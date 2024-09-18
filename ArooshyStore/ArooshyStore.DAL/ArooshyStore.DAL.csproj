@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B36400FC-8FC7-44D2-ABE7-7EDF988D7704}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ArooshyStore.DAL</RootNamespace>
+    <AssemblyName>ArooshyStore.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\ArooshyStore\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\ArooshyStore\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblAction.cs" />
+    <Compile Include="Entities\tblAssignAction.cs" />
+    <Compile Include="Entities\tblAttributeDetail.cs" />
+    <Compile Include="Entities\tblAttribute.cs" />
+    <Compile Include="Entities\tblCarousel.cs" />
+    <Compile Include="Entities\tblInvoiceDetail.cs" />
+    <Compile Include="Entities\tblInvoice.cs" />
+    <Compile Include="Entities\tblExpense.cs" />
+    <Compile Include="Entities\tblExpenseType.cs" />
+    <Compile Include="Entities\tblDiscountOffer.cs" />
+    <Compile Include="Entities\tblCustomerSupplier.cs" />
+    <Compile Include="Entities\tblProductAttributeDetail.cs" />
+    <Compile Include="Entities\tblProduct.cs" />
+    <Compile Include="Entities\tblCity.cs" />
+    <Compile Include="Entities\tblWarehouse.cs" />
+    <Compile Include="Entities\tblDocument.cs" />
+    <Compile Include="Entities\tblErrorsLog.cs" />
+    <Compile Include="Entities\tblInfo.cs" />
+    <Compile Include="Entities\tblLogging.cs" />
+    <Compile Include="Entities\tblModule.cs" />
+    <Compile Include="Entities\tblSecurityGroup.cs" />
+    <Compile Include="Entities\tblSecurityGroupDetail.cs" />
+    <Compile Include="Entities\tblCategory.cs" />
+    <Compile Include="Entities\tblUnit.cs" />
+    <Compile Include="Entities\tblUser.cs" />
+    <Compile Include="Entities\tblUserRole.cs" />
+    <Compile Include="Entities\tblUserType.cs" />
+    <Compile Include="Migrations\202408092252294_Initial_Table_Creations.cs" />
+    <Compile Include="Migrations\202408092252294_Initial_Table_Creations.Designer.cs">
+      <DependentUpon>202408092252294_Initial_Table_Creations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408100752189_Added_Table_tblUnit.cs" />
+    <Compile Include="Migrations\202408100752189_Added_Table_tblUnit.Designer.cs">
+      <DependentUpon>202408100752189_Added_Table_tblUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408100753361_Added_Table_tblUnit_2.cs" />
+    <Compile Include="Migrations\202408100753361_Added_Table_tblUnit_2.Designer.cs">
+      <DependentUpon>202408100753361_Added_Table_tblUnit_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408171954372_test.cs" />
+    <Compile Include="Migrations\202408171954372_test.designer.cs">
+      <DependentUpon>202408171954372_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408171958009_Added_Table_Category.cs" />
+    <Compile Include="Migrations\202408171958009_Added_Table_Category.designer.cs">
+      <DependentUpon>202408171958009_Added_Table_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408172002038_Added_Table_Attribute.cs" />
+    <Compile Include="Migrations\202408172002038_Added_Table_Attribute.designer.cs">
+      <DependentUpon>202408172002038_Added_Table_Attribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408172004572_Added_Table_Warehouse.cs" />
+    <Compile Include="Migrations\202408172004572_Added_Table_Warehouse.designer.cs">
+      <DependentUpon>202408172004572_Added_Table_Warehouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408172014275_Added_Table_AttributeDetail.cs" />
+    <Compile Include="Migrations\202408172014275_Added_Table_AttributeDetail.designer.cs">
+      <DependentUpon>202408172014275_Added_Table_AttributeDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408172105253_Added_fieldId_tblAttributeDetail.cs" />
+    <Compile Include="Migrations\202408172105253_Added_fieldId_tblAttributeDetail.designer.cs">
+      <DependentUpon>202408172105253_Added_fieldId_tblAttributeDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408180749344_Added_typenullabe.cs" />
+    <Compile Include="Migrations\202408180749344_Added_typenullabe.designer.cs">
+      <DependentUpon>202408180749344_Added_typenullabe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408191132430_Added_Table_tblProduct.cs" />
+    <Compile Include="Migrations\202408191132430_Added_Table_tblProduct.designer.cs">
+      <DependentUpon>202408191132430_Added_Table_tblProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408191133509_Added_Table_tblProductAttributeDetail.cs" />
+    <Compile Include="Migrations\202408191133509_Added_Table_tblProductAttributeDetail.designer.cs">
+      <DependentUpon>202408191133509_Added_Table_tblProductAttributeDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408191728173_Added_tblProduct_tyoeNull.cs" />
+    <Compile Include="Migrations\202408191728173_Added_tblProduct_tyoeNull.designer.cs">
+      <DependentUpon>202408191728173_Added_tblProduct_tyoeNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408211319185_Added_Table_tblCity.cs" />
+    <Compile Include="Migrations\202408211319185_Added_Table_tblCity.designer.cs">
+      <DependentUpon>202408211319185_Added_Table_tblCity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408211320523_Added_lengthInCityName_tblCity.cs" />
+    <Compile Include="Migrations\202408211320523_Added_lengthInCityName_tblCity.designer.cs">
+      <DependentUpon>202408211320523_Added_lengthInCityName_tblCity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408211408472_Added_Table_tblCustomerSupplier.cs" />
+    <Compile Include="Migrations\202408211408472_Added_Table_tblCustomerSupplier.designer.cs">
+      <DependentUpon>202408211408472_Added_Table_tblCustomerSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408261413388_Added_Table_tblDoscountOffer.cs" />
+    <Compile Include="Migrations\202408261413388_Added_Table_tblDoscountOffer.designer.cs">
+      <DependentUpon>202408261413388_Added_Table_tblDoscountOffer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408270913594_Added_Table_tblExpenseType.cs" />
+    <Compile Include="Migrations\202408270913594_Added_Table_tblExpenseType.designer.cs">
+      <DependentUpon>202408270913594_Added_Table_tblExpenseType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408270930136_Added_Table_tblExpense.cs" />
+    <Compile Include="Migrations\202408270930136_Added_Table_tblExpense.designer.cs">
+      <DependentUpon>202408270930136_Added_Table_tblExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271009474_Added_UpdateFrom_tblExpense.cs" />
+    <Compile Include="Migrations\202408271009474_Added_UpdateFrom_tblExpense.designer.cs">
+      <DependentUpon>202408271009474_Added_UpdateFrom_tblExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409052117211_Added_Column_Status_tblCategory.cs" />
+    <Compile Include="Migrations\202409052117211_Added_Column_Status_tblCategory.Designer.cs">
+      <DependentUpon>202409052117211_Added_Column_Status_tblCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409062159055_Added_Column_Status_tblDiscountOffer.cs" />
+    <Compile Include="Migrations\202409062159055_Added_Column_Status_tblDiscountOffer.Designer.cs">
+      <DependentUpon>202409062159055_Added_Column_Status_tblDiscountOffer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409101009088_Added_table_tblInvoice.cs" />
+    <Compile Include="Migrations\202409101009088_Added_table_tblInvoice.designer.cs">
+      <DependentUpon>202409101009088_Added_table_tblInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409101011461_Added_table_tblInvoiceDetail.cs" />
+    <Compile Include="Migrations\202409101011461_Added_table_tblInvoiceDetail.designer.cs">
+      <DependentUpon>202409101011461_Added_table_tblInvoiceDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409161722261_Added-coumnnFeatured-tblproduct.cs" />
+    <Compile Include="Migrations\202409161722261_Added-coumnnFeatured-tblproduct.designer.cs">
+      <DependentUpon>202409161722261_Added-coumnnFeatured-tblproduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409170729055_Added_tbl_tblCarousel.cs" />
+    <Compile Include="Migrations\202409170729055_Added_tbl_tblCarousel.designer.cs">
+      <DependentUpon>202409170729055_Added_tbl_tblCarousel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409170800252_Added_tColumnName_tblCarousel.cs" />
+    <Compile Include="Migrations\202409170800252_Added_tColumnName_tblCarousel.designer.cs">
+      <DependentUpon>202409170800252_Added_tColumnName_tblCarousel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202408092252294_Initial_Table_Creations.resx">
+      <DependentUpon>202408092252294_Initial_Table_Creations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408100752189_Added_Table_tblUnit.resx">
+      <DependentUpon>202408100752189_Added_Table_tblUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408100753361_Added_Table_tblUnit_2.resx">
+      <DependentUpon>202408100753361_Added_Table_tblUnit_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408171954372_test.resx">
+      <DependentUpon>202408171954372_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408171958009_Added_Table_Category.resx">
+      <DependentUpon>202408171958009_Added_Table_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408172002038_Added_Table_Attribute.resx">
+      <DependentUpon>202408172002038_Added_Table_Attribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408172004572_Added_Table_Warehouse.resx">
+      <DependentUpon>202408172004572_Added_Table_Warehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408172014275_Added_Table_AttributeDetail.resx">
+      <DependentUpon>202408172014275_Added_Table_AttributeDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408172105253_Added_fieldId_tblAttributeDetail.resx">
+      <DependentUpon>202408172105253_Added_fieldId_tblAttributeDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408180749344_Added_typenullabe.resx">
+      <DependentUpon>202408180749344_Added_typenullabe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408191132430_Added_Table_tblProduct.resx">
+      <DependentUpon>202408191132430_Added_Table_tblProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408191133509_Added_Table_tblProductAttributeDetail.resx">
+      <DependentUpon>202408191133509_Added_Table_tblProductAttributeDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408191728173_Added_tblProduct_tyoeNull.resx">
+      <DependentUpon>202408191728173_Added_tblProduct_tyoeNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408211319185_Added_Table_tblCity.resx">
+      <DependentUpon>202408211319185_Added_Table_tblCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408211320523_Added_lengthInCityName_tblCity.resx">
+      <DependentUpon>202408211320523_Added_lengthInCityName_tblCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408211408472_Added_Table_tblCustomerSupplier.resx">
+      <DependentUpon>202408211408472_Added_Table_tblCustomerSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408261413388_Added_Table_tblDoscountOffer.resx">
+      <DependentUpon>202408261413388_Added_Table_tblDoscountOffer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408270913594_Added_Table_tblExpenseType.resx">
+      <DependentUpon>202408270913594_Added_Table_tblExpenseType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408270930136_Added_Table_tblExpense.resx">
+      <DependentUpon>202408270930136_Added_Table_tblExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271009474_Added_UpdateFrom_tblExpense.resx">
+      <DependentUpon>202408271009474_Added_UpdateFrom_tblExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409052117211_Added_Column_Status_tblCategory.resx">
+      <DependentUpon>202409052117211_Added_Column_Status_tblCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409062159055_Added_Column_Status_tblDiscountOffer.resx">
+      <DependentUpon>202409062159055_Added_Column_Status_tblDiscountOffer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409101009088_Added_table_tblInvoice.resx">
+      <DependentUpon>202409101009088_Added_table_tblInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409101011461_Added_table_tblInvoiceDetail.resx">
+      <DependentUpon>202409101011461_Added_table_tblInvoiceDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409161722261_Added-coumnnFeatured-tblproduct.resx">
+      <DependentUpon>202409161722261_Added-coumnnFeatured-tblproduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409170729055_Added_tbl_tblCarousel.resx">
+      <DependentUpon>202409170729055_Added_tbl_tblCarousel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409170800252_Added_tColumnName_tblCarousel.resx">
+      <DependentUpon>202409170800252_Added_tColumnName_tblCarousel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\ArooshyStore\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

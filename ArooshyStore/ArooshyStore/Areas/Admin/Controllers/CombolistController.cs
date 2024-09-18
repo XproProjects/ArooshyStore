@@ -1,0 +1,137 @@
+﻿using System.Web.Mvc;
+using ArooshyStore.BLL.Interfaces;
+using ArooshyStore.BLL.Services;
+
+namespace ArooshyStore.Areas.Admin.Controllers
+{
+    public class CombolistController : BaseController
+    {
+        private readonly ICombolistRepository _repository;
+        private readonly ICategoryRepository _categories;
+
+        public CombolistController()
+        {
+            _repository = new CombolistRepository();
+        }
+        public CombolistController(ICombolistRepository repository ,ICategoryRepository categories)
+        {
+            _repository = repository;
+            _categories = categories;
+        }
+        #region Categories
+        public JsonResult GetCategoryOptionList(string searchTerm, int pageSize, int pageNumber, string type = "child")
+        {
+            var select2pagedResult = _repository.GetCategoriesList(searchTerm, pageSize, pageNumber, type);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Customers Supplier
+        public JsonResult GetCustomerSupplierOptionList(string searchTerm, int pageSize, int pageNumber, string type = "customer")
+        {
+            var select2pagedResult = _repository.GetCustomerSupplierList(searchTerm, pageSize, pageNumber,type);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Attributes
+        public JsonResult GetAttributesOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetAttributesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Attributes Detail
+        public JsonResult GetAttributesDetailOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetAttributeDetailList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Units
+        public JsonResult GetUnitsOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetUnitsList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Discount Offers
+        public JsonResult GetDiscountOffersOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetDiscountOffersList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region User Types
+        public JsonResult GetUserTypesOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetUserTypesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Cities
+        public JsonResult GetCitiesOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetCitiesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Products
+        public JsonResult GetProductsOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetProductsList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region ExpenseTypes
+        public JsonResult GetExpenseTypesOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetExpenseTypesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Error Line Number
+        public JsonResult GetErrorLineNumberOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetErrorLineNumberList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+       
+       
+        #region Error Source
+        public JsonResult GetErrorSourceOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetErrorSourceList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Error Line Number
+        public JsonResult GetErrorClassOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetErrorClassList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Error Source
+        public JsonResult GetErrorActionOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetErrorActionList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+    }
+}

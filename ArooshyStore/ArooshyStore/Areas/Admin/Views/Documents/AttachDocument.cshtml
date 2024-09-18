@@ -1,0 +1,90 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model DocumentViewModel
+<div style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("AttachDocumentsForPost", "documents", FormMethod.Post, new { id = "documentForm", @class = "smart-form custome-class-form", enctype = "multipart/form-data" }))
+    {
+        <input type="hidden" id="TypeId" name="TypeId" value="@Model.TypeId" />
+        <input type="hidden" id="DocumentType" name="DocumentType" value="@Model.DocumentType" />
+        <fieldset style="padding:20px;margin-top:25px">
+            <div class="row" style="margin-top:-10px">
+                @*<section class="col col-6">
+                        <label>Date</label>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-calendar"></i>
+                            <input type="date" id="DocumentDate" name="DocumentDate" />
+                        </label>
+                    </section>*@
+                <section class="col col-6">
+                    <label>Document Name</label>
+                    <input type="hidden" id="DocumentId" name="DocumentId" value="0" />
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fal fa-file"></i>
+                            </span>
+                        </div>
+                        <input type="text" placeholder="Document Name" id="DocumentRemarks" name="DocumentRemarks" class="form-control" />
+                    </div>
+                </section>
+                <section class="col col-md-6">
+                    <label>Select Document</label>
+                    <div class="custom-file fileDiv">
+                        <input type="file" class="custom-file-input" id="Document">
+                        <label class="custom-file-label" id="AttachDocument" for="Document" style="overflow:hidden">Choose Document....</label>
+                    </div>
+                </section>
+            </div>
+
+        </fieldset>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" id="btnSaveDocument" class="btn btn-primary btnSaveForm pull-right" style="margin-right: 21px;padding: 8px;padding-left: 11px;padding-right: 12px;">Upload</button>
+                <button type="button" class="btn btn-secondary pull-right btnCancelDocument" style="margin-right: 10px;padding: 8px;padding-left: 11px;padding-right: 12px;">Cancel</button>
+            </div>
+            @*<table class="pull-right footer-nav" style="margin-right:14px">
+                    <tr>
+                        <td>
+                            <button type="submit" id="btnSaveDocument" class="btn btn-primary pull-right" style="width:116px;height:30px;margin-right:7px;color:white">
+                                UPLOAD
+                            </button>
+                        </td>
+                        <td class="deleteTd">
+                            <a id="btnDeleteDocument" class="btn btn-default" style="width: 95px; height: 32px; margin-right: 16px; line-height: 30px;">
+                                DELETE
+                            </a>
+                        </td>
+                    </tr>
+                </table>*@
+        </div>
+        <div class="row ImageDisplayRow" hidden>
+            <section class="col-md-4"></section>
+            <section class="col-md-4 thumbnail">
+                <img id="DocumentImage" style="height: 200px; width: 100%;border:10px solid #ddd;padding:20px;border-radius:20px" />
+            </section>
+            <section class="col-md-4"></section>
+        </div>
+    }
+    <center>
+        <h4 style="margin-top: 15px;">Documents List</h4>
+    </center>
+    <div class="row" style="padding:21px;padding-top:0px">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;width:20px">Sr#</th>
+                        @*<th style="text-align:center;width:20%">Date</th>*@
+                        <th style="text-align:left;">Document Name</th>
+                        <th style="text-align:center;width:80px">View</th>
+                        <th style="text-align:center;width:80px">Edit</th>
+                        <th style="text-align:center;width:80px">Delete</th>
+                        @*<th style="text-align: center; width: 15%">Download</th>*@
+                    </tr>
+                </thead>
+                <tbody id="DocumentsListTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Documents/AttachDocument.js"></script>

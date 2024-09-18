@@ -1,0 +1,56 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model AttributeViewModel
+
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+   @using (Html.BeginForm("InsertUpdateAttributeDetail", "AttributeDetail", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+
+        <fieldset style="padding:1.25rem;">
+            <div class="row" style="margin-top: 25px;">
+                <section class="col-md-12">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Attribute Detail Name (*)</label>
+                        <input type="hidden" id="AttributeDetailId" name="AttributeDetailId" value="@Model.AttributeDetailId" />
+                        <input type="hidden" id="AttributeId" name="AttributeId" value="@Model.AttributeId" />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-random"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.AttributeDetailName, new { @placeholder = "Attribute Detail Name", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            @{
+                string ishiddenStatus = "hidden";
+                string ischecked = "";
+                if (Model.AttributeDetailId > 0)
+                {
+                    ishiddenStatus = "";
+                    if (Model.Status == true)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+            }
+            <div class="row" @ishiddenStatus style="margin-top:10px">
+                <section class="col-md-12">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischecked>
+                        <label class="custom-control-label" for="Status">Active</label>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+     }
+</div>
+
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Attribute/InsertUpdateAttributeDetail.js?v=2"></script>

@@ -1,0 +1,40 @@
+﻿@{
+    string businessName = ViewBag.BusinessName;
+}
+<!DOCTYPE html>
+<!--
+Template Name:  SmartAdmin Responsive WebApp - Template build with Twitter Bootstrap 4
+Version: 4.0.0
+Author: Sunnyat Ahmmed
+Website: http://gootbootstrap.com
+Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
+License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Login - @businessName
+    </title>
+    <meta name="description" content="Login">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- base css -->
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon.ico">
+    <link rel="mask-icon" href="~/favicon.ico" color="#5bbad5">
+    <!-- Optional: page related CSS-->
+    @Styles.Render("~/areas/admin/content/login")
+    <link href="~/Areas/Admin/Content/ArooshyStoreCss/Account/LoginPartial.css" rel="stylesheet" />
+</head>
+<body>
+    @Scripts.Render("~/areas/admin/script/login")
+    @RenderBody()
+    <script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Account/Login.js"></script>
+</body>
+</html>

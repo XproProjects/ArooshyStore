@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Error Log";
+}
+@using ArooshyStore.Models.ViewModels
+@model List<ModuleViewModel>
+<style>
+    .FiltersPanel {
+        /*-webkit-box-orient: vertical;
+         -webkit-box-direction: normal;*/
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .myFilterPanel > .ui-sortable-handle {
+        cursor: pointer !important;
+    }
+
+        .myFilterPanel > .ui-sortable-handle:before {
+            content: '' !important;
+        }
+
+    .myFilterPanel > .panel-toolbar {
+        display: none;
+    }
+
+    .myFilterPanel > .myToolbar {
+        display: block;
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content mySelectList">
+    <div class="row">
+        <div class="col-md-12" style="display:flex">
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-clipboard"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Errors</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-list-ol"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Error Log</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </th>
+                    <th style="text-align:right">
+                        <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-hdr bg-primary-500 bg-info-gradient" role="heading">
+                    <h2>Error Logs List</h2>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="panel FiltersPanel panel-locked panel-collapsed" style="margin-top:15px;background-color:#FDFDFD;border: 2px solid #ddd;cursor:pointer !important">
+                            <div class="panel-hdr color-success-600 myFilterPanel" title="Click to Expand/Collapase Filters" style="background-color:#FDFDFD;cursor:pointer !important" data-action="panel-collapse">
+                                <h2>
+                                    <span>
+                                        <i class="fal fa-search"></i>
+                                        &nbsp;
+                                        Filters
+                                    </span>
+                                </h2>
+                                <div class="panel-toolbar myToolbar" style="margin-right:15px">
+                                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                                </div>
+                            </div>
+                            <div class="panel-container collapse" style="">
+                                <div class="panel-content">
+                                    <div class="row">
+                                        <section class="col-md-4" style="margin-top:5px">
+                                            <span>
+                                                <span style="padding-left:5px;font-weight:bold">Select Error Line Number</span>
+                                                <div class="custom-control custom-switch pull-right" style="cursor:pointer">
+                                                    <input type="checkbox" class="custom-control-input" id="ErrorLineNumberCheckbox">
+                                                    <label class="custom-control-label" for="ErrorLineNumberCheckbox">&nbsp;</label>
+                                                </div>
+                                            </span>
+                                            <div class="input-group" style="margin-top:10px">
+                                                <select id="ErrorLineNumberIdList" name="ErrorLineNumberIdList" disabled></select>
+                                            </div>
+                                        </section>
+                                        <section class="col-md-6" style="margin-top:5px">
+                                            <span>
+                                                <span style="padding-left:5px;font-weight:bold">Select Error Class</span>
+                                                <div class="custom-control custom-switch pull-right" style="cursor:pointer">
+                                                    <input type="checkbox" class="custom-control-input" id="ErrorClassCheckbox">
+                                                    <label class="custom-control-label" for="ErrorClassCheckbox">&nbsp;</label>
+                                                </div>
+                                            </span>
+                                            <div class="input-group" style="margin-top:10px">
+                                                <select id="ErrorClassIdList" name="ErrorClassIdList" disabled></select>
+                                            </div>
+                                        </section>
+                                        <section class="col-md-4" style="margin-top:5px">
+                                            <span>
+                                                <span style="padding-left:5px;font-weight:bold">Select Error Source</span>
+                                                <div class="custom-control custom-switch pull-right" style="cursor:pointer">
+                                                    <input type="checkbox" class="custom-control-input" id="ErrorSourceCheckbox">
+                                                    <label class="custom-control-label" for="ErrorSourceCheckbox">&nbsp;</label>
+                                                </div>
+                                            </span>
+                                            <div class="input-group" style="margin-top:10px">
+                                                <select id="ErrorSourceIdList" name="ErrorSourceIdList" disabled></select>
+                                            </div>
+                                        </section>
+                                        <section class="col-md-6" style="margin-top:5px">
+                                            <span>
+                                                <span style="padding-left:5px;font-weight:bold">Select Error Action</span>
+                                                <div class="custom-control custom-switch pull-right" style="cursor:pointer">
+                                                    <input type="checkbox" class="custom-control-input" id="ErrorActionCheckbox">
+                                                    <label class="custom-control-label" for="ErrorActionCheckbox">&nbsp;</label>
+                                                </div>
+                                            </span>
+                                            <div class="input-group" style="margin-top:10px">
+                                                <select id="ErrorActionIdList" name="ErrorActionIdList" disabled></select>
+                                            </div>
+                                        </section>
+                                        <section class="col-md-2" style="margin-top: 35px;">
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <button id="btnFind" class="btn btn-outline-default btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search"></i></button>
+                                                    <button id="btnReset" class="btn btn-outline-default btnSearchGoAdvance" type="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sync"></i></button>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show active  MyMainTab" id="MainDiv" role="tabpanel">
+                            <table id="myTable" class="table table-bordered table-hover table-striped w-100" style="margin-top: -13px !important;">
+                                <thead>
+                                    <tr>
+                                        <th class="min-mobile">Error Class</th>
+                                        <th class="min-mobile">Error Action</th>
+                                        <th class="min-tablet">Error Source</th>
+                                        <th class="none">Error Line Number</th>
+                                        <th class="none">Error Description</th>
+                                        <th class="none">Created Date</th>
+                                        <th class="none">Created By</th>
+                                        <th class="none">Updated Date</th>
+                                        <th class="none">Updated By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/ErrorLog/Index.js"></script>

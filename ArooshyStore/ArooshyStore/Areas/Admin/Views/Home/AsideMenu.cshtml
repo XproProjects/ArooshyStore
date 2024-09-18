@@ -1,0 +1,152 @@
+﻿@{
+    string businessName = ViewBag.BusinessName;
+    string bgImageSrc = ViewBag.BannerImage;
+    string bgLogo = ViewBag.BusinessLogo;
+    string bgColor = ViewBag.BgColor;
+    //MvcHtmlString adminImageSrc = Html.Action("GetUserPicture", "account", new
+    //{
+    //    id = Convert.ToInt32(User.UserId)
+    //});
+    string adminImageSrc = Url.Action("GetUserPicture", "account", new
+    {
+        id = Convert.ToInt32(User.UserId)
+    });
+    //string adminName = User.Name;
+    //MvcHtmlString adminName = Html.Action("GetUserName", "account");
+    //MvcHtmlString email = Html.Action("GetUserEmail", "account");
+    MvcHtmlString userNameAndEmail = Html.Action("GetUserNameAndEmail", "account");
+    string adminName = userNameAndEmail.ToString().Split('|')[0];
+    //string email = userNameAndEmail.ToString().Split('|')[1];
+    //int branchCount = Convert.ToInt32(userNameAndEmail.ToString().Split('|')[2]);
+}
+@using ArooshyStore.Models.ViewModels
+@model ModuleViewModel
+<aside class="page-sidebar">
+    <div class="page-logo">
+        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+            <span class="page-logo-text mr-1" style="margin-left:0px">
+                <img src="@bgLogo" alt="@businessName" aria-roledescription="logo" style="height: 30px;width: 36px;">
+                &nbsp;&nbsp;@businessName
+            </span>
+            <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+            <i class="fas fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+        </a>
+    </div>
+    <!-- BEGIN PRIMARY NAVIGATION -->
+    <nav id="js-primary-nav" class="primary-nav" role="navigation">
+        <div class="nav-filter">
+            <div class="position-relative">
+                <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
+                <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
+                    <i class="fas fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="status status-success status-sm ">
+                <img src="@adminImageSrc" class="profile-image rounded-circle" alt="@adminName" style="height: 48px;width: 48px;padding: 0px;border:3px solid #eee;">
+            </div>
+            @*<img src="@adminImageSrc" class="profile-image rounded-circle" alt="@adminName" style="height: 48px;width: 48px;padding: 0px;border:3px solid #eee;">*@
+            <div class="info-card-text">
+                <a href="javascript:void(0)" class="d-flex align-items-center text-white">
+                    <span title="@adminName" class="text-truncate text-truncate-md d-inline-block">
+                        @adminName
+                    </span>
+                </a>
+            </div>
+            <img src="@bgImageSrc" class="cover" style="width:100%" alt="cover">
+            <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
+                <i class="fas fa-angle-down"></i>
+            </a>
+        </div>
+        <ul id="js-nav-menu" class="nav-menu">
+            @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "dashboard"))
+            {
+                @*<li class="nav-title">Dashboard</li>*@
+                <li>
+                    <a href="/admin/home/index" title="Dashboard" data-filter-tags="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-link-text" data-i18n="nav.Dashboard">Dashboard</span>
+                    </a>
+                </li>
+            }
+
+            @if (Model.ModuleList.Any(x =>
+          x.ModuleName.ToLower() == "product"))
+            {
+                @*<li class="nav-title">Products</li>*@
+                <li>
+                    <a href="/admin/product/index" title="Products" data-filter-tags="products">
+                        <i class="fas fa-box"></i>
+                        <span class="nav-link-text" data-i18n="nav.Products">Products</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "customer"))
+            {
+                @*<li class="nav-title">Customers</li>*@
+                <li>
+                    <a href="/admin/customersupplier/index/?type=customer" title="Customers" data-filter-tags="customers">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="nav-link-text" data-i18n="nav.Customers">Customers</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "supplier"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/customersupplier/index/?type=supplier" title="Suppliers" data-filter-tags="suppliers">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="nav-link-text" data-i18n="nav.Suppliers">Suppliers</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "expense"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/expense/index" title="Expenses" data-filter-tags="expenses">
+                        <i class="fas fa-money-bill"></i>
+                        <span class="nav-link-text" data-i18n="nav.Expenses">Expenses</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "sale invoice"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/invoice/saleinvoiceindex" title="Sale Invoice" data-filter-tags="Sale Invoice">
+                        <i class="fas fa-align-justify"></i>
+                        <span class="nav-link-text" data-i18n="nav.Invoice">Sale Invoice</span>
+                    </a>
+                </li>
+
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "user" ||
+x.ModuleName.ToLower() == "user permissions"))
+            {
+                @*<li class="nav-title">User</li>*@
+                <li>
+                    <a href="/admin/user/index" title="Users" data-filter-tags="users">
+                        <i class="fas fa-user"></i>
+                        <span class="nav-link-text" data-i18n="nav.Users">Users</span>
+                    </a>
+                </li>
+            }
+            @*<li class="nav-title">Settings</li>*@
+            <li>
+                <a href="/admin/home/setting" title="Settings" data-filter-tags="setting">
+                    <i class="fas fa-cogs"></i>
+                    <span class="nav-link-text" data-i18n="nav.Settings">Settings</span>
+                </a>
+            </li>
+        </ul>
+        <div class="filter-message js-filter-message bg-success-600"></div>
+    </nav>
+</aside>

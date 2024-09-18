@@ -1,0 +1,66 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model CarouselViewModel
+
+<style>
+    .bg-color-0 {
+        background-color: #007bff;
+    }
+
+    .bg-color-1 {
+        background-color: #ff0000; 
+    }
+
+    .bg-color-2 {
+        background-color: #ffc107; 
+    }
+
+    .bg-color-3 {
+        background-color: #28a745; 
+    }
+
+    .bg-color-4 {
+        background-color: #343a40; 
+    }
+</style>
+
+<div id="carouselExampleIndicators" class="carousel slide">
+    <div class="carousel-inner">
+        @if (Model.Carousels != null && Model.Carousels.Any())
+        {
+            int index = 0;
+            foreach (var carousel in Model.Carousels)
+            {
+                var activeClass = index == 0 ? "active" : "";
+                var bgColorClass = $"bg-color-{index}";
+                <div class="carousel-item @activeClass @bgColorClass">
+                    <div class="row d-flex align-items-center">
+                        <div class="col d-none d-lg-flex justify-content-center">
+                            <div>
+                                <h3 class="h3 fw-light text-white fw-bold">@carousel.CarouselName</h3>
+                                <h1 class="h1 text-white fw-bold">@carousel.Line1</h1>
+                                <p class="text-white fw-bold"><i>@carousel.Line2</i></p>
+                                <p class="text-white fw-bold"><i>@carousel.Line3</i></p>
+
+                                <div>
+                                    <a class="btn btn-dark btn-ecomm" href="shop-grid.html">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img src="@carousel.ImagePath" class="img-fluid" alt="@carousel.CarouselName">
+                        </div>
+                    </div>
+                </div>
+                index++;
+            }
+        }
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

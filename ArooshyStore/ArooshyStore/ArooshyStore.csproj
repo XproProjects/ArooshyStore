@@ -1,0 +1,2444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0E2975E1-2174-46B4-B2CC-6265EB5904B5}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ArooshyStore</RootNamespace>
+    <AssemblyName>ArooshyStore</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44342</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Core, Version=1.24.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>packages\Azure.Core.1.24.0\lib\net461\Azure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Identity, Version=1.6.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>packages\Azure.Identity.1.6.0\lib\netstandard2.0\Azure.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.SqlClient, Version=5.0.0.0, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Data.SqlClient.5.0.1\lib\net462\Microsoft.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=6.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Configuration.6.0.1\lib\net461\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Configuration.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Configuration.Binder.6.0.0\lib\net461\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.7.0.1\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Options.6.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Options.ConfigurationExtensions.6.0.0\lib\net461\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client, Version=4.45.0.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Identity.Client.4.45.0\lib\net461\Microsoft.Identity.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=2.19.3.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Identity.Client.Extensions.Msal.2.19.3\lib\net45\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.Abstractions.6.21.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.JsonWebTokens.6.21.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.Logging.6.21.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.Protocols.6.21.0\lib\net472\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.Protocols.OpenIdConnect.6.21.0\lib\net472\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IdentityModel.Tokens.6.21.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.3.0.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.Console.4.1.0\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=5.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.File.5.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.MSSqlServer, Version=6.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.MSSqlServer.6.3.0\lib\net472\Serilog.Sinks.MSSqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.PeriodicBatching, Version=3.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.PeriodicBatching.3.1.0\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Configuration.ConfigurationManager.6.0.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.21.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\System.IdentityModel.Tokens.Jwt.6.21.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\System.Linq.Dynamic.1.0.8\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory.Data, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.Data.1.0.2\lib\net461\System.Memory.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.ProtectedData.4.7.0\lib\net461\System.Security.Cryptography.ProtectedData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Permissions.6.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.4.7.2\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.4.7.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>packages\Unity.5.11.1\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>packages\Unity.5.11.1\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc5, Version=1.4.0.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>packages\Unity.Mvc5.1.4.0\lib\net45\Unity.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Facebook.4.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>packages\Microsoft.Owin.Security.Google.4.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>packages\Microsoft.Owin.Security.Twitter.4.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SerilogMiddleware.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\CarouselController.cs" />
+    <Compile Include="Areas\Admin\Controllers\InvoiceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorLogController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExpenseTypeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerSupplierController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AttributeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExpenseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DiscountOfferController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WarehouseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
+    <Compile Include="Areas\User\Controllers\HomeController.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Authentication\FormsAuthentication\BaseViewPage.cs" />
+    <Compile Include="Authentication\FormsAuthentication\CustomPrincipal.cs" />
+    <Compile Include="Authentication\FormsAuthentication\CustomPrincipalSerializeModel.cs" />
+    <Compile Include="Authentication\FormsAuthentication\ICustomPrincipal.cs" />
+    <Compile Include="Authentication\Identity\AccountViewModels.cs" />
+    <Compile Include="Authentication\Identity\IdentityModels.cs" />
+    <Compile Include="Authentication\Identity\ManageViewModels.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ActionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CombolistController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DocumentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ModuleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserTypeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Content\app.bundle.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\ChangePassword.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\CheckOldPassword.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\FallingLeaves.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login5.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login6.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login7.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login8.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\LoginPartial.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Action\InsertUpdateAssign.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Home\QuickAccess.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Home\Setting.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Layout\Header.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Layout\Layout.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Invoice\InsertUpdateSaleInvoice.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\User\AssignModule.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\User\InsertUpdateUser.css" />
+    <Content Include="Areas\Admin\Content\datagrid\datatables\datatables.bundle.css" />
+    <Content Include="Areas\Admin\Content\download.png" />
+    <Content Include="Areas\Admin\Content\dummy.png" />
+    <Content Include="Areas\Admin\Content\dummy2.png" />
+    <Content Include="Areas\Admin\Content\errorimage.png" />
+    <Content Include="Areas\Admin\Content\errorimage2.png" />
+    <Content Include="Areas\Admin\Content\fa-brands.css" />
+    <Content Include="Areas\Admin\Content\fa-regular.css" />
+    <Content Include="Areas\Admin\Content\fa-solid.css" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-colorpicker\bootstrap-colorpicker.css" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-datepicker\bootstrap-datepicker.css" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-daterangepicker\bootstrap-daterangepicker.css" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-markdown\bootstrap-markdown.css" />
+    <Content Include="Areas\Admin\Content\formplugins\cropperjs\cropper.css" />
+    <Content Include="Areas\Admin\Content\formplugins\dropzone\dropzone.css" />
+    <Content Include="Areas\Admin\Content\formplugins\ion-rangeslider\ion-rangeslider.css" />
+    <Content Include="Areas\Admin\Content\formplugins\nouislider\nouislider.css" />
+    <Content Include="Areas\Admin\Content\formplugins\select2\select2.bundle.css" />
+    <Content Include="Areas\Admin\Content\formplugins\smartwizard\smartwizard.css" />
+    <Content Include="Areas\Admin\Content\formplugins\summernote\summernote.css" />
+    <Content Include="Areas\Admin\Content\img\acc11.svg" />
+    <Content Include="Areas\Admin\Content\img\acc12.svg" />
+    <Content Include="Areas\Admin\Content\img\acc13.gif" />
+    <Content Include="Areas\Admin\Content\img\acc14.svg" />
+    <Content Include="Areas\Admin\Content\img\acc16.svg" />
+    <Content Include="Areas\Admin\Content\img\acc17.svg" />
+    <Content Include="Areas\Admin\Content\img\ajax-loader.gif" />
+    <Content Include="Areas\Admin\Content\img\alpha.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\bg-1.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\bg-2.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\bg-3.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\bg-4.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\bg-5.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\clouds.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\credit.txt" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\download %2823%29.jpg" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\page-bg.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\prev-bg-1.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\prev-bg-2.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\prev-bg-3.png" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\prev-bg-4.png" />
+    <Content Include="Areas\Admin\Content\img\Banner.png" />
+    <Content Include="Areas\Admin\Content\img\Banner2.png" />
+    <Content Include="Areas\Admin\Content\img\Banner3.jpg" />
+    <Content Include="Areas\Admin\Content\img\Banner4.jpg" />
+    <Content Include="Areas\Admin\Content\img\bitbucket-logo.png" />
+    <Content Include="Areas\Admin\Content\img\blank.gif" />
+    <Content Include="Areas\Admin\Content\img\border.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-1-lg.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-2-lg.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-3-lg.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-4-lg.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-5-lg.png" />
+    <Content Include="Areas\Admin\Content\img\card-backgrounds\cover-6-lg.png" />
+    <Content Include="Areas\Admin\Content\img\clear.png" />
+    <Content Include="Areas\Admin\Content\img\cover.png" />
+    <Content Include="Areas\Admin\Content\img\delete.png" />
+    <Content Include="Areas\Admin\Content\img\demo\angular.png" />
+    <Content Include="Areas\Admin\Content\img\demo\authors\josh.png" />
+    <Content Include="Areas\Admin\Content\img\demo\authors\jovanni.png" />
+    <Content Include="Areas\Admin\Content\img\demo\authors\roberto.png" />
+    <Content Include="Areas\Admin\Content\img\demo\authors\sunny.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-a.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-admin-lg.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-admin.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-admin.txt" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-b.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-c.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-d.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-e.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-f.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-g.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-h.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-i.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-j.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-k.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\avatar-m.png" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\cc.txt" />
+    <Content Include="Areas\Admin\Content\img\demo\avatars\ng.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\debounce-at_begin.png" />
+    <Content Include="Areas\Admin\Content\img\demo\debounce.png" />
+    <Content Include="Areas\Admin\Content\img\demo\demo-panel.png" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\1.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\10.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\11.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\12.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\13.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\14.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\15.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\16.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\17.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\18.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\19.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\2.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\20.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\21.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\22.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\23.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\24.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\25.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\26.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\27.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\28.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\29.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\3.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\30.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\31.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\32.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\33.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\34.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\35.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\36.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\37.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\38.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\39.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\4.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\40.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\41.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\42.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\43.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\44.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\45.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\46.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\47.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\48.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\49.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\5.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\50.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\51.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\52.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\53.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\54.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\55.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\56.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\57.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\58.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\59.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\6.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\7.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\8.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\9.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\source.txt" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\1.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\10.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\11.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\12.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\13.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\14.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\15.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\16.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\17.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\18.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\19.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\2.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\20.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\21.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\22.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\23.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\24.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\25.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\26.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\27.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\28.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\29.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\3.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\30.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\31.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\32.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\33.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\34.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\35.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\36.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\37.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\38.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\39.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\4.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\40.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\41.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\42.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\43.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\44.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\45.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\46.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\47.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\48.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\49.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\5.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\50.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\51.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\52.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\53.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\54.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\55.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\56.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\57.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\58.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\59.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\6.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\7.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\8.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\gallery\thumb\9.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\grid-options.png" />
+    <Content Include="Areas\Admin\Content\img\demo\html5.png" />
+    <Content Include="Areas\Admin\Content\img\demo\mvc.png" />
+    <Content Include="Areas\Admin\Content\img\demo\peace-full.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\php.png" />
+    <Content Include="Areas\Admin\Content\img\demo\position-absolute.gif" />
+    <Content Include="Areas\Admin\Content\img\demo\position-fixed.gif" />
+    <Content Include="Areas\Admin\Content\img\demo\position-sticky.gif" />
+    <Content Include="Areas\Admin\Content\img\demo\profile\article-healthyfood.png" />
+    <Content Include="Areas\Admin\Content\img\demo\profile\cc.txt" />
+    <Content Include="Areas\Admin\Content\img\demo\rails.png" />
+    <Content Include="Areas\Admin\Content\img\demo\react.png" />
+    <Content Include="Areas\Admin\Content\img\demo\relax-full.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\s-1.png" />
+    <Content Include="Areas\Admin\Content\img\demo\sea-full.jpg" />
+    <Content Include="Areas\Admin\Content\img\demo\search\1.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\10.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\11.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\12.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\13.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\14.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\15.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\2.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\3.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\4.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\5.png" />
+    <Content Include="Areas\Admin\Content\img\demo\search\6.png" />
+    <Content Include="Areas\Admin\Content\img\demo\side-panel-demo.gif" />
+    <Content Include="Areas\Admin\Content\img\demo\skins\black.png" />
+    <Content Include="Areas\Admin\Content\img\demo\skins\blue.png" />
+    <Content Include="Areas\Admin\Content\img\demo\skins\green.png" />
+    <Content Include="Areas\Admin\Content\img\demo\skins\pink.png" />
+    <Content Include="Areas\Admin\Content\img\demo\throttle-no_trailing.png" />
+    <Content Include="Areas\Admin\Content\img\demo\throttle.png" />
+    <Content Include="Areas\Admin\Content\img\demo\vuejs.png" />
+    <Content Include="Areas\Admin\Content\img\Document.png" />
+    <Content Include="Areas\Admin\Content\img\Document2.png" />
+    <Content Include="Areas\Admin\Content\img\DocumentAttachPin.png" />
+    <Content Include="Areas\Admin\Content\img\download.jpg" />
+    <Content Include="Areas\Admin\Content\img\DummyLogo3n.png" />
+    <Content Include="Areas\Admin\Content\img\DummyLogo5.jpg" />
+    <Content Include="Areas\Admin\Content\img\errorimage2.png" />
+    <Content Include="Areas\Admin\Content\img\exit.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\android-chrome-144x144.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\apple-touch-icon.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\browserconfig.xml" />
+    <Content Include="Areas\Admin\Content\img\favicon\favicon-16x16.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\favicon-32x32.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\favicon-generator.txt" />
+    <Content Include="Areas\Admin\Content\img\favicon\favicon.ico" />
+    <Content Include="Areas\Admin\Content\img\favicon\mstile-150x150.png" />
+    <Content Include="Areas\Admin\Content\img\favicon\safari-pinned-tab.svg" />
+    <Content Include="Areas\Admin\Content\img\File.png" />
+    <Content Include="Areas\Admin\Content\img\glass-image-copyright.txt" />
+    <Content Include="Areas\Admin\Content\img\glass.jpg" />
+    <Content Include="Areas\Admin\Content\img\Hold.png" />
+    <Content Include="Areas\Admin\Content\img\Hold2.png" />
+    <Content Include="Areas\Admin\Content\img\HoldList.png" />
+    <Content Include="Areas\Admin\Content\img\hue.png" />
+    <Content Include="Areas\Admin\Content\img\images %281%29.jpg" />
+    <Content Include="Areas\Admin\Content\img\images.jpg" />
+    <Content Include="Areas\Admin\Content\img\List.png" />
+    <Content Include="Areas\Admin\Content\img\list2.png" />
+    <Content Include="Areas\Admin\Content\img\loading.gif" />
+    <Content Include="Areas\Admin\Content\img\Logo %281%29.png" />
+    <Content Include="Areas\Admin\Content\img\Logo %281%292x.png" />
+    <Content Include="Areas\Admin\Content\img\logo-blacknwhite.png" />
+    <Content Include="Areas\Admin\Content\img\logo-blue.png" />
+    <Content Include="Areas\Admin\Content\img\logo-flat.svg" />
+    <Content Include="Areas\Admin\Content\img\logo-gradient.svg" />
+    <Content Include="Areas\Admin\Content\img\logo-o.png" />
+    <Content Include="Areas\Admin\Content\img\logo-pale.png" />
+    <Content Include="Areas\Admin\Content\img\logo-white.png" />
+    <Content Include="Areas\Admin\Content\img\Logo.jpg" />
+    <Content Include="Areas\Admin\Content\img\logo.png" />
+    <Content Include="Areas\Admin\Content\img\logo.svg" />
+    <Content Include="Areas\Admin\Content\img\logo2.png" />
+    <Content Include="Areas\Admin\Content\img\male.png" />
+    <Content Include="Areas\Admin\Content\img\mappin-default.png" />
+    <Content Include="Areas\Admin\Content\img\medical-websites-develop.jpg" />
+    <Content Include="Areas\Admin\Content\img\minus.png" />
+    <Content Include="Areas\Admin\Content\img\minus1.png" />
+    <Content Include="Areas\Admin\Content\img\mybg.png" />
+    <Content Include="Areas\Admin\Content\img\NewLogo.png" />
+    <Content Include="Areas\Admin\Content\img\NewLogoIcon.ico" />
+    <Content Include="Areas\Admin\Content\img\plus.png" />
+    <Content Include="Areas\Admin\Content\img\plus1.png" />
+    <Content Include="Areas\Admin\Content\img\plus2.png" />
+    <Content Include="Areas\Admin\Content\img\Print.png" />
+    <Content Include="Areas\Admin\Content\img\refresh.png" />
+    <Content Include="Areas\Admin\Content\img\refresh2.png" />
+    <Content Include="Areas\Admin\Content\img\ribbon.png" />
+    <Content Include="Areas\Admin\Content\img\sa-dark.png" />
+    <Content Include="Areas\Admin\Content\img\sa-default.png" />
+    <Content Include="Areas\Admin\Content\img\saturation.png" />
+    <Content Include="Areas\Admin\Content\img\save.png" />
+    <Content Include="Areas\Admin\Content\img\select2-spinner.gif" />
+    <Content Include="Areas\Admin\Content\img\sort_asc.png" />
+    <Content Include="Areas\Admin\Content\img\sort_asc_disabled.png" />
+    <Content Include="Areas\Admin\Content\img\sort_both.png" />
+    <Content Include="Areas\Admin\Content\img\sort_desc.png" />
+    <Content Include="Areas\Admin\Content\img\sort_desc_disabled.png" />
+    <Content Include="Areas\Admin\Content\img\svg\pattern-1.svg" />
+    <Content Include="Areas\Admin\Content\img\svg\pattern-2.svg" />
+    <Content Include="Areas\Admin\Content\img\svg\pattern-3.svg" />
+    <Content Include="Areas\Admin\Content\img\svg\pattern-4.svg" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-1.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-2.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-3.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-4.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-video-1.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\ng-thumb-video-2.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-1.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-10.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-11.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-12.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-3.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-4.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-5.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-6.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-7.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-8.png" />
+    <Content Include="Areas\Admin\Content\img\thumbs\pic-9.png" />
+    <Content Include="Areas\Admin\Content\img\UserRole.png" />
+    <Content Include="Areas\Admin\Content\img\view-1.jpg" />
+    <Content Include="Areas\Admin\Content\img\view-2.jpg" />
+    <Content Include="Areas\Admin\Content\img\view-3.jpg" />
+    <Content Include="Areas\Admin\Content\img\violate.jpg" />
+    <Content Include="Areas\Admin\Content\img\vt-menu.png" />
+    <Content Include="Areas\Admin\Content\jquery-confirm.min.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\accordion.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\all.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\autocomplete.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\base.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Base_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Black-Tie_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Blitzer_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\button.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\core.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Cupertino_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Dark-Hive_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\datepicker.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\dialog.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Dot-Luv_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\draggable.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\EggPlant_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Excite-Bite_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Hot-Sneaks_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Humanity_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonal-maze_20_6e4f1c_10x10.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonal-maze_40_000000_10x10.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_0_aaaaaa_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_25_c5ddfc_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_40_db4865_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_50_262626_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_50_93c3cd_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_50_ff3853_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-small_75_ccd232_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_15_0b3e6f_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_15_444444_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_20_e69700_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_22_1484e6_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_26_2293f7_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_75_f3d8d8_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_8_333333_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diagonals-thick_95_ffdc2e_40x40.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_10_4f4221_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_20_372806_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_25_675423_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_25_d5ac5d_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_8_261803_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_diamond_8_443113_10x8.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-medium_30_0b58a2_4x4.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-medium_80_ffff38_4x4.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-small_20_333333_2x2.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-small_30_a32d00_2x2.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-small_35_35414f_2x2.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-small_40_00498f_2x2.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_dots-small_65_a6a6a6_2x2.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_10_eceadf_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_10_f8f7f6_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_15_eceadf_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_15_f7f3de_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_15_ffffff_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_65_654b24_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_fine-grain_68_b83400_60x60.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_100_f5f0e5_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_100_f8f8f8_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_15_5f391b_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_20_555555_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_25_cb842e_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_35_dddddd_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_40_0078a3_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_40_0a0a0a_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_40_111111_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_1c1c1c_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_f1fbe5_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_fbf5d0_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_fbf8ee_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_55_fcf0ba_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_60_000000_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_60_eeeeee_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_70_ede4d4_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_75_79c9ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_100_ece8da_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_16_121212_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_20_111111_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_20_1c160d_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_25_333333_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_25_453326_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_30_3d3644_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_30_44372c_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_45_817865_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_55_000000_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_60_fece2f_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_85_9fda58_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_90_fff9e5_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_gloss-wave_95_f6ecd5_500x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_f4f0ec_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_f5f3e5_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_f6f6f6_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_f9f9f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_100_fafaf4_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_15_459e00_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_15_888888_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_20_0972a5_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_30_285c00_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_40_aaaaaa_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_55_555555_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_65_fee4bd_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_75_f5f5b5_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-hard_95_cccccc_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_dcd9de_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_eae6ea_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_f9f9f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_100_feeebd_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_15_cc0000_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_20_201913_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_20_619226_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_25_30273a_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_25_67b021_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_33_003147_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_33_3a8104_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_35_222222_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_35_adadad_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_44_444444_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_45_5f5964_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_50_4eb305_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_50_aaaaaa_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_60_4ca20b_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_60_dddddd_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_highlight-soft_95_ffedad_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_45_cd0a0a_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_55_ffeb80_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-hard_75_999999_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_100_f4f0ec_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_10_201913_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_10_285c00_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_15_121212_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_15_2b2922_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_25_000000_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_30_f58400_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_30_ffffff_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_inset-soft_50_c9c9c9_1x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_loop_25_000000_21x21.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-bg_white-lines_85_f7f7ba_40x100.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_000000_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_004276_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_00498f_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_0073ea_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_0078ae_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_056b93_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_070603_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_0a82eb_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_0b54d5_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_1f1f1f_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_3383bb_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_3572ac_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_3d3d3d_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_444444_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_454545_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_4ca300_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_4eb305_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_555555_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_5fa5e3_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_666666_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_70b2e1_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_72b42d_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_734d99_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_777620_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_777777_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_808080_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_847e71_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_888888_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_88a206_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_8c291d_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_8d78a5_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_8DC262_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_98d2fb_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_999999_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_9bcc60_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_9ccdfc_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_9fda58_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_a83300_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_a8a3ae_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_aaaaaa_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_add978_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_b83400_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_b8ec79_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_bbbbbb_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_bd7b00_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_c02669_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_c47a23_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_c98000_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_cb672b_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_cccccc_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_d19405_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_e1e463_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_e3ddc9_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_e8e2b5_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_e9cd86_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_eb990f_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ebccce_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ed9f26_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ededed_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_eeeeee_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_efec9f_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f08000_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f1fd86_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f29a00_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f2ec64_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f35f07_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f5e175_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_f9f2bd_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_fadc7a_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_fbc856_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_fbdb93_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_fcdd4a_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ff0084_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ff7519_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ffcf29_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ffe180_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ffeb33_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Admin\Content\JqueryUI\jquery-ui-MyCustom.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\jquery-ui.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\jquery-ui.min.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Le-Frog_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\menu.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Mint-Choc_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Overcast_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Pepper-Grinder_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\progressbar.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Red-Mond_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\resizable.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\selectable.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\selectmenu.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\slider.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Smoothness_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\sortable.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\South-Street_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\spinner.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Start_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Sunny_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Swanky-Purse_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\tabs.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\tooltip.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Trontastic_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\UI-Darkness_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\UI_Lightness_Theme.css" />
+    <Content Include="Areas\Admin\Content\JqueryUI\Vader_Theme.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\backgroundTop.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\backImage.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_blackhover.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_blackhover_horizontal.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_blackpressed.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_blackpressed_horizontal.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_black_horizontal.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_blueenergy.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_darkblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_darkbluehover.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\bg_darkbluepressed.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\blackbackground.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\black_gradient.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_blue_indeterminate.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_disabled.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_indeterminate_black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_indeterminate_disabled.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_indeterminate_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_lightblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_lightblue_indeterminate.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\check_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\close.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\close_black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\close_blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\close_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\bar-hue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\bar-saturation.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\map-hue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\map-saturation-overlay.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\map-saturation.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\colorpicker\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\common.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\crosshair-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\crosshair.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_glass_20_555555_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_glass_40_0078a3_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_gloss-wave_25_333333_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_inset-soft_25_000000_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-bg_inset-soft_30_f58400_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-icons_a83300_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-icons_cccccc_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkness\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\darkred_gradient.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\drag.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\dragcancel.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\error.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\filter.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\html_editor.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\html_editor_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-calendar-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-calendar.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-cancel-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-cancel.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-delete-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-delete.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-down-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-down-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-down-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-down.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-edit-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-edit.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-first-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-first-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-first-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-first.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-last-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-last-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-last-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-last.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-left-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-left-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-left-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-left.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-menu-minimized-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-menu-minimized.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-plus-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-plus.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-recurrence-exception-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-recurrence-exception.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-recurrence-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-recurrence.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-right-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-right-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-right-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-right.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-save-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-save.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-showpassword-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-showpassword.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-time-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-time.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-up-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-up-transparent.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-up-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\icon-up.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\info.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_diagonals-small_0_aaaaaa_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_diagonals-thick_15_444444_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_diagonals-thick_95_ffdc2e_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_glass_55_fbf5d0_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_highlight-hard_30_285c00_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_highlight-soft_33_3a8104_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_highlight-soft_50_4eb305_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_highlight-soft_60_4ca20b_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-bg_inset-soft_10_285c00_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-icons_4eb305_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-icons_72b42d_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\le-frog\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\icon-first.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\icon-last.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-icons_228ef1_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\lightness\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\loader-small.gif" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\loader.gif" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\mail.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\menubutton.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-down-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-down.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-first-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-first.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-last-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-last.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-left-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-left.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-right - Copy.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-right-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-right.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-up-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\metro-icon-up.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\multi-arrow.gif" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-down.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-first.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-last.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-left.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-right.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\office-icon-up.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_flat_55_c0402a_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_flat_55_eeeeee_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_glass_100_f8f8f8_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_glass_35_dddddd_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_glass_60_eeeeee_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_inset-hard_75_999999_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-bg_inset-soft_50_c9c9c9_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-icons_3383bb_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-icons_454545_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-icons_70b2e1_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-icons_999999_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\overcast\ui-icons_fbc856_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin-black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin-lightblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin-yellow.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pin.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned-black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned-blue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned-lightblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned-white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned-yellow.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pinned.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\plus.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\plus_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\pointer.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\rangebar_classic.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\rangebar_darkblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\rangebar_shinyblack.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\rangebar_summer.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\icon-first.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\icon-last.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\redmond\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\red_arrow_down.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\red_arrow_up.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\red_gradient.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_check_black.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_check_disabled.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_check_indeterminate.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_check_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_classic_hover.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_classic_normal.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\roundbg_disabled.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\search.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\search_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-icons_454545_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-icons_888888_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\smoothness\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sortasc.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sortascbutton.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sortdesc.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sortdescbutton.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sortremove.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\star.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_flat_55_999999_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_glass_75_79c9ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_0078ae_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_056b93_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_f5e175_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\start\ui-icons_fcd113_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\star_disabled.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\star_hover.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\stripes.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\success.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ReadMe.txt" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_gloss-wave_45_817865_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_gloss-wave_60_fece2f_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_gloss-wave_90_fff9e5_500x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_highlight-soft_100_feeebd_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-bg_inset-soft_30_ffffff_1x100.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_3d3d3d_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_bd7b00_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_d19405_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_eb990f_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_ed9f26_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_fadc7a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\sunny\ui-icons_ffe180_256x240.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\tick.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\time.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\track_classic.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\track_darkblue.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\track_shinyblack.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\track_summer.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\warning.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\wp_check_indeterminate_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\images\wp_check_white.png" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.android.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.arctic.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.base.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.black.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.blackberry.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.bootstrap.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.classic.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.dark.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.darkblue.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.energyblue.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.fresh.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.glacier.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.highcontrast.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.light.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.metro.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.metrodark.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.mobile.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.office.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.orange.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.shinyblack.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.summer.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-darkness.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-le-frog.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-lightness.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-overcast.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-redmond.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-smoothness.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-start.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.ui-sunny.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.web.css" />
+    <Content Include="Areas\Admin\Content\jqxWidget\jqx.windowsphone.css" />
+    <Content Include="Areas\Admin\Content\media\sound\bigbox.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\bigbox.ogg" />
+    <Content Include="Areas\Admin\Content\media\sound\license.txt" />
+    <Content Include="Areas\Admin\Content\media\sound\messagebox.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\messagebox.ogg" />
+    <Content Include="Areas\Admin\Content\media\sound\smallbox.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\smallbox.ogg" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_alert.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_alert.ogg" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_off.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_off.ogg" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_on.mp3" />
+    <Content Include="Areas\Admin\Content\media\sound\voice_on.ogg" />
+    <Content Include="Areas\Admin\Content\media\video\36150715-heavenly-clouds-v2-license.txt" />
+    <Content Include="Areas\Admin\Content\media\video\cc.mp4" />
+    <Content Include="Areas\Admin\Content\media\video\cc.webm" />
+    <Content Include="Areas\Admin\Content\miscellaneous\fullcalendar\fullcalendar.bundle.css" />
+    <Content Include="Areas\Admin\Content\miscellaneous\jqvmap\jqvmap.bundle.css" />
+    <Content Include="Areas\Admin\Content\miscellaneous\lightgallery\lightgallery.bundle.css" />
+    <Content Include="Areas\Admin\Content\miscellaneous\nestable\nestable.css" />
+    <Content Include="Areas\Admin\Content\miscellaneous\reactions\reactions.css" />
+    <Content Include="Areas\Admin\Content\noimage.png" />
+    <Content Include="Areas\Admin\Content\notifications\sweetalert2\sweetalert2.bundle.css" />
+    <Content Include="Areas\Admin\Content\notifications\toastr\toastr.css" />
+    <Content Include="Areas\Admin\Content\page-invoice.css" />
+    <Content Include="Areas\Admin\Content\page-login.css" />
+    <Content Include="Areas\Admin\Content\RichTextEditor\richtext.min.css" />
+    <Content Include="Areas\Admin\Content\RichTextEditor\site.css" />
+    <Content Include="Areas\Admin\Content\SearchBox.css" />
+    <Content Include="Areas\Admin\Content\statistics\c3\c3.css" />
+    <Content Include="Areas\Admin\Content\statistics\chartist\chartist.css" />
+    <Content Include="Areas\Admin\Content\statistics\chartjs\chartjs.css" />
+    <Content Include="Areas\Admin\Content\statistics\dygraph\dygraph.css" />
+    <Content Include="Areas\Admin\Content\TaxDeptLogo.png" />
+    <Content Include="Areas\Admin\Content\theme-demo.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-1.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-10.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-11.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-12.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-13.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-2.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-3.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-4.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-5.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-6.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-7.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-8.css" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-9.css" />
+    <Content Include="Areas\Admin\Content\vendors.bundle.css" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Areas\Admin\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Admin\fonts\SIL Open Font License.txt" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-brands-400.svg" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-light-300.svg" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-regular-400.svg" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-solid-900.svg" />
+    <Content Include="Areas\Admin\fonts\webfonts\nextgen-icons.svg" />
+    <Content Include="Areas\Admin\Scripts\app.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Account\ChangePassword.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Account\CheckOldPassword.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Account\FallingLeaves.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Account\Login.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Action\AssignActionToModule.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Action\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Action\InsertUpdateAction.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Action\InsertUpdateAssign.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Attribute\InsertUpdateAttributeDetail.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\SaleInvoiceIndex.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\InsertUpdateSaleInvoice.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ErrorLog\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Expense\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Expense\InsertUpdateExpense.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\InsertUpdateExpenseType.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\InsertUpdateProductAttributeDetail.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\InsertUpdateProduct.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\City\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\City\InsertUpdateCity.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\CustomerSupplier\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\CustomerSupplier\InsertUpdateCustomerSupplier.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DiscountOffer\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DiscountOffer\InsertUpdateDiscountOffer.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Warehouse\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Warehouse\InsertUpdateWarehouse.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Category\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Category\InsertUpdateCategory.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Documents\AttachDocument.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Home\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Home\QuickAccesss.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Layout\Header.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Layout\Layout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Module\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Module\InsertUpdateModule.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Attribute\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Attribute\InsertUpdateAttribute.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Unit\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Unit\InsertUpdateUnit.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\UserType\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\UserType\InsertUpdateUserType.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\User\AssignModule.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\User\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\User\InsertUpdateUser.js" />
+    <Content Include="Areas\Admin\Scripts\datagrid\datatables\datatables.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\datagrid\datatables\datatables.export.js" />
+    <Content Include="Areas\Admin\Scripts\dependency\moment\moment.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-colorpicker\bootstrap-colorpicker.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-datepicker\bootstrap-datepicker.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-daterangepicker\bootstrap-daterangepicker.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-markdown\bootstrap-markdown.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\cropperjs\cropper.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\dropzone\dropzone.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\inputmask\inputmask.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\ion-rangeslider\ion-rangeslider.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\nouislider\nouislider.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\select2\select2.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\smartwizard\smartwizard.js" />
+    <Content Include="Areas\Admin\Scripts\formplugins\summernote\summernote.js" />
+    <Content Include="Areas\Admin\Scripts\holder.js" />
+    <Content Include="Areas\Admin\Scripts\i18n\i18n.js" />
+    <Content Include="Areas\Admin\Scripts\jquery-confirm.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.validate.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Areas\Admin\Scripts\JqueryUI\jquery-ui-1.13.0.js" />
+    <Content Include="Areas\Admin\Scripts\JqueryUI\jquery-ui-1.13.0.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\angular-sanitize.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\angular-ui-router.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\angular.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\demos.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\documentation.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\format.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.cs-CZ.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.de-DE.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.en-CA.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.en-US.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.fr-FR.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.he-IL.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.hr-HR.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.hu-HU.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.it-IT.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.ja-JP.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.lt.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.ru-RU.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.culture.sa-IN.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\globalize.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jquery-1.11.1.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jquery-1.11.2.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jquery.mobile-1.4.3.min.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqx-all.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxangular.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxbargauge.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxbulletchart.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxbuttongroup.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxbuttons.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcalendar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.annotations.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.api.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.core.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.rangeselector.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxchart.waterfall.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcheckbox.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcolorpicker.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcombobox.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcomplexinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxcore.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdata.export.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdata.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdatatable.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdate.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdatetimeinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdocking.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdockinglayout.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdockpanel.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdragdrop.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdraw.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdropdownbutton.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxdropdownlist.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxeditor.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxexpander.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxfileupload.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxformattedinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgauge.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.aggregates.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.columnsreorder.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.columnsresize.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.edit.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.export.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.filter.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.grouping.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.pager.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.selection.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.sort.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxgrid.storage.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxkanban.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxknob.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxknockout.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxlayout.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxlistbox.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxlistmenu.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxloader.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxmaskedinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxmenu.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxnavbar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxnavigationbar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxnotification.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxnumberinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxpanel.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxpasswordinput.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxpopover.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxprogressbar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxradiobutton.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxrangeselector.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxrating.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxresponse.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxresponsivepanel.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxribbon.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxscheduler.api.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxscheduler.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxscrollbar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxscrollview.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxslider.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxsortable.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxsplitter.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxswitchbutton.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtabs.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtagcloud.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtextarea.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtoolbar.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtooltip.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtouch.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtree.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtreegrid.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxtreemap.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxvalidator.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jqxwindow.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\knockout-2.2.1.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\knockout-3.0.0.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\knockout-mapping-2.0.0.js" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\ReadMe.txt" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\require.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\fullcalendar\fullcalendar.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\jqvmap.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.algeria.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.argentina.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.brazil.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.canada.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.europe.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.france.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.germany.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.greece.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.iran.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.iraq.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.russia.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.tunisia.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.turkey.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.usa.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\lightgallery\lightgallery.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\lightgallery\smartvoice.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\miscellaneous\nestable\nestable.js" />
+    <Content Include="Areas\Admin\Scripts\notifications\sweetalert2\sweetalert2.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\notifications\toastr\toastr.js" />
+    <Content Include="Areas\Admin\Scripts\PdfConverter\html2canvas.js" />
+    <Content Include="Areas\Admin\Scripts\PdfConverter\jspdf.min.js" />
+    <Content Include="Areas\Admin\Scripts\PdfConverter\jspdf2.min.js" />
+    <Content Include="Areas\Admin\Scripts\PdfConverter\jspdf3.min.js" />
+    <Content Include="Areas\Admin\Scripts\RichTextEditor\fontawsomev5.js" />
+    <Content Include="Areas\Admin\Scripts\RichTextEditor\jquery.richtext.js" />
+    <Content Include="Areas\Admin\Scripts\RichTextEditor\jquery.richtext.min.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\c3\c3.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\chartist\chartist.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\chartjs\chartjs.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\d3\d3.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\demo-data\demo-c3.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\demo-data\demo-data-dygraph.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\dygraph\dygraph.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\easypiechart\easypiechart.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\flot\flot.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\peity\peity.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\statistics\sparkline\sparkline.bundle.js" />
+    <Content Include="Areas\Admin\Scripts\treeview.min.js" />
+    <Content Include="Areas\Admin\Scripts\vendors.bundle.js" />
+    <Content Include="Areas\User\Content\css\app.css" />
+    <Content Include="Areas\User\Content\css\bootstrap.min.css" />
+    <Content Include="Areas\User\Content\css\icons.css" />
+    <Content Include="Areas\User\Content\css\pace.min.css" />
+    <Content Include="Areas\User\Content\fonts\boxicons.svg" />
+    <Content Include="Areas\User\Content\fonts\LineIcons.svg" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-1.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-10.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-11.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-12.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-13.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-14.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-15.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-16.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-17.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-18.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-19.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-2.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-20.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-21.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-22.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-23.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-24.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-25.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-3.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-4.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-5.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-6.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-7.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-8.png" />
+    <Content Include="Areas\User\Content\images\avatars\avatar-9.png" />
+    <Content Include="Areas\User\Content\images\banners\01.png" />
+    <Content Include="Areas\User\Content\images\banners\02.png" />
+    <Content Include="Areas\User\Content\images\banners\03.png" />
+    <Content Include="Areas\User\Content\images\banners\04.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\1.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\2.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\3.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\4.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\5.png" />
+    <Content Include="Areas\User\Content\images\bg-themes\6.png" />
+    <Content Include="Areas\User\Content\images\blogs\01.png" />
+    <Content Include="Areas\User\Content\images\blogs\02.png" />
+    <Content Include="Areas\User\Content\images\blogs\03.png" />
+    <Content Include="Areas\User\Content\images\blogs\04.png" />
+    <Content Include="Areas\User\Content\images\blogs\05.png" />
+    <Content Include="Areas\User\Content\images\blogs\06.png" />
+    <Content Include="Areas\User\Content\images\brands\01.png" />
+    <Content Include="Areas\User\Content\images\brands\02.png" />
+    <Content Include="Areas\User\Content\images\brands\03.png" />
+    <Content Include="Areas\User\Content\images\brands\04.png" />
+    <Content Include="Areas\User\Content\images\brands\05.png" />
+    <Content Include="Areas\User\Content\images\brands\06.png" />
+    <Content Include="Areas\User\Content\images\brands\07.png" />
+    <Content Include="Areas\User\Content\images\brands\08.png" />
+    <Content Include="Areas\User\Content\images\brands\09.png" />
+    <Content Include="Areas\User\Content\images\brands\10.png" />
+    <Content Include="Areas\User\Content\images\brands\11.png" />
+    <Content Include="Areas\User\Content\images\brands\12.png" />
+    <Content Include="Areas\User\Content\images\brands\13.png" />
+    <Content Include="Areas\User\Content\images\brands\14.png" />
+    <Content Include="Areas\User\Content\images\brands\15.png" />
+    <Content Include="Areas\User\Content\images\categories\01.png" />
+    <Content Include="Areas\User\Content\images\categories\02.png" />
+    <Content Include="Areas\User\Content\images\categories\03.png" />
+    <Content Include="Areas\User\Content\images\categories\04.png" />
+    <Content Include="Areas\User\Content\images\categories\05.png" />
+    <Content Include="Areas\User\Content\images\categories\06.png" />
+    <Content Include="Areas\User\Content\images\categories\07.png" />
+    <Content Include="Areas\User\Content\images\categories\08.png" />
+    <Content Include="Areas\User\Content\images\categories\09.png" />
+    <Content Include="Areas\User\Content\images\categories\10.png" />
+    <Content Include="Areas\User\Content\images\categories\11.png" />
+    <Content Include="Areas\User\Content\images\categories\12.png" />
+    <Content Include="Areas\User\Content\images\errors-images\404-error.png" />
+    <Content Include="Areas\User\Content\images\errors-images\505-error.png" />
+    <Content Include="Areas\User\Content\images\favicon-32x32.png" />
+    <Content Include="Areas\User\Content\images\gallery\01.png" />
+    <Content Include="Areas\User\Content\images\gallery\02.png" />
+    <Content Include="Areas\User\Content\images\gallery\03.png" />
+    <Content Include="Areas\User\Content\images\gallery\04.png" />
+    <Content Include="Areas\User\Content\images\gallery\05.png" />
+    <Content Include="Areas\User\Content\images\gallery\06.png" />
+    <Content Include="Areas\User\Content\images\gallery\07.png" />
+    <Content Include="Areas\User\Content\images\gallery\08.png" />
+    <Content Include="Areas\User\Content\images\gallery\09.png" />
+    <Content Include="Areas\User\Content\images\gallery\10.png" />
+    <Content Include="Areas\User\Content\images\gallery\11.png" />
+    <Content Include="Areas\User\Content\images\gallery\12.png" />
+    <Content Include="Areas\User\Content\images\gallery\13.png" />
+    <Content Include="Areas\User\Content\images\gallery\14.png" />
+    <Content Include="Areas\User\Content\images\gallery\15.png" />
+    <Content Include="Areas\User\Content\images\gallery\16.png" />
+    <Content Include="Areas\User\Content\images\gallery\17.png" />
+    <Content Include="Areas\User\Content\images\gallery\18.png" />
+    <Content Include="Areas\User\Content\images\gallery\19.png" />
+    <Content Include="Areas\User\Content\images\gallery\20.png" />
+    <Content Include="Areas\User\Content\images\gallery\21.png" />
+    <Content Include="Areas\User\Content\images\gallery\22.png" />
+    <Content Include="Areas\User\Content\images\gallery\23.png" />
+    <Content Include="Areas\User\Content\images\gallery\24.png" />
+    <Content Include="Areas\User\Content\images\gallery\25.png" />
+    <Content Include="Areas\User\Content\images\gallery\26.png" />
+    <Content Include="Areas\User\Content\images\gallery\27.png" />
+    <Content Include="Areas\User\Content\images\gallery\28.png" />
+    <Content Include="Areas\User\Content\images\gallery\29.png" />
+    <Content Include="Areas\User\Content\images\gallery\30.png" />
+    <Content Include="Areas\User\Content\images\gallery\31.png" />
+    <Content Include="Areas\User\Content\images\gallery\32.png" />
+    <Content Include="Areas\User\Content\images\gallery\33.png" />
+    <Content Include="Areas\User\Content\images\gallery\34.png" />
+    <Content Include="Areas\User\Content\images\gallery\menu-img.jpg" />
+    <Content Include="Areas\User\Content\images\icons\american-express.png" />
+    <Content Include="Areas\User\Content\images\icons\apple-store.png" />
+    <Content Include="Areas\User\Content\images\icons\chair.png" />
+    <Content Include="Areas\User\Content\images\icons\chair.svg" />
+    <Content Include="Areas\User\Content\images\icons\delivery.png" />
+    <Content Include="Areas\User\Content\images\icons\discover.png" />
+    <Content Include="Areas\User\Content\images\icons\forgot-2.png" />
+    <Content Include="Areas\User\Content\images\icons\headphones.png" />
+    <Content Include="Areas\User\Content\images\icons\idea.png" />
+    <Content Include="Areas\User\Content\images\icons\mastercard-2.png" />
+    <Content Include="Areas\User\Content\images\icons\mastercard.png" />
+    <Content Include="Areas\User\Content\images\icons\money-bag.png" />
+    <Content Include="Areas\User\Content\images\icons\paypal.png" />
+    <Content Include="Areas\User\Content\images\icons\play-store.png" />
+    <Content Include="Areas\User\Content\images\icons\search.svg" />
+    <Content Include="Areas\User\Content\images\icons\shoes.png" />
+    <Content Include="Areas\User\Content\images\icons\support.png" />
+    <Content Include="Areas\User\Content\images\icons\tshirt.png" />
+    <Content Include="Areas\User\Content\images\icons\user-interface.png" />
+    <Content Include="Areas\User\Content\images\icons\user.png" />
+    <Content Include="Areas\User\Content\images\icons\visa.png" />
+    <Content Include="Areas\User\Content\images\icons\watch.png" />
+    <Content Include="Areas\User\Content\images\login-images\bg-forgot-password.jpg" />
+    <Content Include="Areas\User\Content\images\login-images\bg-lock-screen.jpg" />
+    <Content Include="Areas\User\Content\images\login-images\bg-login-img.jpg" />
+    <Content Include="Areas\User\Content\images\login-images\forgot-password-frent-img.jpg" />
+    <Content Include="Areas\User\Content\images\logo-icon.png" />
+    <Content Include="Areas\User\Content\images\posts\01.png" />
+    <Content Include="Areas\User\Content\images\posts\02.png" />
+    <Content Include="Areas\User\Content\images\posts\03.png" />
+    <Content Include="Areas\User\Content\images\product-gallery\01.png" />
+    <Content Include="Areas\User\Content\images\product-gallery\02.png" />
+    <Content Include="Areas\User\Content\images\product-gallery\03.png" />
+    <Content Include="Areas\User\Content\images\product-gallery\04.png" />
+    <Content Include="Areas\User\Content\images\product-gallery\05.png" />
+    <Content Include="Areas\User\Content\images\products\01.png" />
+    <Content Include="Areas\User\Content\images\products\02.png" />
+    <Content Include="Areas\User\Content\images\products\03.png" />
+    <Content Include="Areas\User\Content\images\products\04.png" />
+    <Content Include="Areas\User\Content\images\products\05.png" />
+    <Content Include="Areas\User\Content\images\products\06--.png" />
+    <Content Include="Areas\User\Content\images\products\06.png" />
+    <Content Include="Areas\User\Content\images\products\07.png" />
+    <Content Include="Areas\User\Content\images\products\08.png" />
+    <Content Include="Areas\User\Content\images\products\09.png" />
+    <Content Include="Areas\User\Content\images\products\10.png" />
+    <Content Include="Areas\User\Content\images\products\11.png" />
+    <Content Include="Areas\User\Content\images\products\12.png" />
+    <Content Include="Areas\User\Content\images\products\13.png" />
+    <Content Include="Areas\User\Content\images\products\14.png" />
+    <Content Include="Areas\User\Content\images\products\15.png" />
+    <Content Include="Areas\User\Content\images\products\16.png" />
+    <Content Include="Areas\User\Content\images\products\17.png" />
+    <Content Include="Areas\User\Content\images\products\18.png" />
+    <Content Include="Areas\User\Content\images\products\19.png" />
+    <Content Include="Areas\User\Content\images\products\20.png" />
+    <Content Include="Areas\User\Content\images\products\21.png" />
+    <Content Include="Areas\User\Content\images\products\22.png" />
+    <Content Include="Areas\User\Content\images\products\23.png" />
+    <Content Include="Areas\User\Content\images\promo\01.png" />
+    <Content Include="Areas\User\Content\images\promo\02.png" />
+    <Content Include="Areas\User\Content\images\promo\03.png" />
+    <Content Include="Areas\User\Content\images\promo\04.png" />
+    <Content Include="Areas\User\Content\images\promo\05.png" />
+    <Content Include="Areas\User\Content\images\promo\06.png" />
+    <Content Include="Areas\User\Content\images\promo\07.png" />
+    <Content Include="Areas\User\Content\images\promo\08.png" />
+    <Content Include="Areas\User\Content\images\promo\kindpng_7411250.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\01.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\02.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\03.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\04.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\05.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\06.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\07.png" />
+    <Content Include="Areas\User\Content\images\shop-categories\08.png" />
+    <Content Include="Areas\User\Content\images\similar-products\01.png" />
+    <Content Include="Areas\User\Content\images\similar-products\02.png" />
+    <Content Include="Areas\User\Content\images\similar-products\03.png" />
+    <Content Include="Areas\User\Content\images\similar-products\04.png" />
+    <Content Include="Areas\User\Content\images\similar-products\05.png" />
+    <Content Include="Areas\User\Content\images\similar-products\06.png" />
+    <Content Include="Areas\User\Content\images\similar-products\07.png" />
+    <Content Include="Areas\User\Content\images\slider\01.png" />
+    <Content Include="Areas\User\Content\images\slider\02.png" />
+    <Content Include="Areas\User\Content\images\slider\03.png" />
+    <Content Include="Areas\User\Content\images\slider\04.png" />
+    <Content Include="Areas\User\Content\images\slider\05.png" />
+    <Content Include="Areas\User\Content\plugins\apexcharts-bundle\css\apexcharts.css" />
+    <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apex-custom-2.js" />
+    <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apex-custom.js" />
+    <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apexcharts.js" />
+    <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apexcharts.min.js" />
+    <Content Include="Areas\User\Content\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.min.css" />
+    <Content Include="Areas\User\Content\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.min.js" />
+    <Content Include="Areas\User\Content\plugins\bootstrap-material-datetimepicker\js\moment.min.js" />
+    <Content Include="Areas\User\Content\plugins\chartjs\js\Chart.extension.js" />
+    <Content Include="Areas\User\Content\plugins\chartjs\js\Chart.min.js" />
+    <Content Include="Areas\User\Content\plugins\chartjs\js\chartjs-custom.js" />
+    <Content Include="Areas\User\Content\plugins\datatable\css\dataTables.bootstrap5.min.css" />
+    <Content Include="Areas\User\Content\plugins\datatable\js\dataTables.bootstrap5.min.js" />
+    <Content Include="Areas\User\Content\plugins\datatable\js\jquery.dataTables.min.js" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\css\classic.css" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\css\classic.date.css" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\css\classic.time.css" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\js\legacy.js" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\js\picker.date.js" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\js\picker.js" />
+    <Content Include="Areas\User\Content\plugins\datetimepicker\js\picker.time.js" />
+    <Content Include="Areas\User\Content\plugins\Drag-And-Drop\dist\imageuploadify.min.css" />
+    <Content Include="Areas\User\Content\plugins\Drag-And-Drop\dist\imageuploadify.min.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\cors\jquery.postmessage-transport.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\cors\jquery.xdr-transport.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_fileupload.css" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_microphone.png" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_okay.png" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_remove.png" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_upload.png" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\fancy_webcam.png" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\jquery.fancy-fileupload.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\jquery.fileupload.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\jquery.iframe-transport.js" />
+    <Content Include="Areas\User\Content\plugins\fancy-file-uploader\jquery.ui.widget.js" />
+    <Content Include="Areas\User\Content\plugins\fullcalendar\css\main.css" />
+    <Content Include="Areas\User\Content\plugins\fullcalendar\css\main.min.css" />
+    <Content Include="Areas\User\Content\plugins\fullcalendar\js\main.js" />
+    <Content Include="Areas\User\Content\plugins\fullcalendar\js\main.min.js" />
+    <Content Include="Areas\User\Content\plugins\gmaps\map-custom-script.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\css\dark-unica.css" />
+    <Content Include="Areas\User\Content\plugins\highcharts\css\grid-light.css" />
+    <Content Include="Areas\User\Content\plugins\highcharts\css\highcharts-white.css" />
+    <Content Include="Areas\User\Content\plugins\highcharts\css\highcharts.css" />
+    <Content Include="Areas\User\Content\plugins\highcharts\css\sand-signika.css" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\accessibility.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\cylinder.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\export-data.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\exporting.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\funnel3d.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts-3d.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts-custom.script.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts-more.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\solid-gauge.js" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\variable-pie.js" />
+    <Content Include="Areas\User\Content\plugins\input-tags\css\tagsinput.css" />
+    <Content Include="Areas\User\Content\plugins\input-tags\js\tagsinput.js" />
+    <Content Include="Areas\User\Content\plugins\jquery-knob\excanvas.js" />
+    <Content Include="Areas\User\Content\plugins\jquery-knob\jquery.knob.js" />
+    <Content Include="Areas\User\Content\plugins\jquery.easy-pie-chart\easy-pie-chart.init.js" />
+    <Content Include="Areas\User\Content\plugins\jquery.easy-pie-chart\easypiechart.min.js" />
+    <Content Include="Areas\User\Content\plugins\jquery.easy-pie-chart\jquery.easypiechart.min.js" />
+    <Content Include="Areas\User\Content\plugins\metismenu\css\metisMenu.min.css" />
+    <Content Include="Areas\User\Content\plugins\metismenu\js\metisMenu.min.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\css\lobibox.css" />
+    <Content Include="Areas\User\Content\plugins\notifications\css\lobibox.min.css" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\1.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\2.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\3.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\4.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\5.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\img\6.jpg" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\lobibox.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\lobibox.min.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\messageboxes.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\messageboxes.min.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\notification-custom-script.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\notifications.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\js\notifications.min.js" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound1.ogg" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound2.ogg" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound3.ogg" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound4.ogg" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound5.ogg" />
+    <Content Include="Areas\User\Content\plugins\notifications\sounds\sound6.ogg" />
+    <Content Include="Areas\User\Content\plugins\nouislider\nouislider.css" />
+    <Content Include="Areas\User\Content\plugins\nouislider\nouislider.js" />
+    <Content Include="Areas\User\Content\plugins\nouislider\nouislider.min.css" />
+    <Content Include="Areas\User\Content\plugins\nouislider\nouislider.min.js" />
+    <Content Include="Areas\User\Content\plugins\OwlCarousel\css\owl.carousel.min.css" />
+    <Content Include="Areas\User\Content\plugins\OwlCarousel\js\owl.carousel.min.js" />
+    <Content Include="Areas\User\Content\plugins\OwlCarousel\js\owl.carousel2.thumbs.min.js" />
+    <Content Include="Areas\User\Content\plugins\perfect-scrollbar\css\perfect-scrollbar.css" />
+    <Content Include="Areas\User\Content\plugins\perfect-scrollbar\js\perfect-scrollbar.js" />
+    <Content Include="Areas\User\Content\plugins\select2\css\select2-bootstrap4.css" />
+    <Content Include="Areas\User\Content\plugins\select2\css\select2.min.css" />
+    <Content Include="Areas\User\Content\plugins\select2\js\select2.min.js" />
+    <Content Include="Areas\User\Content\plugins\simplebar\css\simplebar.css" />
+    <Content Include="Areas\User\Content\plugins\simplebar\js\simplebar.min.js" />
+    <Content Include="Areas\User\Content\plugins\smart-wizard\css\smart_wizard_all.min.css" />
+    <Content Include="Areas\User\Content\plugins\smart-wizard\js\jquery.smartWizard.min.js" />
+    <Content Include="Areas\User\Content\plugins\sparkline-charts\apex-sparkline-charts.js" />
+    <Content Include="Areas\User\Content\plugins\sparkline-charts\jquery.sparkline.min.js" />
+    <Content Include="Areas\User\Content\plugins\sparkline-charts\sparkline-chart-script.js" />
+    <Content Include="Areas\User\Content\plugins\tiny-slider\tiny-slider.css" />
+    <Content Include="Areas\User\Content\plugins\tiny-slider\tiny-slider.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-2.0.2.css" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-2.0.2.min.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-au-mill.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-in-mill.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="Areas\User\Script\js\app.js" />
+    <Content Include="Areas\User\Script\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\User\Script\js\index.js" />
+    <Content Include="Areas\User\Script\js\jquery.min.js" />
+    <Content Include="Areas\User\Script\js\pace.min.js" />
+    <Content Include="Areas\User\Script\js\price-slider.js" />
+    <Content Include="Areas\User\Script\js\product-details.js" />
+    <Content Include="Areas\User\Script\js\product-gallery.js" />
+    <Content Include="Areas\User\Script\js\show-hide-password.js" />
+    <Content Include="Areas\User\Script\plugins\apexcharts-bundle\css\apexcharts.css" />
+    <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apex-custom-2.js" />
+    <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apex-custom.js" />
+    <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apexcharts.js" />
+    <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apexcharts.min.js" />
+    <Content Include="Areas\User\Script\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.min.css" />
+    <Content Include="Areas\User\Script\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.min.js" />
+    <Content Include="Areas\User\Script\plugins\bootstrap-material-datetimepicker\js\moment.min.js" />
+    <Content Include="Areas\User\Script\plugins\chartjs\js\Chart.extension.js" />
+    <Content Include="Areas\User\Script\plugins\chartjs\js\Chart.min.js" />
+    <Content Include="Areas\User\Script\plugins\chartjs\js\chartjs-custom.js" />
+    <Content Include="Areas\User\Script\plugins\datatable\css\dataTables.bootstrap5.min.css" />
+    <Content Include="Areas\User\Script\plugins\datatable\js\dataTables.bootstrap5.min.js" />
+    <Content Include="Areas\User\Script\plugins\datatable\js\jquery.dataTables.min.js" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\css\classic.css" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\css\classic.date.css" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\css\classic.time.css" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\js\legacy.js" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\js\picker.date.js" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\js\picker.js" />
+    <Content Include="Areas\User\Script\plugins\datetimepicker\js\picker.time.js" />
+    <Content Include="Areas\User\Script\plugins\Drag-And-Drop\dist\imageuploadify.min.css" />
+    <Content Include="Areas\User\Script\plugins\Drag-And-Drop\dist\imageuploadify.min.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\cors\jquery.postmessage-transport.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\cors\jquery.xdr-transport.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_fileupload.css" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_microphone.png" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_okay.png" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_remove.png" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_upload.png" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\fancy_webcam.png" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\jquery.fancy-fileupload.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\jquery.fileupload.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\jquery.iframe-transport.js" />
+    <Content Include="Areas\User\Script\plugins\fancy-file-uploader\jquery.ui.widget.js" />
+    <Content Include="Areas\User\Script\plugins\fullcalendar\css\main.css" />
+    <Content Include="Areas\User\Script\plugins\fullcalendar\css\main.min.css" />
+    <Content Include="Areas\User\Script\plugins\fullcalendar\js\main.js" />
+    <Content Include="Areas\User\Script\plugins\fullcalendar\js\main.min.js" />
+    <Content Include="Areas\User\Script\plugins\gmaps\map-custom-script.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\css\dark-unica.css" />
+    <Content Include="Areas\User\Script\plugins\highcharts\css\grid-light.css" />
+    <Content Include="Areas\User\Script\plugins\highcharts\css\highcharts-white.css" />
+    <Content Include="Areas\User\Script\plugins\highcharts\css\highcharts.css" />
+    <Content Include="Areas\User\Script\plugins\highcharts\css\sand-signika.css" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\accessibility.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\cylinder.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\export-data.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\exporting.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\funnel3d.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts-3d.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts-custom.script.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts-more.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\solid-gauge.js" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\variable-pie.js" />
+    <Content Include="Areas\User\Script\plugins\input-tags\css\tagsinput.css" />
+    <Content Include="Areas\User\Script\plugins\input-tags\js\tagsinput.js" />
+    <Content Include="Areas\User\Script\plugins\jquery-knob\excanvas.js" />
+    <Content Include="Areas\User\Script\plugins\jquery-knob\jquery.knob.js" />
+    <Content Include="Areas\User\Script\plugins\jquery.easy-pie-chart\easy-pie-chart.init.js" />
+    <Content Include="Areas\User\Script\plugins\jquery.easy-pie-chart\easypiechart.min.js" />
+    <Content Include="Areas\User\Script\plugins\jquery.easy-pie-chart\jquery.easypiechart.min.js" />
+    <Content Include="Areas\User\Script\plugins\metismenu\css\metisMenu.min.css" />
+    <Content Include="Areas\User\Script\plugins\metismenu\js\metisMenu.min.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\css\lobibox.css" />
+    <Content Include="Areas\User\Script\plugins\notifications\css\lobibox.min.css" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\1.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\2.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\3.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\4.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\5.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\img\6.jpg" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\lobibox.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\lobibox.min.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\messageboxes.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\messageboxes.min.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\notification-custom-script.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\notifications.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\js\notifications.min.js" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound1.ogg" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound2.ogg" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound3.ogg" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound4.ogg" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound5.ogg" />
+    <Content Include="Areas\User\Script\plugins\notifications\sounds\sound6.ogg" />
+    <Content Include="Areas\User\Script\plugins\nouislider\nouislider.css" />
+    <Content Include="Areas\User\Script\plugins\nouislider\nouislider.js" />
+    <Content Include="Areas\User\Script\plugins\nouislider\nouislider.min.css" />
+    <Content Include="Areas\User\Script\plugins\nouislider\nouislider.min.js" />
+    <Content Include="Areas\User\Script\plugins\OwlCarousel\css\owl.carousel.min.css" />
+    <Content Include="Areas\User\Script\plugins\OwlCarousel\js\owl.carousel.min.js" />
+    <Content Include="Areas\User\Script\plugins\OwlCarousel\js\owl.carousel2.thumbs.min.js" />
+    <Content Include="Areas\User\Script\plugins\perfect-scrollbar\css\perfect-scrollbar.css" />
+    <Content Include="Areas\User\Script\plugins\perfect-scrollbar\js\perfect-scrollbar.js" />
+    <Content Include="Areas\User\Script\plugins\select2\css\select2-bootstrap4.css" />
+    <Content Include="Areas\User\Script\plugins\select2\css\select2.min.css" />
+    <Content Include="Areas\User\Script\plugins\select2\js\select2.min.js" />
+    <Content Include="Areas\User\Script\plugins\simplebar\css\simplebar.css" />
+    <Content Include="Areas\User\Script\plugins\simplebar\js\simplebar.min.js" />
+    <Content Include="Areas\User\Script\plugins\smart-wizard\css\smart_wizard_all.min.css" />
+    <Content Include="Areas\User\Script\plugins\smart-wizard\js\jquery.smartWizard.min.js" />
+    <Content Include="Areas\User\Script\plugins\sparkline-charts\apex-sparkline-charts.js" />
+    <Content Include="Areas\User\Script\plugins\sparkline-charts\jquery.sparkline.min.js" />
+    <Content Include="Areas\User\Script\plugins\sparkline-charts\sparkline-chart-script.js" />
+    <Content Include="Areas\User\Script\plugins\tiny-slider\tiny-slider.css" />
+    <Content Include="Areas\User\Script\plugins\tiny-slider\tiny-slider.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-2.0.2.css" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-2.0.2.min.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-au-mill.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-in-mill.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Areas\User\Script\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Content\app.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\datagrid\datatables\datatables.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\fa-brands.css.map" />
+    <Content Include="Areas\Admin\Content\fa-regular.css.map" />
+    <Content Include="Areas\Admin\Content\fa-solid.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-colorpicker\bootstrap-colorpicker.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-datepicker\bootstrap-datepicker.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-daterangepicker\bootstrap-daterangepicker.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\bootstrap-markdown\bootstrap-markdown.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\cropperjs\cropper.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\dropzone\dropzone.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\ion-rangeslider\ion-rangeslider.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\nouislider\nouislider.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\select2\select2.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\smartwizard\smartwizard.css.map" />
+    <Content Include="Areas\Admin\Content\formplugins\summernote\summernote.css.map" />
+    <Content Include="Areas\Admin\Content\img\backgrounds\Amorserv - Timesheet Report.pdf" />
+    <Content Include="Areas\Admin\Content\img\favicon\site.webmanifest" />
+    <Content Include="Areas\Admin\Content\media\data\2500.json" />
+    <Content Include="Areas\Admin\Content\media\data\ch.json" />
+    <Content Include="Areas\Admin\Content\media\data\en.json" />
+    <Content Include="Areas\Admin\Content\media\data\es.json" />
+    <Content Include="Areas\Admin\Content\media\data\fa-brand-list.json" />
+    <Content Include="Areas\Admin\Content\media\data\fa-icon-list.json" />
+    <Content Include="Areas\Admin\Content\media\data\ng-bg-colors.json" />
+    <Content Include="Areas\Admin\Content\media\data\ng-icon-base.json" />
+    <Content Include="Areas\Admin\Content\media\data\ng-icon-list.json" />
+    <Content Include="Areas\Admin\Content\media\data\ng-text-colors.json" />
+    <Content Include="Areas\Admin\Content\media\data\plugin-reference.json" />
+    <Content Include="Areas\Admin\Content\media\data\server-demo.json" />
+    <Content Include="Areas\Admin\Content\miscellaneous\fullcalendar\fullcalendar.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\miscellaneous\jqvmap\jqvmap.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\miscellaneous\lightgallery\lightgallery.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\miscellaneous\nestable\nestable.css.map" />
+    <Content Include="Areas\Admin\Content\miscellaneous\reactions\reactions.css.map" />
+    <Content Include="Areas\Admin\Content\notifications\sweetalert2\sweetalert2.bundle.css.map" />
+    <Content Include="Areas\Admin\Content\notifications\toastr\toastr.css.map" />
+    <Content Include="Areas\Admin\Content\page-invoice.css.map" />
+    <Content Include="Areas\Admin\Content\page-login.css.map" />
+    <Content Include="Areas\Admin\Content\statistics\c3\c3.css.map" />
+    <Content Include="Areas\Admin\Content\statistics\chartist\chartist.css.map" />
+    <Content Include="Areas\Admin\Content\statistics\chartjs\chartjs.css.map" />
+    <Content Include="Areas\Admin\Content\statistics\dygraph\dygraph.css.map" />
+    <Content Include="Areas\Admin\Content\theme-demo.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-1.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-10.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-11.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-12.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-13.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-2.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-3.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-4.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-5.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-6.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-7.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-8.css.map" />
+    <Content Include="Areas\Admin\Content\themes\cust-theme-9.css.map" />
+    <Content Include="Areas\Admin\Content\vendors.bundle.css.map" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\angular-sanitize.min.js.map" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\angular.min.js.map" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jquery-1.11.1.min.map" />
+    <Content Include="Areas\Admin\Scripts\jqxWidget\jquery.mobile-1.4.3.min.map" />
+    <Content Include="Areas\Admin\Scripts\treeview.min.js.map" />
+    <Content Include="Areas\Admin\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\CheckOldPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\LinkExpired.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login2.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login3.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login4.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login5.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login6.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login7.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login8.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Action\AssignActionToModule.cshtml" />
+    <Content Include="Areas\Admin\Views\Action\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Action\InsertUpdateAction.cshtml" />
+    <Content Include="Areas\Admin\Views\Action\InsertUpdateAssign.cshtml" />
+    <Content Include="Areas\Admin\Views\Documents\AttachDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\AccessDenied.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\AsideMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Blank.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ModalHeaderShortcut.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\QuickAccess.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Setting.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UnderDevelopment.cshtml" />
+    <Content Include="Areas\Admin\Views\Module\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Module\InsertUpdateModule.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Lockout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Footer.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_ModalPartialView.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Ribbon.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Scripts.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_UserLoggedOut.cshtml" />
+    <Content Include="Areas\Admin\Views\UserType\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserType\InsertUpdateUserType.cshtml" />
+    <Content Include="Areas\Admin\Views\User\AssignModule.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\InsertUpdateUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Areas\Admin\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Areas\Admin\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Admin\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Admin\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Admin\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\fonts\Jameel.ttf" />
+    <Content Include="Areas\Admin\fonts\JameelNooriNastaleeq.ttf" />
+    <Content Include="Areas\Admin\fonts\NewFont.ttf" />
+    <Content Include="Areas\Admin\fonts\Poppins-Bold.ttf" />
+    <Content Include="Areas\Admin\fonts\Poppins-Light.ttf" />
+    <Content Include="Areas\Admin\fonts\Poppins-Medium.ttf" />
+    <Content Include="Areas\Admin\fonts\Poppins-Regular.ttf" />
+    <Content Include="Areas\Admin\fonts\Poppins-SemiBold.ttf" />
+    <Content Include="Areas\Admin\fonts\pxiEyp8kv8JHgFVrJJnecmNE.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-brands-400.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-brands-400.woff" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-light-300.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-light-300.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-light-300.woff" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-light-300.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-regular-400.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-regular-400.woff" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-solid-900.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-solid-900.woff" />
+    <Content Include="Areas\Admin\fonts\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\nextgen-icons.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\nextgen-icons.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\nextgen-icons.woff" />
+    <Content Include="Areas\Admin\fonts\webfonts\nextgen-icons.woff2" />
+    <Content Include="Areas\Admin\fonts\webfonts\summernote.eot" />
+    <Content Include="Areas\Admin\fonts\webfonts\summernote.ttf" />
+    <Content Include="Areas\Admin\fonts\webfonts\summernote.woff" />
+    <Content Include="Areas\Admin\Views\Unit\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\InsertUpdateUnit.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\InsertUpdateAttribute.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\InsertUpdateAttributeDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\InsertUpdateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Warehouse\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Warehouse\InsertUpdateWarehouse.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\GetAttributeDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\InsertUpdateProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\City\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\City\InsertUpdateCity.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomerSupplier\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomerSupplier\InsertUpdateCustomerSupplier.cshtml" />
+    <Content Include="Areas\Admin\Views\DiscountOffer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DiscountOffer\InsertUpdateDiscountOffer.cshtml" />
+    <Content Include="Areas\Admin\Views\ExpenseType\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ExpenseType\InsertUpdateExpenseType.cshtml" />
+    <Content Include="Areas\Admin\Views\Expense\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Expense\InsertUpdateExpense.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\InsertUpdateProductAttributeDetail.cshtml" />
+    <Content Include="Areas\User\Views\Home\About.cshtml" />
+    <Content Include="Areas\User\Views\Home\Index.cshtml" />
+    <Content Include="Areas\User\Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\ErrorLog\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\SaleInvoiceIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InsertUpdateSaleInvoice.cshtml" />
+    <Content Include="Areas\User\Views\Home\FeaturedProducts.cshtml" />
+    <Content Include="Areas\User\Views\Home\Categories.cshtml" />
+    <Content Include="Areas\Admin\Views\Carousel\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Carousel\InsertUpdateCarousel.cshtml" />
+    <Content Include="Areas\User\Views\Home\LatestProducts.cshtml" />
+    <Content Include="Areas\User\Views\Home\Carousels.cshtml" />
+    <Content Include="Areas\User\Content\css\bootstrap.min.css.map" />
+    <Content Include="Areas\User\Content\fonts\boxicons.eot" />
+    <Content Include="Areas\User\Content\fonts\boxicons.ttf" />
+    <Content Include="Areas\User\Content\fonts\boxicons.woff" />
+    <Content Include="Areas\User\Content\fonts\boxicons.woff2" />
+    <Content Include="Areas\User\Content\fonts\LineIcons.eot" />
+    <Content Include="Areas\User\Content\fonts\LineIcons.ttf" />
+    <Content Include="Areas\User\Content\fonts\LineIcons.woff" />
+    <Content Include="Areas\User\Content\fonts\LineIcons.woff2" />
+    <Content Include="Areas\User\Content\images\banners\banner-1.psd" />
+    <Content Include="Areas\User\Content\images\banners\banner-2.psd" />
+    <Content Include="Areas\User\Content\images\icons\canada.webp" />
+    <Content Include="Areas\User\Content\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.min.css.map" />
+    <Content Include="Areas\User\Content\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.min.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\accessibility.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\cylinder.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\export-data.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\exporting.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\funnel3d.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts-3d.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts-more.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\highcharts.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\solid-gauge.js.map" />
+    <Content Include="Areas\User\Content\plugins\highcharts\js\variable-pie.js.map" />
+    <Content Include="Areas\User\Content\plugins\metismenu\css\metisMenu.min.css.map" />
+    <Content Include="Areas\User\Content\plugins\metismenu\js\metisMenu.min.js.map" />
+    <Content Include="Areas\User\Script\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\User\Script\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.min.css.map" />
+    <Content Include="Areas\User\Script\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.min.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\accessibility.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\cylinder.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\export-data.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\exporting.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\funnel3d.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts-3d.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts-more.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\highcharts.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\solid-gauge.js.map" />
+    <Content Include="Areas\User\Script\plugins\highcharts\js\variable-pie.js.map" />
+    <Content Include="Areas\User\Script\plugins\metismenu\css\metisMenu.min.css.map" />
+    <Content Include="Areas\User\Script\plugins\metismenu\js\metisMenu.min.js.map" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArooshyStore.BLL\ArooshyStore.BLL.csproj">
+      <Project>{801f69f2-8dd6-4edf-941c-f500f0263250}</Project>
+      <Name>ArooshyStore.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArooshyStore.Domain\ArooshyStore.Domain.csproj">
+      <Project>{51ae31c2-665a-468e-b43f-8466a347be7a}</Project>
+      <Name>ArooshyStore.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArooshyStore.Models\ArooshyStore.Models.csproj">
+      <Project>{9e0ee45e-6faf-412f-aa64-5ccedc396d93}</Project>
+      <Name>ArooshyStore.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>6531</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:43360/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
+  </Target>
+  <Import Project="packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

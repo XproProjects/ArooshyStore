@@ -1,0 +1,260 @@
+﻿@{
+   MvcHtmlString primaryColor = Html.Action("GetPrimaryColor", "home");
+    MvcHtmlString secondaryColor = Html.Action("GetSecondaryColor", "home");
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Marquee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- Custom Theme files -->
+    <link href="~/areas/user/content/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <link href="~/areas/user/content/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="~/areas/user/content/css/font-awesome.css" rel="stylesheet">		<!-- font-awesome icons -->
+    <!-- //Custom Theme files -->
+    <!-- js -->
+    <script src="~/areas/user/content/js/jquery-2.2.3.min.js"></script>
+    @*<link href="~/Areas/User/Content/bootstrap.min.css" rel="stylesheet" />*@
+    <script src="~/Areas/User/Content/bootstrap.min.js"></script>
+
+    <script src="~/Areas/User/Content/jquery.min.js"></script>
+    <!-- web-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- //web-fonts -->
+
+    <style>
+
+
+
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+            color: #fff;
+            background-color:@primaryColor !important;
+        }
+          .active {
+            color:whitesmoke!important;
+        background-color: red!important;
+
+        }
+
+
+        .hvr-sweep-to-right:before {
+
+            background: @primaryColor !important;
+            color:black;
+        }
+
+        nav.navbar.navbar-default {
+    border-bottom: @primaryColor !important;
+}
+        .footer-top {
+    border-top: 3px solid @primaryColor;
+}
+        .navv{
+            cursor:pointer !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+            if (location.pathname.toLowerCase() == '/' || location.pathname.toLowerCase() == '/user' || location.pathname.toLowerCase() == '/home/index') {
+                $('#home-nav-item').parent("li").addClass('active');
+            }
+            else if (location.pathname.toLowerCase() == '/user/home/contactus' || location.pathname.toLowerCase() == '/home/contactus') {
+                $('#contact-nav-item').parent("li").addClass('active');
+            }
+        });
+
+    </script>
+
+
+
+
+    <section class="header" data-spy="scroll" data-target=".navbar-fixed-top">
+        <div class="header-w3layouts">
+            <nav class="navbar navbar-default ">
+                <div class="container">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Marquee</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                    
+                        <h1 style="color:@primaryColor;font-size:41px;font-weight:bolder">Marquee</h1>
+
+
+                        @*<img style="height:78px;width:270px;margin-top:-18px;" src="~/Areas/ramzanLogo.png" />*@
+                    </div>
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="hidden"><a class="page-scroll navv" href="#page-top"></a>	</li>
+
+                            <li class="navv"><a class="hvr-sweep-to-right" id="home-nav-item" href="@Url.Action("Index", "Home")">Home</a></li>
+                            <li class="navv"><a class="hvr-sweep-to-right" href="#about">About</a></li>
+
+                            <li class="dropdown navv">
+                                <a href="#" class="dropdown-toggle hvr-sweep-to-right" data-hover="Events" data-toggle="dropdown">Services <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="navv"><a class="hvr-sweep-to-right" href="#services">Weddings</a></li>
+                                    <li class="navv"><a class="hvr-sweep-to-right" href="#services">Birthdays</a></li>
+                                    <li class="navv"><a class="hvr-sweep-to-right" href="#services">Musical Concerts</a></li>
+                                    <li class="navv"><a class="hvr-sweep-to-right" href="#services">Catering</a></li>
+                                </ul>
+                            </li>
+                            <li class="navv"><a class="hvr-sweep-to-right" href="#gallery">Gallery</a></li>
+                            <li class="navv"><a class="hvr-sweep-to-right"  id="contact-nav-item"   href="@Url.Action("ContactUs", "Home")">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </section>
+</head>
+<body>
+
+
+    @RenderBody()
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="col-md-4 foot-left">
+                <h3>About Us</h3>
+
+                <p> We have been serving our client from last 20 years by offering attractive deals. We offer wide range of services for your wedding</p>
+            </div>
+            <div class="col-md-4 foot-left">
+                <h3>Get In Touch</h3>
+
+                <div class="contact-btm">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <p>Bhimber Road GT Road Gujrat</p>
+                    <div class="contact-btm">
+                    </div>
+
+                </div>
+                <div class="contact-btm">
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    <p>+92 308 9142388</p>
+                    <div class="contact-btm">
+                    </div>
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                    <p><a href="mailto:example@email.com">tayyab_shahid619@gmail.com</a></p>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="col-md-4 foot-left">
+                <h3>Subscribe</h3>
+                <p>Subscribe to get latest offers! </p>
+                <form action="#" method="post">
+                    <input type="email" Name="Enter Your Email" placeholder="Enter Your Email" required="">
+                    <input style="background-color:@primaryColor! important" type="submit" value="Subscribe">
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <a href="#" id="toTop" style="display: block;background-color:aliceblue;z-index:2;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+    <!-- /footer-top -->
+    <!-- footer -->
+    <div class="copy-right">
+        <div class="container">
+            <div class="col-md-6 col-sm-6 col-xs-6 copy-right-grids">
+                @*<div class="copy-left">
+            <p>&copy; 2020 Ramzan Marquee. All rights reserved | Design by <a href="http://xprosol.com/" style="color:@primaryColor">XProsol</a></p>
+        </div>*@
+                <div class="copy-left">
+                    <p>&copy; 2020 Ramzan Marquee. All rights reserved</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 top-middle">
+                <ul>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- //footer -->
+</body>
+
+@*Script for smooth scrolling*@
+<script>
+    $(document).ready(function () {
+        // Add smooth scrolling to all links
+        $("a").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function () {
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+    });
+</script>
+
+
+
+<script type="text/javascript" src="~/Areas/User/Content/js/move-top.js"></script>
+<script type="text/javascript" src="~/Areas/User/Content/js/easing.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+            $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+        });
+    });
+</script>
+<!-- start-smoth-scrolling -->
+<script src="js/bootstrap.js"></script>
+<!-- //for bootstrap working -->
+<!-- here stars scrolling icon -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        /*
+            var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+            };
+        */
+
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+
+
+
+</html>
+
+

@@ -1,0 +1,124 @@
+﻿.icon {
+    height: 45px;
+    width: 51px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    font-size: 45px;
+    margin-top: 5px;
+    color: white;
+}
+
+.wrimagecard {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    position: relative;
+    background: #fff;
+    box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+    .wrimagecard .fa {
+        position: relative;
+        font-size: 70px;
+    }
+
+.wrimagecard-topimage_header {
+    padding: 20px;
+}
+
+a.wrimagecard:hover, .wrimagecard-topimage:hover {
+    box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+}
+
+.wrimagecard-topimage a {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.wrimagecard-topimage_title {
+    padding: 20px 24px;
+    height: 80px;
+    padding-bottom: 0.75rem;
+    position: relative;
+}
+
+.wrimagecard-topimage a {
+    border-bottom: none;
+    text-decoration: none;
+    color: #525C65;
+    transition: color 0.3s ease;
+}
+
+.card {
+    min-height: 166px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: none;
+    box-shadow: 6px 6px 12px #D1D1D1, -6px -6px 12px #FFFFFF;
+    border-radius: 15px;
+    transition: 0.4s ease;
+}
+
+    .card:hover {
+        box-shadow: 14px 14px 28px #D1D1D1, -14px -14px 28px #FFFFFF;
+    }
+
+    .card .card-title {
+        color: black !important;
+    }
+
+    .card p {
+        height: 100px;
+        width: 90%;
+        border-radius: 50%;
+        margin: auto
+    }
+
+        .card p i {
+            color: white;
+        }
+
+@media screen and (max-width: 1110px) {
+
+
+    h4 {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+
+    .card p {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        margin: auto
+    }
+}
+
+@media screen and (max-width: 635px) {
+
+    .card p {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        margin: auto
+    }
+}
+
+@media screen and (max-width: 574px) {
+    h4 {
+        font-size: 15px;
+    }
+
+    .card p {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        margin: auto
+    }
+}

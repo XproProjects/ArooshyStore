@@ -1,0 +1,105 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<ModuleViewModel>
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/User/AssignModule.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12" style="margin-top:13px;">
+        <table class="" style="width:100%;margin-top:5px !important;margin-bottom:5px !important;">
+            <tr>
+                <td style="width: 100%; padding-right: 3px; padding-left: 3px" id="">
+                    <a href="javascript:void(0);" class="btn btn-primary  selectAllBtn" style="margin-left:11px;" title="Select All" @*style=" text-align: center;font-size: 15px;margin-bottom:10px;padding:4px;color:#fff !important;border-radius:2px*@ ">
+                        Select All
+                    </a>
+
+                    <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
+                        Clear All
+                    </a>
+                </td>
+                <td>
+                    <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm saveRoleBtn" style="margin-right:11px;">Save</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="AllModules" style="">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <section class="tree">
+                <ul>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (ModuleViewModel u in Model)
+                    {
+                        i++;
+                        string checkModule = "";
+                        string bgColor = "";
+                        if (u.AllActions == "Yes")
+                        {
+                            checkModule = "checked";
+                        }
+                        if (u.ActionList.Any(x=>x.UserRoleId > 0))
+                        {
+                            bgColor = "#886AB5";
+                        }
+                        else
+                        {
+                            bgColor = "#D69C1F";
+                        }
+                        string id = "module" + i;
+                        int j = 0;
+
+                        <li class="ModuleList" style="">
+                            <span class="col-md-12" style=" padding: 15px; background-color: @bgColor; margin-bottom: 32px;font-size:17px;margin-left:-20px">
+                                @*<span style=" width:300px;padding: 15px; background-color: #886AB5; margin-bottom: 32px;font-size:17px">*@
+                                <input type="hidden" class="UserId" value="@u.UserId" />
+                                <input type="hidden" class="ModuleId" value="@u.ModuleId" />
+                                <input type="checkbox" id="@id" class="moduleCheckbox" @checkModule />
+                                <label for="@id" style="margin-right: 3px;float: left;"></label>
+                                <a style="color:whitesmoke;margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#Web" aria-expanded="true" aria-controls="Web">
+                                    @u.ModuleName <span class="pull-right" style="font-size: 14px; font-weight: bold">(@u.ActionList.Where(x => x.UserRoleId > 0).Count() / @u.ActionList.Count())</span>
+                                </a>
+                            </span>
+
+
+                            <ul style="margin-top:-31px">
+
+                                @foreach (ModuleViewModel m in u.ActionList)
+                                {
+                                    j++;
+                                    string checkAction = "";
+                                    string bgColor2 = "";
+                                    if (m.UserRoleId > 0)
+                                    {
+                                        checkAction = "checked";
+                                        bgColor2 = "#727B84";
+                                    }
+                                    else
+                                    {
+                                        bgColor2 = "#ECC87B";
+                                    }
+                                    string id2 = "action" + i + j;
+                                    <li style="display:none" class="ActionList">
+                                        @*<span style="background-color:#727B84;color:white;padding:5px;width:200px">*@
+                                        <span style="background-color: @bgColor2; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
+                                            <input type="hidden" class="ActionId" value="@m.ActionId" />
+                                            <input type="checkbox" id="@id2" class="actionCheckbox" @checkAction />
+                                            <label for="@id2" style="margin-right: 3px;"></label>
+                                            <b style="font-size:15px;margin-top:6px;text-decoration:none!important;">@m.ActionName</b>
+                                        </span>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/User/AssignModule.js?v=1"></script>
+

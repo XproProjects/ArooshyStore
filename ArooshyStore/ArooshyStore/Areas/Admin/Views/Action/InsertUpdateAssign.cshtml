@@ -1,0 +1,111 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<ModuleViewModel>
+
+@{
+    ViewBag.Title = "Assign Action To Module";
+}
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Action/InsertUpdateAssign.css" rel="stylesheet" />
+<div class="row">
+    <div class="col col-md-12" style="margin-top:13px;">
+        <table class="" style="width:100%;margin-top:5px !important;margin-bottom:5px !important;">
+            <tr>
+                <td style="width: 100%; padding-right: 3px; padding-left: 3px" id="">
+                    <a href="javascript:void(0);" class="btn btn-primary  selectAllBtn" style="margin-left:11px;" title="Select All" @*style=" text-align: center;font-size: 15px;margin-bottom:10px;padding:4px;color:#fff !important;border-radius:2px*@ ">
+                        Select All
+                    </a>
+
+                    <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
+                        Clear All
+                    </a>
+                </td>
+                <td>
+                    @*<a href="javascript:void(0);" class="btn btn-primary btnSaveForm saveRoleBtn  pull-right" title="Save" style="text-align: center;font-size: 12px;height:30px;width:55px;margin-bottom:10px;padding:4px;color:#fff !important;background-color:@bgColor !important;border-color:@bgColor !important;border-radius:2px "></a>*@
+                    <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm saveRoleBtn" style="margin-right:11px;">Save</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    @*<div class="col col-md-8">
+
+        </div>*@
+    @*<div class="col col-md-1 pull-right">
+
+        </div>*@
+</div>
+
+
+@*<div class="input-group input-group-lg mb-5 shadow-1 rounded">
+        <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters" placeholder="Search anything..." value="SmartAdmin WebApp responsive webapp">
+        <div class="input-group-append">
+            <button class="btn btn-primary hidden-sm-down waves-effect waves-themed" type="button"><i class="fal fa-search mr-lg-2"></i><span class="hidden-md-down">Search</span></button>
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-themed" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+        </div>
+    </div>*@
+<div class="row" style="margin-top:13px!important;margin-bottom:5px!important;margin-left:0.5px!important;margin-right:0.5px!important;">
+    @*<div class="col col-lg-12 col-md-12">*@
+    <div class="input-group input-group-sm col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-right">
+
+        <input class="form-control input-lg" type="text" placeholder="Search action name here..." name="txtSearchModal" id="txtSearchModal">
+        <div class="input-group-btn">
+            @*<button type="button" id="btnSearchModal" class=" btn btn-primary hidden-sm-down waves-effect waves-themed">
+                    &nbsp;&nbsp;&nbsp;<i class="fal fa-search mr-lg-2"></i>&nbsp;&nbsp;&nbsp;
+                </button>*@
+            <button type="button" id="btnRefreshModal" class="btn btn-sm btn-default waves-effect waves-themed">
+                Refresh
+            </button>
+        </div>
+    </div>
+    @*</div>*@
+</div>
+<table class=" table table-sm m-0 table-bordered table-hover" style="width:97%;margin-left:13px!important;margin-bottom:8px!important;margin-top: 13px!important;">
+   
+    <thead class="thead-themed">
+        <tr class="headingRowBilling">
+            <th style=" width:85%;text-align: left; padding: 5px; padding-left:15px;font-size:13px ">
+                Action Name
+            </th>
+            <th style="text-align: center; padding: 5px;border-right:1px solid #ddd;font-size:15px ">
+                Assign
+            </th>
+        </tr>
+    </thead>
+    @if (Model.Count() == 0)
+    {
+        <tr style="" class="rowsListBilling">
+            <th colspan="2" style="width:100%;text-align: center;padding:15px;">
+                <span style="        font-size: 16px;
+        font-weight: normal">No action found.</span>
+            </th>
+        </tr>
+    }
+    @foreach (ModuleViewModel u in Model)
+    {
+        string check = "";
+        if (u.AssignId > 0)
+        {
+            check = "checked";
+        }
+        else
+        {
+            check = "";
+        }
+        <tr class="roleRows">
+            <th style=" width:85%;text-align: left; padding: 5px; padding-left: 15px; ">
+                <input type="hidden" class="ActionId" value="@u.ActionId" />
+                <input type="hidden" class="ModuleId" value="@u.ModuleId" />
+                <span style="font-size:14px;font-weight:normal"> @u.ActionName </span>
+            </th>
+            <th style="text-align: center; padding: 5px;border-right:1px solid #ddd;width:8% ">
+                <label class="containerCheckBox custom-control custom-checkbox" style="font-size:16px;text-align:center">
+                    <input type="checkbox" class="ActionIdCheckbox .custom-checkbox custom-control" @check>
+                    <span class="checkmark" style="margin-left:15px;margin-top:3px"></span>
+                </label>
+            </th>
+        </tr>
+    }
+</table>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Action/InsertUpdateAssign.js"></script>

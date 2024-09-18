@@ -1,0 +1,104 @@
+﻿@{
+    string businessName = ViewBag.BusinessName;
+    string bgImageSrc = ViewBag.BannerImage;
+    string bgLogo = ViewBag.BusinessLogo;
+    string bgColor = ViewBag.BgColor;
+}
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Account/Login5.css" rel="stylesheet" />
+<input type="hidden" id="HiddenLoginHeaderBusinessName" value=" @businessName" />
+<div class="area">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<div class="blankpage-form-field" style="margin-top:33px">
+    <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
+        <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
+            @*<img src="@bgLogo" alt="SmartAdmin WebApp" aria-roledescription="logo" style="height: 30px;width: 37px;">*@
+            <img src="@bgLogo" style="width:38px;height:30px;float:left" />
+            <span class="page-logo-text mr-1 businessTitle" id="LoginHeaderBusinessName" style="font-size:18px;margin-top:3px;font-weight:bold">
+                @businessName
+            </span>
+        </a>
+    </div>
+    <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0 LoginForm">
+        @using (Html.BeginForm("login", "account", FormMethod.Post, new { id = "loginForm", enctype = "multipart/form-data", role = "form" }))
+        {
+            <div class="form-group">
+                <label class="form-label" for="username">
+                    <i class="fal fa-user"></i>&nbsp;
+                    Email
+                </label>
+                <div class="input-group">
+                    @*<div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fal fa-user"></i></span>
+                    </div>*@
+                    <input type="email" class="form-control no-border" name="Email" id="Email" placeholder="Your Email here" value="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">
+                    <i class="fal fa-lock"></i>&nbsp;
+                    Password
+                </label>
+                <div class="input-group">
+                    @*<div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fal fa-lock"></i></span>
+                    </div>*@
+                    <input type="password" class="form-control no-border" name="Password" id="Password" placeholder="Your Password here" value="" required>
+                </div>
+                <span data-toggle="#Password" id="eyeIcon" class="fal fa-fw fa-eye field-icon toggle-password" style="cursor:pointer"></span>
+            </div>
+            @*<div class="form-group text-left">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberme">
+                    <label class="custom-control-label" for="rememberme"> Remember me</label>
+                </div>
+            </div>*@
+
+            <button type="submit" id="btnLogin" class="btn float-right btnLogin" style="width: 100%; background-color: @bgColor !important;color:#fff">Login Now</button>
+            <div class="text-center important" style="margin-top: 10px !important; margin-bottom: 70px; color: #AF0001; ">
+            </div>
+            <center>
+                <div style="text-decoration:underline">
+                    <a href="javascript:void(0)" id="btnForgotPassword">Forgot Password <i class="fal fa-frown"></i></a>
+                </div>
+            </center>
+        }
+    </div>
+    <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0 ForgotPasswordForm" hidden>
+        @using (Html.BeginForm("forgotpassword", "account", FormMethod.Post, new { id = "forgotPasswordForm", enctype = "multipart/form-data", role = "form" }))
+        {
+            <div class="form-group">
+                <label class="form-label" for="username">
+                    <i class="fal fa-user"></i>&nbsp;
+                    Email
+                </label>
+                <div class="input-group">
+                    <input type="email" class="form-control no-border" name="ForgotEmail" id="ForgotEmail" placeholder="Your Email here" value="" required>
+                </div>
+            </div>
+            <button type="submit" id="btnSubmitForgotPassword" class="btn float-right btnSubmitForgotPassword" style="width: 100%; background-color: @bgColor !important;color:#fff">Submit</button>
+            <div class="text-center importantForgot" style="margin-top: 10px; margin-bottom: 70px; color: #AF0001;">
+            </div>
+            <center>
+                <div style="text-decoration:underline">
+                    <a href="javascript:void(0)" id="btnGoBackToLogin">Go back to Login.</a>
+                </div>
+            </center>
+        }
+    </div>
+    @*<div class="blankpage-footer text-center">
+            <a href="#" style="color:@bgColor"><strong>Forgot Password?</strong></a> </a>
+        </div>*@
+    @*<center>Developed By Internussoft</center>*@
+</div>

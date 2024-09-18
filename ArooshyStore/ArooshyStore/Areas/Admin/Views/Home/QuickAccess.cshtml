@@ -1,0 +1,215 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model ModuleViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Home/QuickAccess.css" rel="stylesheet" />
+<div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top">
+    <h4 class="m-0 text-center color-white">
+        Quick Access
+        <small class="mb-0 opacity-80">Setting Forms</small>
+    </h4>
+</div>
+<div class="custom-scroll" style="overflow-y:auto;">
+    <div class="row">
+        <input type="text" class="col col-md-10 form-control" id="txtSearchModule" placeholder="Search Setting Module Here" style="margin-left:32px;margin-top:15px">
+    </div>
+
+
+    @*<div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">at</span>
+            </div>
+            <input type="text" id="basic-addon1" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>*@
+<ul class="app-list">
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "city"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/city/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-4 icon-stack-3x opacity-100 color-danger-600"></i>
+                    <i class="base base-4 icon-stack-2x opacity-100 color-danger-600"></i>
+                    <i class="fal fa-university icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    City
+                </span>
+            </a>
+        </li>
+    }
+    @*@if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "customer"))
+        {
+            <li class="ModuleNameLi" style="margin-top:-15px">
+                <a href="/admin/customersupplier/index/?type=customer" class="app-list-item hover-white">
+                    <span class="icon-stack">
+                        <i class="base base-19 icon-stack-3x opacity-100 color-danger-600"></i>
+                        <i class="base base-19 icon-stack-2x opacity-100 color-danger-600"></i>
+                        <i class="fal fa-user icon-stack-1x opacity-100 color-white"></i>
+                    </span>
+                    <span class="app-list-name ModuleNameSpan">
+                        Customer
+                    </span>
+                </a>
+            </li>
+        }*@
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "discount offer"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/discountoffer/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-11 icon-stack-3x color-warning-800"></i>
+                    <i class="base base-11 icon-stack-2x color-warning-800"></i>
+                    <i class="fal fa-percent icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Discount Offer
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "expense type"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/expensetype/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base-5 icon-stack-3x color-success-700"></i>
+                    <i class="base-5 icon-stack-2x color-success-700"></i>
+                    <i class="fal fa-dollar-sign icon-stack-1x text-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Expense Type
+                </span>
+            </a>
+        </li>
+    }
+    @*@if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "expense"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/expense/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-6 icon-stack-3x opacity-100 color-primary-600"></i>
+                    <i class="base base-6 icon-stack-2x opacity-100 color-primary-600"></i>
+                    <i class="fal fa-money-bill-alt icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Expense
+                </span>
+            </a>
+        </li>
+    }*@
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "product attribute"))
+    {
+        <li class="ModuleNameLi" style="margin-top:-15px">
+            <a href="/admin/attribute/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-7 icon-stack-3x opacity-100 color-primary-500"></i>
+                    <i class="base base-7 icon-stack-2x opacity-100 color-primary-500"></i>
+                    <i class="fal fa-tags icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Product Attribute
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "product category"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/category/index/?from=master" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-7 icon-stack-3x opacity-100 color-info-700"></i>
+                    <i class="base base-7 icon-stack-2x opacity-100 color-info-700"></i>
+                    <i class="fal fa-list icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Product Master Category
+                </span>
+            </a>
+        </li>
+    }
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "product category"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/category/index/?from=child" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-6 icon-stack-3x opacity-100 color-primary-600"></i>
+                    <i class="base base-6 icon-stack-2x opacity-100 color-primary-600"></i>
+                    <i class="fal fa-list icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Product Child Category
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "product unit"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/unit/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-11 icon-stack-3x opacity-100 color-warning-800"></i>
+                    <i class="base base-11 icon-stack-2x opacity-100 color-warning-800"></i>
+                    <i class="fal fa-random icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Product Unit
+                </span>
+            </a>
+        </li>
+    }
+    @*@if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "supplier"))
+        {
+            <li class="ModuleNameLi" style="margin-top:-15px">
+                <a href="/admin/customersupplier/index/?type=supplier" class="app-list-item hover-white">
+                    <span class="icon-stack">
+                        <i class="base base-7 icon-stack-3x opacity-100 color-info-700"></i>
+                        <i class="base base-7 icon-stack-2x opacity-100 color-info-700"></i>
+                        <i class="fal fa-user icon-stack-1x opacity-100 color-white"></i>
+                    </span>
+                    <span class="app-list-name ModuleNameSpan">
+                        Supplier
+                    </span>
+                </a>
+            </li>
+        }*@
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "user type"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/usertype/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-7 icon-stack-3x opacity-100 color-primary-500"></i>
+                    <i class="base base-7 icon-stack-2x opacity-100 color-primary-500"></i>
+                    <i class="fal fa-user icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    User Type
+                </span>
+            </a>
+        </li>
+    }
+    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "warehouse"))
+    {
+        <li class="ModuleNameLi">
+            <a href="/admin/warehouse/index" class="app-list-item hover-white">
+                <span class="icon-stack">
+                    <i class="base base-11 icon-stack-3x opacity-100 color-warning-800"></i>
+                    <i class="base base-11 icon-stack-2x opacity-100 color-warning-800"></i>
+                    <i class="fal fa-cubes icon-stack-1x opacity-100 color-white"></i>
+                </span>
+                <span class="app-list-name ModuleNameSpan">
+                    Warehouse
+                </span>
+            </a>
+        </li>
+    }
+
+
+
+
+
+
+
+</ul>
+
+</div>

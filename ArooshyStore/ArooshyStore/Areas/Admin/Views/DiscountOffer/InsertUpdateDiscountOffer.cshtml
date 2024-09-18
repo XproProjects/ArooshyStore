@@ -1,0 +1,230 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model  DiscountOfferViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Category/InsertUpdateCategory.css" rel="stylesheet" />
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("InsertUpdateDiscountOffer", "DiscountOffer", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        string checkbox1 = "";
+        string checkbox2 = "";
+        string checkbox3 = "";
+        string hidden1 = "";
+        string hidden2 = "";
+        string hidden3 = "";
+        if (Model.SelectType == "Master Category" || string.IsNullOrEmpty(Model.SelectType))
+        {
+            checkbox1 = "checked";
+            checkbox2 = "";
+            checkbox3 = "";
+            hidden1 = "";
+            hidden2 = "hidden";
+            hidden3 = "hidden";
+        }
+        else if (Model.SelectType == "Child Category")
+        {
+            checkbox1 = "";
+            checkbox2 = "checked";
+            checkbox3 = "";
+            hidden1 = "hidden";
+            hidden2 = "";
+            hidden3 = "hidden";
+        }
+        else if (Model.SelectType == "Product")
+        {
+            checkbox1 = "";
+            checkbox2 = "";
+            checkbox3 = "checked";
+            hidden1 = "hidden";
+            hidden2 = "hidden";
+            hidden3 = "";
+        }
+        <fieldset style="padding:1.25rem;">
+            <div class="row">
+                <section class="col-md-3">
+                </section>
+                <section class="col-md-6">
+                    <div style="display: flex; flex-direction: column; padding: 18px; padding-top: 0px; padding-bottom: 0px;">
+                        <div class="myDiv" style="flex: 1;">
+                            <img id="DocumentImage" src="@Model.ImagePath" style="margin-top: 28px;height: 240px;width:100%;border-top-left-radius: 5px;border-top-right-radius: 5px;" />
+                            <a href="javascript:void(0)" title="Delete this Picture" data-value="0" style="background-color: #FD1381; font-size: 14px; border-radius: 50%; font-weight: bold; padding: 5px; color: #fff; padding-left: 9px; padding-right: 9px; position: absolute; right: 35px; top: 33px;" class="deleteImage DeleteImage">X</a>
+
+                        </div>
+                        <div class="custom-file" style="flex: 1;">
+                            <input type="file" class="custom-file-input" id="ProfileImage">
+                            <label class="custom-file-label" id="AttachDocument" for="ProfileImage" style="overflow: hidden;">Choose Picture...</label>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-3">
+                </section>
+            </div>
+            <div class="row" style="margin-top: 25px;margin-left:10px">
+                <section class="col-md-4">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="MasterCategoryWise" value="Master Category" name="AssignType" @checkbox1>
+                        <label class="custom-control-label" for="MasterCategoryWise">Master Category Wise</label>
+                    </div>
+                </section>
+                <section class="col-md-4">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="ChildCategoryWise" value="Child Category" name="AssignType" @checkbox2>
+                        <label class="custom-control-label" for="ChildCategoryWise">Child Category Wise</label>
+                    </div>
+                </section>
+                <section class="col-md-4">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="ProductWise" value="Product" name="AssignType" @checkbox3>
+                        <label class="custom-control-label" for="ProductWise">Product Wise</label>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 25px;">
+                <section id="MasterCategoryDiv" class="col-md-12" @hidden1>
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Master Category (*)</label>
+                                        <div class="input-group" id="MasterCategoryIdDiv">
+                                            <select id="MasterCategoryId" name="MasterCategoryId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/category/index/?from=master" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Master Category">
+                                            <i class="fas fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section id="ChildCategoryDiv" class="col-md-12" @hidden2>
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Child Category (*)</label>
+                                        <div class="input-group" id="ChildCategoryIdDiv">
+                                            <select id="ChildCategoryId" name="ChildCategoryId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/category/index/?from=child" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px; color: #fff; padding: 9px; margin-left: -6px; background-color: #aaaaaa !important; border-color: #aaaaaa !important; padding-left: 12px; padding-right: 12px;" title="Add New Child Category">
+                                            <i class="fas fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section id="ProductDiv" class="col-md-12" @hidden3>
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Product (*)</label>
+                                        <div class="input-group" id="ProductIdDiv">
+                                            <select id="ProductId" name="ProductId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/product/index" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Product">
+                                            <i class="fas fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 5px;">
+                <section class="col-md-4">
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <label>Offer Name (*)</label>
+                        <input type="hidden" id="OfferId" name="OfferId" value="@Model.OfferId" />
+                        <input type="hidden" id="HiddenCategoryId" name="HiddenCategoryId" value="@Model.CategoryId" />
+                        <input type="hidden" id="HiddenCategoryName" name="HiddenCategoryName" value="@Model.CategoryName" />
+                        <input type="hidden" id="HiddenProductId" name="HiddenProductId" value="@Model.ProductId" />
+                        <input type="hidden" id="HiddenProductName" name="HiddenProductName" value="@Model.ProductName" />
+                        <input type="hidden" id="HiddenSelectType" name="HiddenSelectType" value="@Model.SelectType" />
+                        <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-info"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.DiscountName, new { @placeholder = "Offer Name", @class = "form-control" })
+
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-4">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Disc Percent (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-percent"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.DiscPercent, new { @placeholder = "Disc Percent", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-4">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Expiry Date (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                            @if (Model.ExpiredOn != null)
+                            {
+                                <input type="date" class="form-control" id="ExpiredOn" name="ExpiredOn" value="@Model.ExpiredOn.GetValueOrDefault().ToString("yyyy-MM-dd")" />
+                            }
+                            else
+                            {
+                                <input type="date" class="form-control" id="ExpiredOn" name="ExpiredOn" value="" />
+                            }
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            @{
+                string ishiddenStatus = "hidden";
+                string ischecked = "";
+                if (Model.OfferId > 0)
+                {
+                    ishiddenStatus = "";
+                    if (Model.Status == true)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+            }
+            <div class="row" @ishiddenStatus style="margin-top:10px">
+                <section class="col-md-12">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischecked>
+                        <label class="custom-control-label" for="Status">Active</label>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+    }
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/DiscountOffer/InsertUpdateDiscountOffer.js?v=2"></script>

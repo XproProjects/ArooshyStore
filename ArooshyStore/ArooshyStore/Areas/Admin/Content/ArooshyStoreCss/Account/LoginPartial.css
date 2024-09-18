@@ -1,0 +1,38 @@
+﻿:root {
+    --bg-color: #584677;
+}
+.page-logo, .page-sidebar, .nav-footer, .bg-brand-gradient {
+    background-color: var(--bg-color);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: var(--bg-color) !important;
+    background-color: var(--bg-color) !important;
+}
+
+.toggle-password {
+    float: right;
+    cursor: pointer;
+    position: relative !important;
+    top: -24px !important;
+    right: 7px !important;
+}
+select {
+    border: 1px solid #A2A2A2 !important;
+}
+.btnLogin, .btnSubmitForgotPassword, .btnReset {
+    background-color: var(--bg-color) !important;
+}
+.no-border {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0px;
+    border-bottom: 1px solid #535287
+}
+.login2Container{
+    padding-top:5rem !important;
+}
+.businessTitleLogin2 {
+    margin-top: -7px;
+}

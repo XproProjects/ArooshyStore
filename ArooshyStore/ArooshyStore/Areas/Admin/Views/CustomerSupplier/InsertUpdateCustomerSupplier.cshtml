@@ -1,0 +1,270 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model CustomerSupplierViewModel
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+
+    @using (Html.BeginForm("InsertUpdateCustomerSupplier", "CustomerSupplier", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset style="padding:1.25rem;">
+            <div class="row">
+                <div class="col-md-4" style="padding: 18px;padding-top:0px;padding-bottom:0px">
+                    <div class="myDiv">
+                        <img id="DocumentImage" src="@Model.ImagePath" style="margin-top: 28px;height: 190px;width:100%;border-top-left-radius: 5px;border-top-right-radius: 5px;" />
+                        <a href="javascript:void(0)" title="Delete this Picture" data-value="0" style="background-color: #FD1381; font-size: 14px; border-radius: 50%; font-weight: bold; padding: 5px; color: #fff; padding-left: 9px; padding-right: 9px; position: absolute; right: 15px; top: 25px;display: none;" class="deleteImage DeleteImage">X</a>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="ProfileImage">
+                        <label class="custom-file-label" id="AttachDocument" for="ProfileImage" style="overflow:hidden">Choose Picture...</label>
+                    </div>
+                </div>
+                <div class="col-md-8" style="margin-top:23px">
+                    <div class="row">
+
+                        <section class="col-md-12">
+                            <div style="padding:5px;padding-top:0px">
+                                <input type="hidden" id="CustomerSupplierId" name="CustomerSupplierId" value="@Model.CustomerSupplierId" />
+                                <input type="hidden" id="Type" name="Type" value="@ViewBag.Type" />
+                                <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                                <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
+                                <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
+                                <label>@(ViewBag.Type.ToString().ToLower() == "customer" ? "Customer" : "Supplier") Name (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-user"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.CustomerSupplierName, new { @placeholder = ViewBag.Type.ToString().ToLower() == "customer" ? "Customer Name" : "Supplier Name", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+
+
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Contact 1 (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-mobile"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" data-inputmask="'mask': '9999-9999999'" class="form-control">
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Contact 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-mobile"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" data-inputmask="'mask': '9999-9999999'" class="form-control">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="row" style="margin-top:10px">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Email (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Email, new { @placeholder = "Email", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>House #</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-home"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.HouseNo, new { @placeholder = "House #", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Street</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-map-pin"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Street, new { @placeholder = "Street", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Colony / Village Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-home"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.ColonyOrVillageName, new { @placeholder = "Colony / Village Name", @class = "form-control" })
+
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Postal Code</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.PostalCode, new { @placeholder = "Postal Code", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px;padding-right:0px">
+                                <div class="input-group">
+                                    <table class="" style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 80%;">
+                                                <label class="form-label">Select City (*)</label>
+                                                <div class="input-group">
+                                                    <select id="CityId" name="CityId"></select>
+                                                </div>
+                                            </td>
+                                            <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                                <a href="/admin/city/index" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New City">
+                                                    <i class="fal fa-plus" style=""></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Credit Days</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.CreditDays, new { @placeholder = "Credit Days", @class = "form-control" })
+
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Credit Limit</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-credit-card fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.CreditLimit, new { @placeholder = "Credit Limit", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+                <section class="col-md-12">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Complete Address (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-map-marker"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.CompleteAddress, new { @placeholder = "Complete Address", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <section class="col-md-12">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Remarks</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-comment fa-fw"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.Remarks, new { @placeholder = "Remarks", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+            </div>
+            @{
+                string ishidden = "hidden";
+                string ischecked = "";
+                if (Model.CustomerSupplierId > 0)
+                {
+                    ishidden = "";
+                    if (Model.Status == true)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+            }
+            <div class="row" @ishidden style="margin-top:10px">
+                <section class="col-md-12">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischecked>
+                        <label class="custom-control-label" for="Status">Active</label>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+    }
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/CustomerSupplier/InsertUpdateCustomerSupplier.js"></script>

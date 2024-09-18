@@ -1,0 +1,16 @@
+﻿@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
+    var action = HttpContext.Current.Request.RequestContext.RouteData.Values["Action"].ToString().ToLower();
+    if (action == "login" || action == "resetpassword")
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_LoginPartial.cshtml";
+    }
+    else if (action == "linkexpired")
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    }
+}

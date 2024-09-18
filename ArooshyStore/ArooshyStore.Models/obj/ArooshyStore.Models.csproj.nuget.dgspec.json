@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\ArooshyStore.Models.csproj": {}
+  },
+  "projects": {
+    "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\ArooshyStore.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\ArooshyStore.Models.csproj",
+        "projectName": "ArooshyStore.Models",
+        "projectPath": "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\ArooshyStore.Models.csproj",
+        "packagesPath": "C:\\Users\\Ak Tech\\.nuget\\packages\\",
+        "outputPath": "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ak Tech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

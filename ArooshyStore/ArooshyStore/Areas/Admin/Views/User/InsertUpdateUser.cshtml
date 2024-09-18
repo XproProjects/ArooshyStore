@@ -1,0 +1,277 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model UserViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Category/InsertUpdateCategory.css" rel="stylesheet" />
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("InsertUpdateUser", "User", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset style="padding:1.25rem;">
+            <div class="row">
+                <div class="col-md-4" style="padding: 18px;padding-top:0px;padding-bottom:0px">
+                    <div class="myDiv">
+                        <img id="DocumentImage" src="@Model.ImagePath" style="margin-top: 28px;height: 190px;width:100%;border-top-left-radius: 5px;border-top-right-radius: 5px;" />
+                        <a href="javascript:void(0)" title="Delete this Picture" data-value="0" style="background-color: #FD1381; font-size: 14px; border-radius: 50%; font-weight: bold; padding: 5px; color: #fff; padding-left: 9px; padding-right: 9px; position: absolute; right: 15px; top: 25px;" class="deleteImage DeleteImage">X</a>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="ProfileImage">
+                        <label class="custom-file-label" id="AttachDocument" for="ProfileImage" style="overflow:hidden">Choose Picture...</label>
+                    </div>
+                </div>
+                <div class="col-md-8" style="margin-top:23px">
+                    <div class="row">
+                        @{
+                            string col = "";
+                            string hiddenType = "";
+                            string activeStatus = "";
+                            if (Model.TypeName.ToLower() == "super admin")
+                            {
+                                col = "col-md-12";
+                                activeStatus = "hidden";
+                                hiddenType = "hidden";
+                            }
+                            else
+                            {
+                                col = "col-md-6";
+                                activeStatus = "";
+                                hiddenType = "";
+                            }
+                        }
+                        <section class="@col">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Full Name (*)</label>
+                                <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+                                <input type="hidden" id="InfoId" name="InfoId" value="@Model.InfoId" />
+                                <input type="hidden" id="HiddenTr" value="0" />
+                                <input type="hidden" id="IsChangePassword" name="IsChangePassword" value="0" />
+                                <input type="hidden" id="HiddenUserTypeId" name="HiddenUserTypeId" value="@Model.UserTypeId" />
+                                <input type="hidden" id="HiddenTypeName" name="HiddenTypeName" value="@Model.TypeName" />
+                                <input type="hidden" id="HiddenGender" name="HiddenGender" value="@Model.Gender" />
+                                <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-user"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.FullName, new { @placeholder = "Full Name", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6" @hiddenType>
+                            <div style="padding:5px;padding-top:0px;padding-right:0px">
+                                <div class="input-group">
+                                    <table class="" style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 80%;">
+                                                <label class="form-label">Select User Type (*)</label>
+                                                <div class="input-group">
+                                                    <select id="UserTypeId" name="UserTypeId"></select>
+                                                </div>
+                                            </td>
+                                            <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                                <a href="/admin/usertype/index" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New User Type">
+                                                    <i class="fas fa-plus" style=""></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="row" style="margin-top:5px">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Gender</label>
+                                <select id="Gender" name="Gender" class="custom-select">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>CNIC</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-id-card"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Cnic, new { @placeholder = "CNIC", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Contact 1</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-phone"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Contact1, new { @placeholder = "Contact 1", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Contact 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-phone"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Contact2, new { @placeholder = "Contact 2", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>DOB</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    @if (Model.UserId > 0)
+                                    {
+                                        @Html.TextBoxFor(a => a.DOB, new { @type = "date", @class = "form-control", @Value = Model.DOB.HasValue ? Model.DOB.GetValueOrDefault().ToString("yyyy-MM-dd") : "" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(a => a.DOB, new { @type = "date", @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    }
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Email (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Email, new { @placeholder = "Email", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-4">
+                            <div style="padding:5px;padding-top:0px">
+                                @if (Model != null && Model.UserId > 0)
+                                {
+                                    <label>
+                                        Password (*)
+                                        (<a href="javascript:void(0)" class="btnChangeUserPassword">Change</a>)
+                                        (<a href="javascript:void(0)" class="btnCancelUserPassword">Cancel</a>)
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-hashtag"></i>
+                                            </span>
+                                        </div>
+                                        @Html.TextBoxFor(a => a.Password, "", new { @placeholder = "Password", @type = "password", @disabled = "disabled", @class = "form-control", @style = "margin-right: 3.5px;" })
+                                        <span data-toggle="#Password" id="eyeIcon" style="" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label>Password (*)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-hashtag"></i>
+                                            </span>
+                                        </div>
+                                        @Html.TextBoxFor(a => a.Password, new { @placeholder = "Password", @autocomplete = "new-password", @type = "password", @class = "form-control", @style = "margin-right: 3.5px;" })
+                                    </div>
+                                }
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+                        <section class="col-md-12">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Current Address</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-map-marker"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Address1, new { @placeholder = "Current Address", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+                        <section class="col-md-12">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Permanent Address</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-map-marker"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Address2, new { @placeholder = "Permanent Address", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            @{
+                string ishiddenStatus = "hidden";
+                string ischecked = "";
+                if (Model.UserId > 0)
+                {
+                    ishiddenStatus = "";
+                    if (Model.IsActive == true)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+            }
+            <div class="row" @ishiddenStatus style="margin-top:10px">
+                <section class="col-md-12">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="IsActive" id="IsActive" @ischecked>
+                        <label class="custom-control-label" for="IsActive">Active</label>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+    }
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/User/InsertUpdateUser.js?v=4"></script>

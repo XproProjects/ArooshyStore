@@ -1,0 +1,215 @@
+﻿
+@{
+    string businessName = ViewBag.BusinessName;
+    string bgImageSrc = ViewBag.BannerImage;
+    string bgLogo = ViewBag.BusinessLogo;
+    string bgColor = ViewBag.BgColor;
+    //MvcHtmlString adminImageSrc = Html.Action("GetUserPicture", "account", new
+    //{
+    //    id = Convert.ToInt32(User.UserId)
+    //});
+    string adminImageSrc = Url.Action("GetUserPicture", "account", new
+    {
+        id = Convert.ToInt32(User.UserId)
+    });
+    //string adminName = User.Name;
+    //string email = User.Email;
+    //MvcHtmlString adminName = Html.Action("GetUserName", "account");
+    //MvcHtmlString email = Html.Action("GetUserEmail", "account");
+    MvcHtmlString userNameAndEmail = Html.Action("GetUserNameAndEmail", "account");
+    string adminName = userNameAndEmail.ToString().Split('|')[0];
+    string email = userNameAndEmail.ToString().Split('|')[1];
+}
+@*<header class="page-header" role="banner" id="myHeader">*@
+<header class="page-header" role="banner">
+    <!-- we need this logo when user switches to nav-function-top -->
+    <div class="page-logo">
+        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+            <img src="@bgLogo" alt="@businessName" aria-roledescription="logo" style="height: 30px;width: 37px;">
+            <span class="page-logo-text mr-1">@businessName</span>
+            <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+            <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+        </a>
+    </div>
+    <!-- DOC: nav menu layout change shortcut -->
+    <div class="hidden-md-down dropdown-icon-menu position-relative">
+        <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
+            <i class="ni ni-menu"></i>
+        </a>
+        <ul>
+            <li>
+                <a href="#" class="btn js-waves-off MinimizeSidebar" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
+                    <i class="ni ni-minify-nav"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
+                    <i class="ni ni-lock-nav"></i>
+                </a>
+            </li>
+        </ul>
+        @*<span class="color-primary-600" style="font-weight:bold;font-size:15px"> ABCD </span>*@
+    </div>
+    <!-- DOC: mobile button appears during mobile width -->
+    <div class="hidden-lg-up">
+        <a href="#" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
+            <i class="ni ni-menu"></i>
+        </a>
+    </div>
+    @*<div class="search">
+            <form class="app-forms hidden-xs-down" role="search" action="page_search.html" autocomplete="off">
+                <input type="text" id="search-field" placeholder="Search for anything" class="form-control" tabindex="1">
+                <a href="#" onclick="return false;" class="btn-danger btn-search-close js-waves-off d-none" data-action="toggle" data-class="mobile-search-on">
+                    <i class="fal fa-times"></i>
+                </a>
+            </form>
+        </div>*@
+    @*<div id="ProgressBarsDiv" style=" position: fixed; top: 13%; right: 2%; z-index: 2000;">
+            <div id="loaderToast" class="container" style="background-color: white; width: 300px; border: 1px solid #ddd; box-shadow: 0px 0px 28px 0px rgb(86 61 124 / 13%);" hidden>
+                <div class="row" style="background-color: #EEEEF2; padding: 5px 20px;">
+                    <div class="col-xs-8">
+                        <strong class="mr-auto font-weight-bold"><i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;Sending Sms</strong>
+                    </div>
+                    <div class="col-xs-4 ml-auto d-flex">
+                        <small id="startedSince">11 mins ago</small>
+                        <button id="closeProgress" type="button" class="ml-2 mb-1 close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" style="padding: 15px 20px;">
+                    <div class="col">
+                        <table id="counter" class="table">
+                            <tr>
+                                <th>Total</th>
+                                <td id="total" class="text-primary font-weight-bold"></td>
+                                <th>Processed</th>
+                                <td id="processed" class="text-info font-weight-bold"></td>
+                            </tr>
+                            <tr>
+                                <th>Sent</th>
+                                <td id="sent" class="text-success font-weight-bold"></td>
+                                <th>Failed</th>
+                                <td id="failed" class="text-danger font-weight-bold"></td>
+                            </tr>
+                        </table>
+                        <div id="sentProgress">
+                            <div class="progress progress-striped progress0" style="height: 30px;">
+                                <div class="progress-bar progress-bar0" style="width: 0%; padding: 0 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    @*<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px; width: 300px;">
+            <div class="toast" style="position: absolute; top: 150px; right: 0;">
+                <div class="toast-header">
+                    <strong class="mr-auto font-weight-bold"><i class="fa fa-envelope"></i> Sending Sms</strong>
+                    <small>11 mins ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    <p id="counter"></p>
+                    <div id="sentProgress">
+                        <div class="progress progress-striped" style="height: 30px;">
+                            <div class="progress-bar" style="width: 0%; padding: 0 20px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+<div class="ml-auto d-flex">
+    <!-- activate app search icon (mobile) -->
+    @*<div class="hidden-sm-up">
+            <a href="#" class="header-icon" data-action="toggle" data-class="mobile-search-on" data-focus="search-field" title="Search">
+                <i class="fal fa-search"></i>
+            </a>
+        </div>*@
+    <!-- app settings -->
+    @*<div class="hidden-md-down">*@
+    <div class="">
+        @*<a href="#" class="header-icon TopSettingIcon" data-toggle="modal" data-target=".js-modal-settings" title="Layout Settings">
+                <i class="fal fa-cog"></i>
+            </a>*@
+        <a href="/admin/home/setting" class="header-icon TopSettingIcon" title="Settings">
+            <i class="fal fa-cog"></i>
+        </a>
+    </div>
+    <!-- app shortcuts -->
+    <div>
+
+        <a href="#" class="header-icon" data-toggle="dropdown" title="Quick Access">
+            <i class="fal fa-cube"></i>
+        </a>
+
+
+        <div class="dropdown-menu dropdown-menu-animated w-auto h-auto">
+            @{Html.RenderAction("QuickAccess", "home");}
+        </div>
+
+    </div>
+
+    <!-- app settings -->
+    @*<a href="/home/setting" class="header-icon" title="System Settings">
+            <i class="fal fa-cog"></i>
+
+        </a>*@
+
+    <!-- app message -->
+    <a href="#" class="header-icon TotalMsgCount" id="chat" data-toggle="modal" data-target=".js-modal-messenger" title="Messages">
+        <i class="fal fa-envelope"></i>
+    </a>
+    <!-- app notification -->
+    <div>
+        <a href="#" class="header-icon" data-toggle="dropdown" title="You got 0 notifications">
+            <i class="fal fa-bell"></i>
+            @*<span class="badge badge-icon">11</span>*@
+        </a>
+        @*<a href="#" class="header-icon" data-toggle="dropdown" title="You got 0 notifications">
+                <i class="fal fa-bell"></i>
+                <span class="badge badge-icon">11</span>
+            </a>*@
+        @*@{Html.RenderAction("NotificationIndex", "Notification");}*@
+    </div>
+    <!-- app user menu -->
+    <div>
+        <a href="#" id="btnSideBarToggle" data-toggle="dropdown" data-target="#abc" style="cursor:pointer" title="Profile" class="header-icon d-flex align-items-center justify-content-center ml-2">
+            <img src="@adminImageSrc" class="profile-image rounded-circle" style="height: 40px;width: 40px;border:3px solid #eee;" alt="Profile Picture">
+            <!-- you can also add username next to the avatar with the codes below:-->
+            @*<span class="ml-1 mr-1 text-truncate text-truncate-header hidden-xs-down">Admin</span>
+                <i class="ni ni-chevron-down hidden-xs-down"></i>*@
+        </a>
+        <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
+            <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
+                <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
+                    <span class="mr-2">
+                        <img src="@adminImageSrc" class="rounded-circle profile-image" style="height: 42px;width: 42px;padding: 0px;border:3px solid #eee;" alt="@adminName">
+                    </span>
+                    <div class="info-card-text">
+                        <div class="fs-lg">@adminName</div>
+                        <span class="opacity-80">@email</span>
+                        @*<span class="opacity-80"><i class="fas fa-map-marker"></i>&nbsp;&nbsp;@User.BranchName</span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-divider m-0"></div>
+            <a href="#" class="dropdown-item" data-toggle="modal" data-target=".js-modal-settings">
+                <span data-i18n="drpdwn.settings">Theme Settings</span>
+            </a>
+            <div class="dropdown-divider m-0"></div>
+            <a href="/admin/account/checkoldpassword" class="dropdown-item">
+                <span data-i18n="drpdwn.changepassword">Change Password</span>
+            </a>
+            <div class="dropdown-divider m-0"></div>
+            <a class="dropdown-item fw-500 pt-3 pb-3" href="/admin/account/logout">
+                <span data-i18n="drpdwn.page-logout">Logout</span>
+                @*<span class="float-right fw-n">&commat;codexlantern</span>*@
+            </a>
+        </div>
+    </div>
+</div>
+</header>

@@ -1,0 +1,132 @@
+﻿@{
+    string businessName = ViewBag.BusinessName;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        @ViewBag.Title
+    </title>
+    <meta name="description" content="Analytics Dashboard">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon.ico">
+    <link rel="mask-icon" href="~/favicon.ico" color="#5bbad5">
+    @Styles.Render("~/areas/admin/content/smartadmin")
+    @Styles.Render("~/areas/admin/Content/JqueryUI/cssjQueryUI")
+    @Styles.Render("~/areas/admin/content/confirm")
+    @Styles.Render("~/areas/admin/content/layout")
+</head>
+<body class="mod-bg-1 header-function-fixed">
+    <script>
+        //#region Store Theme Color in Local Storage and Load What Color u Selected By Default From LocalStorage. Note: Keep this Script in Layout and not in External JS,Otherwise it will slowdown theme pickup from local storage
+        /**
+         *	This script should be placed right after the body tag for fast execution
+         *	Note: the script is written in pure javascript and does not depend on thirdparty library
+         **/
+        'use strict';
+
+        var classHolder = document.getElementsByTagName("BODY")[0],
+            /**
+             * Load from localstorage
+             **/
+            themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+                {},
+            themeURL = themeSettings.themeURL || '',
+            themeOptions = themeSettings.themeOptions || '';
+        /**
+         * Load theme options
+         **/
+        if (themeSettings.themeOptions) {
+            classHolder.className = themeSettings.themeOptions;
+            console.log("%c✔ Theme settings loaded", "color: #148f32");
+        }
+        else {
+            console.log("Heads up! Theme settings is empty or does not exist, loading default settings...");
+        }
+        if (themeSettings.themeURL && !document.getElementById('mytheme')) {
+            var cssfile = document.createElement('link');
+            cssfile.id = 'mytheme';
+            cssfile.rel = 'stylesheet';
+            cssfile.href = themeURL;
+            document.getElementsByTagName('head')[0].appendChild(cssfile);
+        }
+        /**
+         * Save to localstorage
+         **/
+        var saveSettings = function () {
+            themeSettings.themeOptions = String(classHolder.className).split(/[^\w-]+/).filter(function (item) {
+                return /^(nav|header|mod|display)-/i.test(item);
+            }).join(' ');
+            if (document.getElementById('mytheme')) {
+                themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
+            };
+            //#region I added this line by myself to by default add class nav-function-fixed to make sidebar fixed
+            themeSettings.themeOptions = themeSettings.themeOptions + " nav-function-fixed";
+            //#endregion
+            localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+        }
+        /**
+         * Reset settings
+         **/
+        var resetSettings = function () {
+            localStorage.setItem("themeSettings", "");
+        }
+//#endregion
+    </script>
+    <div class="page-wrapper">
+        <div class="page-inner">
+            @{Html.RenderAction("AsideMenu", "home");}
+            <div class="page-content-wrapper">
+                @{ Html.RenderPartial("_Header"); }
+                @Scripts.Render("~/areas/admin/script/smartadmin")
+                @Scripts.Render("~/areas/admin/script/jqueryvalidator")
+                @Scripts.Render("~/areas/admin/bundles/jqueryui")
+                @Scripts.Render("~/areas/admin/script/confirm")
+                @RenderBody()
+                @Scripts.Render("~/areas/admin/script/layout")
+                @{ Html.RenderPartial("_ModalPartialView"); }
+                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+                @*<footer class="page-footer webfooter" role="contentinfo">
+                    <div class="d-flex align-items-center flex-1 text-muted">
+                        <span class="hidden-md-down fw-700">Developed By: <a target="_blank" href="http://www.internussoft.com" style="font-weight: bold; text-decoration: none !important">Internussoft ®</a></span>
+                    </div>
+                </footer>*@
+            </div>
+        </div>
+    </div>
+
+    <nav class="shortcut-menu d-none d-sm-block">
+        <input type="checkbox" class="menu-open" name="menu-open" id="menu_open" />
+        <label for="menu_open" class="menu-open-button ">
+            <span class="app-shortcut-icon d-block"></span>
+        </label>
+        <a href="#" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="Scroll Top">
+            <i class="fal fa-arrow-up"></i>
+        </a>
+        <a href="/admin/account/logout" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="Logout">
+            <i class="fal fa-sign-out"></i>
+        </a>
+        <a href="#" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="Full Screen">
+            <i class="fal fa-expand"></i>
+        </a>
+        <a href="#" class="menu-item btn" data-action="app-print" data-toggle="tooltip" data-placement="left" title="Print page">
+            <i class="fal fa-print"></i>
+        </a>
+        @*<a href="#" class="menu-item btn" data-action="app-voice" data-toggle="tooltip" data-placement="left" title="Voice command">
+                <i class="fal fa-microphone"></i>
+            </a>*@
+        @*<a href="#" class="menu-item btn chat" data-toggle="modal" data-target="#chat" data-placement="left" title="Print page">
+                <i class="fal fa-envelope"></i>
+            </a>*@
+    </nav>
+</body>
+</html>
+

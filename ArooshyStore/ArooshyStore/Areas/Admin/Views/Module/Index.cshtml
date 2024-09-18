@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Module";
+}
+<!-- END Page Header -->
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-md-12" style="display:flex">
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-clipboard"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Module</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-list-ol"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Modules List</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </th>
+                    <th style="text-align:right">
+                        <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-hdr bg-primary-500 bg-info-gradient" role="heading">
+                    <h2>Modules List</h2>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="row" style="padding-left: 0px;padding-right: 0px;padding-top:0px">
+                            <div class="col-lg-5" style="margin-top:4px">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
+                                    <i class="fal fa-plus-circle"></i>
+                                    &nbsp;
+                                    New Module
+                                </a>
+                            </div>
+                            <div class="col-lg-7" style="margin-top:4px">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Module Name</button>
+                                        <div class="dropdown-menu" id="ulSearchJobType">
+                                            <a class="dropdown-item" href="#">Module Name</a>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
+                                    <div class="input-group-append">
+                                        <button id="btnSearch" class="btn btn-outline-default btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false">Go</button>
+                                    </div>
+                                </div>
+                                @*<div class="pull-right top_search" style="width:100%">
+                                        <div class="input-group">
+                                            <input type="text" id="txtSearch" class="form-control" placeholder="Search here...">
+                                            <span class="input-group-btn">
+                                                <button id="btnSearch" class="btn btn-outline-primary waves-effect waves-themed btnSearchGo" type="button">Go</button>
+                                            </span>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+
+                        <table id="myTable" class="table table-bordered table-hover table-striped w-100">
+                            <thead>
+                                <tr>
+                                    <th>Module Name</th>
+                                    <th class="none">Created Date</th>
+                                    <th class="none">Created By</th>
+                                    <th class="none">Updated Date</th>
+                                    <th class="none">Updated By</th>
+                                    <th class="min-mobile">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            @*<tfoot>
+                                </tfoot>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- this overlay is activated only when mobile menu is triggered -->
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Module/Index.js"></script>

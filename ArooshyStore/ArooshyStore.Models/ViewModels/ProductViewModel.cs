@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace ArooshyStore.Models.ViewModels
+{
+    public class ProductViewModel
+    {
+        public int ProductId { get; set; }
+        public List<ProductViewModel> Products { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
+        public string ParentCategoryName { get; set; }
+
+        public string ProductName { get; set; }
+        public string ProductNameUrdu { get; set; }
+        public string AllAttributes { get; set; }
+        public string MasterCategoryName { get; set; }
+        public string ChildCategoryName { get; set; }
+
+        public string Barcode { get; set; }
+        public int? UnitId { get; set; }
+        public string UnitName { get; set; }
+
+        public int? CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
+        public decimal CostPrice { get; set; }
+        public decimal SalePrice { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public string ImagePath { get; set; }
+        public int DocumentId { get; set; }
+        public int? InfoId { get; set; }
+        public string StatusString { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+        public int? CreatedBy { get; set; }
+        public string CreatedByString { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? UpdatedBy { get; set; }
+        public string UpdatedByString { get; set; }
+        public int TotalRecords { get; set; }
+
+        //public List<ProductAttributeDetailViewModel> ProductAttributeDetailList { get; set; }
+        //public ProductAttributeDetailViewModel ProductAttributeDetail { get; set; }
+        //public List<ProductAttributeDetailViewModel> ProductAttributeDetailViewModelList { get; set; }
+       
+        public List<AttributeViewModel> AttributesList { get; set; }
+        public List<ProductAttributeDetailViewModel> AttributesDetailList { get; set; }
+        public class ProductAttributeDetailViewModel
+        {
+            public int? AttributeId { get; set; }
+            public int? AttributeDetailId { get; set; }
+            public bool? Status { get; set; }
+        }
+
+
+
+    }
+}

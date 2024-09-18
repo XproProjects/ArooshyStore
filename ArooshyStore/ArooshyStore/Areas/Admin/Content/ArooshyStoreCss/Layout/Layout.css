@@ -1,0 +1,223 @@
+﻿:root {
+    --bg-color: #584677;
+}
+
+.nav-menu li a > [class*='fa-'], .nav-menu li a > .ni {
+    color: #fff;
+}
+
+.nav-menu li a {
+    color: #fff;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 79%;
+}
+
+#myHeader {
+    box-shadow: 0 0 1px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.22);
+}
+
+.collapse-sign > em {
+    color: #fff;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: var(--bg-color);
+    background-color: var(--bg-color);
+}
+
+.dataTables_empty {
+    color: #000 !important;
+    font-size: 1rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.btn-default-icon {
+    border: 1px solid #A2A8B5;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    vertical-align: middle;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+    .btn-default-icon > i {
+        padding: 7px 11px;
+        height: 100%;
+        background-color: #5A6268;
+        border: 1px solid #5A6268 !important;
+        color: #fff;
+        font-size: 17px;
+        font-weight: bold;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .btn-default-icon:hover {
+        background-color: #E6E6E6;
+    }
+
+.searchButtons {
+    background-color: #fff !important;
+    border: 1px solid #000;
+    width: 30px;
+    height: 30px;
+}
+
+.btnNew, .btnSearchGo {
+    background-color: #FAF8FB;
+    border-color: #ddd;
+    color: #000;
+    box-shadow: none !important;
+}
+
+    .btnNew:hover, .btnSearchGo:hover {
+        color: #fff;
+    }
+
+.Acenter {
+    text-align: center;
+}
+
+.Aright {
+    text-align: right;
+}
+
+#txtSearch:focus {
+    border-color: #E5E5E5;
+}
+
+input[type=text], input[type=date], input[type=password], input[type=number] {
+    border-color: #A2A2A2;
+}
+
+textarea, .select2-selection {
+    border-color: #A2A2A2 !important;
+}
+
+input[type=file], input[type=date], input[type=month], input[type=time], input[type=datetime-local], .input-group-text {
+    border: 1px solid #A2A2A2;
+}
+
+.custom-file-label {
+    border: 1px solid #A2A2A2;
+}
+
+input[type=number]:disabled {
+    background-color: #f3f3f3 !important;
+}
+
+select {
+    border: 1px solid #A2A2A2 !important;
+}
+
+.dataTables_filter {
+    display: none !important;
+}
+
+.error {
+    font-size: 12px;
+    color: #af0001 !important;
+}
+
+.nav-item > a > i {
+    color: var(--bg-color);
+    font-weight: bold;
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+    .nav-item > a > span {
+        color: var(--bg-color);
+        font-weight: bold;
+    }
+
+    .nav-item.active {
+        border-top: 3px solid var(--bg-color);
+    }
+
+        .nav-item.active > a {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+            .nav-item.active > a > span {
+                font-weight: bold;
+            }
+
+            .nav-item.active > a > i {
+                color: #000;
+                font-weight: bold;
+            }
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+.heading-1 {
+    position: relative;
+    text-align: center;
+}
+
+    .heading-1:before {
+        content: "";
+        display: block;
+        border-top: solid 2px #838383;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        z-index: 0;
+    }
+
+    .heading-1 span {
+        background: #fff;
+        padding: 0 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.btn-warning {
+    background-color: #E39906 !important;
+    border-color: #E39906 !important;
+}
+
+.btn {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+.datepicker-calendar-icon {
+    float: right;
+    cursor: pointer;
+    position: relative !important;
+    top: -27px !important;
+    right: 14px !important;
+    font-size: 15px !important;
+}
+
+.hasDatepicker {
+    background-color: #fff !important;
+    cursor: pointer !important;
+}
+
+.page-logo, .page-sidebar, .nav-footer, .bg-brand-gradient {
+    background-image: none !important;
+    background-image: none !important;
+    /*background-color: #584475;*/
+}

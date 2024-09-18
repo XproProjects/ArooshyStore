@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "VF12ik4Mh+MZOdaAFhNJ3de/H9/pPz5HZoM224fpky9QDxweC2iZWudJceyTRUcFHn6UKTNWQIVAybRTT7QS/A==",
+  "success": true,
+  "projectFilePath": "D:\\ArooshyStore\\Project\\ArooshyStore\\ArooshyStore\\ArooshyStore.Models\\ArooshyStore.Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ak Tech\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.7\\microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
+    "C:\\Users\\Ak Tech\\.nuget\\packages\\microsoft.aspnet.razor\\3.2.7\\microsoft.aspnet.razor.3.2.7.nupkg.sha512",
+    "C:\\Users\\Ak Tech\\.nuget\\packages\\microsoft.aspnet.webpages\\3.2.7\\microsoft.aspnet.webpages.3.2.7.nupkg.sha512",
+    "C:\\Users\\Ak Tech\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ak Tech\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

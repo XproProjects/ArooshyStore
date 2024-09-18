@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+    string businessName = ViewBag.BusinessName;
+    string bgImageSrc = ViewBag.BannerImage;
+    string bgLogo = ViewBag.BusinessLogo;
+    string bgColor = ViewBag.BgColor;
+}
+<div class="page-wrapper">
+    <div class="page-inner" style="">
+        <div class="page-content-wrapper bg-transparent m-0">
+            @*<div class="height-10 w-100 shadow-lg px-4 bg-brand-gradient">
+                <div class="d-flex align-items-center container p-0">
+                    <div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9">
+                        <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
+                            <img src="@bgLogo" alt="SmartAdmin WebApp" aria-roledescription="logo" style="height: 30px;width: 37px;">
+                            <span class="page-logo-text mr-1">@businessName</span>
+                        </a>
+                    </div>
+                </div>
+            </div>*@
+            <div class="flex-1" style=" background: url('../../Content/img/acc13.gif') no-repeat center bottom fixed; background-size: cover; ">
+                <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0 login2Container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 ml-auto">
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
+                            <div class="card p-4 rounded-plus" style="background-color: #535087 !important ">
+                                <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center businessTitleLogin2">
+                                    <img src="@bgLogo" style="width:38px;height:30px;float:left" />
+                                    <span class="page-logo-text mr-1" style="font-size:18px;font-weight:bold">
+                                        @businessName
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="card p-4 rounded-plus bg-faded" style="background-color:#fff;margin-top: -8px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+                                @using (Html.BeginForm("login", "account", FormMethod.Post, new { id = "loginForm", enctype = "multipart/form-data", role = "form" }))
+                                {
+                                    <div class="form-group">
+                                        <label class="form-label" for="username">Username</label>
+                                        <input type="text" id="Email" class="form-control form-control-lg" placeholder="Enter username or email here" value="" required>
+                                        <div class="invalid-feedback">Username is required.</div>
+                                        @*<div class="help-block">Your unique Username to app</div>*@
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" id="Password" class="form-control form-control-lg" placeholder="Enter password here" value="" required>
+                                        <span data-toggle="#Password" id="eyeIcon" class="fal fa-fw fa-eye field-icon toggle-password" style="cursor:pointer"></span>
+                                        <div class="invalid-feedback">Password is required.</div>
+                                        @*<div class="help-block">Your password</div>*@
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="rememberme">
+                                            <label class="custom-control-label" for="rememberme"> Remember me</label>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters">
+                                        @*<div class="col-lg-6 pr-lg-1 my-2">
+                        <button type="submit" class="btn btn-info btn-block btn-lg">Sign in with <i class="fab fa-google"></i></button>
+                    </div>*@
+                                        <div class="col-lg-12 pl-lg-1 my-2">
+                                            <button id="btnLogin" type="submit" style="background-color: #535087 !important; border-color: #535087 !important; box-shadow: none !important " class="btn btn-danger btn-block btn-lg">Login Now</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-center important" style="margin-top: 10px; color: #AF0001;">
+
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 ml-auto">
+                        </div>
+                    </div>
+                    @*<div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
+                            2019 © @businessName
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<img src="~/Content/img/acc.jpg" style="height:99vh;width:100vw;margin-top:-16px" />*@

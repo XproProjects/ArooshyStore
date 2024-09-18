@@ -1,0 +1,130 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model CategoryViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Category/InsertUpdateCategory.css" rel="stylesheet" />
+<div class="mySelect container" style="margin-top: -20px;">
+    @using (Html.BeginForm("InsertUpdateCategory", "Category", FormMethod.Post, new { id = "popupForm", @class = "smart-form custom-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset class="p-4">
+            <div class="row">
+                <section class="col-md-12">
+                    <div style="display: flex; flex-direction: column; padding: 18px; padding-top: 0px; padding-bottom: 0px;">
+                        <div class="myDiv" style="flex: 1;">
+                            <img id="DocumentImage" src="@Model.ImagePath" style="margin-top: 28px;height: 240px;width:100%;border-top-left-radius: 5px;border-top-right-radius: 5px;" />
+                            <a href="javascript:void(0)" title="Delete this Picture" data-value="0" style="background-color: #FD1381; font-size: 14px; border-radius: 50%; font-weight: bold; padding: 5px; color: #fff; padding-left: 9px; padding-right: 9px; position: absolute; right: 35px; top: 33px;" class="deleteImage DeleteImage">X</a>
+
+                        </div>
+                        <div class="custom-file" style="flex: 1;">
+                            <input type="file" class="custom-file-input" id="ProfileImage">
+                            <label class="custom-file-label" id="AttachDocument" for="ProfileImage" style="overflow: hidden;">Choose Picture...</label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <section class="col-md-12">
+                    <div class="form-group" style="padding: 18px; padding-top: 0px; padding-bottom: 0px; ">
+                        <label for="CategoryName">Category Name (*)</label>
+                        <input type="hidden" id="CategoryId" name="CategoryId" value="@Model.CategoryId" />
+                        <input type="hidden" id="HiddenParentCategoryId" name="HiddenParentCategoryId" value="@Model.ParentCategoryId" />
+                        <input type="hidden" id="HiddenParentCategoryName" name="HiddenParentCategoryName" value="@Model.ParentCategoryName" />
+                        <input type="hidden" id="From" name="From" value="@ViewBag.From" />
+                        <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                        <div class="input-group" style="width: 100%;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-random"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.CategoryName, new { @placeholder = "Enter Category Name", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+            </div>
+            @{
+                string ishidden = "";
+                if (ViewBag.From.ToLower() == "child")
+                {
+                    ishidden = "";
+                }
+                else
+                {
+                    ishidden = "hidden";
+                }
+            }
+
+            <div class="row" style="margin-top:10px;" @ishidden>
+                <section class="col-md-12">
+                    <div class="form-group" style="padding: 18px; padding-top: 0px; padding-bottom: 0px;">
+                        <table class="" style="width: 100%;">
+                            <tr>
+                                <td style="width: 80%;">
+                                    <label class="form-label">Select Parent Category (*)</label>
+                                    <div class="input-group">
+                                        <select id="ParentCategoryId" name="ParentCategoryId"></select>
+                                    </div>
+                                </td>
+                                <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                    <a href="/admin/category/index/?from=master" target="_blank" class="btn btn-primary" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Parent Category">
+                                        <i class="fas fa-plus" style=""></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+
+                @*<section class="col-md-12">
+                        <div style="padding:5px;padding-top:0px;padding-right:0px">
+                            <div class="input-group">
+                                <table class="" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 80%;">
+                                            <label class="form-label">Select Parent Category (*)</label>
+                                            <div class="input-group">
+                                                <select id="ParentCategoryId" name="ParentCategoryId"></select>
+                                            </div>
+                                        </td>
+                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                            <a href="/admin/category/index/?from=master" target="_blank" class="btn btn-primary" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Parent Category">
+                                                <i class="fas fa-plus" style=""></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>*@
+            </div>
+            @{
+                string ishiddenStatus = "hidden";
+                string ischecked = "";
+                if (Model.CategoryId > 0)
+                {
+                    ishiddenStatus = "";
+                    if (Model.Status == true)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+            }
+            <div class="row" @ishiddenStatus style="margin-top:10px">
+                <section class="col-md-12">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischecked>
+                        <label class="custom-control-label" for="Status">Active</label>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+
+        <!-- Footer Buttons -->
+        <footer class="modal-footer mt-3">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+    }
+</div>
+
+<!-- External Scripts -->
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Category/InsertUpdateCategory.js?v=3"></script>
