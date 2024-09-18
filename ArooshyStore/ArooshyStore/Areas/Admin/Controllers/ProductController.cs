@@ -82,11 +82,11 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 else if (!(string.IsNullOrEmpty(barcode)))
                 {
-                    whereCondition += " LOWER(s.ProductName) like ('%" + barcode.ToLower() + "%')";
+                    whereCondition += " LOWER(s.Barcode) like ('%" + barcode.ToLower() + "%')";
                 }
                 else if (!(string.IsNullOrEmpty(categoryName)))
                 {
-                    whereCondition += " LOWER(s.ProductName) like ('%" + categoryName.ToLower() + "%')";
+                    whereCondition += " LOWER(c.CategoryName) like ('%" + categoryName.ToLower() + "%')";
                 }
                 else
                 {

@@ -41,6 +41,16 @@
             { "data": "CostPrice", "name": "CostPrice", "autoWidth": true },
             { "data": "SalePrice", "name": "SalePrice", "autoWidth": true },
             {
+                "data": "IsFeaturedString", "name": "IsFeaturedString", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    if (data.toString() == "Yes") {
+                        return '<span class="badge badge-success badge-pill">Yes</span>';
+                    }
+                    else {
+                        return '<span class="badge badge-danger badge-pill">No</span>';
+                    }
+                }
+            },
+            {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
                 }
