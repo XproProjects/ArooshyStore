@@ -44,8 +44,7 @@ namespace ArooshyStore.BLL.Services
                                    "AND dc.Remarks = 'ProfilePicture' " +
                                    "where " + whereCondition;
                     //Get List
-                    //query += " select s.CarouselId,isnull(s.CarouselName,'') as CarouselName,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblCarousel s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
-                    query += "SELECT s.CarouselId, " + "ISNULL(s.CarouselName, '') AS CarouselName, " + "ISNULL(s.Line1, '') AS Line1, " + "ISNULL(s.Line2, '') AS Line2, " +  "ISNULL(s.Line3, '') AS Line3, " +  "(CASE WHEN ISNULL(dc.DocumentId, 0) = 0 " +  "THEN '/Areas/Admin/Content/noimage.png' " +  "ELSE '/Areas/Admin/FormsDocuments/Carousel/' + CAST(ISNULL(dc.DocumentId, 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') END) AS ImagePath, " +
+                    query += "SELECT s.CarouselId, " + " " + "ISNULL(s.Line1, '') AS Line1, " + "ISNULL(s.Line2, '') AS Line2, " +  "ISNULL(s.Line3, '') AS Line3, " +  "(CASE WHEN ISNULL(dc.DocumentId, 0) = 0 " +  "THEN '/Areas/Admin/Content/noimage.png' " +  "ELSE '/Areas/Admin/FormsDocuments/Carousel/' + CAST(ISNULL(dc.DocumentId, 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') END) AS ImagePath, " +
                              "(CASE WHEN ISNULL(s.Status, 0) = 0 THEN 'In-Active' ELSE 'Active' END) AS StatusString, " +
                              "ISNULL(CONVERT(VARCHAR, s.CreatedDate, 120), '') AS CreatedDate, " +
                              "(CASE WHEN ISNULL(s.CreatedBy, 0) = 0 THEN '' " +
@@ -76,12 +75,10 @@ namespace ArooshyStore.BLL.Services
                                 list.Add(new CarouselViewModel()
                                 {
                                     CarouselId = Convert.ToInt32(reader["CarouselId"]),
-                                    CarouselName = reader["CarouselName"].ToString(),
                                     Line1 = reader["Line1"].ToString(),
                                     Line2 = reader["Line2"].ToString(),
                                     Line3 = reader["Line3"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-
                                     StatusString = reader["StatusString"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
@@ -116,10 +113,9 @@ namespace ArooshyStore.BLL.Services
                          select new CarouselViewModel
                          {
                              CarouselId = f.CarouselId,
-                             CarouselName = f.CarouselName,
-                             Line1 = f.Line1,
-                             Line2 = f.Line2,
-                             Line3 = f.Line3,
+                             Line1 = f.Line1 ?? "",
+                             Line2 = f.Line2 ?? "",
+                             Line3 = f.Line3 ?? "",
                              ImagePath = _unitOfWork.Db.Set<tblDocument>()
                                           .Where(x => x.TypeId == f.CarouselId.ToString() && x.DocumentType == "Carousel" && x.Remarks == "ProfilePicture")
                                           .Select(x => "/Areas/Admin/FormsDocuments/Carousel/" + x.DocumentId + "." + x.DocumentExtension)
@@ -137,7 +133,6 @@ namespace ArooshyStore.BLL.Services
                 model = new CarouselViewModel
                 {
                     CarouselId = 0,
-                    CarouselName = "",
                     Line1 = "",
                     Line2 = "",
                     Line3 = "",
@@ -157,17 +152,6 @@ namespace ArooshyStore.BLL.Services
                 string insertUpdateStatus = "";
                 if (model.CarouselId > 0)
                 {
-                    bool check = _unitOfWork.Db.Set<tblCarousel>().Where(x => x.CarouselId == model.CarouselId).Any(x => x.CarouselName.ToLower().Trim() == model.CarouselName.ToLower().Trim());
-                    if (!check)
-                    {
-                        bool check2 = _unitOfWork.Db.Set<tblCarousel>().Any(x => x.CarouselName.ToLower().Trim() == model.CarouselName.ToLower().Trim());
-                        if (check2)
-                        {
-                            response.Status = false;
-                            response.Message = "Carousel Name already exists.";
-                            return response;
-                        }
-                    }
                     if (model.StatusString == "Yes")
                     {
                         model.Status = true;
@@ -180,13 +164,6 @@ namespace ArooshyStore.BLL.Services
                 }
                 else
                 {
-                    bool check2 = _unitOfWork.Db.Set<tblCarousel>().Any(x => x.CarouselName.ToLower().Trim() == model.CarouselName.ToLower().Trim());
-                    if (check2)
-                    {
-                        response.Status = false;
-                        response.Message = "Carousel Name already exists.";
-                        return response;
-                    }
                     model.Status = true;
                     insertUpdateStatus = "Save";
                 }
@@ -230,11 +207,9 @@ namespace ArooshyStore.BLL.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Clear();
                         cmd.Parameters.Add("@CarouselId", SqlDbType.Int).Value = st.CarouselId;
-                        cmd.Parameters.Add("@CarouselName", SqlDbType.NVarChar).Value = st.CarouselName;
                         cmd.Parameters.Add("@Line1", SqlDbType.NVarChar).Value = st.Line1;
                         cmd.Parameters.Add("@Line2", SqlDbType.NVarChar).Value = st.Line2;
                         cmd.Parameters.Add("@Line3", SqlDbType.NVarChar).Value = st.Line3;
-
                         cmd.Parameters.Add("@Status", SqlDbType.Bit).Value = st.Status;
                         cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
                         cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
@@ -299,7 +274,6 @@ namespace ArooshyStore.BLL.Services
                     select new CarouselViewModel
                     {
                         CarouselId = f.CarouselId,
-                        CarouselName = f.CarouselName,
                         Line1 = f.Line1,
                         Line2 = f.Line2,
                         Line3 = f.Line3,

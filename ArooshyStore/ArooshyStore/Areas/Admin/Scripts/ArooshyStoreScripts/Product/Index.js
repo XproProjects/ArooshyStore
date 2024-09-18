@@ -24,11 +24,9 @@
                     return '<img src="' + data + '" style="height:45px;width:45px;" />';
                 }
             },
+            { "data": "Barcode", "name": "Barcode", "autoWidth": true },
             { "data": "ProductName", "name": "ProductName", "autoWidth": true },
-            { "data": "ProductNameUrdu", "name": "ProductNameUrdu", "autoWidth": true },
-            { "data": "CostPrice", "name": "CostPrice", "autoWidth": true },
-            { "data": "SalePrice", "name": "SalePrice", "autoWidth": true },
-
+            { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
             {
                 "data": "StatusString", "name": "StatusString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
                     if (data.toString() == "Active") {
@@ -39,6 +37,9 @@
                     }
                 }
             },
+            //{ "data": "ProductNameUrdu", "name": "ProductNameUrdu", "autoWidth": true },
+            { "data": "CostPrice", "name": "CostPrice", "autoWidth": true },
+            { "data": "SalePrice", "name": "SalePrice", "autoWidth": true },
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -60,17 +61,12 @@
                         '</button>' +
                         '<div class="dropdown-menu">';
                     div += '<a class="dropdown-item btnAttachDocument btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Attach Document">Attach Documents</a>';
-                    div += '<a class="dropdown-item btnProducAttributeDetail btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="1" style="text-decoration:none !important;font-weight:normal !important" title="Product Attribute Detail">Product Attribute Detail</a>';
-
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Edit Product" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
-
                     if ($('#DeleteActionRole').val() > 0) {
                         div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Product" data-toggle="modal" data-target="#DeleteModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
                     }
-
-
                     div += '</div>' +
                         '</div>';
 
@@ -111,30 +107,6 @@ $(document).on('keydown', function (event) {
 $(document).on('shown.bs.modal', "#MyModal", function () {
     $('#ProductName').focus();
 });
-$(document).on('click', '.btnProducAttributeDetail', function () {
-    $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
-    var id = $(this).attr("data-value");
-    if (id > 0) {
-        $('#ModelHeaderSpan').html('Edit Product');
-    }
-    else {
-        $('#ModelHeaderSpan').html('Add Product');
-    }
-    $('#modalDiv').html('');
-    // $('#modalDiv').load('@Url.Action("InsertUpdateProduct", "Product")?id=' + id + '');
-    $.ajax({
-        type: "GET",
-        url: "/Admin/Product/InsertUpdateProductAttributeDetail/",
-        data: {
-            'id': id,
-        },
-        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
-        success: function (response) {
-            //$('#ProductsData').html('');
-            $('#modalDiv').html(response);
-        }
-    })
-});
 $(document).on('click', '.AddEditRecord', function () {
     $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
     var id = $(this).attr("data-value");
@@ -171,6 +143,12 @@ function SearchItem() {
     var BElement = $("#btnSearchJobType");
     if (BElement.html() == 'Product Name') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
+    }
+    else if (BElement.html() == 'Barcode') {
+        oTable.columns(1).search($('#txtSearch').val().trim()).draw();
+    }
+    else if (BElement.html() == 'Category') {
+        oTable.columns(2).search($('#txtSearch').val().trim()).draw();
     }
     else {
         alert("Error! try again.");

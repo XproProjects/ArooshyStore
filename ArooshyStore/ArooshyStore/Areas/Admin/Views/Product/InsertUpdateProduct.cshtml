@@ -1,74 +1,6 @@
-﻿<link href="~/Content/ArooshyStoreCss/User/InsertUpdateUser.css" rel="stylesheet" />
-@using ArooshyStore.Models.ViewModels
+﻿@using ArooshyStore.Models.ViewModels
 @model ProductViewModel
-<style>
-
-
-    .actionCheckbox, .moduleCheckbox {
-        width: 20px;
-        height: 20px;
-        /*background-color:green!important;*/
-    }
-
-
-    .tree li {
-        list-style-type: none;
-        margin: 0;
-        padding: 10px 5px 0 5px;
-        position: relative
-    }
-
-        .tree li::before,
-        .tree li::after {
-            content: '';
-            left: -20px;
-            position: absolute;
-            right: auto
-        }
-
-        .tree li::before {
-            border-left: 2px solid #886AB5;
-            bottom: 50px;
-            height: 100%;
-            top: 0;
-            width: 1px
-        }
-
-        .tree li::after {
-            border-top: 2px solid #886AB5;
-            height: 20px;
-            top: 25px;
-            width: 25px
-        }
-
-        .tree li span {
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 3px;
-            display: inline-block;
-            padding: 3px 8px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-    .tree > ul > li::before,
-    .tree > ul > li::after {
-        border: 0
-    }
-
-    .tree li:last-child::before {
-        height: 27px
-    }
-
-    .tree li span:hover {
-        border: 2px solid #94a0b4;
-    }
-
-    [aria-expanded="false"] > .expanded,
-    [aria-expanded="true"] > .collapsed {
-        display: none;
-    }
-</style>
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/User/AssignModule.css" rel="stylesheet" />
 <div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
     @using (Html.BeginForm("InsertUpdateProduct", "Product", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
     {
@@ -86,12 +18,9 @@
                 </div>
                 <div class="col-md-8" style="margin-top:23px">
                     <div class="row">
-
                         <section class="col-md-12">
                             <div style="padding:5px;padding-top:0px">
-
                                 <label>Product Name (*)</label>
-
                                 <input type="hidden" id="ProductId" name="ProductId" value="@Model.ProductId" />
                                 <input type="hidden" id="HiddenCategoryId" name="HiddenCategoryId" value="@Model.CategoryId" />
                                 <input type="hidden" id="HiddenCategoryName" name="HiddenCategoryName" value="@Model.CategoryName" />
@@ -101,7 +30,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-user"></i>
+                                            <i class="fal fa-info"></i>
                                         </span>
                                     </div>
                                     @Html.TextBoxFor(a => a.ProductName, new { @placeholder = "Product Name", @class = "form-control" })
@@ -109,30 +38,28 @@
 
                             </div>
                         </section>
-                        <section class="col-md-12">
-                            <div style="padding:5px;padding-top:20px">
-                                <label>Product Name Urdu</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-random"></i>
-                                        </span>
+                        @*<section class="col-md-12">
+                                <div style="padding:5px;padding-top:7px">
+                                    <label>Product Name Urdu</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-info"></i>
+                                            </span>
+                                        </div>
+                                        @Html.TextBoxFor(a => a.ProductNameUrdu, new { @placeholder = "Product Name Urdu", @class = "form-control" })
                                     </div>
-                                    @Html.TextBoxFor(a => a.ProductNameUrdu, new { @placeholder = "Product Name Urdu", @class = "form-control" })
                                 </div>
-                            </div>
-                        </section>
-
+                            </section>*@
                     </div>
-
-                    <div class="row" style="margin-top:10px">
+                    <div class="row" style="margin-top:7px">
                         <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px;padding-right:0px">
                                 <div class="input-group">
                                     <table class="" style="width: 100%;">
                                         <tr>
                                             <td style="width: 80%;">
-                                                <label class="form-label">Select Category(*)</label>
+                                                <label class="form-label">Select Category (*)</label>
                                                 <div class="input-group">
                                                     <select id="CategoryId" name="CategoryId"></select>
                                                 </div>
@@ -147,14 +74,13 @@
                                 </div>
                             </div>
                         </section>
-
                         <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px">
-                                <label>Barcode</label>
+                                <label>Barcode (*)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-id-card"></i>
+                                            <i class="fal fa-barcode"></i>
                                         </span>
                                     </div>
                                     @Html.TextBoxFor(a => a.Barcode, new { @placeholder = "Barcode", @class = "form-control" })
@@ -162,90 +88,109 @@
                             </div>
                         </section>
                     </div>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-md-12" style="margin-top:13px">
                     <div class="row">
-
-
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px;padding-right:0px">
-                                <div class="input-group">
-                                    <table class="" style="width: 100%;">
-                                        <tr>
-                                            <td style="width: 80%;">
-                                                <label class="form-label">Select Unit</label>
-                                                <div class="input-group">
-                                                    <select id="UnitId" name="UnitId"></select>
-                                                </div>
-                                            </td>
-                                            <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                                <a href="javascript:void(0)" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add Unit">
-                                                    <i class="fas fa-plus" style=""></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Cost Price</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-credit-card fa-fw"></i>
-                                        </span>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <div class="row">
+                                @*<section class="col-md-4">
+                                        <div style="padding:5px;padding-top:0px;padding-right:0px">
+                                            <div class="input-group">
+                                                <table class="" style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 80%;">
+                                                            <label class="form-label">Select Unit</label>
+                                                            <div class="input-group">
+                                                                <select id="UnitId" name="UnitId"></select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                                            <a href="javascript:void(0)" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add Unit">
+                                                                <i class="fas fa-plus" style=""></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>*@
+                                <section class="col-md-6">
+                                    <div style="padding:5px;padding-top:0px">
+                                        <label>Cost Price (*)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fal fa-money-bill-alt"></i>
+                                                </span>
+                                            </div>
+                                            @Html.TextBoxFor(a => a.CostPrice, new { @placeholder = "Cost Price", @class = "form-control" })
+                                        </div>
                                     </div>
-                                    @Html.TextBoxFor(a => a.CostPrice, new { @placeholder = "Cost Price", @class = "form-control" })
-
-                                </div>
-                            </div>
-                        </section>
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>SalePrice</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-credit-card fa-fw"></i>
-                                        </span>
+                                </section>
+                                <section class="col-md-6">
+                                    <div style="padding:5px;padding-top:0px">
+                                        <label>Sale Price (*)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fal fa-money-bill-alt"></i>
+                                                </span>
+                                            </div>
+                                            @Html.TextBoxFor(a => a.SalePrice, new { @placeholder = "Sale Price", @class = "form-control" })
+                                        </div>
                                     </div>
-                                    @Html.TextBoxFor(a => a.SalePrice, new { @placeholder = "Sale Price", @class = "form-control" })
-                                </div>
+                                </section>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
-            <h1 class="heading-1" style="margin-top: 20px;color: #838383;font-weight:bold;font-size:17px "><span>Attributes Detail</span></h1>
-
+            @{
+                string ishidden = "hidden";
+                string ischeckedStatus = "";
+                string ischeckedFeatured = "";
+                if (Model.ProductId > 0)
+                {
+                    ishidden = "";
+                    if (Model.Status == true)
+                    {
+                        ischeckedStatus = "checked";
+                    }
+                }
+                if (Model.IsFeatured == true)
+                {
+                    ischeckedFeatured = "checked";
+                }
+            }
+            <div class="row">
+                <section class="col-md-8">
+                </section>
+                <section class="col-md-2">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;" @ishidden>
+                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischeckedStatus>
+                        <label class="custom-control-label" for="Status">Active</label>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="Featured" id="Featured" @ischeckedFeatured>
+                        <label class="custom-control-label" for="Featured">Featured</label>
+                    </div>
+                </section>
+            </div>
+            <h1 class="heading-1" style="margin-top: 20px;color: #838383;font-weight:bold;font-size:17px "><span>Product Attributes</span></h1>
             <div class="row">
                 <div class="col-md-12" style="margin-top:13px;">
-                    <table class="" style="width:100%;margin-top:5px !important;margin-bottom:5px !important;">
-                        <tr>
-                            <td style="width: 100%; padding-right: 3px; padding-left: 3px" id="">
-                                <a href="javascript:void(0);" class="btn btn-primary selectAllBtn" style="margin-left:11px;" title="Select All">
-                                    Select All
-                                </a>
+                    <center>
+                        <a href="javascript:void(0);" class="btn btn-primary  selectAllBtn" style="margin-left:11px;" title="Select All">
+                            Select All
+                        </a>
 
-                                <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
-                                    Clear All
-                                </a>
-                            </td>
-                            @*<td>
-                                    <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm saveRoleBtn" style="margin-right:11px;">Save</button>
-                                </td>*@
-                        </tr>
-                    </table>
+                        <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
+                            Clear All
+                        </a>
+                    </center>
                 </div>
             </div>
-
-            <div class="AllModules">
+            <div class="AllModules" style="">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
@@ -254,31 +199,57 @@
                                 @{
                                     int i = 0;
                                 }
-                                @foreach (var attribute in Model.AttributesList)
+                                @foreach (AttributeViewModel u in Model.AttributesList)
                                 {
                                     i++;
-                                    string id = "attribute" + i;
+                                    string checkTab = "";
+                                    string bgColor = "";
+                                    if (u.AllAttributes == "Yes")
+                                    {
+                                        checkTab = "checked";
+                                    }
+                                    if (u.AttributeDetails.Any(x => x.ProductAttributeDetailId > 0))
+                                    {
+                                        bgColor = "#1D2739";
+                                    }
+                                    else
+                                    {
+                                        bgColor = "#D69C1F";
+                                    }
+                                    string id = "module" + i;
                                     int j = 0;
 
-                                    <li class="ModuleList">
-                                        <span class="col-md-12" style="padding: 15px; background-color: #886AB5; margin-bottom: 32px; font-size:17px; margin-left:-20px;">
-                                            <input type="checkbox" id="@id" class="moduleCheckbox" />
-                                            <label for="@id" style="margin-right: 3px; float: left;"></label>
-                                            <a style="color:whitesmoke; margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#attribute_@i" aria-expanded="true" aria-controls="attribute_@i">
-                                                @attribute.AttributeName
+                                    <li class="ModuleList" style="">
+                                        <span class="col-md-12" style=" padding: 15px; background-color: @bgColor; margin-bottom: 32px;font-size:17px;margin-left:-20px">
+                                            <input type="hidden" class="AttributeId" value="@u.AttributeId" />
+                                            <input type="checkbox" id="@id" class="moduleCheckbox" @checkTab />
+                                            <label for="@id" style="margin-right: 3px;float: left;"></label>
+                                            <a style="color:whitesmoke;margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#Web" aria-expanded="true" aria-controls="Web">
+                                                @u.AttributeName <span class="pull-right" style="font-size: 14px; font-weight: bold">(@u.AttributeDetails.Where(x => x.ProductAttributeDetailId > 0).Count() / @u.AttributeDetails.Count())</span>
                                             </a>
                                         </span>
-
-                                        <ul id="attribute_@i" style="margin-top:-31px">
-                                            @foreach (var detail in attribute.AttributeDetails)
+                                        <ul style="margin-top:-31px">
+                                            @foreach (ProductAttributeDetailViewModel m in u.AttributeDetails)
                                             {
                                                 j++;
-                                                string id2 = "detail" + i + j;
+                                                string checkAction = "";
+                                                string bgColor2 = "";
+                                                if (m.ProductAttributeDetailId > 0)
+                                                {
+                                                    checkAction = "checked";
+                                                    bgColor2 = "#727B84";
+                                                }
+                                                else
+                                                {
+                                                    bgColor2 = "#ECC87B";
+                                                }
+                                                string id2 = "action" + i + j;
                                                 <li style="display:none" class="ActionList">
-                                                    <span style="background-color: #727B84; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
-                                                        <input type="checkbox" id="@id2" class="actionCheckbox" />
+                                                    <span style="background-color: @bgColor2; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
+                                                        <input type="hidden" class="AttributeDetailId" value="@m.AttributeDetailId" />
+                                                        <input type="checkbox" id="@id2" class="actionCheckbox" @checkAction />
                                                         <label for="@id2" style="margin-right: 3px;"></label>
-                                                        <b style="font-size:15px; margin-top:6px;">@detail.AttributeDetailName</b>
+                                                        <b style="font-size:15px;margin-top:6px;text-decoration:none!important;">@m.AttributeDetailName</b>
                                                     </span>
                                                 </li>
                                             }
@@ -291,31 +262,6 @@
                     <div class="col-md-2"></div>
                 </div>
             </div>
-
-
-            @{
-                string ishidden = "hidden";
-                string ischecked = "";
-                if (Model.ProductId > 0)
-                {
-                    ishidden = "";
-                    if (Model.Status == true)
-                    {
-                        ischecked = "checked";
-                    }
-                }
-            }
-            <div class="row" @ishidden>
-                <section class="col-md-12">
-                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
-                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischecked>
-                        <label class="custom-control-label" for="Status">Active</label>
-                    </div>
-                </section>
-            </div>
-
-
-
         </fieldset>
         <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -324,4 +270,4 @@
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=1"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=2"></script>

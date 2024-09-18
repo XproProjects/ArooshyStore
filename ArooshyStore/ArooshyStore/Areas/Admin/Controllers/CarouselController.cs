@@ -56,7 +56,9 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var userName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var line1 = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var line2 = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
+                var line3 = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
@@ -73,14 +75,21 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.CarouselId asc";
                 }
-                if (!(string.IsNullOrEmpty(userName)))
+                if (!(string.IsNullOrEmpty(line1)))
                 {
-                    whereCondition += " LOWER(s.CarouselName) like ('%" + userName.ToLower() + "%')";
+                    whereCondition += " LOWER(s.Line1) like ('%" + line1.ToLower() + "%')";
                 }
-               
+                else if (!(string.IsNullOrEmpty(line2)))
+                {
+                    whereCondition += " LOWER(s.Line2) like ('%" + line2.ToLower() + "%')";
+                }
+                else if (!(string.IsNullOrEmpty(line3)))
+                {
+                    whereCondition += " LOWER(s.Line3) like ('%" + line3.ToLower() + "%')";
+                }
                 else
                 {
-                    whereCondition += " LOWER(s.CarouselName) like ('%%')";
+                    whereCondition += " LOWER(s.Line1) like ('%%')";
                 }
                 List<CarouselViewModel> listsub = new List<CarouselViewModel>();
                 if (_roles.CheckActionRoleId(User.UserId, "carousel", "view") > 0)
@@ -146,7 +155,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
 
-       
+
 
     }
 }

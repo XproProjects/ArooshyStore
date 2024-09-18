@@ -25,6 +25,7 @@ namespace ArooshyStore.Models.ViewModels
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
         public string AllAttributes { get; set; }
+        public string IsChecked { get; set; }
         public List<ProductAttributeDetailViewModel> ProductAttributeDetailList { get; set; }
     }
 }

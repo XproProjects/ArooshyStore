@@ -7,13 +7,13 @@ namespace ArooshyStore.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class test : IMigrationMetadata
+    public sealed partial class Removed_column_CarousalName_tblCarousal : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(test));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Removed_column_CarousalName_tblCarousal));
         
         string IMigrationMetadata.Id
         {
-            get { return "202408171954372_test"; }
+            get { return "202409182113220_Removed_column_CarousalName_tblCarousal"; }
         }
         
         string IMigrationMetadata.Source

@@ -1459,7 +1459,6 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\InsertUpdateExpenseType.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\Index.js" />
-    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\InsertUpdateProductAttributeDetail.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\InsertUpdateProduct.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\City\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\City\InsertUpdateCity.js" />
@@ -2323,7 +2322,6 @@
     <Content Include="Areas\Admin\Views\ExpenseType\InsertUpdateExpenseType.cshtml" />
     <Content Include="Areas\Admin\Views\Expense\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Expense\InsertUpdateExpense.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\InsertUpdateProductAttributeDetail.cshtml" />
     <Content Include="Areas\User\Views\Home\About.cshtml" />
     <Content Include="Areas\User\Views\Home\Index.cshtml" />
     <Content Include="Areas\User\Views\Shared\_Layout - Copy.cshtml" />

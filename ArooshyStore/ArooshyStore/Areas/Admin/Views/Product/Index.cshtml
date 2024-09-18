@@ -79,6 +79,8 @@
                                         <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product Name</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
                                             <a class="dropdown-item" href="#">Product Name</a>
+                                            <a class="dropdown-item" href="#">Barcode</a>
+                                            <a class="dropdown-item" href="#">Category</a>
                                         </div>
                                     </div>
                                     <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
@@ -100,12 +102,14 @@
                         <table id="myTable" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>Product Name</th>
-                                    <th class="min-mobile">Product Name Urdu</th>
-                                    <th class="min-mobile">Cost Price</th>
-                                    <th class="min-mobile">Sales Price</th>
-                                    <th class="min-mobile">Status</th>
+                                    <th class="min-mobile"></th>
+                                    <th class="min-mobile">Barcode</th>
+                                    <th class="min-tablet">Product Name</th>
+                                    <th class="min-tablet">Category</th>
+                                    <th class="min-desktop">Status</th>
+                                    @*<th class="none">Product Name Urdu</th>*@
+                                    <th class="none">Cost Price</th>
+                                    <th class="none">Sales Price</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>

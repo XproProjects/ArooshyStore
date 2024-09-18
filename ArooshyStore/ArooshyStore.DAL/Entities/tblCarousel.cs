@@ -9,8 +9,6 @@ namespace ArooshyStore.DAL.Entities
 
         [Key]
         public int CarouselId { get; set; }
-        [StringLength(200)]
-        public string CarouselName { get; set; }
         [StringLength(500)]
         public string Line1 { get; set; }
         [StringLength(500)]

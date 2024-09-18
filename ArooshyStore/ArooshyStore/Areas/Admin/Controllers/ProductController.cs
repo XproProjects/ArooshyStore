@@ -31,7 +31,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
-                    actionList = _roles.ActionsList(User.UserId, "user permissions");
+                    actionList = _roles.ActionsList(User.UserId, "product");
 
                     return View(actionList);
                 }
@@ -57,7 +57,9 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var userName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var productName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var barcode = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
+                var categoryName = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
@@ -74,9 +76,17 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.ProductId asc";
                 }
-                if (!(string.IsNullOrEmpty(userName)))
+                if (!(string.IsNullOrEmpty(productName)))
                 {
-                    whereCondition += " LOWER(s.ProductName) like ('%" + userName.ToLower() + "%')";
+                    whereCondition += " LOWER(s.ProductName) like ('%" + productName.ToLower() + "%')";
+                }
+                else if (!(string.IsNullOrEmpty(barcode)))
+                {
+                    whereCondition += " LOWER(s.ProductName) like ('%" + barcode.ToLower() + "%')";
+                }
+                else if (!(string.IsNullOrEmpty(categoryName)))
+                {
+                    whereCondition += " LOWER(s.ProductName) like ('%" + categoryName.ToLower() + "%')";
                 }
                 else
                 {
@@ -114,13 +124,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult InsertUpdateProduct(ProductViewModel user, string AttributeDetailData)
+        public ActionResult InsertUpdateProduct(ProductViewModel user, string data)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
 
-                response = _repository.InsertUpdateProduct(user, AttributeDetailData, User.UserId);
+                response = _repository.InsertUpdateProduct(user, data, User.UserId);
             }
             else
             {
@@ -145,36 +155,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 response = business.UserLoggedOut();
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
-        }
-
-
-        [HttpGet]
-        public ActionResult InsertUpdateProductAttributeDetail()
-        {
-            if (User != null)
-            {
-                List<ProductAttributeDetailViewModel> attributes = _repository.GetAttributesWithDetails();
-                return PartialView(attributes);
-            }
-            else
-            {
-                return PartialView("_UserLoggedOut");
-            }
-        }
-        [HttpPost]
-        public ActionResult InsertUpdateProductAttributeDetail(ProductViewModel user, string AttributeDetailData)
-        {
-            StatusMessageViewModel response = new StatusMessageViewModel();
-            if (User != null)
-            {
-                response = _repository.InsertUpdateProduct(user, AttributeDetailData, User.UserId);
-            }
-            else
-            {
-                BusinessInfo business = BusinessInfo.GetInstance;
-                response = business.UserLoggedOut();
-            }
-            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
         }
 
         [HttpPost]

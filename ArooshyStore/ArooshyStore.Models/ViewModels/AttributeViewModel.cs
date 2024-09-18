@@ -19,7 +19,7 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public string AllAttributes { get; set; }
         public List<ProductAttributeDetailViewModel> AttributeDetails { get; set; }
-
     }
 }

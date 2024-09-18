@@ -187,6 +187,10 @@
     <Compile Include="Migrations\202409170800252_Added_tColumnName_tblCarousel.designer.cs">
       <DependentUpon>202409170800252_Added_tColumnName_tblCarousel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202409182113220_Removed_column_CarousalName_tblCarousal.cs" />
+    <Compile Include="Migrations\202409182113220_Removed_column_CarousalName_tblCarousal.Designer.cs">
+      <DependentUpon>202409182113220_Removed_column_CarousalName_tblCarousal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202409170800252_Added_tColumnName_tblCarousel.resx">
       <DependentUpon>202409170800252_Added_tColumnName_tblCarousel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409182113220_Removed_column_CarousalName_tblCarousal.resx">
+      <DependentUpon>202409182113220_Removed_column_CarousalName_tblCarousal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

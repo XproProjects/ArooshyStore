@@ -11,6 +11,5 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel InsertUpdateCarousel(CarouselViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteCarousel(int id, int loggedInUserId);
         List<CarouselViewModel> GetAllCarousels();
-
     }
 }

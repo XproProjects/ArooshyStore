@@ -85,9 +85,6 @@ function DeleteImage(id) {
 $(function () {
     var $checkoutForm = $('#popupForm').validate({
         rules: {
-            CarouselName: {
-                required: true
-            },
             Line1: {
                 required: true
             },
@@ -97,20 +94,16 @@ $(function () {
             Line3: {
                 required: true
             },
-           
         },
         messages: {
-            CarouselName: {
-                required: 'Carousel Name is required.'
-            },
             Line1: {
-                required: 'Name is required.'
+                required: 'Line 1 is required.'
             },
             Line2: {
-                required: 'Name is required.'
+                required: 'Line 2 is required.'
             },
             Line3: {
-                required: 'Name is required.'
+                required: 'Line 3 is required.'
             },
            
         },
@@ -135,7 +128,6 @@ $('#popupForm').on('submit', function (e) {
     $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
 
     var CarouselId = $('#CarouselId').val();
-    var CarouselName = $('#CarouselName').val();
     var Line1 = $('#Line1').val();
     var Line2 = $('#Line2').val();
     var Line3 = $('#Line3').val();
@@ -147,7 +139,6 @@ $('#popupForm').on('submit', function (e) {
     var st =
     {
         CarouselId: CarouselId,
-        CarouselName: CarouselName,
         Line1: Line1,
         Line2: Line2,
         Line3: Line3,

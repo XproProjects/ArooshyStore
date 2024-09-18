@@ -19,24 +19,10 @@
                 </div>
                 <div class="col-md-8" style="margin-top:23px">
                     <div class="row">
-
-                        <section class="col-md-12">
-                            <div style="padding:5px;padding-top:10px">
-                                <label>Carousel Name (*)</label>
-                                <input type="hidden" id="CarouselId" name="CarouselId" value="@Model.CarouselId" />
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-building"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.CarouselName, new { @placeholder = "Carousel Name", @class = "form-control" })
-                                </div>
-                            </div>
-                        </section>
                         <section class="col-md-12">
                             <div style="padding:5px;padding-top:10px">
                                 <label>Line 1 (*)</label>
+                                <input type="hidden" id="CarouselId" name="CarouselId" value="@Model.CarouselId" />
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -60,17 +46,8 @@
                                 </div>
                             </div>
                         </section>
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-12" style="margin-top:23px">
-                    <div class="row">
-
-                       
                         <section class="col-md-12">
-                            <div style="padding:5px;padding-top:0px">
+                            <div style="padding:5px;padding-top:13px">
                                 <label>Line 3 (*)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -82,12 +59,8 @@
                                 </div>
                             </div>
                         </section>
-
                     </div>
-
-
                 </div>
-
             </div>
         
           

@@ -4,91 +4,52 @@
         var children = $(this).parent('li.parent_li').find(' > ul > li');
         if (children.is(':visible')) {
             children.hide('fast');
-            $(this).attr('title', 'Expand this Attribute').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+            $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
         } else {
             children.show('fast');
-            $(this).attr('title', 'Collapse this Attribute').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+            $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
         }
         e.stopPropagation();
     });
 });
 $(document).on('change', '.moduleCheckbox', function () {
     var check = $(this).is(':checked');
-    if (check) {
-        $(this).parents('.AttributesList').find('input[type=checkbox]').prop('checked', true);
-    } else {
-        $(this).parents('.AttributesList').find('input[type=checkbox]').prop('checked', false);
+    if (check == true) {
+        $(this).parents('.ModuleList').find('input[type=checkbox]').prop('checked', true);
     }
-});
-
+    else {
+        $(this).parents('.ModuleList').find('input[type=checkbox]').prop('checked', false);
+    }
+})
 $(document).on('change', '.actionCheckbox', function () {
-    var check = $(this).is(':checked');
-    if (check) {
-        $(this).parents('.AttributesDetailList').find('input[type=checkbox]').prop('checked', true);
-    } else {
-        $(this).parents('.AttributesDetailList').find('input[type=checkbox]').prop('checked', false);
+    var checkCampus = $(this).is(':checked');
+    if (checkCampus == true) {
+        $(this).parents('.ActionList').find('input[type=checkbox]').prop('checked', true);
     }
-
-    var unchecked = 0;
-    $(this).parents('.AttributesList').find('.actionCheckbox').each(function () {
-        if (!$(this).is(':checked')) {
-            unchecked++;
+    else {
+        $(this).parents('.ActionList').find('input[type=checkbox]').prop('checked', false);
+    }
+    var checked = 0;
+    $(this).parents('.ModuleList').find('.actionCheckbox').each(function () {
+        var check = $(this).is(':checked');
+        if (check == false) {
+            checked += 1;
         }
-    });
-
-    if (unchecked > 0) {
-        $(this).parents('.AttributesList').find('.moduleCheckbox').prop('checked', false);
-    } else {
-        $(this).parents('.AttributesList').find('.moduleCheckbox').prop('checked', true);
+    })
+    if (checked > 0) {
+        $(this).parents('.ModuleList').find('.moduleCheckbox').prop('checked', false);
     }
-});
-
+    else {
+        $(this).parents('.ModuleList').find('.moduleCheckbox').prop('checked', true);
+    }
+})
 $('.selectAllBtn').click(function () {
     $('.AllModules').find('input[type=checkbox]').prop('checked', true);
-});
-
+})
 $('.clearAllBtn').click(function () {
     $('.AllModules').find('input[type=checkbox]').prop('checked', false);
-});
+})
 
-//$('#btn_Save').click(function () {
-//    var AttributeDetailData = [];
-//    var mainModuleId = 0;
-
-//    $('.AttributesList').each(function () {
-//        var attributeDetailId = $(this).find('.AttributeId').val();
-//        var attributeId = $(this).find('.AttributeDetailId').val();
-//        mainModuleId = attributeId;
-//        var attributeDetailIdCheck = $(this).find('.moduleCheckbox').is(':checked');
-
-//        if (attributeDetailIdCheck) {
-//            var alldata = {
-//                'AttributeId': attributeDetailId,
-//                'AttributeDetailId': attributeId,
-//            };
-//            AttributeDetailData.push(alldata);
-//        }
-//    });
-
-//    var allData2 = JSON.stringify(AttributeDetailData);
-
-//    $.ajax({
-//        type: "POST",
-//        url: "/Admin/Product/InsertUpdateProduct/",
-//        data: JSON.stringify({ 'attributeId': mainModuleId, 'AttributeDetailData': allData2 }),
-//        dataType: 'json',
-//        contentType: 'application/json; charset=utf-8',
-//        success: function (data) {
-//            if (data.status) {
-//                toastr.success("Attributes Assigned Successfully", "Success", { timeOut: 3000, "closeButton": true });
-//                $('.close').click();
-//                oTable.ajax.reload(null, false);
-//            } else {
-//                toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
-//            }
-//        }
-//    });
-//});
 $(document).keypress(function (event) {
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
@@ -156,7 +117,7 @@ $(document).off('click', '.deleteImage').on('click', '.deleteImage', function ()
     DeleteImage(id);
 });
 function DeleteImage(id) {
-    var checkstr = confirm('Are you sure you want to delete Profile Picture?');
+    var checkstr = confirm('Are you sure you want to delete this Picture?');
     if (checkstr == true) {
         $.ajax({
             url: '/Admin/Documents/DeleteDocument/' + id,
@@ -181,8 +142,68 @@ function DeleteImage(id) {
 }
 
 $(function () {
-    if ($('#ProductId').val() > 0) {
+    $('#CategoryId').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetCategoryOptionList/',
+            dataType: 'json',
 
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page,
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Category--",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelect"),
+        allowClear: true,
+    });
+
+    //$('#UnitId').select2({
+    //    ajax: {
+    //        delay: 150,
+    //        url: '/Admin/Combolist/GetUnitsOptionList/',
+    //        dataType: 'json',
+
+    //        data: function (params) {
+    //            params.page = params.page || 1;
+    //            return {
+    //                searchTerm: params.term,
+    //                pageSize: 20,
+    //                pageNumber: params.page,
+    //            };
+    //        },
+    //        processResults: function (data, params) {
+    //            params.page = params.page || 1;
+    //            params.page = params.page || 1;
+    //            return {
+    //                results: data.Results,
+    //                pagination: {
+    //                    more: (params.page * 20) < data.Total
+    //                }
+    //            };
+    //        }
+    //    },
+    //    placeholder: "-- Select Units--",
+    //    minimumInputLength: 0,
+    //    dropdownParent: $(".mySelect"),
+    //    allowClear: true,
+    //});
+
+    if ($('#ProductId').val() > 0) {
         if ($('#CategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
             $('#CategoryId').val($('#HiddenCategoryId').val()).trigger('change');
         } else {
@@ -191,25 +212,19 @@ $(function () {
             // Append it to the select
             $('#CategoryId').append(newOption).trigger('change');
         }
+
+        //if ($('#UnitId').find("option[value='" + $('#HiddenUnitId').val() + "']").length) {
+        //    $('#UnitId').val($('#HiddenUnitId').val()).trigger('change');
+        //} else {
+        //    // Create a DOM Option and pre-select by default
+        //    var newOption = new Option($('#HiddenUnitName').val(), $('#HiddenUnitId').val(), true, true);
+        //    // Append it to the select
+        //    $('#UnitId').append(newOption).trigger('change');
+        //}
     }
     else {
         $('#CategoryId').val(null).trigger('change');
-
-    }
-    if ($('#ProductId').val() > 0) {
-
-        if ($('#UnitId').find("option[value='" + $('#HiddenUnitId').val() + "']").length) {
-            $('#UnitId').val($('#HiddenUnitId').val()).trigger('change');
-        } else {
-            // Create a DOM Option and pre-select by default
-            var newOption = new Option($('#HiddenUnitName').val(), $('#HiddenUnitId').val(), true, true);
-            // Append it to the select
-            $('#UnitId').append(newOption).trigger('change');
-        }
-    }
-    else {
-        $('#UnitId').val(null).trigger('change');
-
+        //$('#UnitId').val(null).trigger('change');
     }
     var $checkoutForm = $('#popupForm').validate({
         rules: {
@@ -219,8 +234,16 @@ $(function () {
             CategoryId: {
                 required: true
             },
-            CostPrice: {
+            Barcode: {
                 required: true
+            },
+            CostPrice: {
+                required: true,
+                min: 1
+            },
+            SalePrice: {
+                required: true,
+                min: 1
             },
         },
         messages: {
@@ -230,8 +253,16 @@ $(function () {
             CategoryId: {
                 required: 'Category is required.'
             },
+            Barcode: {
+                required: 'Barcode is required.'
+            },
             CostPrice: {
-                required: 'Cost Price is required.'
+                required: 'Cost Price is required.',
+                min : 'Cost Price should be greater than zero.'
+            },
+            SalePrice: {
+                required: 'Sale Price is required.',
+                min: 'Sale Price should be greater than zero.'
             },
         },
         errorPlacement: function (error, element) {
@@ -246,113 +277,122 @@ $(document).on('change', 'select', function () {
     $(this).parents('td').siblings('td').find('.btn').css("margin-top", "14px");
     $(this).parents('label').siblings('em').remove();
 })
-$('#CategoryId').select2({
-    ajax: {
-        delay: 150,
-        url: '/Admin/Combolist/GetCategoryOptionList/',
-        dataType: 'json',
 
-        data: function (params) {
-            params.page = params.page || 1;
-            return {
-                searchTerm: params.term,
-                pageSize: 20,
-                pageNumber: params.page,
-            };
-        },
-        processResults: function (data, params) {
-            params.page = params.page || 1;
-            return {
-                results: data.Results,
-                pagination: {
-                    more: (params.page * 20) < data.Total
-                }
-            };
+function getSectionsData() {
+    var tabsData = [];
+    $('.ModuleList').each(function () {
+        var AttributeId = $(this).find('.AttributeId').val();
+        var tabCheckbox = $(this).find('.moduleCheckbox').is(':checked');
+
+        var sectionsData = new Array();
+        var check = 0;
+        var checkSectionList = 0;
+        //Loop on all actions of module
+        $(this).find('.ActionList').each(function () {
+            //this will be incremented if module has any action. Otherwise it will remain zero.
+            checkSectionList++;
+            ///
+            var AttributeDetailId = $(this).find('.AttributeDetailId').val();
+            var sectionCheckbox = $(this).find('.actionCheckbox').is(':checked');
+            var isChecked = '';
+            if (sectionCheckbox == true) {
+                isChecked = 'yes';
+            }
+            else {
+                isChecked = 'no';
+            }
+            //if action checkbox is checked then add it into array
+            /* if (sectionCheckbox == true) {*/
+            check++;
+            var action =
+            {
+                AttributeDetailId: AttributeDetailId,
+                IsChecked: isChecked,
+            }
+            sectionsData.push(action);
+            /*}*/
+        });
+        //This condition will check if module has any action or not.
+        if (checkSectionList > 0) {
+            //If any action of module is checked
+            /*if (check > 0) {*/
+            var alldata = {
+                AttributeId: AttributeId,
+                AttributeDetails: sectionsData
+            }
+            tabsData.push(alldata);
+            /* }*/
         }
-    },
-    placeholder: "-- Select Category--",
-    minimumInputLength: 0,
-    dropdownParent: $(".mySelect"),
-    allowClear: true,
-});
-
-$('#UnitId').select2({
-    ajax: {
-        delay: 150,
-        url: '/Admin/Combolist/GetUnitsOptionList/',
-        dataType: 'json',
-
-        data: function (params) {
-            params.page = params.page || 1;
-            return {
-                searchTerm: params.term,
-                pageSize: 20,
-                pageNumber: params.page,
-            };
-        },
-        processResults: function (data, params) {
-            params.page = params.page || 1;
-            params.page = params.page || 1;
-            return {
-                results: data.Results,
-                pagination: {
-                    more: (params.page * 20) < data.Total
+        else {
+            if (tabCheckbox == true) {
+                var emptyArray = new Array();
+                var action =
+                {
+                    AttributeDetailId: '',
+                    IsChecked: "no",
                 }
-            };
+                emptyArray.push(action);
+                var alldata = {
+                    AttributeId: AttributeId,
+                    AttributeDetails: emptyArray
+                }
+                tabsData.push(alldata);
+            }
         }
-    },
-    placeholder: "-- Select Units--",
-    minimumInputLength: 0,
-    dropdownParent: $(".mySelect"),
-    allowClear: true,
-});
+    });
+    return tabsData;
+}
+function CheckSectionsData() {
+    var check = 0;
+    $('.ModuleList').each(function () {
+        //Loop on all actions of module
+        $(this).find('.ActionList').each(function () {
+            var sectionCheckbox = $(this).find('.actionCheckbox').is(':checked');
+            if (sectionCheckbox == true) {
+                check++;
+            }
+        });
+    });
+    return check;
+}
+
 $('#popupForm').on('submit', function (e) {
     e.preventDefault();
     if (!$("#popupForm").valid()) {
         return false;
     }
+
+    if (CheckSectionsData() == 0) {
+        toastr.error("Please select atleast one Attribute.", "Error", { timeOut: 3000, "closeButton": true });
+        return false;
+    }
+
     $('#btn_Save').attr('disabled', 'disabled');
     $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
 
     var ProductId = $('#ProductId').val();
     var ProductName = $('#ProductName').val();
-    var ProductNameUrdu = $('#ProductNameUrdu').val();
-    var UnitId = $('#UnitId').val();
-    if (UnitId == null || UnitId == undefined) {
-        UnitId = 0;
-    }
-    var CostPrice = $('#CostPrice').val();
-    var Barcode = $('#Barcode').val();
+    /*var ProductNameUrdu = $('#ProductNameUrdu').val();*/
+    var ProductNameUrdu = '';
+    /*var UnitId = $('#UnitId').val();*/
+    var UnitId = 0;
     var CategoryId = $('#CategoryId').val();
+    var Barcode = $('#Barcode').val();
+    var CostPrice = $('#CostPrice').val();
+    var SalePrice = $('#SalePrice').val();
     if (CategoryId == null || CategoryId == undefined) {
         CategoryId = 0;
     }
-    var SalePrice = $('#SalePrice').val();
     var StatusString = "No";
     if ($("#Status").is(":checked")) {
         StatusString = "Yes";
     }
-    var ParentCategoryName = $('#ParentCategoryName').val();
-    var ParentCategoryId = $('#ParentCategoryId').val();
-    var AttributeDetailData = [];
-    var mainAttributeId = 0;
+    var IsFeaturedString = "No";
+    if ($("#Featured").is(":checked")) {
+        IsFeaturedString = "Yes";
+    }
 
-    $('.AttributesList').each(function () {
-        var attributeId = $(this).find('.AttributeId').val();
-        var attributeDetailId = $(this).find('.AttributeDetailId').val();
-        mainAttributeId = attributeId;
-        var isChecked = $(this).find('.moduleCheckbox').is(':checked');
-
-        if (isChecked) {
-            var data = {
-                'AttributeId': attributeId,
-                'AttributeDetailId': attributeDetailId,
-            };
-            AttributeDetailData.push(data);
-        }
-    });
-
-    var allData = JSON.stringify(AttributeDetailData);
+    var detail = JSON.stringify(getSectionsData());
 
     var st =
     {
@@ -364,17 +404,14 @@ $('#popupForm').on('submit', function (e) {
         UnitId: UnitId,
         CategoryId: CategoryId,
         Barcode: Barcode,
-        ParentCategoryName: ParentCategoryName,
         StatusString: StatusString,
-        ParentCategoryId: ParentCategoryId,
-        AttributeDetailData: allData
+        IsFeaturedString: IsFeaturedString
     }
    
-
     $.ajax({
         type: "POST",
         url: "/Admin/Product/InsertUpdateProduct/",
-        data: JSON.stringify({ 'user': st, 'AttributeDetailData': allData }),
+        data: JSON.stringify({ 'user': st, 'data': detail }),
 
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -445,5 +482,8 @@ $('#popupForm').on('submit', function (e) {
 
 })
 $("#CostPrice").on('input keypress', function (event) {
+    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
+});
+$("#SalePrice").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 5, 2);
 });

@@ -25,9 +25,11 @@
                     return '<img src="' + data + '" style="height:45px;width:45px;" />';
                 }
             },
-            { "data": "CarouselName", "name": "CarouselName", "autoWidth": true },
+            { "data": "Line1", "name": "Line1", "autoWidth": true },
+            { "data": "Line2", "name": "Line2", "autoWidth": true },
+            { "data": "Line3", "name": "Line3", "autoWidth": true },
             {
-                "data": "StatusString", "name": "StatusString", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
+                "data": "StatusString", "name": "StatusString", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
                     if (data === "Active") {
                         return '<span class="badge badge-success badge-pill">Active</span>';
                     } else {
@@ -35,10 +37,6 @@
                     }
                 }
             },
-            { "data": "Line1", "name": "Line1", "autoWidth": true },
-            { "data": "Line2", "name": "Line2", "autoWidth": true },
-            { "data": "Line3", "name": "Line3", "autoWidth": true },
-     
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -77,7 +75,7 @@ $(document).on('keydown', function (event) {
     }
 })
 $(document).on('shown.bs.modal', "#MyModal", function () {
-    $('#CarouselName').focus();
+    $('#Line1').focus();
 });
 $(document).on('click', '.AddEditRecord', function () {
     $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
@@ -114,8 +112,14 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Carousel Name') {
+    if (BElement.html() == 'Line 1') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
+    }
+    else if (BElement.html() == 'Line 2') {
+        oTable.columns(1).search($('#txtSearch').val().trim()).draw();
+    }
+    else if (BElement.html() == 'Line 3') {
+        oTable.columns(2).search($('#txtSearch').val().trim()).draw();
     }
     else {
         alert("Error! try again.");
