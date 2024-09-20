@@ -77,7 +77,7 @@ namespace ArooshyStore.BLL.Services
                                     Line2 = reader["Line2"].ToString(),
                                     Line3 = reader["Line3"].ToString(),
                                     StatusString = reader["StatusString"].ToString(),
-                                   // ImagePath = reader["ImagePath"].ToString(),
+                                   ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
                                     UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"].ToString()),
