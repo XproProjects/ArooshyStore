@@ -11,7 +11,7 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel InsertUpdateProduct(ProductViewModel model,string AttributeDetailData, int loggedInUserId);
         StatusMessageViewModel DeleteProduct(int id, int loggedInUserId);
         List<ProductViewModel> GetFeaturedProducts();
-        List<ProductViewModel> GetAllProducts();
+        List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);
         ProductViewModel GetProductByBarcode(string barcode);
     }

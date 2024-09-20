@@ -475,7 +475,7 @@ namespace ArooshyStore.BLL.Services
         public List<ProductViewModel> GetFeaturedProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()
-                    where f.Status == true
+                    where f.Status == true && f.IsFeatured == true
                     select new ProductViewModel
                     {
                         ProductId = f.ProductId,
@@ -509,10 +509,11 @@ namespace ArooshyStore.BLL.Services
                     }).ToList();
         }
 
-        public List<ProductViewModel> GetAllProducts()
+        public List<ProductViewModel> GetNewArrivalProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()
                     where f.Status == true
+                    orderby f.ProductId descending
                     select new ProductViewModel
                     {
                         ProductId = f.ProductId,

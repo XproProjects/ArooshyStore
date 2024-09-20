@@ -1,0 +1,63 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<ProductViewModel>
+
+<section class="py-4">
+    <div class="container">
+        <div class="separator pb-4">
+            <div class="line"></div>
+            <h5 class="mb-0 fw-bold separator-title">New Arrival</h5>
+            <div class="line"></div>
+        </div>
+        <div class="product-grid">
+            <div class="owl-carousel owl-theme new-arrivals position-relative">
+                @foreach (var product in Model)
+                {
+                    <div class="item">
+                        <div class="card">
+                            <div class="position-relative overflow-hidden">
+                                <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                                </div>
+                                <div class="quick-view position-absolute start-0 bottom-0 end-0">
+                                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewModal">Quick View</a>
+                                </div>
+                                <a href="product-details.html">
+                                    <img src="@product.ImagePath" class="img-fluid" style="height: 200px; width: 100%; object-fit: cover;" alt="@product.ProductName">
+                                </a>
+                            </div>
+
+                            <div class="card-body px-0">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="mb-1 product-short-name">Category</p>
+                                        <h6 class="mb-0 fw-bold product-short-title">@product.ProductName</h6>
+                                    </div>
+                                    <div class="icon-wishlist">
+                                        <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="cursor-pointer rating mt-2">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                </div>
+
+                                <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+                                    @if (product.SalePrice < product.CostPrice)
+                                    {
+                                        <div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$@product.CostPrice</div>
+                                    }
+                                    <div class="h6 fw-bold">$@product.SalePrice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

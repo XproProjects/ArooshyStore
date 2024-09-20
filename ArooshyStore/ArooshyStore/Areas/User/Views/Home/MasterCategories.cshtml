@@ -1,0 +1,34 @@
+﻿@model List<ArooshyStore.Models.ViewModels.CategoryViewModel>
+
+<section class="py-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+            @if (Model != null && Model.Count > 0)
+            {
+                var colors = new string[] { "bg-info bg-opacity-25", "bg-danger bg-opacity-25", "bg-warning bg-opacity-25" };
+                int index = 0;
+
+                foreach (var category in Model)
+                {
+                    <div class="col">
+                        <div class="card rounded-0 shadow-none @colors[index]">
+                            <div class="row g-0 align-items-center">
+                                <div class="col">
+                                    <img src="@category.ImagePath"  style="height: 200px; object-fit: cover;" class="img-fluid" alt="@category.CategoryName" />
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-uppercase fw-bold">@category.CategoryName</h5>
+                                        <p class="card-text text-uppercase">Starting at $9</p>
+                                        <a href="javascript:;" class="btn btn-outline-dark btn-ecomm">SHOP NOW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    index = (index + 1) % colors.Length;
+                }
+            }
+        </div>
+    </div>
+</section>

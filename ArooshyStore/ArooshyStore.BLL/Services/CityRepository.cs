@@ -231,19 +231,6 @@ namespace ArooshyStore.BLL.Services
                 response.Message = "City Deleted Successfully";
                 response.Id = result.Id;
             }
-            else if (result.Message == "Fail")
-            {
-                response.Status = false;
-                if (result.Id == -1)
-                {
-                    response.Message = "Error! Please delete all data from Technician Accounts against this Designation first.";
-                }
-                else
-                {
-                    response.Message = "Error! Please delete all data against this Designation first.";
-                }
-                response.Id = result.Id;
-            }
             else
             {
                 response.Status = false;

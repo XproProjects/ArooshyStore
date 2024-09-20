@@ -29,16 +29,15 @@ namespace ArooshyStore.Areas.User.Controllers
             var featuredProducts = _repository.GetFeaturedProducts();
             return PartialView("FeaturedProducts", featuredProducts);
         }
-        public ActionResult LatestProducts()
+        public ActionResult NewArrivalProducts()
         {
-            var categories = _category.GetCategories();
-            var products = _repository.GetAllProducts();
-            var model = new ProductViewModel
-            {
-                Categories = categories.ToList(),
-                Products = products.ToList()
-            };
-            return PartialView("LatestProducts", model);
+            var newArrivalProducts = _repository.GetNewArrivalProducts();
+            return PartialView("NewArrivalProducts", newArrivalProducts);
+        }
+        public ActionResult MasterCategories()
+        {
+            var masterCategories = _category.GetMasterCategories();           
+            return PartialView("MasterCategories", masterCategories);
 
         }
         public ActionResult Carousels()
@@ -52,10 +51,10 @@ namespace ArooshyStore.Areas.User.Controllers
 
         }
 
-        public ActionResult Categories()
+        public ActionResult BrowseCategories()
         {
-            var categories = _category.GetCategories();
-            return PartialView("Categories", categories);
+            var categories = _category.GetBrowseCategories();
+            return PartialView("BrowseCategories", categories);
         }
         public ActionResult About()
         {

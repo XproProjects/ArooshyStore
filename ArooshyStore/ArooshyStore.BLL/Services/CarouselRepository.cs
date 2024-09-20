@@ -38,23 +38,22 @@ namespace ArooshyStore.BLL.Services
                 {
                     con.Open();
                     //Get Count
-                    string query = "SELECT Count(s.CarouselId) as MyRowCount FROM tblCarousel s " +
-                                   "LEFT JOIN tblDocument dc ON s.CarouselId = dc.TypeId " +
-                                   "AND dc.DocumentType = 'Carousel' " +
-                                   "AND dc.Remarks = 'ProfilePicture' " +
-                                   "where " + whereCondition;
+                    string query = "SELECT Count(s.CarouselId) as MyRowCount FROM tblCarousel s where " + whereCondition + " ";
                     //Get List
-                    query += "SELECT s.CarouselId, " + " " + "ISNULL(s.Line1, '') AS Line1, " + "ISNULL(s.Line2, '') AS Line2, " +  "ISNULL(s.Line3, '') AS Line3, " +  "(CASE WHEN ISNULL(dc.DocumentId, 0) = 0 " +  "THEN '/Areas/Admin/Content/noimage.png' " +  "ELSE '/Areas/Admin/FormsDocuments/Carousel/' + CAST(ISNULL(dc.DocumentId, 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') END) AS ImagePath, " +
-                             "(CASE WHEN ISNULL(s.Status, 0) = 0 THEN 'In-Active' ELSE 'Active' END) AS StatusString, " +
-                             "ISNULL(CONVERT(VARCHAR, s.CreatedDate, 120), '') AS CreatedDate, " +
-                             "(CASE WHEN ISNULL(s.CreatedBy, 0) = 0 THEN '' " +
-                             "ELSE ISNULL((SELECT ISNULL(i.FullName, '') FROM tblUser u INNER JOIN tblInfo i ON u.InfoId = i.InfoId WHERE u.UserId = s.CreatedBy), 'Record Deleted') END) AS CreatedBy, " +
-                             "ISNULL(CONVERT(VARCHAR, s.UpdatedDate, 120), '') AS UpdatedDate, " +
-                             "(CASE WHEN ISNULL(s.UpdatedBy, 0) = 0 THEN '' " +
-                             "ELSE ISNULL((SELECT ISNULL(i.FullName, '') FROM tblUser u INNER JOIN tblInfo i ON u.InfoId = i.InfoId WHERE u.UserId = s.UpdatedBy), 'Record Deleted') END) AS UpdatedBy " +
-                             "FROM tblCarousel s " +
-                             "LEFT JOIN tblDocument dc ON s.CarouselId = dc.TypeId AND dc.DocumentType = 'Carousel' AND dc.Remarks = 'ProfilePicture' " +
-                             "WHERE " + whereCondition + " " +  sorting + " OFFSET " + offset + " ROWS FETCH NEXT " + length + " ROWS ONLY";
+                   // query += " select s.CarouselId,isnull(s.Line1,'') as Line1,isnull(s.Line2,'') as Line2,isnull(s.Line3,'') as Line3,(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblCarousel s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    // query += " select s.CarouselId,isnull(s.Line1,'') as Line1,isnull(s.Line2,'') as Line2,isnull(s.Line3,'') as Line3,(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull((select '/Areas/Admin/FormsDocuments/Carousel/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.CarouselId as varchar)  and dc.DocumentType = 'Carousel' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblCarousel s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += "SELECT s.CarouselId, " + " " + "ISNULL(s.Line1, '') AS Line1, " + "ISNULL(s.Line2, '') AS Line2, " + "ISNULL(s.Line3, '') AS Line3, " + "(CASE WHEN ISNULL(dc.DocumentId, 0) = 0 " + "THEN '/Areas/Admin/Content/noimage.png' " + "ELSE '/Areas/Admin/FormsDocuments/Carousel/' + CAST(ISNULL(dc.DocumentId, 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') END) AS ImagePath, " +
+                              "(CASE WHEN ISNULL(s.Status, 0) = 0 THEN 'In-Active' ELSE 'Active' END) AS StatusString, " +
+                              "ISNULL(CONVERT(VARCHAR, s.CreatedDate, 120), '') AS CreatedDate, " +
+                              "(CASE WHEN ISNULL(s.CreatedBy, 0) = 0 THEN '' " +
+                              "ELSE ISNULL((SELECT ISNULL(i.FullName, '') FROM tblUser u INNER JOIN tblInfo i ON u.InfoId = i.InfoId WHERE u.UserId = s.CreatedBy), 'Record Deleted') END) AS CreatedBy, " +
+                              "ISNULL(CONVERT(VARCHAR, s.UpdatedDate, 120), '') AS UpdatedDate, " +
+                              "(CASE WHEN ISNULL(s.UpdatedBy, 0) = 0 THEN '' " +
+                              "ELSE ISNULL((SELECT ISNULL(i.FullName, '') FROM tblUser u INNER JOIN tblInfo i ON u.InfoId = i.InfoId WHERE u.UserId = s.UpdatedBy), 'Record Deleted') END) AS UpdatedBy " +
+                              "FROM tblCarousel s " +
+                              "LEFT JOIN tblDocument dc ON s.CarouselId = dc.TypeId AND dc.DocumentType = 'Carousel' AND dc.Remarks = 'ProfilePicture' " +
+                              "WHERE " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS FETCH NEXT " + length + " ROWS ONLY";
+
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
@@ -67,7 +66,6 @@ namespace ArooshyStore.BLL.Services
                                 totalCount = Convert.ToInt32(reader["MyRowCount"]);
                             }
 
-                            // this advances to the next resultset 
                             reader.NextResult();
 
                             while (reader.Read())
@@ -78,14 +76,14 @@ namespace ArooshyStore.BLL.Services
                                     Line1 = reader["Line1"].ToString(),
                                     Line2 = reader["Line2"].ToString(),
                                     Line3 = reader["Line3"].ToString(),
-                                    ImagePath = reader["ImagePath"].ToString(),
                                     StatusString = reader["StatusString"].ToString(),
+                                   // ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
                                     UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"].ToString()),
                                     UpdatedByString = reader["UpdatedBy"].ToString(),
                                     TotalRecords = totalCount
-                                }) ;
+                                });
                             }
                         }
                         cmd.Dispose();
@@ -137,7 +135,7 @@ namespace ArooshyStore.BLL.Services
                     Line2 = "",
                     Line3 = "",
                     ImagePath = "/Areas/Admin/Content/noimage.png",
-
+                    DocumentId = 0,
                     Status = false,
                 };
             }
