@@ -20,8 +20,8 @@
             }
         },
         "columns": [
-            { "data": "DeliveryCharges", "name": "DeliveryCharges", "autoWidth": true },
             { "data": "CityName", "name": "CityName", "autoWidth": true },
+            { "data": "DeliveryCharges", "name": "DeliveryCharges", "autoWidth": true },
 
                    
             {

@@ -5,7 +5,7 @@
     {
         <fieldset style="padding:1.25rem;">
             <div class="row" style="margin-top:15px">
-                <section class="col-md-4">
+                <section class="col-md-6">
                     <div style="padding:5px;padding-top:0px">
                         <label>Service 1 Name(*)</label>
                         <div class="input-group">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="col-md-4">
+                <section class="col-md-6">
                     <div style="padding:5px;padding-top:0px">
                         <label>Service 1 Icon</label>
                         <div class="input-group">
@@ -27,11 +27,13 @@
                                     <i class="fal fa-cog"></i>
                                 </span>
                             </div>
-                            @Html.TextBoxFor(a => a.Service1Icon, new { @placeholder = "Service 1 Icon", @class = "form-control" })
+                            @*@Html.TextBoxFor(a => a.Service1Icon, new { @placeholder = "Service 1 Icon", @class = "form-control" })*@
+                            <input type="text" id="Service1Icon" name="Service1Icon" data-input-search="true" placeholder="Service1Icon" class="form-control icp icp-auto" value="@Model.Service1Icon" />
+
                         </div>
                     </div>
                 </section>
-                <section class="col-md-4">
+                <section class="col-md-12">
                     <div style="padding:5px;padding-top:0px">
                         <label>Service 1 Description</label>
                         <div class="input-group">
@@ -40,14 +42,14 @@
                                     <i class="fal fa-pencil-alt"></i>
                                 </span>
                             </div>
-                            @Html.TextBoxFor(a => a.Service1Description, new { @placeholder = "Service 1 Description", @class = "form-control" })
+                            @Html.TextAreaFor(a => a.Service1Description, new { @placeholder = "Service 1 Description", @class = "form-control",row=3 })
                         </div>
                     </div>
                 </section>
             </div>
 
             <div class="row">
-                <div class="col-md-4" style="margin-top:10px">
+                <div class="col-md-6" style="margin-top:10px">
                     <div class="row">
                         <section class="col-md-12">
                             <div style="padding:5px;padding-top:0px;">
@@ -64,7 +66,7 @@
                         </section>
                     </div>
                 </div>
-                <div class="col-md-4" style="margin-top:10px">
+                <div class="col-md-6" style="margin-top:10px">
                     <div class="row">
                         <section class="col-md-12">
                             <div style="padding:5px;padding-top:0px;">
@@ -81,7 +83,7 @@
                         </section>
                     </div>
                 </div>
-                <div class="col-md-4" style="margin-top:10px">
+                <div class="col-md-12" style="margin-top:10px">
                     <div class="row">
                         <section class="col-md-12">
                             <div style="padding:5px;padding-top:0px;">
@@ -92,7 +94,7 @@
                                             <i class="fal fa-pencil-alt"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.Service2Description, new { @placeholder = "Service 2 Description", @class = "form-control" })
+                                    @Html.TextAreaFor(a => a.Service2Description, new { @placeholder = "Service 2 Description", @class = "form-control" ,row=3})
                                 </div>
                             </div>
                         </section>
@@ -102,7 +104,7 @@
             <div class="row">
                 <div class="col-md-12" style="margin-top:10px">
                     <div class="row">
-                        <section class="col-md-4">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px;">
                                 <label>Service 3 Name</label>
                                 <div class="input-group">
@@ -115,7 +117,7 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="col-md-4">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px;">
                                 <label>Service 3 Icon</label>
                                 <div class="input-group">
@@ -128,7 +130,7 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="col-md-4">
+                        <section class="col-md-12">
                             <div style="padding:5px;padding-top:0px;">
                                 <label>Service 3 Description</label>
                                 <div class="input-group">
@@ -137,7 +139,7 @@
                                             <i class="fal fa-pencil-alt"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.Service3Description, new { @placeholder = "Service 3 Description", @class = "form-control" })
+                                    @Html.TextAreaFor(a => a.Service3Description, new { @placeholder = "Service 3 Description", @class = "form-control",row=3 })
                                 </div>
                             </div>
                         </section>
@@ -156,7 +158,7 @@
                                     <i class="fal fa-random"></i>
                                 </span>
                             </div>
-                            @Html.TextBoxFor(a => a.Description, new { @placeholder = "Description", @class = "form-control" })
+                            @Html.TextAreaFor(a => a.Description, new { @placeholder = "Description", @class = "form-control" ,rows = 5 })
                         </div>
                     </div>
                 </section>

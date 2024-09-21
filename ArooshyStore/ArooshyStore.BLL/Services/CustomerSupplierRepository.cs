@@ -326,7 +326,7 @@ namespace ArooshyStore.BLL.Services
                           where cs.CustomerSupplierId == customerSupplierId
                           select dc.DeliveryCharges).FirstOrDefault();
 
-            return result.GetValueOrDefault(); // Returns decimal, defaulting to 0 if result is null
+            return result.GetValueOrDefault(); 
         }
 
 

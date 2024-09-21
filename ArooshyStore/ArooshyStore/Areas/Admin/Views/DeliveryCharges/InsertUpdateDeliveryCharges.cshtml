@@ -7,22 +7,6 @@
             
                 <div class="row" style="margin-top: 25px;">
                     <section class="col-md-12">
-                        <div style="padding:5px;padding-top:0px">
-                            <label>Delivery Charges (*)</label>
-                            <input type="hidden" id="DeliveryId" name="DeliveryId" value="@Model.DeliveryId" />
-                            <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
-                            <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fal fa-money-bill-alt"></i>
-                                    </span>
-                                </div>
-                                @Html.TextBoxFor(a => a.DeliveryCharges, new { @placeholder = "Delivery Charges", @class = "form-control" })
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-12">
                         <div style="padding:5px;padding-top:0px;padding-right:0px">
                             <div class="input-group">
                                 <table class="" style="width: 100%;">
@@ -43,6 +27,23 @@
                             </div>
                         </div>
                     </section>
+                    <section class="col-md-12">
+                        <div style="padding:5px;padding-top:0px">
+                            <label>Delivery Charges (*)</label>
+                            <input type="hidden" id="DeliveryId" name="DeliveryId" value="@Model.DeliveryId" />
+                            <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
+                            <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fal fa-money-bill-alt"></i>
+                                    </span>
+                                </div>
+                                @Html.TextBoxFor(a => a.DeliveryCharges, new { @placeholder = "Delivery Charges", @class = "form-control" })
+                            </div>
+                        </div>
+                    </section>
+
                 </div>
 
            

@@ -315,7 +315,7 @@ $(function () {
                 success: function (response) {
                     if (response.deliveryCharges) {
                         $('#DeliveryCharges').val(response.deliveryCharges);
-                        alert("Delivery Charges: " + response.deliveryCharges);  // Alert the delivery charges
+                        console.log("Delivery Charges: " + response.deliveryCharges);
                     } else {
                         console.log("No deliveryCharges available");
                     }
