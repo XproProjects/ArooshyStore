@@ -40,6 +40,11 @@ namespace ArooshyStore
             container.RegisterType<IErrorLogRepository, ErrorLogRepository>();
             container.RegisterType<IInvoiceRepository, InvoiceRepository>();
             container.RegisterType<ICarouselRepository, CarouselRepository>();
+            container.RegisterType<ICompanyRepository, CompanyRepository>();
+            container.RegisterType<IAboutRepository, AboutRepository>();
+            container.RegisterType<IDeliveryChargesRepository, DeliveryChargesRepository>();
+            container.RegisterType<IDeliveryInfoRepository, DeliveryInfoRepository>();
+            container.RegisterType<IProductTagRepository, ProductTagRepository>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

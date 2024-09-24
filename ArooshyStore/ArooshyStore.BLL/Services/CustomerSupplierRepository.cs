@@ -318,6 +318,20 @@ namespace ArooshyStore.BLL.Services
             }
             return response;
         }
+        public decimal GetDeliveryChargesForCustomer(int customerSupplierId)
+        {
+            var result = (from cs in _unitOfWork.Db.Set<tblCustomerSupplier>()
+                          join dc in _unitOfWork.Db.Set<tblDeliveryCharges>()
+                          on cs.CityId equals dc.CityId
+                          where cs.CustomerSupplierId == customerSupplierId
+                          select dc.DeliveryCharges).FirstOrDefault();
+
+            return result.GetValueOrDefault(); 
+        }
+
+
+
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

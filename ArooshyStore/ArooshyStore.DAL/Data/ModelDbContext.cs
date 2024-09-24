@@ -36,14 +36,16 @@ namespace ArooshyStore.DAL.Data
         public virtual DbSet<tblCity> tblCity { get; set; }
         public virtual DbSet<tblCustomerSupplier> tblCustomerSupplier { get; set; }
         public virtual DbSet<tblDiscountOffer> tblDiscountOffer { get; set; }
-
         public virtual DbSet<tblExpenseType> tblExpenseType { get; set; }
         public virtual DbSet<tblExpense> tblExpense { get; set; }
-
         public virtual DbSet<tblInvoice> tblInvoice { get; set; }
         public virtual DbSet<tblInvoiceDetail> tblInvoiceDetail { get; set; }
-
         public virtual DbSet<tblCarousel> tblCarousel { get; set; }
+        public virtual DbSet<tblCompany> tblCompany { get; set; }
+        public virtual DbSet<tblAbout> tblAbout { get; set; }
+        public virtual DbSet<tblDeliveryCharges> tblDeliveryCharges { get; set; }
+        public virtual DbSet<tblProductTags> tblProductTags { get; set; }
+        public virtual DbSet<tblDeliveryInfo> tblDeliveryInfo { get; set; }
 
     }
 

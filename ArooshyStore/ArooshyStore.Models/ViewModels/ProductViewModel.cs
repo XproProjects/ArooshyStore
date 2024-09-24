@@ -9,11 +9,14 @@ namespace ArooshyStore.Models.ViewModels
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductNameUrdu { get; set; }
+        public string ProductDescription { get; set; }
         public string ParentCategoryName { get; set; }
         public string MasterCategoryName { get; set; }
         public string ChildCategoryName { get; set; }
         public string Barcode { get; set; }
+        public string DeliveryInfoName { get; set; }
         public int? UnitId { get; set; }
+        public int? DeliveryInfoId { get; set; }
         public string UnitName { get; set; }
         public int? CategoryId { get; set; }
         public string CategoryName { get; set; }

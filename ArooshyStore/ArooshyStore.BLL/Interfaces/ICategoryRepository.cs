@@ -10,7 +10,9 @@ namespace ArooshyStore.BLL.Interfaces
         CategoryViewModel GetCategoryById(int id);
         StatusMessageViewModel InsertUpdateCategory(CategoryViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteCategory(int id, int loggedInUserId);
-        List<CategoryViewModel> GetCategories();
+        List<CategoryViewModel> GetBrowseCategories();
+        List<CategoryViewModel> GetMasterCategories();
+
 
     }
 }

@@ -10,6 +10,8 @@ namespace ArooshyStore.BLL.Interfaces
         CustomerSupplierViewModel GetCustomerSupplierById(int id);
         StatusMessageViewModel InsertUpdateCustomerSupplier(CustomerSupplierViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteCustomerSupplier(int id, int loggedInUserId);
+        decimal GetDeliveryChargesForCustomer(int customerSupplierId);
+
 
     }
 }

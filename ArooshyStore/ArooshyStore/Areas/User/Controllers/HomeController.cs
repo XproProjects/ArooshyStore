@@ -11,13 +11,13 @@ namespace ArooshyStore.Areas.User.Controllers
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _category;
         private readonly ICarouselRepository _carousel;
-
-
-        public HomeController(IProductRepository repository, ICategoryRepository category, ICarouselRepository carousel)
+        private readonly IAboutRepository _aboutUs;
+        public HomeController(IProductRepository repository, ICategoryRepository category, ICarouselRepository carousel, IAboutRepository aboutUs)
         {
             _repository = repository;
             _category = category;
             _carousel = carousel;
+            _aboutUs = aboutUs;
 
         }
         public ActionResult Index()
@@ -29,16 +29,25 @@ namespace ArooshyStore.Areas.User.Controllers
             var featuredProducts = _repository.GetFeaturedProducts();
             return PartialView("FeaturedProducts", featuredProducts);
         }
-        public ActionResult LatestProducts()
+        public ActionResult GetProductDetails(int productId)
         {
-            var categories = _category.GetCategories();
-            var products = _repository.GetAllProducts();
-            var model = new ProductViewModel
+            var product = _repository.GetProductWithAttributes(productId);
+            if (product == null)
             {
-                Categories = categories.ToList(),
-                Products = products.ToList()
-            };
-            return PartialView("LatestProducts", model);
+                return HttpNotFound();
+            }
+
+            return View(product);
+        }
+        public ActionResult NewArrivalProducts()
+        {
+            var newArrivalProducts = _repository.GetNewArrivalProducts();
+            return PartialView("NewArrivalProducts", newArrivalProducts);
+        }
+        public ActionResult MasterCategories()
+        {
+            var masterCategories = _category.GetMasterCategories();           
+            return PartialView("MasterCategories", masterCategories);
 
         }
         public ActionResult Carousels()
@@ -52,14 +61,15 @@ namespace ArooshyStore.Areas.User.Controllers
 
         }
 
-        public ActionResult Categories()
+        public ActionResult BrowseCategories()
         {
-            var categories = _category.GetCategories();
-            return PartialView("Categories", categories);
+            var categories = _category.GetBrowseCategories();
+            return PartialView("BrowseCategories", categories);
         }
-        public ActionResult About()
+        public ActionResult AboutUs()
         {
-            return View();
+            var aboutUs = _aboutUs.GetAboutUs();
+            return View(aboutUs);
         }
     }
 }

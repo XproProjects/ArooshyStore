@@ -286,20 +286,39 @@ namespace ArooshyStore.BLL.Services
             }
             return response;
         }
-        public List<CategoryViewModel> GetCategories()
+        public List<CategoryViewModel> GetBrowseCategories()
         {
             return (from f in _unitOfWork.Db.Set<tblCategory>()
-                    where f.Status == true 
+                    where f.Status == true && f.ParentCategoryId != 0
                     select new CategoryViewModel
                     {
                         CategoryId = f.CategoryId,
                         CategoryName = f.CategoryName ?? "",
                         ParentCategoryId = f.ParentCategoryId ?? 0,
                         Status = f.Status ?? false,
-                        ParentCategoryName = _unitOfWork.Db.Set<tblCategory>()
-                                  .Where(x => x.CategoryId == f.ParentCategoryId)
-                                  .Select(x => x.CategoryName)
-                                  .FirstOrDefault() ?? "",
+                        ParentCategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.ParentCategoryId && f.ParentCategoryId != 0).Select(x => x.CategoryName).FirstOrDefault() ?? "",
+                       ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                            .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                            .Select(x => "/Areas/Admin/FormsDocuments/Category/" + x.DocumentId + "." + x.DocumentExtension)
+                            .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                        DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                            .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                            .Select(x => x.DocumentId)
+                            .FirstOrDefault(),
+
+                    }).ToList();
+        }
+        public List<CategoryViewModel> GetMasterCategories()
+        {
+            return (from f in _unitOfWork.Db.Set<tblCategory>()
+                    where f.Status == true && f.ParentCategoryId == 0
+                    select new CategoryViewModel
+                    {
+                        CategoryId = f.CategoryId,
+                        CategoryName = f.CategoryName ?? "",
+                        ParentCategoryId = f.ParentCategoryId ?? 0,
+                        Status = f.Status ?? false,
+                        ParentCategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.ParentCategoryId && f.ParentCategoryId == 0).Select(x => x.CategoryName).FirstOrDefault() ?? "",
                         ImagePath = _unitOfWork.Db.Set<tblDocument>()
                             .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
                             .Select(x => "/Areas/Admin/FormsDocuments/Category/" + x.DocumentId + "." + x.DocumentExtension)

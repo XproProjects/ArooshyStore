@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using ArooshyStore.App_Start;
 using ArooshyStore.BLL.BusinessInfo;
 using ArooshyStore.BLL.Interfaces;
+using ArooshyStore.BLL.Services;
 using ArooshyStore.Models.ViewModels;
 using AutoMapper;
 
@@ -160,5 +161,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
+        [HttpPost]
+        public JsonResult GetDeliveryChargesForCustomer(int customerSupplierId)
+        {
+            // Fetch the delivery charges for the selected customer supplier
+            var deliveryCharges = _repository.GetDeliveryChargesForCustomer(customerSupplierId);
+
+            return Json(new { deliveryCharges = deliveryCharges });
+
+        }
+
     }
 }

@@ -51,6 +51,7 @@ function getLineTotals() {
     var quantity = $('#Qty').val();
     var discountType = $('#LineDiscType').val();
     var discountAmount = $('#LineDiscRate').val();
+    var deliveryCharges = $('#DeliveryCharges').val()
     if (rate == '' || rate == null || rate == undefined || isNaN(rate)) {
         rate = 0;
     }
@@ -59,6 +60,9 @@ function getLineTotals() {
     }
     if (discountAmount == '' || discountAmount == null || discountAmount == undefined || isNaN(discountAmount)) {
         discountAmount = 0;
+    }
+    if (deliveryCharges == '' || deliveryCharges == null || isNaN(deliveryCharges)) {
+        deliveryCharges = 0; 
     }
     var multiplier = 1;
     if (quantity != '' && quantity != null && !isNaN(quantity)) {
@@ -76,6 +80,7 @@ function getLineTotals() {
         netDiscount = 0;
     }
     $('#LineDiscAmount').val(netDiscount);
+
     var netPrice = parseFloat(rate) - parseFloat(netDiscount);
     netPrice = parseFloat(netPrice).toFixed(2);
     if (multiplier > 1) {
@@ -299,6 +304,30 @@ $(function () {
         dropdownParent: $(".mySelect"),
         allowClear: true,
     });
+    $('#CustomerSupplierId').change(function () {
+        var customerSupplierId = $(this).val();
+
+        if (customerSupplierId) {
+            $.ajax({
+                "url": "/Admin/CustomerSupplier/GetDeliveryChargesForCustomer",
+                type: 'POST',
+                data: { customerSupplierId: customerSupplierId },
+                success: function (response) {
+                    if (response.deliveryCharges) {
+                        $('#DeliveryCharges').val(response.deliveryCharges);
+                        console.log("Delivery Charges: " + response.deliveryCharges);
+                    } else {
+                        console.log("No deliveryCharges available");
+                    }
+                },
+                error: function () {
+                    alert('Error fetching product details.');
+                }
+            });
+        } else {
+            $('#DeliveryCharges').val('0');
+        }
+    });
     $('#AttributeDetailId').select2({
         ajax: {
             delay: 150,
@@ -431,6 +460,7 @@ $(function () {
         var AttributeDetailId = $('#AttributeDetailId').val();
         var MasterCategoryId = $('#MasterCategoryId').val();
         var ChildCategoryId = $('#ChildCategoryId').val();
+        $('#DeliveryCharges').val(response.deliveryCharges);
 
         var CustomerSupplierId = $('#CustomerSupplierId').val();
         var quantity = $('#Qty').val();

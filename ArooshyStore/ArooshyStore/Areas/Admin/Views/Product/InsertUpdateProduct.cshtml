@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-8" style="margin-top:23px">
                     <div class="row">
-                        <section class="col-md-12">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px">
                                 <label>Product Name (*)</label>
                                 <input type="hidden" id="ProductId" name="ProductId" value="@Model.ProductId" />
@@ -26,6 +26,8 @@
                                 <input type="hidden" id="HiddenCategoryName" name="HiddenCategoryName" value="@Model.CategoryName" />
                                 <input type="hidden" id="HiddenUnitId" name="UnitId" value="@Model.UnitId" />
                                 <input type="hidden" id="HiddenUnitName" name="HiddenUnitName" value="@Model.UnitName" />
+                                <input type="hidden" id="HiddenDeliveryInfoId" name="DeliveryInfoId" value="@Model.DeliveryInfoId" />
+                                <input type="hidden" id="HiddenDeliveryInfoName" name="HiddenDeliveryInfoName" value="@Model.DeliveryInfoName" />
                                 <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -38,23 +40,23 @@
 
                             </div>
                         </section>
-                        @*<section class="col-md-12">
-                                <div style="padding:5px;padding-top:7px">
-                                    <label>Product Name Urdu</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fal fa-info"></i>
-                                            </span>
-                                        </div>
-                                        @Html.TextBoxFor(a => a.ProductNameUrdu, new { @placeholder = "Product Name Urdu", @class = "form-control" })
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Barcode (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-barcode"></i>
+                                        </span>
                                     </div>
+                                    @Html.TextBoxFor(a => a.Barcode, new { @placeholder = "Barcode", @class = "form-control" })
                                 </div>
-                            </section>*@
+                            </div>
+                        </section>
                     </div>
                     <div class="row" style="margin-top:7px">
                         <section class="col-md-6">
-                            <div style="padding:5px;padding-top:0px;padding-right:0px">
+                            <div style="padding:5px;padding-top:10px;padding-right:0px">
                                 <div class="input-group">
                                     <table class="" style="width: 100%;">
                                         <tr>
@@ -75,15 +77,23 @@
                             </div>
                         </section>
                         <section class="col-md-6">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Barcode (*)</label>
+                            <div style="padding:5px;padding-top:10px;padding-right:0px">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-barcode"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.Barcode, new { @placeholder = "Barcode", @class = "form-control" })
+                                    <table class="" style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 80%;">
+                                                <label class="form-label">Select Delivery (*)</label>
+                                                <div class="input-group">
+                                                    <select id="DeliveryInfoId" name="DeliveryInfoId"></select>
+                                                </div>
+                                            </td>
+                                            <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                                <a href="javascript:void(0)" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add Category">
+                                                    <i class="fas fa-plus" style=""></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </section>
@@ -92,26 +102,26 @@
                         <div class="col-md-12" style="margin-top:10px">
                             <div class="row">
                                 @*<section class="col-md-4">
-                                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                                            <div class="input-group">
-                                                <table class="" style="width: 100%;">
-                                                    <tr>
-                                                        <td style="width: 80%;">
-                                                            <label class="form-label">Select Unit</label>
-                                                            <div class="input-group">
-                                                                <select id="UnitId" name="UnitId"></select>
-                                                            </div>
-                                                        </td>
-                                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                                            <a href="javascript:void(0)" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add Unit">
-                                                                <i class="fas fa-plus" style=""></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </section>*@
+                                <div style="padding:5px;padding-top:0px;padding-right:0px">
+                                    <div class="input-group">
+                                        <table class="" style="width: 100%;">
+                                            <tr>
+                                                <td style="width: 80%;">
+                                                    <label class="form-label">Select Unit</label>
+                                                    <div class="input-group">
+                                                        <select id="UnitId" name="UnitId"></select>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                                    <a href="javascript:void(0)" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add Unit">
+                                                        <i class="fas fa-plus" style=""></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>*@
                                 <section class="col-md-6">
                                     <div style="padding:5px;padding-top:0px">
                                         <label>Cost Price (*)</label>
@@ -140,6 +150,27 @@
                                 </section>
                             </div>
                         </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:10px">
+                    <div class="row">
+                        <section class="col-md-12">
+                            <div style="padding:5px;padding-top:0px;">
+                                <label>Product Description</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-paragraph"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextAreaFor(a => a.ProductDescription, new { @placeholder = "Product Description", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -270,4 +301,5 @@
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=2"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=4"></script>
+
