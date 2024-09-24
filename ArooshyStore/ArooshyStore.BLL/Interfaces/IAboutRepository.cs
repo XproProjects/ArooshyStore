@@ -10,5 +10,7 @@ namespace ArooshyStore.BLL.Interfaces
         AboutViewModel GetAboutById(int id);
         StatusMessageViewModel InsertUpdateAbout(AboutViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteAbout(int id, int loggedInUserId);
+        AboutViewModel GetAboutUs();
+
     }
 }

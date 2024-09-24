@@ -142,6 +142,7 @@ function DeleteImage(id) {
 }
 
 $(function () {
+   
     $('#CategoryId').select2({
         ajax: {
             delay: 150,
@@ -171,37 +172,50 @@ $(function () {
         dropdownParent: $(".mySelect"),
         allowClear: true,
     });
+    $('#DeliveryInfoId').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetDeliveryInfoList/',
+            dataType: 'json',
 
-    //$('#UnitId').select2({
-    //    ajax: {
-    //        delay: 150,
-    //        url: '/Admin/Combolist/GetUnitsOptionList/',
-    //        dataType: 'json',
-
-    //        data: function (params) {
-    //            params.page = params.page || 1;
-    //            return {
-    //                searchTerm: params.term,
-    //                pageSize: 20,
-    //                pageNumber: params.page,
-    //            };
-    //        },
-    //        processResults: function (data, params) {
-    //            params.page = params.page || 1;
-    //            params.page = params.page || 1;
-    //            return {
-    //                results: data.Results,
-    //                pagination: {
-    //                    more: (params.page * 20) < data.Total
-    //                }
-    //            };
-    //        }
-    //    },
-    //    placeholder: "-- Select Units--",
-    //    minimumInputLength: 0,
-    //    dropdownParent: $(".mySelect"),
-    //    allowClear: true,
-    //});
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page,
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Delivery Info--",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelect"),
+        allowClear: true,
+    });
+   
+    if ($('#ProductId').val() > 0) {
+        if ($('#DeliveryInfoId').find("option[value='" + $('#HiddenDeliveryInfoId').val() + "']").length) {
+            $('#DeliveryInfoId').val($('#HiddenDeliveryInfoId').val()).trigger('change');
+        } else {
+            // Create a DOM Option and pre-select by default
+            var newOption = new Option($('#HiddenDeliveryInfoName').val(), $('#HiddenDeliveryInfoId').val(), true, true);
+            // Append it to the select
+            $('#DeliveryInfoId').append(newOption).trigger('change');
+        }
+    }
+    else {
+        $('#DeliveryInfoId').val(null).trigger('change');
+    }
 
     if ($('#ProductId').val() > 0) {
         if ($('#CategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
@@ -372,9 +386,9 @@ $('#popupForm').on('submit', function (e) {
 
     var ProductId = $('#ProductId').val();
     var ProductName = $('#ProductName').val();
-    /*var ProductNameUrdu = $('#ProductNameUrdu').val();*/
+    var ProductDescription = $('#ProductDescription').val();
     var ProductNameUrdu = '';
-    /*var UnitId = $('#UnitId').val();*/
+    var DeliveryInfoId = $('#DeliveryInfoId').val();
     var UnitId = 0;
     var CategoryId = $('#CategoryId').val();
     var Barcode = $('#Barcode').val();
@@ -399,6 +413,8 @@ $('#popupForm').on('submit', function (e) {
         ProductId: ProductId,
         ProductName: ProductName,
         ProductNameUrdu: ProductNameUrdu,
+        ProductDescription: ProductDescription,
+        DeliveryInfoId: DeliveryInfoId,
         SalePrice: SalePrice,
         CostPrice: CostPrice,
         UnitId: UnitId,

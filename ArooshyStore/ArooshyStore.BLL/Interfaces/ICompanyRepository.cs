@@ -10,5 +10,6 @@ namespace ArooshyStore.BLL.Interfaces
         CompanyViewModel GetCompanyById(int id);
         StatusMessageViewModel InsertUpdateCompany(CompanyViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteCompany(int id, int loggedInUserId);
+        CompanyViewModel GetFooterDataForCompany();
     }
 }

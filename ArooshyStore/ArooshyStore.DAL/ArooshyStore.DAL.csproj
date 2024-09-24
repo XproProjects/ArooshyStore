@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblDeliveryInfo.cs" />
+    <Compile Include="Entities\tblProductTags.cs" />
     <Compile Include="Entities\tblDeliveryCharges.cs" />
     <Compile Include="Entities\tblCompany.cs" />
     <Compile Include="Entities\tblAction.cs" />
@@ -202,6 +204,14 @@
     <Compile Include="Migrations\202409200911527_Added_Table_tblDeliveryCharges.designer.cs">
       <DependentUpon>202409200911527_Added_Table_tblDeliveryCharges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202409241305013_Added_Table_tblProductTag.cs" />
+    <Compile Include="Migrations\202409241305013_Added_Table_tblProductTag.designer.cs">
+      <DependentUpon>202409241305013_Added_Table_tblProductTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.cs" />
+    <Compile Include="Migrations\202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.designer.cs">
+      <DependentUpon>202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -300,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202409200911527_Added_Table_tblDeliveryCharges.resx">
       <DependentUpon>202409200911527_Added_Table_tblDeliveryCharges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409241305013_Added_Table_tblProductTag.resx">
+      <DependentUpon>202409241305013_Added_Table_tblProductTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.resx">
+      <DependentUpon>202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

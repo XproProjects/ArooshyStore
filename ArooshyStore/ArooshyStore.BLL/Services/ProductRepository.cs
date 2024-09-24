@@ -42,7 +42,7 @@ namespace ArooshyStore.BLL.Services
                     con.Open();
 
                     string query = "SELECT Count(s.ProductId) as MyRowCount FROM tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId where " + whereCondition + " ";
-                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.Barcode,'') as Barcode,isnull(c.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.ProductDescription,'') as ProductDescription,isnull(s.Barcode,'') as Barcode,isnull(c.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     //query += " ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -65,6 +65,7 @@ namespace ArooshyStore.BLL.Services
                                     ProductId = Convert.ToInt32(reader["ProductId"]),
                                     ProductName = reader["ProductName"].ToString(),
                                     ProductNameUrdu = reader["ProductNameUrdu"].ToString(),
+                                    ProductDescription = reader["ProductDescription"].ToString(),
                                     Barcode = reader["Barcode"].ToString(),
                                     CategoryName = reader["CategoryName"].ToString(),
                                     CostPrice = Convert.ToDecimal(reader["CostPrice"].ToString()),
@@ -108,11 +109,14 @@ namespace ArooshyStore.BLL.Services
                              ProductId = f.ProductId,
                              ProductName = f.ProductName,
                              ProductNameUrdu = f.ProductNameUrdu,
+                             ProductDescription = f.ProductDescription,
                              Barcode = f.Barcode,
                              UnitId = f.UnitId ?? 0,
                              UnitName = _unitOfWork.Db.Set<tblUnit>().Where(x => x.UnitId == f.UnitId).Select(x => x.UnitName).FirstOrDefault() ?? "",
                              CategoryId = f.CategoryId ?? 0,
                              CategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.CategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? "",
+                             DeliveryInfoId = f.DeliveryInfoId ?? 0,
+                             DeliveryInfoName = _unitOfWork.Db.Set<tblDeliveryInfo>().Where(x => x.DeliveryInfoId == f.DeliveryInfoId).Select(x => x.DeliveryInfoName).FirstOrDefault() ?? "",
                              SalePrice = f.SalePrice ?? 0,
                              CostPrice = f.CostPrice ?? 0,
                              Status = f.Status,
@@ -135,6 +139,9 @@ namespace ArooshyStore.BLL.Services
                     ProductId = 0,
                     ProductName = "",
                     ProductNameUrdu = "",
+                    ProductDescription = "",
+                    DeliveryInfoId = 0,
+                    DeliveryInfoName = "",
                     Barcode = "",
                     UnitId = 0,
                     CategoryId = 0,
@@ -285,7 +292,9 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Add("@ProductId", SqlDbType.Int).Value = model.ProductId;
                         cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = model.ProductName;
                         cmd.Parameters.Add("@ProductNameUrdu", SqlDbType.NVarChar).Value = model.ProductNameUrdu;
+                        cmd.Parameters.Add("@ProductDescription", SqlDbType.NVarChar).Value = model.ProductDescription;
                         cmd.Parameters.Add("@Barcode", SqlDbType.NVarChar).Value = model.Barcode;
+                        cmd.Parameters.Add("@DeliveryInfoId", SqlDbType.Int).Value = model.DeliveryInfoId;
                         cmd.Parameters.Add("@UnitId", SqlDbType.Int).Value = model.UnitId;
                         cmd.Parameters.Add("@CategoryId", SqlDbType.Int).Value = model.CategoryId;
                         cmd.Parameters.Add("@CostPrice", SqlDbType.Decimal).Value = model.CostPrice;
@@ -503,12 +512,61 @@ namespace ArooshyStore.BLL.Services
                                         .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
                                         .Select(x => x.DocumentId)
                                         .FirstOrDefault(),
+                        AttributesList = (from pad in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                          join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on pad.AttributeDetailId equals ad.AttributeDetailId
+                                          join a in _unitOfWork.Db.Set<tblAttribute>() on pad.AttributeId equals a.AttributeId
+                                          where pad.ProductId == f.ProductId && a.Status == true && ad.Status == true
+                                          group ad by new { a.AttributeId, a.AttributeName } into g
+                                          select new AttributeViewModel
+                                          {
+                                              AttributeId = g.Key.AttributeId,
+                                              AttributeName = g.Key.AttributeName,
+                                              AttributeDetails = g.Select(detail => new ProductAttributeDetailViewModel
+                                              {
+                                                  AttributeDetailId = detail.AttributeDetailId,
+                                                  AttributeDetailName = detail.AttributeDetailName
+                                              }).ToList()
+                                          }).ToList()
 
-                        CreatedDate = f.CreatedDate,
-                        UpdatedDate = f.UpdatedDate
                     }).ToList();
         }
 
+        public ProductViewModel GetProductWithAttributes(int productId)
+        {
+            var model = (from f in _unitOfWork.Db.Set<tblProduct>()
+                         where f.ProductId == productId
+                         select new ProductViewModel
+                         {
+                             ProductId = f.ProductId,
+                             ProductName = f.ProductName,
+                             SalePrice = f.SalePrice ?? 0,
+                             CostPrice = f.CostPrice ?? 0,
+                             ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                 .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                 .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                 .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                             AttributesList = (from pad in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                               join ad in _unitOfWork.Db.Set<tblAttributeDetail>()
+                                               on pad.AttributeDetailId equals ad.AttributeDetailId
+                                               join a in _unitOfWork.Db.Set<tblAttribute>()
+                                               on pad.AttributeId equals a.AttributeId
+                                               where pad.ProductId == productId && a.Status == true && ad.Status == true
+                                               group ad by new { a.AttributeId, a.AttributeName } into g
+                                               select new AttributeViewModel
+                                               {
+                                                   AttributeId = g.Key.AttributeId,
+                                                   AttributeName = g.Key.AttributeName,
+                                                   AttributeDetails = g.Select(detail => new ProductAttributeDetailViewModel
+                                                   {
+                                                       AttributeDetailId = detail.AttributeDetailId,
+                                                       AttributeDetailName = detail.AttributeDetailName
+                                                   }).ToList()
+                                               }).ToList()
+
+                         }).FirstOrDefault();
+
+            return model;
+        }
         public List<ProductViewModel> GetNewArrivalProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()

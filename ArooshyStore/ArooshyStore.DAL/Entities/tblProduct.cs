@@ -12,8 +12,12 @@ namespace ArooshyStore.DAL.Entities
         public string ProductName { get; set; }
         [StringLength(200)]
         public string ProductNameUrdu { get; set; }
+        public string ProductDescription { get; set; }
+
         [StringLength(50)]
         public string Barcode { get; set; }
+        public Nullable<int> DeliveryInfoId { get; set; }
+
         public Nullable<int> UnitId { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public Nullable<decimal> CostPrice { get; set; }

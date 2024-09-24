@@ -44,6 +44,9 @@ namespace ArooshyStore.DAL.Data
         public virtual DbSet<tblCompany> tblCompany { get; set; }
         public virtual DbSet<tblAbout> tblAbout { get; set; }
         public virtual DbSet<tblDeliveryCharges> tblDeliveryCharges { get; set; }
+        public virtual DbSet<tblProductTags> tblProductTags { get; set; }
+        public virtual DbSet<tblDeliveryInfo> tblDeliveryInfo { get; set; }
+
     }
 
 }

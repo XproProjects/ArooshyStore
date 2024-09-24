@@ -11,13 +11,13 @@ namespace ArooshyStore.Areas.User.Controllers
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _category;
         private readonly ICarouselRepository _carousel;
-
-
-        public HomeController(IProductRepository repository, ICategoryRepository category, ICarouselRepository carousel)
+        private readonly IAboutRepository _aboutUs;
+        public HomeController(IProductRepository repository, ICategoryRepository category, ICarouselRepository carousel, IAboutRepository aboutUs)
         {
             _repository = repository;
             _category = category;
             _carousel = carousel;
+            _aboutUs = aboutUs;
 
         }
         public ActionResult Index()
@@ -28,6 +28,16 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             var featuredProducts = _repository.GetFeaturedProducts();
             return PartialView("FeaturedProducts", featuredProducts);
+        }
+        public ActionResult GetProductDetails(int productId)
+        {
+            var product = _repository.GetProductWithAttributes(productId);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(product);
         }
         public ActionResult NewArrivalProducts()
         {
@@ -56,9 +66,10 @@ namespace ArooshyStore.Areas.User.Controllers
             var categories = _category.GetBrowseCategories();
             return PartialView("BrowseCategories", categories);
         }
-        public ActionResult About()
+        public ActionResult AboutUs()
         {
-            return View();
+            var aboutUs = _aboutUs.GetAboutUs();
+            return View(aboutUs);
         }
     }
 }

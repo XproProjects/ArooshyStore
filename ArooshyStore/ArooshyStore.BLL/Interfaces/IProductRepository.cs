@@ -14,5 +14,7 @@ namespace ArooshyStore.BLL.Interfaces
         List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);
         ProductViewModel GetProductByBarcode(string barcode);
+        ProductViewModel GetProductWithAttributes(int productId);
+
     }
 }

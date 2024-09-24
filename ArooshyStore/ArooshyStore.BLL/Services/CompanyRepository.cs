@@ -286,8 +286,39 @@ namespace ArooshyStore.BLL.Services
             return response;
         }
 
+        public CompanyViewModel GetFooterDataForCompany()
+        {
+            var model = _unitOfWork.Db.Set<tblCompany>().Select(f => new CompanyViewModel
+            {
+                CompanyId = f.CompanyId,
+                CompanyName = f.CompanyName,
+                Contact1 = f.Contact1,
+                Contact2 = f.Contact2,
+                Email = f.Email,
+                FacebookId = f.FacebookId,
+                InstagramId = f.InstagramId,
+                LinkedInId = f.LinkedInId,
+                Address = f.Address,
+                Longitude = f.Longitude,
+                Latitude = f.Latitude,
+                ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                        .Where(x => x.TypeId == f.CompanyId.ToString() && x.DocumentType == "Company" && x.Remarks == "ProfilePicture")
+                        .Select(x => "/Areas/Admin/FormsDocuments/Company/" + x.DocumentId + "." + x.DocumentExtension)
+                        .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                        .Where(x => x.TypeId == f.CompanyId.ToString() && x.DocumentType == "Company" && x.Remarks == "ProfilePicture")
+                        .Select(x => x.DocumentId)
+                        .FirstOrDefault(),
+                Categories = _unitOfWork.Db.Set<tblCategory>().Where(c => c.ParentCategoryId != 0).OrderByDescending(c => c.CategoryId).Take(10).Select(c => new CategoryViewModel
+                {
+                    CategoryId = c.CategoryId,
+                    CategoryName = c.CategoryName
+                }).ToList()
+            }).SingleOrDefault();
 
-      
+
+            return model;
+        }
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

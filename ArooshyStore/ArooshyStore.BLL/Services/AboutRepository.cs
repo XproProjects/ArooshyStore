@@ -255,9 +255,27 @@ namespace ArooshyStore.BLL.Services
             }
             return response;
         }
+        public AboutViewModel GetAboutUs()
+        {
+            var model = _unitOfWork.Db.Set<tblAbout>().Select(f => new AboutViewModel
+            {
+                AboutId = f.AboutId,
+                Description = f.Description,
+                Service1Name = f.Service1Name,
+                Service2Name = f.Service2Name,
+                Service3Name = f.Service3Name,
+                Service1Icon = f.Service1Icon,
+                Service2Icon = f.Service2Icon,
+                Service3Icon = f.Service3Icon,
+                Service1Description = f.Service1Description,
+                Service2Description = f.Service2Description,
+                Service3Description = f.Service3Description
+            }).SingleOrDefault();
 
 
-      
+            return model;
+        }
+
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

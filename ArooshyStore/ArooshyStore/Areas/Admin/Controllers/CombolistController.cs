@@ -106,8 +106,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
-       
-       
+
+        #region Delivery Info
+        public JsonResult GetDeliveryInfoList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetDeliveryInfoList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         #region Error Source
         public JsonResult GetErrorSourceOptionList(string searchTerm, int pageSize, int pageNumber)
         {

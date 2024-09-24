@@ -365,6 +365,8 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductTagController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DeliveryInfoController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryChargesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CarouselController.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
@@ -381,6 +383,7 @@
     <Compile Include="Areas\Admin\Controllers\DiscountOfferController.cs" />
     <Compile Include="Areas\Admin\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
+    <Compile Include="Areas\User\Controllers\FooterController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Authentication\FormsAuthentication\BaseViewPage.cs" />
@@ -1456,6 +1459,10 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\InsertUpdateAbout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryInfo\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryInfo\InsertUpdateDeliveryInfo.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ProductTag\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ProductTag\InsertUpdateProductTag.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryCharges\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryCharges\InsertUpdateDeliveryCharge.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\SaleInvoiceIndex.js" />
@@ -2331,7 +2338,7 @@
     <Content Include="Areas\Admin\Views\ExpenseType\InsertUpdateExpenseType.cshtml" />
     <Content Include="Areas\Admin\Views\Expense\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Expense\InsertUpdateExpense.cshtml" />
-    <Content Include="Areas\User\Views\Home\About.cshtml" />
+    <Content Include="Areas\User\Views\Home\AboutUs.cshtml" />
     <Content Include="Areas\User\Views\Home\Index.cshtml" />
     <Content Include="Areas\User\Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
@@ -2394,6 +2401,12 @@
     <Content Include="Areas\Admin\Views\About\InsertUpdateAbout.cshtml" />
     <Content Include="Areas\Admin\Views\DeliveryCharges\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DeliveryCharges\InsertUpdateDeliveryCharges.cshtml" />
+    <Content Include="Areas\User\Views\Footer\Index.cshtml" />
+    <Content Include="Areas\User\Views\Home\GetProductDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductTag\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductTag\InsertUpdateProductTag.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryInfo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryInfo\InsertUpdateDeliveryInfo.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
