@@ -267,6 +267,7 @@ namespace ArooshyStore.BLL.Services
         }
         public List<CarouselViewModel> GetAllCarousels()
         {
+
             return (from f in _unitOfWork.Db.Set<tblCarousel>()
                     where f.Status == true
                     select new CarouselViewModel
