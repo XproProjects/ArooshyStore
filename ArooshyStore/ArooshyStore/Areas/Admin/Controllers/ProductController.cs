@@ -124,13 +124,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult InsertUpdateProduct(ProductViewModel user, string data)
+        public ActionResult InsertUpdateProduct(ProductViewModel user, string data,string tags)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
 
-                response = _repository.InsertUpdateProduct(user, data, User.UserId);
+                response = _repository.InsertUpdateProduct(user, data,tags, User.UserId);
             }
             else
             {

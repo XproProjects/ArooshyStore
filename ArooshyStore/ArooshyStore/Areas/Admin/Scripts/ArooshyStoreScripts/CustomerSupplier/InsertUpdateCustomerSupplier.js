@@ -97,6 +97,9 @@ $(function () {
                 required: true,
                 email: true,
             },
+            Password: {
+                required: true
+            },
             CityId: {
                 required: true
             },
@@ -114,6 +117,9 @@ $(function () {
             Email: {
                 required: 'Email is required.',
                 email: 'Please enter a valid email address.',
+            },
+            Password: {
+                required: 'Password is required.'
             },
             CityId: {
                 required: 'City is required.'
@@ -194,6 +200,8 @@ $('#popupForm').on('submit', function (e) {
     var Contact1 = $('#Contact1').val();
     var Contact2 = $('#Contact2').val();
     var Email = $('#Email').val();
+    var Password = $('#Password').val();
+    var isChangePassword = $('#IsChangePassword').val();
     var HouseNo = $('#HouseNo').val();
     var Street = $('#Street').val();
     var ColonyOrVillageName = $('#ColonyOrVillageName').val();
@@ -218,6 +226,8 @@ $('#popupForm').on('submit', function (e) {
         Contact1: Contact1,
         Contact2: Contact2,
         Email: Email,
+        Password: Password,
+        IsChangePassword: isChangePassword,
         HouseNo: HouseNo,
         Street: Street,
         ColonyOrVillageName: ColonyOrVillageName,
@@ -308,4 +318,33 @@ $("#CreditDays").on('input keypress', function (event) {
 });
 $("#CreditLimit").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 8, 2);
+});
+$(document).on('click', '.btnChangeUserPassword', function () {
+    $(this).css('color', '#3276B1');
+    $('#IsChangePassword').val(1);
+    $('#Password').val('');
+    $('#Password').prop("disabled", false);
+    $('#eyeIcon').css("display", "block");
+
+});
+$(document).on('click', '.btnCancelUserPassword', function () {
+    $(this).css('color', '#3276B1');
+    $('#IsChangePassword').val(0);
+    $('#Password').val('*************************');
+    $('#Password').prop("disabled", true);
+    $('#eyeIcon').css("display", "none");
+});
+$('#eyeIcon').on('click', function () {
+    if ($(this).hasClass('fa-eye-slash')) {
+        $(this).removeClass('fa-eye-slash');
+    }
+    else {
+        $(this).addClass('fa-eye-slash');
+    }
+    var input = $("#Password");
+    if (input.attr("type") == "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
 });

@@ -13,7 +13,9 @@ namespace ArooshyStore.Models.ViewModels
         public string ParentCategoryName { get; set; }
         public string MasterCategoryName { get; set; }
         public string ChildCategoryName { get; set; }
+        public string DeliveryInfoDetail { get; set; }
         public string Barcode { get; set; }
+        public string TagName { get; set; }
         public string DeliveryInfoName { get; set; }
         public int? UnitId { get; set; }
         public int? DeliveryInfoId { get; set; }
@@ -40,5 +42,7 @@ namespace ArooshyStore.Models.ViewModels
         public List<AttributeViewModel> AttributesList { get; set; }
         public List<ProductViewModel> Products { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
+        public List<TagsForProductsViewModel> Tags { get; set; }
+
     }
 }

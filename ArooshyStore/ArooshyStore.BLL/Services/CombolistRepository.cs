@@ -304,6 +304,31 @@ namespace ArooshyStore.BLL.Services
             return result;
         }
         #endregion
+        #region Product Tag
+        public Select2PagedResultViewModel GetProductTagList(string searchTerm, int pageSize, int pageNumber)
+        {
+            AllItemsList = GetProductTagsList();
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> GetProductTagsList()
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblProductTags>()
+                    orderby c.TagId
+                    select new SelectListViewModel
+                    {
+                        id = c.TagId,
+                        text = c.TagName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
         #region Error Line Number
         public Select2PagedResultStringViewModel GetErrorLineNumberList(string searchTerm, int pageSize, int pageNumber)
         {

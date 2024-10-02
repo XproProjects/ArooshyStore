@@ -32,12 +32,12 @@ namespace ArooshyStore.Areas.User.Controllers
         public ActionResult GetProductDetails(int productId)
         {
             var product = _repository.GetProductWithAttributes(productId);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-
             return View(product);
+        }
+        public ActionResult GetSimilarProducts(int productId)
+        {
+            var product = _repository.GetSimilrProducts(productId);
+            return PartialView("GetSimilarProducts", product);
         }
         public ActionResult NewArrivalProducts()
         {

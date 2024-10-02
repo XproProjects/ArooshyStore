@@ -33,6 +33,8 @@ namespace ArooshyStore.DAL.Entities
         public Nullable<decimal> CreditLimit { get; set; }
         [StringLength(1000)]
         public string Remarks { get; set; }
+        [StringLength(200)]
+        public string Password { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

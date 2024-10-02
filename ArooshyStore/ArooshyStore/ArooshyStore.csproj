@@ -383,6 +383,9 @@
     <Compile Include="Areas\Admin\Controllers\DiscountOfferController.cs" />
     <Compile Include="Areas\Admin\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
+    <Compile Include="Areas\User\Controllers\BaseController.cs" />
+    <Compile Include="Areas\User\Controllers\CustomerAccountController.cs" />
+    <Compile Include="Areas\User\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\User\Controllers\FooterController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
@@ -1686,6 +1689,7 @@
     <Content Include="Areas\Admin\Scripts\vendors.bundle.js" />
     <Content Include="Areas\User\Content\css\app.css" />
     <Content Include="Areas\User\Content\css\bootstrap.min.css" />
+    <Content Include="Areas\User\Content\css\ArooshyStoreCss\CustomerAccount\Login.css" />
     <Content Include="Areas\User\Content\css\icons.css" />
     <Content Include="Areas\User\Content\css\pace.min.css" />
     <Content Include="Areas\User\Content\fonts\boxicons.svg" />
@@ -1884,6 +1888,8 @@
     <Content Include="Areas\User\Content\images\slider\03.png" />
     <Content Include="Areas\User\Content\images\slider\04.png" />
     <Content Include="Areas\User\Content\images\slider\05.png" />
+    <Content Include="Areas\User\Content\notifications\sweetalert2\sweetalert2.bundle.css" />
+    <Content Include="Areas\User\Content\notifications\toastr\toastr.css" />
     <Content Include="Areas\User\Content\plugins\apexcharts-bundle\css\apexcharts.css" />
     <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apex-custom-2.js" />
     <Content Include="Areas\User\Content\plugins\apexcharts-bundle\js\apex-custom.js" />
@@ -1999,6 +2005,14 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\ChangePassword.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\CheckOldPassword.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\FallingLeaves.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\Register.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\Login.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\ContactUs\Index.js" />
+    <Content Include="Areas\User\Script\jqxWidget\bootstrap.min.js" />
+    <Content Include="Areas\User\Script\jqxWidget\jquery.validate.min.js" />
     <Content Include="Areas\User\Script\js\app.js" />
     <Content Include="Areas\User\Script\js\bootstrap.bundle.min.js" />
     <Content Include="Areas\User\Script\js\index.js" />
@@ -2008,6 +2022,8 @@
     <Content Include="Areas\User\Script\js\product-details.js" />
     <Content Include="Areas\User\Script\js\product-gallery.js" />
     <Content Include="Areas\User\Script\js\show-hide-password.js" />
+    <Content Include="Areas\User\Script\notifications\sweetalert2\sweetalert2.bundle.js" />
+    <Content Include="Areas\User\Script\notifications\toastr\toastr.js" />
     <Content Include="Areas\User\Script\plugins\apexcharts-bundle\css\apexcharts.css" />
     <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apex-custom-2.js" />
     <Content Include="Areas\User\Script\plugins\apexcharts-bundle\js\apex-custom.js" />
@@ -2407,6 +2423,19 @@
     <Content Include="Areas\Admin\Views\ProductTag\InsertUpdateProductTag.cshtml" />
     <Content Include="Areas\Admin\Views\DeliveryInfo\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DeliveryInfo\InsertUpdateDeliveryInfo.cshtml" />
+    <Content Include="Areas\User\Views\Home\GetSimilarProducts.cshtml" />
+    <Content Include="Areas\User\Views\ContactUs\Index.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\Login.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\AccountDashboard.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\CustomerAddress.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\AccountDetail.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\Register.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\ForgotPassword.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\ResetPassword.cshtml" />
+    <Content Include="Areas\User\Content\notifications\sweetalert2\sweetalert2.bundle.css.map" />
+    <Content Include="Areas\User\Content\notifications\toastr\toastr.css.map" />
+    <Content Include="Areas\User\Views\CustomerAccount\LinkExpired.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\ChangePassword.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@ namespace ArooshyStore.BLL.Interfaces
         Select2PagedResultViewModel GetDiscountOffersList(string searchTerm, int pageSize, int pageNumber);
         Select2PagedResultViewModel GetAttributeDetailList(string searchTerm, int pageSize, int pageNumber);
         Select2PagedResultViewModel GetDeliveryInfoList(string searchTerm, int pageSize, int pageNumber);
+        Select2PagedResultViewModel GetProductTagList(string searchTerm, int pageSize, int pageNumber);
 
     }
 }
