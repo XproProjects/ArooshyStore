@@ -52,7 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblProductReview.cs" />
+    <Compile Include="Entities\tblContactUs.cs" />
     <Compile Include="Entities\tblDeliveryInfo.cs" />
+    <Compile Include="Entities\tblTagsForProducts.cs" />
     <Compile Include="Entities\tblProductTags.cs" />
     <Compile Include="Entities\tblDeliveryCharges.cs" />
     <Compile Include="Entities\tblCompany.cs" />
@@ -212,6 +215,30 @@
     <Compile Include="Migrations\202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.designer.cs">
       <DependentUpon>202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202409260523058_Added_Table_tblTagsForProducts.cs" />
+    <Compile Include="Migrations\202409260523058_Added_Table_tblTagsForProducts.designer.cs">
+      <DependentUpon>202409260523058_Added_Table_tblTagsForProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409260530481_Added_Table_tblTagsForProducts2.cs" />
+    <Compile Include="Migrations\202409260530481_Added_Table_tblTagsForProducts2.designer.cs">
+      <DependentUpon>202409260530481_Added_Table_tblTagsForProducts2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409280824361_Added_Table_tblContactUs.cs" />
+    <Compile Include="Migrations\202409280824361_Added_Table_tblContactUs.designer.cs">
+      <DependentUpon>202409280824361_Added_Table_tblContactUs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409300904551_Added_Column_PasswordIntblCustomerSupplier.cs" />
+    <Compile Include="Migrations\202409300904551_Added_Column_PasswordIntblCustomerSupplier.designer.cs">
+      <DependentUpon>202409300904551_Added_Column_PasswordIntblCustomerSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410021129317_Added_ColumnPhone_tblContactUs.cs" />
+    <Compile Include="Migrations\202410021129317_Added_ColumnPhone_tblContactUs.designer.cs">
+      <DependentUpon>202410021129317_Added_ColumnPhone_tblContactUs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410021249449_Added_Table_tblProductReview.cs" />
+    <Compile Include="Migrations\202410021249449_Added_Table_tblProductReview.designer.cs">
+      <DependentUpon>202410021249449_Added_Table_tblProductReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -316,6 +343,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.resx">
       <DependentUpon>202409241312200_Added_Table&amp;Column_tblDeliveryInfo&amp;ColumnProductDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409260523058_Added_Table_tblTagsForProducts.resx">
+      <DependentUpon>202409260523058_Added_Table_tblTagsForProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409260530481_Added_Table_tblTagsForProducts2.resx">
+      <DependentUpon>202409260530481_Added_Table_tblTagsForProducts2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409280824361_Added_Table_tblContactUs.resx">
+      <DependentUpon>202409280824361_Added_Table_tblContactUs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409300904551_Added_Column_PasswordIntblCustomerSupplier.resx">
+      <DependentUpon>202409300904551_Added_Column_PasswordIntblCustomerSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410021129317_Added_ColumnPhone_tblContactUs.resx">
+      <DependentUpon>202410021129317_Added_ColumnPhone_tblContactUs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410021249449_Added_Table_tblProductReview.resx">
+      <DependentUpon>202410021249449_Added_Table_tblProductReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

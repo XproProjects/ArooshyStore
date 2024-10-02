@@ -115,6 +115,14 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Product Tag
+        public JsonResult GetProductTagsList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetProductTagList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         #region Error Source
         public JsonResult GetErrorSourceOptionList(string searchTerm, int pageSize, int pageNumber)
         {

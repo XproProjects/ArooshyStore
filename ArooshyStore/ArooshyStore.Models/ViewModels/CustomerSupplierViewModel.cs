@@ -17,7 +17,8 @@ namespace ArooshyStore.Models.ViewModels
         public string PostalCode { get; set; }
         public int? CityId { get; set; }
         public string CityName { get; set; }
-
+        public string Password { get; set; }
+        public int IsChangePassword { get; set; }
         public string CompleteAddress { get; set; }
         public int? CreditDays { get; set; }
         public decimal? CreditLimit { get; set; }

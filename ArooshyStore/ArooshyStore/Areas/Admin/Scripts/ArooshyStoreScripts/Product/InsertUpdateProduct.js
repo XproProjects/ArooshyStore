@@ -142,7 +142,36 @@ function DeleteImage(id) {
 }
 
 $(function () {
-   
+    $('#TagId').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetProductTagsList/',
+            dataType: 'json',
+
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        //placeholder: "-- Select City--",
+        minimumInputLength: 0,
+        allowClear: true,
+        dropdownParent: $(".mySelect"),
+        multiple: true,
+    });
     $('#CategoryId').select2({
         ajax: {
             delay: 150,
@@ -291,7 +320,17 @@ $(document).on('change', 'select', function () {
     $(this).parents('td').siblings('td').find('.btn').css("margin-top", "14px");
     $(this).parents('label').siblings('em').remove();
 })
-
+function getTagsData() {
+    var arrayData = [];
+    $('#TagId  > option:selected').each(function () {
+        var id = $(this).val();
+        var alldata = {
+            'TagId': id,
+        }
+        arrayData.push(alldata);
+    });
+    return arrayData;
+}
 function getSectionsData() {
     var tabsData = [];
     $('.ModuleList').each(function () {
@@ -407,6 +446,7 @@ $('#popupForm').on('submit', function (e) {
     }
 
     var detail = JSON.stringify(getSectionsData());
+    var tagsData = JSON.stringify(getTagsData());
 
     var st =
     {
@@ -427,8 +467,7 @@ $('#popupForm').on('submit', function (e) {
     $.ajax({
         type: "POST",
         url: "/Admin/Product/InsertUpdateProduct/",
-        data: JSON.stringify({ 'user': st, 'data': detail }),
-
+        data: JSON.stringify({ 'user': st, 'data': detail, 'tags': tagsData }),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {

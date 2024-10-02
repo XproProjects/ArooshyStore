@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "User Registration";
+}
+@model ArooshyStore.Models.ViewModels.CustomerSupplierViewModel
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--start breadcrumb-->
+        <section class="py-3 border-bottom border-top d-none d-md-flex bg-light">
+            <div class="container">
+                <div class="page-breadcrumb d-flex align-items-center">
+                    <h3 class="breadcrumb-title pe-3">Customer Dashboard</h3>
+                    <div class="ms-auto">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 p-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;"><i class="bx bx-home-alt"></i> Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;">Account</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Account Detail</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end breadcrumb-->
+        <!--start shop cart-->
+        <section class="py-4">
+            <div class="container">
+                <h3 class="d-none">Account</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card shadow-none mb-3 mb-lg-0 border">
+                                    <div class="card-body">
+                                        <div class="list-group list-group-flush">
+                                            <a href="@Url.Action("AccountDashboard", "CustomerAccount", new { id = Model.CustomerSupplierId })" class="list-group-item active d-flex justify-content-between align-items-center">
+                                                Dashboard <i class='bx bx-tachometer fs-5'></i>
+                                            </a>
+                                            <a href="@Url.Action("CustomerAddress", "CustomerAccount", new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                                                Addresses <i class='bx bx-home-smile fs-5'></i>
+                                            </a>
+                                            <a href="@Url.Action("AccountDetail", "CustomerAccount", new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                                                Account Details <i class='bx bx-user-circle fs-5'></i>
+                                            </a>
+                                            <a href="@Url.Action("Logout", "CustomerAccount")" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                                                Logout <i class='bx bx-log-out fs-5'></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="card shadow-none mb-0 border">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Register", "CustomerAccount", FormMethod.Post, new { id = "accountDetailForm", @class = "row g-3" }))
+                                        {
+                                            <input type="hidden" name="CustomerSupplierId" value="@Model.CustomerSupplierId" />
+                                            <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                                            <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
+                                            <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
+                                            <div class="row">
+                                                <div class="col-md-12" style="margin-top:23px">
+                                                    <div class="row">
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="CustomerSupplierName">Full Name (*)</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" id="CustomerSupplierName" class="form-control" name="CustomerSupplierName" value="@Model.CustomerSupplierName" required placeholder="Enter Full Name">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="Email">Email (*)</label>
+                                                                <div class="input-group">
+                                                                    <input type="email" id="Email" class="form-control" name="Email" value="@Model.Email" required placeholder="Email">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px;">
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="Contact1">Contact 1 (*)</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" data-inputmask="'mask': '9999-9999999'" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="Contact2">Contact 2</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" data-inputmask="'mask': '9999-9999999'" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px;">
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="HouseNo">House #</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" id="HouseNo" class="form-control" name="HouseNo" value="@Model.HouseNo" placeholder="House #">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <section class="col-md-6">
+                                                            <div style="padding:5px;">
+                                                                <label for="Street">Street</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" id="Street" class="form-control" name="Street" value="@Model.Street" placeholder="Street">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12" style="margin-top:23px;">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="CreditDays" class="form-label">Credit Days</label>
+                                                            <input type="number" id="CreditDays" class="form-control" name="CreditDays" value="@Model.CreditDays">
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label for="CreditLimit" class="form-label">Credit Limit</label>
+                                                            <input type="number" id="CreditLimit" class="form-control" name="CreditLimit" value="@Model.CreditLimit">
+                                                        </div>
+
+                                                        <div class="col-md-12" style="margin-top:10px;">
+                                                            <label for="CityId" class="form-label">Select City (*)</label>
+                                                            <div class="input-group">
+                                                                <select id="CityId" name="CityId" class="form-control" required>
+                                                                    <option value="">Select a city</option>
+                                                                    <!-- Add city options here -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12" style="margin-top:10px;">
+                                                            <label for="Address" class="form-label">Complete Address (*)</label>
+                                                            <input type="text" id="CompleteAddress" class="form-control" name="CompleteAddress" placeholder="Enter Complete Address" value="@Model.CompleteAddress" required>
+                                                        </div>
+
+                                                        <div class="col-12" style="margin-top:10px;">
+                                                            <label for="Remarks" class="form-label">Remarks</label>
+                                                            <textarea id="Remarks" class="form-control" name="Remarks">@Model.Remarks</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12" style="margin-top:10px;">
+                                                        <button type="submit" class="btn btn-dark btn-ecomm">Save Changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/Register.js?=5"></script>
