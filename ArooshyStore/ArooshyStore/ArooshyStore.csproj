@@ -386,6 +386,7 @@
     <Compile Include="Areas\User\Controllers\BaseController.cs" />
     <Compile Include="Areas\User\Controllers\CustomerAccountController.cs" />
     <Compile Include="Areas\User\Controllers\ContactUsController.cs" />
+    <Compile Include="Areas\User\Controllers\ProductsReviewController.cs" />
     <Compile Include="Areas\User\Controllers\FooterController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
@@ -2005,6 +2006,7 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductsReview\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\ChangePassword.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\CheckOldPassword.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\FallingLeaves.js" />
@@ -2436,6 +2438,8 @@
     <Content Include="Areas\User\Content\notifications\toastr\toastr.css.map" />
     <Content Include="Areas\User\Views\CustomerAccount\LinkExpired.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\ChangePassword.cshtml" />
+    <Content Include="Areas\User\Views\ProductsReview\Index.cshtml" />
+    <Content Include="Areas\User\Views\ProductsReview\ProductReviews.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

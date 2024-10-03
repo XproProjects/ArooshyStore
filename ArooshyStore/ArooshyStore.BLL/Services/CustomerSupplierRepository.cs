@@ -449,8 +449,6 @@ namespace ArooshyStore.BLL.Services
                 response.Status = false;
                 response.Message = ex.Message.ToString();
                 response.Id = 0;
-
-                // You might want to handle logging differently, since there's no loggedInUserId now
                 ErrorHandler error = ErrorHandler.GetInstance;
                 error.InsertError(0, ex.Message.ToString(), "Web Application", "CustomerSupplierRepository", "InsertUpdateCustomerSupplier"); // Logging without user ID
             }

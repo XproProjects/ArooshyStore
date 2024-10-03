@@ -37,20 +37,20 @@
                                         </div>
 
                                     </div>
-                                    <div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
-                                        <button class="owl-thumb-item">
-                                            <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                        </button>
-                                        <button class="owl-thumb-item">
-                                            <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                        </button>
-                                        <button class="owl-thumb-item">
-                                            <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                        </button>
-                                        <button class="owl-thumb-item">
-                                            <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                        </button>
-                                    </div>
+                                    @*<div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
+            <button class="owl-thumb-item">
+                <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+            </button>
+            <button class="owl-thumb-item">
+                <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+            </button>
+            <button class="owl-thumb-item">
+                <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+            </button>
+            <button class="owl-thumb-item">
+                <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+            </button>
+        </div>*@
                                 </div>
                             </div>
                             <div class="col-12 col-lg-7">
@@ -203,103 +203,11 @@
                         <div class="tab-pane fade show active" id="reviews">
                             <div class="row">
                                 <div class="col col-lg-8">
-                                    <div class="product-review">
-                                        <h5 class="mb-4">3 Reviews For The Product</h5>
-                                        <div class="review-list">
-                                            <div class="d-flex align-items-start">
-                                                <div class="review-user">
-                                                    <img src="assets/images/avatars/avatar-1.png" width="65" height="65" class="rounded-circle" alt="" />
-                                                </div>
-                                                <div class="review-content ms-3">
-                                                    <div class="rates cursor-pointer fs-6">
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                    </div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="mb-0">James Caviness</h6>
-                                                        <p class="mb-0 ms-auto">February 16, 2021</p>
-                                                    </div>
-                                                    <p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="d-flex align-items-start">
-                                                <div class="review-user">
-                                                    <img src="assets/images/avatars/avatar-2.png" width="65" height="65" class="rounded-circle" alt="" />
-                                                </div>
-                                                <div class="review-content ms-3">
-                                                    <div class="rates cursor-pointer fs-6">
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                    </div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="mb-0">David Buckley</h6>
-                                                        <p class="mb-0 ms-auto">February 22, 2021</p>
-                                                    </div>
-                                                    <p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="d-flex align-items-start">
-                                                <div class="review-user">
-                                                    <img src="assets/images/avatars/avatar-3.png" width="65" height="65" class="rounded-circle" alt="" />
-                                                </div>
-                                                <div class="review-content ms-3">
-                                                    <div class="rates cursor-pointer fs-6">
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                    </div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="mb-0">Peter Costanzo</h6>
-                                                        <p class="mb-0 ms-auto">February 26, 2021</p>
-                                                    </div>
-                                                    <p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @Html.Action("ProductReviews", "ProductsReview", new { area = "User" })
+
                                 </div>
                                 <div class="col col-lg-4">
-                                    <div class="add-review border">
-                                        <div class="form-body p-3">
-                                            <h4 class="mb-4">Write a Review</h4>
-                                            <div class="mb-3">
-                                                <label class="form-label">Your Name</label>
-                                                <input type="text" class="form-control rounded-0">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Your Email</label>
-                                                <input type="text" class="form-control rounded-0">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Rating</label>
-                                                <select class="form-select rounded-0">
-                                                    <option selected>Choose Rating</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="3">4</option>
-                                                    <option value="3">5</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Example textarea</label>
-                                                <textarea class="form-control rounded-0" rows="3"></textarea>
-                                            </div>
-                                            <div class="d-grid">
-                                                <button type="button" class="btn btn-dark btn-ecomm">Submit a Review</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @Html.Action("Index", "ProductsReview", new { area = "User" }) 
                                 </div>
                             </div>
                             <!--end row-->

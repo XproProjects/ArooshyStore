@@ -58,12 +58,13 @@ function SubmitForm() {
                 data: v,
                 dataType: 'json',
                 success: function (data) {
-                    if (data) {
-                        window.location.href = "/User/CustomerAccount/Logout"
-                    }
-                    else {
-                        alert("Error!Password could not changed.");
-                        return false;
+                    if (data.status) {
+                        toastr.success("Password Changed successfully", "Success", { timeOut: 3000, closeButton: true });
+                    } else {
+                        $("#userResetForm").removeClass('was-validated');
+                        $('.important').html('<span style="font-size:16px;">' + data.message + '</span>').css('margin-bottom', '10px');
+                        toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
+
                     }
                 }
             })

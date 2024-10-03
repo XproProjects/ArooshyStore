@@ -444,18 +444,17 @@ namespace ArooshyStore.BLL.Services
 
                 if (product != null)
                 {
-                    // If the product's category has a ParentCategoryId of 0, it's a master category
                     var masterCategory = "";
                     var childCategory = "";
 
                     if (product.Category.ParentCategoryId == 0)
                     {
-                        masterCategory = product.Category.CategoryName; // Master if ParentCategoryId is 0
+                        masterCategory = product.Category.CategoryName; 
                     }
                     else
                     {
-                        childCategory = product.Category.CategoryName; // Otherwise, it's a child category
-                                                                       // Find the parent category (master category)
+                        childCategory = product.Category.CategoryName; 
+                                                                       
                         masterCategory = _unitOfWork.Db.Set<tblCategory>()
                             .Where(c => c.CategoryId == product.Category.ParentCategoryId)
                             .Select(c => c.CategoryName)
@@ -645,7 +644,7 @@ namespace ArooshyStore.BLL.Services
         }
 
 
-    public List<ProductViewModel> GetNewArrivalProducts()
+        public List<ProductViewModel> GetNewArrivalProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()
                     where f.Status == true
