@@ -1,0 +1,33 @@
+﻿@model List<ArooshyStore.Models.ViewModels.ProductReviewViewModel>
+
+<div class="col col-lg-8">
+    <div class="product-review">
+        <h5 class="mb-4">@Model.Count() Reviews For The Product</h5>
+        <div class="review-list">
+            @foreach (var review in Model)
+            {
+                <div class="d-flex align-items-start">
+                    <div class="review-user">
+                        <img src="@review.ImagePath" width="65" height="65" class="rounded-circle" alt="" />
+                    </div>
+                    <div class="review-content ms-3">
+                        <div class="rates cursor-pointer fs-6">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <i class="bx bxs-star text-warning"></i>
+                            }
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <h6 class="mb-0">@review.ReviewByName</h6>
+                            <p class="mb-0 ms-auto">@review.CreatedDate</p>
+                        </div>
+                        <p>@review.ReviewDetail</p>
+                    </div>
+                </div>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,46 @@
+﻿@model ArooshyStore.Models.ViewModels.ProductReviewViewModel
+
+
+        <section class="py-5 border-top bg-light">
+            <div class="container">
+                @using (Html.BeginForm("Index", "ProductsReview", FormMethod.Post, new { id = "reviewForm", enctype = "multipart/form-data", role = "form", @class = "row g-3" }))
+                {
+                    <input type="hidden" id="ReviewByCustomerId" name="ReviewByCustomerId" value="@Model.ReviewByCustomerId" />
+                    <input type="hidden" id="ProductId" name="ProductId" value="@Model.ProductId" />
+
+                    <div class="col-12">
+                        <label for="ReviewByName" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" name="ReviewByName" id="ReviewByName" placeholder="Your Name" required value="@Model.ReviewByName" />
+                    </div>
+
+                    <div class="col-12">
+                        <label for="ReviewByEmail" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" name="ReviewByEmail" id="ReviewByEmail" placeholder="Your Email" required value="@Model.ReviewByEmail" />
+                    </div>
+
+                    <div class="col-12">
+                        <label for="Rating" class="form-label">Rating</label>
+                        <select class="form-select" name="Rating" id="Rating" required>
+                            <option selected disabled>Choose Rating</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="ReviewDetail" class="form-label">Review Details</label>
+                        <textarea class="form-control" name="ReviewDetail" id="ReviewDetail" rows="3" required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark"><i class="bx bxs-pencil"></i> Submit a Review</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+   
