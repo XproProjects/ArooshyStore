@@ -1,10 +1,44 @@
 ﻿$(function () {
+    var $checkoutForm = $('#userResetForm').validate({
+        rules: {
+            password: {
+                required: true
+            },
+            confirmPassword: {
+                required: true,
+                equalTo: '#password' 
+
+            },
+        },
+        messages: {
+            password: {
+                required: 'password is required.'
+            },
+            confirmPassword: {
+                required: 'Confirm Password is required.'
+            },
+          
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+            if (element.val() == '' || element.val() == null) {
+                element.parents('td').siblings('td').find('.btn').css("margin-top", "-8.5px");
+            }
+        }
+    });
+})
+$('#btnSubmit').click(function (event) {
+    event.preventDefault();
+    SubmitForm();
+});
+$(function () {
     $('#password').focus();
 })
 $('#btnSubmit').click(function () {
     SubmitForm();
 })
 function SubmitForm() {
+
     if ($('#password').val() == "" || $('#confirmPassword').val() == "") {
         if ($('#password').val() == "" && $('#confirmPassword').val() == "") {
             $('#password').css('border-color', '#cf564a');
@@ -53,9 +87,9 @@ function SubmitForm() {
                 Password: $("#password").val()
             }
             $.ajax({
-                url: "/User/CustomerAccount/ChangePassword",
                 type: "POST",
-                data: v,
+                url: "/User/CustomerAccount/ChangePassword",
+                data:  v ,
                 dataType: 'json',
                 success: function (data) {
                     if (data.status) {

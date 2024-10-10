@@ -330,6 +330,53 @@ namespace ArooshyStore.BLL.Services
 
                     }).ToList();
         }
+        public List<HeaderViewModel> GetCategoriesForHeader()
+        {
+            var masterCategories = (from f in _unitOfWork.Db.Set<tblCategory>()
+                                    where f.Status == true && f.ParentCategoryId == 0
+                                    select new CategoryViewModel
+                                    {
+                                        CategoryId = f.CategoryId,
+                                        CategoryName = f.CategoryName ?? "",
+                                        Status = f.Status ?? false,
+                                        ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                            .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                            .Select(x => "/Areas/Admin/FormsDocuments/Category/" + x.DocumentId + "." + x.DocumentExtension)
+                                            .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                        DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                            .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                            .Select(x => x.DocumentId)
+                                            .FirstOrDefault(),
+                                    }).ToList();
+
+            var childCategories = (from f in _unitOfWork.Db.Set<tblCategory>()
+                                   where f.Status == true && f.ParentCategoryId != 0
+                                   select new CategoryViewModel
+                                   {
+                                       CategoryId = f.CategoryId,
+                                       CategoryName = f.CategoryName ?? "",
+                                       ParentCategoryId = f.ParentCategoryId ?? 0,
+                                       Status = f.Status ?? false,
+                                       ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                           .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                           .Select(x => "/Areas/Admin/FormsDocuments/Category/" + x.DocumentId + "." + x.DocumentExtension)
+                                           .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                       DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                           .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                           .Select(x => x.DocumentId)
+                                           .FirstOrDefault(),
+                                   }).ToList();
+
+            return new List<HeaderViewModel>
+            {
+             new HeaderViewModel
+             {
+              MasterCategory = masterCategories,
+              ChildCategory = childCategories
+             }
+            };
+        }
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

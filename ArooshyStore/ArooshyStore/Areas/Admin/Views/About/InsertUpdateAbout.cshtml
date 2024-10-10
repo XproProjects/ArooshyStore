@@ -1,5 +1,8 @@
 ﻿@using ArooshyStore.Models.ViewModels
 @model AboutViewModel
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<link href="~/Areas/Admin/Content/fontawesomebrowser/fontawesome-iconpicker.min.css" rel="stylesheet" />
+<link href="~/Areas/Admin/Content/fontawesomebrowser/font-awesome.min.css" rel="stylesheet" />
 <div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
     @using (Html.BeginForm("InsertUpdateAbout", "About", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
     {
@@ -20,16 +23,14 @@
                 </section>
                 <section class="col-md-6">
                     <div style="padding:5px;padding-top:0px">
-                        <label>Service 1 Icon</label>
+                        <label>Service 1 icon (*)</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fal fa-cog"></i>
+                                    <i id="symbolIcon" class="fal fa-info"></i>
                                 </span>
                             </div>
-                            @*@Html.TextBoxFor(a => a.Service1Icon, new { @placeholder = "Service 1 Icon", @class = "form-control" })*@
-                            <input type="text" id="Service1Icon" name="Service1Icon" data-input-search="true" placeholder="Service1Icon" class="form-control icp icp-auto" value="@Model.Service1Icon" />
-
+                            <input type="text" id="Service1Icon" name="Service1Icon" data-input-search="true" placeholder="Service1Icon" class="form-control iconpicker" value="@Model.Service1Icon" />
                         </div>
                     </div>
                 </section>
@@ -49,9 +50,9 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6" style="margin-top:10px">
+                <div class="col-md-12" style="margin-top:10px">
                     <div class="row">
-                        <section class="col-md-12">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px;">
                                 <label>Service 2 Name(*)</label>
                                 <div class="input-group">
@@ -64,42 +65,39 @@
                                 </div>
                             </div>
                         </section>
-                    </div>
-                </div>
-                <div class="col-md-6" style="margin-top:10px">
-                    <div class="row">
-                        <section class="col-md-12">
-                            <div style="padding:5px;padding-top:0px;">
-                                <label>Service 2 Icon</label>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Service 2 icon (*)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-cog"></i>
+                                            <i id="symbolIcon" class="fal fa-info"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.Service2Icon, new { @placeholder = "Service 2 Icon", @class = "form-control" })
+                                    <input type="text" id="Service2Icon" name="Service2Icon" data-input-search="true" placeholder="Service 2 Icon" class="form-control icp icp-auto" value="@Model.Service2Icon" />
                                 </div>
                             </div>
                         </section>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top:10px">
-                    <div class="row">
-                        <section class="col-md-12">
-                            <div style="padding:5px;padding-top:0px;">
-                                <label>Service 2 Description</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-pencil-alt"></i>
-                                        </span>
+                        <div class="col-md-12" style="margin-top:10px">
+                            <div class="row">
+                                <section class="col-md-12">
+                                    <div style="padding:5px;padding-top:0px;">
+                                        <label>Service 2 Description</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fal fa-pencil-alt"></i>
+                                                </span>
+                                            </div>
+                                            @Html.TextAreaFor(a => a.Service2Description, new { @placeholder = "Service 2 Description", @class = "form-control" })
+                                        </div>
                                     </div>
-                                    @Html.TextAreaFor(a => a.Service2Description, new { @placeholder = "Service 2 Description", @class = "form-control"})
-                                </div>
+                                </section>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12" style="margin-top:10px">
@@ -118,15 +116,15 @@
                             </div>
                         </section>
                         <section class="col-md-6">
-                            <div style="padding:5px;padding-top:0px;">
-                                <label>Service 3 Icon</label>
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Service 3 icon (*)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-cog"></i>
+                                            <i id="symbolIcon" class="fal fa-info"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.Service3Icon, new { @placeholder = "Service 3 Icon", @class = "form-control" })
+                                    <input type="text" id="Service3Icon" name="Service3Icon" data-input-search="true" placeholder="Service 3 Icon" class="form-control icp icp-auto" value="@Model.Service3Icon" />
                                 </div>
                             </div>
                         </section>
@@ -164,7 +162,7 @@
                 </section>
 
             </div>
-           
+
 
 
         </fieldset>
@@ -176,4 +174,35 @@
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/fontawesomebrowser/fontawesome-iconpicker.min.js"></script>
 <script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/About/InsertUpdateAbout.js?v=2"></script>
+<script>
+    $('.iconpicker').iconpicker({
+        title: 'Icon Picker',
+        selected: false,
+        defaultValue: false,
+        placement: "bottom",
+        collision: "none",
+        animation: true,
+        hideOnSelect: true,
+        showFooter: true,
+        searchInFooter: false,
+        mustAccept: false,
+        selectedCustomClass: "bg-primary",
+        fullClassFormatter: function (e) {
+            return e;
+        },
+        input: "input,.iconpicker-input",
+        inputSearch: false,
+        container: false,
+        component: ".input-group-addon,.iconpicker-component",
+        templates: {
+            popover: '<div class="iconpicker-popover popover" role="tooltip"><div class="arrow"></div>' + '<div class="popover-title"></div><div class="popover-content"></div></div>',
+            footer: '<div class="popover-footer"></div>',
+            buttons: '<button class="iconpicker-btn iconpicker-btn-cancel btn btn-default btn-sm">Cancel</button>' + ' <button class="iconpicker-btn iconpicker-btn-accept btn btn-primary btn-sm">Accept</button>',
+            search: '<input type="search" class="form-control iconpicker-search" placeholder="Type to filter" />',
+            iconpicker: '<div class="iconpicker"><div class="iconpicker-items"></div></div>',
+            iconpickerItem: '<a role="button" href="javascript:;" class="iconpicker-item"><i></i></a>'
+        }
+    });
+</script>

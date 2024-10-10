@@ -58,13 +58,13 @@ $('#popupForm').on('submit', function (e) {
         AboutId: AboutId,
         Description: Description,
         Service1Name: Service1Name,
-        Service1Icon: Service1Icon,
+        Service1Icon: 'fa ' + Service1Icon,
         Service1Description: Service1Description,
         Service2Name: Service2Name,
-        Service2Icon: Service2Icon,
+        Service2Icon: 'fa ' + Service2Icon,
         Service2Description: Service2Description,
         Service3Name: Service3Name,
-        Service3Icon: Service3Icon,
+        Service3Icon: 'fa ' + Service3Icon,
         Service3Description: Service3Description,
 
     }

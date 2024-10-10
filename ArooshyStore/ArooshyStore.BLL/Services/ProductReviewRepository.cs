@@ -250,6 +250,7 @@ namespace ArooshyStore.BLL.Services
         {
             return (from r in _unitOfWork.Db.Set<tblProductReview>()
                     where r.ProductId == productId
+                    orderby r.ReviewId descending
                     select new ProductReviewViewModel
                     {
                         ReviewId = r.ReviewId,
@@ -267,6 +268,30 @@ namespace ArooshyStore.BLL.Services
                                                            .Where(x => x.TypeId == r.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
                                                            .Select(x => x.DocumentId)
                                                            .FirstOrDefault(),
+                    }).Take(3).ToList();
+        }
+        public List<ProductReviewViewModel> GetAllReviews()
+        {
+            return (from r in _unitOfWork.Db.Set<tblProductReview>()
+                    select new ProductReviewViewModel
+                    {
+                        ReviewId = r.ReviewId,
+                        ProductId = r.ProductId,
+                        ReviewByName = r.ReviewByName,
+                        ReviewByEmail = r.ReviewByEmail,
+                        Rating = r.Rating,
+                        ReviewDetail = r.ReviewDetail,
+                        CreatedDate = r.CreatedDate,
+                        ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == r.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
+
+                        ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                                   .Where(x => x.TypeId == r.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                                    .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                                   .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                        DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                                    .Where(x => x.TypeId == r.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                                   .Select(x => x.DocumentId)
+                                                   .FirstOrDefault(),
                     }).ToList();
         }
 

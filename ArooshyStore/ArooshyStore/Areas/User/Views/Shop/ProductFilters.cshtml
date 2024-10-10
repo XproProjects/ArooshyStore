@@ -1,0 +1,94 @@
+﻿@model List<ArooshyStore.Models.ViewModels.ProductFilterViewModel>
+
+<div class="card rounded-0 shadow-none border">
+    <div class="card-header d-none d-xl-block bg-transparent">
+        <h5 class="mb-0 fw-bold">Filters</h5>
+    </div>
+    @foreach (var filter in Model)
+    {
+        <div class="card-body">
+            <!-- Categories Filter -->
+            <h6 class="p-1 fw-bold bg-light">Categories</h6>
+            <div class="categories">
+                <div class="categories-wrapper height-1 p-1">
+                    @foreach (var category in filter.Categories)
+                    {
+                        <div class="form-check">
+                            <input id="CategoryCheckbox_@category.CategoryId" class="form-check-input" type="radio" name="category" value="@category.CategoryId" onchange="applyFilters()" />
+                            <label class="form-check-label" for="CategoryCheckbox_@category.CategoryId">
+                                <span>@category.CategoryName</span>
+                                <span class="product-number">(20)</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <hr>
+
+            <!-- Price Filter -->
+            <div class="Price">
+                <h6 class="p-1 fw-bold bg-light">Price</h6>
+                <div class="Price-wrapper p-1">
+                    <div class="input-group">
+                        <input type="number" id="MinPriceCheckBox" class="form-control rounded-0" placeholder="$10">
+                        <span class="input-group-text bg-section-1 border-0">-</span>
+                        <input type="number" id="maxPriceCheckBox" class="form-control rounded-0" placeholder="$10000">
+                        <button type="button" class="btn btn-outline-dark rounded-0 ms-2" id="filterPriceBtn" onclick="applyFilters()">
+                            <i class='bx bx-chevron-right me-0'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            @foreach (var attribute in filter.AttributesList)
+            {
+                <div class="colors">
+                    <h6 class="p-1 fw-bold bg-light">@attribute.AttributeName</h6>
+
+                    <div class="color-wrapper height-1 p-1">
+
+                        <div class="form-check">
+                            @*<strong>@attribute.AttributeName</strong>*@
+                            <div>
+                                @foreach (var detail in attribute.AttributeDetails)
+                                {
+                                    <div class="form-check">
+                                        <input id="AttributeCheckBox_@detail.AttributeDetailId" class="form-check-input" type="radio" value="@detail.AttributeDetailId" name="attribute" onchange="applyFilters()" />
+                                        <label class="form-check-label" for="AttributeCheckBox_@detail.AttributeDetailId">
+                                            <span>@detail.AttributeDetailName</span>
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <hr>
+            <div class="discount">
+                <h6 class="p-1 fw-bold bg-light">Discount Range</h6>
+                <div class="discount-wrapper p-1">
+                    @foreach (var discountOffer in filter.DiscountOffer)
+                    {
+                        <div class="form-check">
+                            <input id="chekDisc_@discountOffer.OfferId" class="form-check-input" name="discountOffer" type="radio" value="@discountOffer.OfferId" onchange="applyFilters()">
+                            <label class="form-check-label" for="chekDisc_@discountOffer.OfferId">
+                                @discountOffer.DiscPercent %
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    }
+    <div class="text-center my-3">
+        <button id="btnFind" class="btn btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white; width: 150px;">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+<!-- Search Button -->
+

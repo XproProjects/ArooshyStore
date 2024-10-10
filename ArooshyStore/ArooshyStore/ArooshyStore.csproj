@@ -365,6 +365,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsReviewController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductTagController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryInfoController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryChargesController.cs" />
@@ -386,6 +387,7 @@
     <Compile Include="Areas\User\Controllers\BaseController.cs" />
     <Compile Include="Areas\User\Controllers\CustomerAccountController.cs" />
     <Compile Include="Areas\User\Controllers\ContactUsController.cs" />
+    <Compile Include="Areas\User\Controllers\ShopController.cs" />
     <Compile Include="Areas\User\Controllers\ProductsReviewController.cs" />
     <Compile Include="Areas\User\Controllers\FooterController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
@@ -424,6 +426,7 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login8.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\LoginPartial.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Action\InsertUpdateAssign.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Home\QuickAccess.css" />
@@ -442,6 +445,10 @@
     <Content Include="Areas\Admin\Content\fa-brands.css" />
     <Content Include="Areas\Admin\Content\fa-regular.css" />
     <Content Include="Areas\Admin\Content\fa-solid.css" />
+    <Content Include="Areas\Admin\Content\fontawesomebrowser\font-awesome.min.css" />
+    <Content Include="Areas\Admin\Content\fontawesomebrowser\fontawesome-iconpicker.min.css" />
+    <Content Include="Areas\Admin\Content\fontawesomebrowser\fontawesome-iconpicker.css" />
+    <Content Include="Areas\Admin\Content\fonts\font-awesome.min.css" />
     <Content Include="Areas\Admin\Content\formplugins\bootstrap-colorpicker\bootstrap-colorpicker.css" />
     <Content Include="Areas\Admin\Content\formplugins\bootstrap-datepicker\bootstrap-datepicker.css" />
     <Content Include="Areas\Admin\Content\formplugins\bootstrap-daterangepicker\bootstrap-daterangepicker.css" />
@@ -1509,6 +1516,8 @@
     <Content Include="Areas\Admin\Scripts\datagrid\datatables\datatables.bundle.js" />
     <Content Include="Areas\Admin\Scripts\datagrid\datatables\datatables.export.js" />
     <Content Include="Areas\Admin\Scripts\dependency\moment\moment.js" />
+    <Content Include="Areas\Admin\Scripts\fontawesomebrowser\fontawesome-iconpicker.js" />
+    <Content Include="Areas\Admin\Scripts\fontawesomebrowser\fontawesome-iconpicker.min.js" />
     <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-colorpicker\bootstrap-colorpicker.js" />
     <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Areas\Admin\Scripts\formplugins\bootstrap-daterangepicker\bootstrap-daterangepicker.js" />
@@ -2006,6 +2015,9 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductGridPagination.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductListPagination.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductsReview\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\ChangePassword.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\CheckOldPassword.js" />
@@ -2432,7 +2444,6 @@
     <Content Include="Areas\User\Views\CustomerAccount\CustomerAddress.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\AccountDetail.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\Register.cshtml" />
-    <Content Include="Areas\User\Views\CustomerAccount\ForgotPassword.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\ResetPassword.cshtml" />
     <Content Include="Areas\User\Content\notifications\sweetalert2\sweetalert2.bundle.css.map" />
     <Content Include="Areas\User\Content\notifications\toastr\toastr.css.map" />
@@ -2440,6 +2451,12 @@
     <Content Include="Areas\User\Views\CustomerAccount\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\ProductsReview\Index.cshtml" />
     <Content Include="Areas\User\Views\ProductsReview\ProductReviews.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductsReview\AllReviews.cshtml" />
+    <Content Include="Areas\User\Views\Shop\Index.cshtml" />
+    <Content Include="Areas\User\Views\Shop\GetProductsGrid.cshtml" />
+    <Content Include="Areas\User\Views\Shop\ProductFilters.cshtml" />
+    <Content Include="Areas\User\Views\Shop\GetProductsList.cshtml" />
+    <Content Include="Areas\User\Views\Home\Header.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

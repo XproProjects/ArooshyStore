@@ -1,7 +1,5 @@
 ﻿@model ArooshyStore.Models.ViewModels.CustomerSupplierViewModel
 
-<link href="~/Areas/User/Content/ArooshyStoreCss/CustomerAccount/Login.css" rel="stylesheet" />
-
 <div class="page-wrapper">
     <div class="page-content">
         <!-- Start breadcrumb -->
@@ -35,25 +33,26 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="border p-4 rounded">
-                                        <div class="text-center">
-                                            <h3 class="">Sign in</h3>
-                                            <p>
-                                                Don't have an account yet? <a href="@Url.Action("Register", "CustomerAccount")">Sign up here</a>
-                                            </p>
-                                        </div>
+                                       
 
                                         <div class="form-body">
                                             <!-- Login Form -->
                                             @using (Html.BeginForm("Login", "CustomerAccount", FormMethod.Post, new { id = "loginForm", enctype = "multipart/form-data", role = "form", @class = "row g-3" }))
                                             {
+                                                <div class="text-center">
+                                                    <h3 class="">Sign in</h3>
+                                                    <p>
+                                                        Don't have an account yet? <a href="@Url.Action("Register", "CustomerAccount")">Sign up here</a>
+                                                    </p>
+                                                </div>
                                                 <div class="col-12">
-                                                    <label for="inputEmailAddress" class="form-label">Email Address</label>
+                                                    <label for="inputEmailAddress" class="form-label">Email Address (*)</label>
                                                     <input type="email" class="form-control" name="Email" id="Email" placeholder="Email Address">
                                                 </div>
                                                 <div class="col-12">
-                                                    <label for="inputChoosePassword" class="form-label">Enter Password</label>
+                                                    <label for="inputChoosePassword" class="form-label">Enter Password (*)</label>
                                                     <div class="input-group" id="show_hide_password">
-                                                        <input type="password" class="form-control border-end-0" name="Password" id="Password" value="12345678" placeholder="Enter Password">
+                                                        <input type="password" class="form-control border-end-0" name="Password" id="Password" placeholder="Enter Password">
                                                         <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                                     </div>
                                                 </div>
@@ -76,10 +75,12 @@
                                             <!-- Forgot Password Form -->
                                             @using (Html.BeginForm("ForgotPassword", "CustomerAccount", FormMethod.Post, new { id = "forgotPasswordForm", enctype = "multipart/form-data", role = "form", @class = "hidden row g-3" })) // initially hidden
                                             {
+                                                <div class="text-center">
+                                                    <img src="~/Areas/User/Content/images/icons/forgot-2.png" width="120" alt="" />
+                                                </div>
                                                 <h4 class="mt-5 font-weight-bold">Forgot Password?</h4>
-                                                <p class="">Enter your registered email ID to reset the password</p>
                                                 <div class="form-group my-4">
-                                                    <label for="ForgotEmail">Enter your email to reset password</label>
+                                                    <label for="ForgotEmail">Enter your email to reset password (*)</label>
                                                     <input type="email" class="form-control" name="ForgotEmail" id="ForgotEmail" placeholder="Enter email">
                                                 </div>
                                                 <div class="d-grid gap-2">
@@ -97,24 +98,8 @@
                 </div>
             </div>
         </section>
-        <!-- End shop cart -->
     </div>
 </div>
 
-<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/Login.js=?4"></script>
-<script>
-    $(document).ready(function () {
-        // Hide the forgot password form by default
-        $('#forgotPasswordForm').hide();
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/Login.js"></script>
 
-        $('#showForgotPassword').click(function () {
-            $('#loginForm').hide(); // Hide the login form
-            $('#forgotPasswordForm').show(); // Show the forgot password form
-        });
-
-        $('#backToLogin').click(function () {
-            $('#forgotPasswordForm').hide(); // Hide the forgot password form
-            $('#loginForm').show(); // Show the login form
-        });
-    });
-</script>

@@ -1,4 +1,96 @@
 ﻿// Login Form Submission
+$(document).ready(function () {
+    $('#forgotPasswordForm').hide();
+
+    $('#showForgotPassword').click(function () {
+        $('#loginForm').hide();
+        $('#forgotPasswordForm').show();
+    });
+
+    $('#backToLogin').click(function () {
+        $('#forgotPasswordForm').hide();
+        $('#loginForm').show();
+    });
+});
+$(document).ready(function () {
+    // Initialize validation for login form
+    $('#loginForm').validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            },
+            Password: {
+                required: true
+            }
+        },
+        messages: {
+            Email: {
+                required: 'Email is required.',
+                email: 'Please enter a valid email address.'
+            },
+            Password: {
+                required: 'Password is required.'
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+
+    // Initialize validation for forgot password form
+    $('#forgotPasswordForm').validate({
+        rules: {
+            ForgotEmail: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            ForgotEmail: {
+                required: 'Email is required.',
+                email: 'Please enter a valid email address.'
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    // Initialize validation for forgot password form
+    $('#userResetForm').validate({
+        rules: {
+            userResetPassword: {
+                required: true,
+            },
+            userConfirmPassword: {
+                required: true,
+                equalTo: '#userResetPassword' 
+            }
+        },
+        messages: {
+            userResetPassword: {
+                required: 'Password is required.',
+            },
+            userConfirmPassword: {
+                required: 'Confirm Password is required.',
+                equalTo: 'Passwords do not match.' // Message for when passwords don't match
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+
+    // Toggle between login and forgot password forms
+    $('#showForgotPassword').click(function () {
+        $('#loginForm').hide();
+        $('#forgotPasswordForm').show();
+    });
+
+    $('#backToLogin').click(function () {
+        $('#forgotPasswordForm').hide();
+        $('#loginForm').show();
+    });
 $("#btnLogin").click(function (event) {
     var form = $("#userLoginForm");
 
@@ -45,6 +137,27 @@ function submitLoginForm() {
 }
 
 // Forgot Password Form Submission
+(function () {
+    var $checkoutForm = $('#forgotPasswordForm').validate({
+        rules: {
+            ForgotEmail: {
+                required: true
+            },
+
+        },
+        messages: {
+            ForgotEmail: {
+                required: 'Email is required.'
+            },
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+            if (element.val() == '' || element.val() == null) {
+                element.parents('td').siblings('td').find('.btn').css("margin-top", "-8.5px");
+            }
+        }
+    });
+})
 $('#userForgotPasswordForm').on('submit', function (e) {
     e.preventDefault();
     $('.importantForgot').html('');
@@ -109,15 +222,11 @@ $('#userResetForm').on('submit', function (e) {
         }
     });
 });
-
-// Clear error messages on input focus
 $("#userResetPassword, #userConfirmPassword").on("focus", function () {
     $('.important').html('');
 });
-
-
-// Clear error messages on input focus
 $("#userPassword, #userEmail").on("mousedown keydown", function () {
     $('.important').html('');
     $('.important').css('margin-bottom', '70px');
+});
 });

@@ -8,6 +8,7 @@ namespace ArooshyStore.Models.ViewModels
         public int ReviewByCustomerId { get; set; }
         public int ProductId { get; set; }
         public int Rating { get; set; }
+        public string ProductName { get; set; }
         public string ReviewByName { get; set; }
         public string ReviewByEmail { get; set; }
         public string ReviewDetail { get; set; }
