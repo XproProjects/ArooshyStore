@@ -19,7 +19,11 @@ namespace ArooshyStore.BLL.Interfaces
         List<ProductViewModel> GetSimilrProducts(int productId);
         List<ProductViewModel> GetProductsForShop();
         List<ProductFilterViewModel> GetFiltersList();
-        List<ProductViewModel> GetFilteredProducts(string searchString);
+        List<ProductViewModel> GetFilteredProducts(bool? categoryCheckbox, int[] category,
+                                                           bool? attributeCheckbox, int[] attribute,
+                                                           bool? discountCheckbox, int[] discount,
+                                                           decimal? minPrice, decimal? maxPrice,
+                                                           string sortBy);
 
 
 

@@ -40,45 +40,10 @@ namespace ArooshyStore.Areas.User.Controllers
             var model = _repository.GetFiltersList(); 
             return PartialView(model);
         }
-        public ActionResult SetSearchString(bool? categoryCheckbox, int[] category,
-                                    bool? attributeCheckbox, int[] attribute,
-                                    bool? discountCheckbox, int[] discount,
-                                    decimal? minPrice, decimal? maxPrice)
+        public ActionResult SetSearchString(bool? categoryCheckbox, int[] category,bool? attributeCheckbox, int[] attribute,
+            bool? discountCheckbox, int[] discount, decimal? minPrice, decimal? maxPrice, string sortBy)
         {
-            var searchString = new List<string>();
-
-            if (categoryCheckbox == true && category != null && category.Length > 0)
-            {
-                string condition = string.Join(",", category.Select(p => p.ToString()));
-                searchString.Add($"isnull(s.CategoryId, 0) in ({condition})");
-            }
-
-            if (attributeCheckbox == true && attribute != null && attribute.Length > 0)
-            {
-                string condition = string.Join(",", attribute.Select(p => p.ToString()));
-                searchString.Add($"isnull(s.AttributeId, 0) in ({condition})");
-            }
-
-            if (discountCheckbox == true && discount != null && discount.Length > 0)
-            {
-                string condition = string.Join(",", discount.Select(p => p.ToString()));
-                searchString.Add($"isnull(s.OfferId, 0) in ({condition})");
-            }
-
-            if (minPrice.HasValue)
-            {
-                searchString.Add($"s.Price >= {minPrice.Value}");
-            }
-
-            if (maxPrice.HasValue)
-            {
-                searchString.Add($"s.Price <= {maxPrice.Value}");
-            }
-
-            string finalSearchString = string.Join(" AND ", searchString);
-
-            var filteredProducts = _repository.GetFilteredProducts(finalSearchString);
-
+            var filteredProducts = _repository.GetFilteredProducts(categoryCheckbox, category,attributeCheckbox, attribute, discountCheckbox, discount, minPrice, maxPrice, sortBy);
             return PartialView("GetProductsGrid", filteredProducts);
         }
 

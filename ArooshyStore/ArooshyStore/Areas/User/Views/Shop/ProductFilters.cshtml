@@ -14,12 +14,13 @@
                     @foreach (var category in filter.Categories)
                     {
                         <div class="form-check">
-                            <input id="CategoryCheckbox_@category.CategoryId" class="form-check-input" type="radio" name="category" value="@category.CategoryId" onchange="applyFilters()" />
+                            <input id="CategoryCheckbox_@category.CategoryId" class="form-check-input" type="checkbox" name="category" value="@category.CategoryId" onchange="applyFilters()" />
                             <label class="form-check-label" for="CategoryCheckbox_@category.CategoryId">
                                 <span>@category.CategoryName</span>
                                 <span class="product-number">(20)</span>
                             </label>
                         </div>
+
                     }
                 </div>
             </div>
@@ -54,7 +55,7 @@
                                 @foreach (var detail in attribute.AttributeDetails)
                                 {
                                     <div class="form-check">
-                                        <input id="AttributeCheckBox_@detail.AttributeDetailId" class="form-check-input" type="radio" value="@detail.AttributeDetailId" name="attribute" onchange="applyFilters()" />
+                                        <input id="AttributeCheckBox_@detail.AttributeDetailId" class="form-check-input" type="checkbox" value="@detail.AttributeDetailId" name="attribute" onchange="applyFilters()" />
                                         <label class="form-check-label" for="AttributeCheckBox_@detail.AttributeDetailId">
                                             <span>@detail.AttributeDetailName</span>
                                         </label>
@@ -73,7 +74,7 @@
                     @foreach (var discountOffer in filter.DiscountOffer)
                     {
                         <div class="form-check">
-                            <input id="chekDisc_@discountOffer.OfferId" class="form-check-input" name="discountOffer" type="radio" value="@discountOffer.OfferId" onchange="applyFilters()">
+                            <input id="chekDisc_@discountOffer.OfferId" class="form-check-input" name="discountOffer" type="checkbox" value="@discountOffer.OfferId" onchange="applyFilters()">
                             <label class="form-check-label" for="chekDisc_@discountOffer.OfferId">
                                 @discountOffer.DiscPercent %
                             </label>
@@ -84,11 +85,11 @@
 
         </div>
     }
-    <div class="text-center my-3">
+    @*<div class="text-center my-3">
         <button id="btnFind" class="btn btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false" style="background-color: black; color: white; width: 150px;">
             <i class="fas fa-search"></i>
         </button>
-    </div>
+    </div>*@
 </div>
-<!-- Search Button -->
+
 

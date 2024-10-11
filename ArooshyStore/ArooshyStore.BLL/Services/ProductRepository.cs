@@ -778,15 +778,55 @@ namespace ArooshyStore.BLL.Services
         }
     };
         }
-        public List<ProductViewModel> GetFilteredProducts(string searchString)
+        public List<ProductViewModel> GetFilteredProducts(bool? categoryCheckbox, int[] category,
+                                                           bool? attributeCheckbox, int[] attribute,
+                                                           bool? discountCheckbox, int[] discount,
+                                                           decimal? minPrice, decimal? maxPrice,
+                                                           string sortBy)
         {
             var query = from f in _unitOfWork.Db.Set<tblProduct>()
-                        where f.Status == true 
+                        where f.Status == true
                         select f;
-            if (!string.IsNullOrEmpty(searchString))
+
+            if (categoryCheckbox == true && category != null && category.Length > 0)
             {
-                query = query.Where(f => f.ProductName.Contains(searchString));
+                query = query.Where(p => category.Contains(p.CategoryId ?? 0));
             }
+            if (attributeCheckbox == true && attribute != null && attribute.Length > 0)
+            {
+                var productIdsWithAttributes = _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                    .Where(pad => attribute.Contains(pad.AttributeDetailId ?? 0)) 
+                    .Select(pad => pad.ProductId)
+                    .Distinct();
+
+                query = query.Where(p => productIdsWithAttributes.Contains(p.ProductId));
+            }
+           
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.SalePrice >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.SalePrice <= maxPrice.Value);
+            }
+            switch (sortBy)
+            {
+                case "date":
+                    query = query.OrderByDescending(p => p.CreatedDate); 
+                    break;
+                case "price":
+                    query = query.OrderBy(p => p.SalePrice);
+                    break;
+                case "price-desc":
+                    query = query.OrderByDescending(p => p.SalePrice);
+                    break;
+                default:
+                    break;
+            }
+
             var result = query.Select(f => new ProductViewModel
             {
                 ProductId = f.ProductId,

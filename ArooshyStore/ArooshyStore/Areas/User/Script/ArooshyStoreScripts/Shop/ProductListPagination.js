@@ -1,7 +1,7 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const productsPerPage = 9;  // Number of products per page
+    let productsPerPage = 9;  // Default number of products per page
     const productCards = [...document.querySelectorAll('.product-grid .card')];
-    const totalPages = Math.ceil(productCards.length / productsPerPage);
+    let totalPages = Math.ceil(productCards.length / productsPerPage);
     let currentPage = 1;
 
     function displayProducts(page) {
@@ -9,14 +9,11 @@
         const end = start + productsPerPage;
 
         productCards.forEach((product, index) => {
-            if (index >= start && index < end) {
-                product.style.display = "block";
-            } else {
-                product.style.display = "none";
-            }
+            product.style.display = (index >= start && index < end) ? "block" : "none";
         });
         updatePaginationButtons(page);
     }
+
     function updatePaginationButtons(page) {
         const pageNumbersContainer = document.getElementById("page-numbers");
         pageNumbersContainer.innerHTML = '';
@@ -34,17 +31,26 @@
         document.getElementById("prev-page").classList.toggle('disabled', page === 1);
         document.getElementById("next-page").classList.toggle('disabled', page === totalPages);
     }
+
     document.getElementById("prev-page").addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
             displayProducts(currentPage);
         }
     });
+
     document.getElementById("next-page").addEventListener('click', () => {
         if (currentPage < totalPages) {
             currentPage++;
             displayProducts(currentPage);
         }
     });
-    displayProducts(currentPage);
+    document.getElementById("productsPerPageSelect").addEventListener('change', (event) => {
+        productsPerPage = parseInt(event.target.value, 10);
+        totalPages = Math.ceil(productCards.length / productsPerPage);
+        currentPage = 1; 
+        displayProducts(currentPage); 
+    });
+
+    displayProducts(currentPage); 
 });
