@@ -1,4 +1,5 @@
-﻿using ArooshyStore.BLL.Interfaces;
+﻿using ArooshyStore.BLL.BusinessInfo;
+using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.BLL.Services;
 using ArooshyStore.Models.ViewModels;
 using Azure;
@@ -43,7 +44,10 @@ namespace ArooshyStore.Areas.User.Controllers
             var reviews = _repository.InsertUpdateProductReview(user);
             if (reviews != null) 
             {
+                response.Status = true; 
+                response.Message = "Review saved successfully.";
                 return new JsonResult { Data = new { status = response.Status, message = response.Message } };
+
             }
             else
             {
@@ -57,7 +61,6 @@ namespace ArooshyStore.Areas.User.Controllers
 
             return PartialView(reviews);
         }
-
 
 
     }

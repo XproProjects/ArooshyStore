@@ -24,6 +24,12 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             return View();
         }
+        public ActionResult Header()
+        {
+            var model = _category.GetCategoriesForHeader();
+            return PartialView(model); 
+           
+        }
         public ActionResult FeaturedProducts()
         {
             var featuredProducts = _repository.GetFeaturedProducts();

@@ -12,7 +12,6 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel DeleteCategory(int id, int loggedInUserId);
         List<CategoryViewModel> GetBrowseCategories();
         List<CategoryViewModel> GetMasterCategories();
-
-
+        List<HeaderViewModel> GetCategoriesForHeader();
     }
 }

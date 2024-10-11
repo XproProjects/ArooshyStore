@@ -35,11 +35,11 @@
                                     <div class="card-body">
                                         <div class="list-group list-group-flush">
                                             <a href="@Url.Action("AccountDashboard", "CustomerAccount",new { id = Model.CustomerSupplierId })" class="list-group-item active d-flex justify-content-between align-items-center">Dashboard <i class='bx bx-tachometer fs-5'></i></a>
-                                            <a href="@Url.Action("ChangePassword", "CustomerAccount",new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Change Password <i class='bx bx-cart-alt fs-5'></i></a>
                                             @*<a href="account-downloads.html" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Downloads <i class='bx bx-download fs-5'></i></a>*@
                                             <a href="@Url.Action("CustomerAddress", "CustomerAccount",new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Addresses <i class='bx bx-home-smile fs-5'></i></a>
                                             @*<a href="account-payment-methods.html" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Payment Methods <i class='bx bx-credit-card fs-5'></i></a>*@
                                             <a href="@Url.Action("AccountDetail", "CustomerAccount",new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Account Details <i class='bx bx-user-circle fs-5'></i></a>
+                                            <a href="@Url.Action("ChangePassword", "CustomerAccount",new { id = Model.CustomerSupplierId })" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Change Password <i class='bx bx-cart-alt fs-5'></i></a>
                                             <a href="@Url.Action("Logout", "CustomerAccount")" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Logout <i class='bx bx-log-out fs-5'></i></a>
                                         </div>
                                     </div>
@@ -51,29 +51,22 @@
                                         <h6 class="mb-4">The following addresses will be used on the checkuot page by default.</h6>
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
-                                                <h5 class="mb-3">Complete Address:</h5>
+                                                <h5 class="mb-3">Billing Addresses</h5>
                                                 <address>
-                                                    <p> @Model.CompleteAddress</p>
+                                                    House # <strong>@Model.HouseNo</strong><br />
+                                                    Street: <strong>@Model.Street</strong><br />
+                                                    City: <strong>@Model.CityName</strong><br />
+                                                    Colony Or Village Name: <strong>@Model.ColonyOrVillageName</strong>
+
                                                 </address>
                                             </div>
                                             <div class="col-12 col-lg-6">
-                                                <h5 class="mb-3">Colony Or VillageName:</h5>
+                                                <h5 class="mb-3">Shipping Addresses</h5>
                                                 <address>
-                                                    <p> @Model.ColonyOrVillageName</p>
-                                                </address>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-6">
-                                                <h5 class="mb-3">House No</h5>
-                                                <address>
-                                                    <p> @Model.HouseNo</p>
-                                                </address>
-                                            </div>
-                                            <div class="col-12 col-lg-6">
-                                                <h5 class="mb-3">Street</h5>
-                                                <address>
-                                                    <p> @Model.Street</p>
+                                                    House # <strong>@Model.HouseNo</strong><br />
+                                                    Street: <strong>@Model.Street</strong><br />
+                                                    City: <strong>@Model.CityName</strong><br />
+                                                    Colony Or Village Name: <strong>@Model.ColonyOrVillageName</strong>
                                                 </address>
                                             </div>
                                         </div>

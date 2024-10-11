@@ -12,5 +12,8 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel DeleteProductReview(int id, int loggedInUserId);
         List<ProductReviewViewModel> GetProductReviews(int productId);
 
+        List<ProductReviewViewModel> GetAllReviews();
+
+
     }
 }

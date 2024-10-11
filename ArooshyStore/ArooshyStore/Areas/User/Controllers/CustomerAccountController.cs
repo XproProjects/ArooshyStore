@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using ArooshyStore.Authentication.FormsAuthentication;
 using ArooshyStore.Domain.DomainModels;
 using System.Web.Script.Serialization;
+using ArooshyStore.Areas.Admin.Authentication.Identity;
 
 namespace ArooshyStore.Areas.User.Controllers
 {
@@ -35,23 +36,13 @@ namespace ArooshyStore.Areas.User.Controllers
         public ActionResult Register(CustomerSupplierViewModel user)
         {
             StatusMessageViewModel response;
-
-            if (User != null)
-            {
-                response = _repository.InsertUpdateCustomer(user);
-            }
-            else
-            {
-                BusinessInfo business = BusinessInfo.GetInstance;
-                response = business.UserLoggedOut();
-            }
-
+            response = _repository.InsertUpdateCustomer(user);
             return Json(new { status = response.Status, message = response.Message, Id = response.Id });
         }
 
         public ActionResult Login()
         {
-            if(User!=null)
+            if (User != null)
             {
                 return RedirectToAction("AccountDashboard", new { id = User.UserId });
 
@@ -197,9 +188,9 @@ namespace ArooshyStore.Areas.User.Controllers
             }
             return Json(new { status = false, message = "Password is required." });
         }
-    
 
-    public ActionResult LinkExpired()
+
+        public ActionResult LinkExpired()
         {
             return View();
         }
@@ -208,7 +199,11 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             if (User != null)
             {
-                return View();
+                var model = new CustomerSupplierViewModel
+                {
+                    CustomerSupplierId = User.UserId
+                };
+                return View(model);
             }
             else
             {
@@ -219,26 +214,23 @@ namespace ArooshyStore.Areas.User.Controllers
         public async Task<ActionResult> ChangePassword(string password)
         {
             bool result = false;
-            if (User != null)
-            {
-                if (password != null)
-                {
-                    result = await _repository.ChangePassword(User.UserId, password);
-                }
-                else
-                {
-                    result = false;
 
-                }
+            if (User != null && !string.IsNullOrEmpty(password))
+            {
+                result = await _repository.ChangePassword(User.UserId, password);
+            }
+
+            if (result)
+            {
+                return Json(new { status = true });
             }
             else
             {
-                result = true;
+                return Json(new { status = false, message = "Failed to change the password." });
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 
-}
+    }
 
    

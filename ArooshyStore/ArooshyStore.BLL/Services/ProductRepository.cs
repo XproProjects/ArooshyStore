@@ -20,7 +20,7 @@ namespace ArooshyStore.BLL.Services
         {
             this._unitOfWork = unitOfWork;
         }
-
+        #region Admin Side
         public List<ProductViewModel> GetProductsListAndCount(string whereCondition, string start, string length, string sorting)
         {
             List<ProductViewModel> list = new List<ProductViewModel>();
@@ -504,7 +504,8 @@ namespace ArooshyStore.BLL.Services
 
             return model;
         }
-
+        #endregion
+        #region User Side
         public List<ProductViewModel> GetFeaturedProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()
@@ -554,7 +555,6 @@ namespace ArooshyStore.BLL.Services
 
                     }).ToList();
         }
-
         public ProductViewModel GetProductWithAttributes(int productId)
         {
             var model = (from f in _unitOfWork.Db.Set<tblProduct>()
@@ -642,8 +642,6 @@ namespace ArooshyStore.BLL.Services
 
                     }).ToList();
         }
-
-
         public List<ProductViewModel> GetNewArrivalProducts()
         {
             return (from f in _unitOfWork.Db.Set<tblProduct>()
@@ -667,6 +665,209 @@ namespace ArooshyStore.BLL.Services
                                         .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png"
                     }).ToList();
         }
+        public List<ProductViewModel> GetProductsForShop()
+        {
+            var query = from f in _unitOfWork.Db.Set<tblProduct>()
+                        where f.Status == true
+                        select f;
+
+            var result = query.Select(f => new ProductViewModel
+            {
+                ProductId = f.ProductId,
+                ProductName = f.ProductName,
+                CategoryId = f.CategoryId ?? 0,
+                CategoryName = _unitOfWork.Db.Set<tblCategory>()
+                                .Where(x => x.CategoryId == f.CategoryId)
+                                .Select(x => x.CategoryName)
+                                .FirstOrDefault() ?? "",
+                SalePrice = f.SalePrice ?? 0,
+                CostPrice = f.CostPrice ?? 0,
+                Status = f.Status,
+                ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                .Select(x => x.DocumentId)
+                                .FirstOrDefault(),
+                AttributesList = (from pad in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                  join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on pad.AttributeDetailId equals ad.AttributeDetailId
+                                  join a in _unitOfWork.Db.Set<tblAttribute>() on pad.AttributeId equals a.AttributeId
+                                  where pad.ProductId == f.ProductId && a.Status == true && ad.Status == true
+                                  group ad by new { a.AttributeId, a.AttributeName } into g
+                                  select new AttributeViewModel
+                                  {
+                                      AttributeId = g.Key.AttributeId,
+                                      AttributeName = g.Key.AttributeName,
+                                      AttributeDetails = g.Select(detail => new ProductAttributeDetailViewModel
+                                      {
+                                          AttributeDetailId = detail.AttributeDetailId,
+                                          AttributeDetailName = detail.AttributeDetailName
+                                      }).ToList()
+                                  }).ToList(),
+            }).ToList();
+
+            return result;
+        }
+        public List<ProductFilterViewModel> GetFiltersList()
+        {
+            var categories = (from f in _unitOfWork.Db.Set<tblCategory>()
+                              where f.Status == true && f.ParentCategoryId != 0
+                              select new CategoryViewModel
+                              {
+                                  CategoryId = f.CategoryId,
+                                  CategoryName = f.CategoryName ?? "",
+                                  ParentCategoryId = f.ParentCategoryId ?? 0,
+                                  Status = f.Status ?? false,
+                                  ParentCategoryName = _unitOfWork.Db.Set<tblCategory>()
+                                      .Where(x => x.CategoryId == f.ParentCategoryId && f.ParentCategoryId != 0)
+                                      .Select(x => x.CategoryName)
+                                      .FirstOrDefault() ?? "",
+                                  ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                      .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                      .Select(x => "/Areas/Admin/FormsDocuments/Category/" + x.DocumentId + "." + x.DocumentExtension)
+                                      .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                  DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                      .Where(x => x.TypeId == f.CategoryId.ToString() && x.DocumentType == "Category" && x.Remarks == "ProfilePicture")
+                                      .Select(x => x.DocumentId)
+                                      .FirstOrDefault(),
+                              }).ToList();
+
+            var groupedAttributes = (from a in _unitOfWork.Db.Set<tblAttribute>()
+                                     join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on a.AttributeId equals ad.AttributeId
+                                     where a.Status == true && ad.Status == true
+                                     select new
+                                     {
+                                         AttributeId = a.AttributeId,
+                                         AttributeName = a.AttributeName,
+                                         AttributeDetailId = ad.AttributeDetailId,
+                                         AttributeDetailName = ad.AttributeDetailName
+                                     })
+                        .GroupBy(attr => new { attr.AttributeId, attr.AttributeName })
+                        .Select(g => new AttributeViewModel
+                        {
+                            AttributeId = g.Key.AttributeId,
+                            AttributeName = g.Key.AttributeName,
+                            AttributeDetails = g.Select(d => new ProductAttributeDetailViewModel
+                            {
+                                AttributeDetailId = d.AttributeDetailId,
+                                AttributeDetailName = d.AttributeDetailName
+                            }).ToList()
+                        }).ToList();
+
+
+            var discountOffer = (from d in _unitOfWork.Db.Set<tblDiscountOffer>()
+                                 where d.Status == true
+                                 select new DiscountOfferViewModel
+                                 {
+                                     OfferId = d.OfferId,
+                                     DiscountName = d.DiscountName ?? "",
+                                     DiscPercent = d.DiscPercent ?? 0,
+                                     Status = d.Status ?? false,
+                                     SelectType = d.SelectType ?? "",
+                                 }).ToList();
+
+            return new List<ProductFilterViewModel>
+    {
+        new ProductFilterViewModel
+        {
+            AttributesList = groupedAttributes,
+            Categories = categories,
+            DiscountOffer = discountOffer
+        }
+    };
+        }
+        public List<ProductViewModel> GetFilteredProducts(bool? categoryCheckbox, int[] category,
+                                                           bool? attributeCheckbox, int[] attribute,
+                                                           bool? discountCheckbox, int[] discount,
+                                                           decimal? minPrice, decimal? maxPrice,
+                                                           string sortBy)
+        {
+            var query = from f in _unitOfWork.Db.Set<tblProduct>()
+                        where f.Status == true
+                        select f;
+
+            if (categoryCheckbox == true && category != null && category.Length > 0)
+            {
+                query = query.Where(p => category.Contains(p.CategoryId ?? 0));
+            }
+            if (attributeCheckbox == true && attribute != null && attribute.Length > 0)
+            {
+                var productIdsWithAttributes = _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                    .Where(pad => attribute.Contains(pad.AttributeDetailId ?? 0)) 
+                    .Select(pad => pad.ProductId)
+                    .Distinct();
+
+                query = query.Where(p => productIdsWithAttributes.Contains(p.ProductId));
+            }
+           
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.SalePrice >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.SalePrice <= maxPrice.Value);
+            }
+            switch (sortBy)
+            {
+                case "date":
+                    query = query.OrderByDescending(p => p.CreatedDate); 
+                    break;
+                case "price":
+                    query = query.OrderBy(p => p.SalePrice);
+                    break;
+                case "price-desc":
+                    query = query.OrderByDescending(p => p.SalePrice);
+                    break;
+                default:
+                    break;
+            }
+
+            var result = query.Select(f => new ProductViewModel
+            {
+                ProductId = f.ProductId,
+                ProductName = f.ProductName,
+                CategoryId = f.CategoryId ?? 0,
+                CategoryName = _unitOfWork.Db.Set<tblCategory>()
+                                .Where(x => x.CategoryId == f.CategoryId)
+                                .Select(x => x.CategoryName)
+                                .FirstOrDefault() ?? "",
+                SalePrice = f.SalePrice ?? 0,
+                CostPrice = f.CostPrice ?? 0,
+                Status = f.Status,
+                ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                .Select(x => x.DocumentId)
+                                .FirstOrDefault(),
+                AttributesList = (from pad in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                  join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on pad.AttributeDetailId equals ad.AttributeDetailId
+                                  join a in _unitOfWork.Db.Set<tblAttribute>() on pad.AttributeId equals a.AttributeId
+                                  where pad.ProductId == f.ProductId && a.Status == true && ad.Status == true
+                                  group ad by new { a.AttributeId, a.AttributeName } into g
+                                  select new AttributeViewModel
+                                  {
+                                      AttributeId = g.Key.AttributeId,
+                                      AttributeName = g.Key.AttributeName,
+                                      AttributeDetails = g.Select(detail => new ProductAttributeDetailViewModel
+                                      {
+                                          AttributeDetailId = detail.AttributeDetailId,
+                                          AttributeDetailName = detail.AttributeDetailName
+                                      }).ToList()
+                                  }).ToList(),
+            }).ToList();
+
+            return result;
+        }
+
+        #endregion
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

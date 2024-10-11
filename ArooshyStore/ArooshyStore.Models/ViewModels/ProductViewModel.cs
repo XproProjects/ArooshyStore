@@ -21,6 +21,8 @@ namespace ArooshyStore.Models.ViewModels
         public int? DeliveryInfoId { get; set; }
         public string UnitName { get; set; }
         public int? CategoryId { get; set; }
+        public int? AttributeId { get; set; }
+
         public string CategoryName { get; set; }
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
@@ -43,6 +45,8 @@ namespace ArooshyStore.Models.ViewModels
         public List<ProductViewModel> Products { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<TagsForProductsViewModel> Tags { get; set; }
+        public List<DiscountOfferViewModel> DiscountOffer { get; set; }
+
 
     }
 }
