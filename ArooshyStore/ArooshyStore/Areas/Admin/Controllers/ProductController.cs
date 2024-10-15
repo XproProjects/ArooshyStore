@@ -15,12 +15,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
     {
         private readonly IProductRepository _repository;
         private readonly ICheckUserRoleRepository _roles;
+        private readonly IProductReviewRepository _review;
+
         private readonly IMapper _mapper;
-        public ProductController(IProductRepository repository, ICheckUserRoleRepository roles)
+        public ProductController(IProductRepository repository, ICheckUserRoleRepository roles, IProductReviewRepository review)
         {
             _repository = repository;
             _mapper = AutoMapperConfig.Mapper;
             _roles = roles;
+            _review = review;
         }
         public ActionResult Index()
         {
@@ -210,5 +213,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(new { productName = "", salePrice = 0 });
 
         }
+
+        [HttpGet]
+        public ActionResult ProductReviews(int productId)
+        {
+            var reviews = _review.GetProductReviews(productId);
+            return View(reviews);
+        }
+
     }
 }

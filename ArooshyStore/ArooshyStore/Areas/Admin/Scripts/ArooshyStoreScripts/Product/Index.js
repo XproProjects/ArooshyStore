@@ -70,6 +70,7 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
+                    div += '<a class="dropdown-item btnProductReview" href="javascript:void(0)" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Product Reviews">Product Reviews</a>';
                     div += '<a class="dropdown-item btnAttachDocument btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Attach Document">Attach Documents</a>';
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Edit Product" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
@@ -77,6 +78,7 @@
                     if ($('#DeleteActionRole').val() > 0) {
                         div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Product" data-toggle="modal" data-target="#DeleteModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
                     }
+
                     div += '</div>' +
                         '</div>';
 
@@ -88,6 +90,12 @@
         ]
     });
     oTable = $('#myTable').DataTable();
+});
+$(document).on('click', '.btnProductReview', function () {
+
+    var id = $(this).attr("data-value"); // Get the ProductId
+    alert(id);
+    window.location.href = "/Admin/Product/ProductReviews?productId=" + id;
 });
 
 $(document).on('click', '.btnAttachDocument', function () {

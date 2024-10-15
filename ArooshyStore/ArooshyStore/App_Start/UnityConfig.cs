@@ -46,6 +46,8 @@ namespace ArooshyStore
             container.RegisterType<IDeliveryInfoRepository, DeliveryInfoRepository>();
             container.RegisterType<IProductTagRepository, ProductTagRepository>();
             container.RegisterType<IProductReviewRepository, ProductReviewRepository>();
+            container.RegisterType<IProductWishlistRepository, ProductWishlistRepository>();
+            container.RegisterType<IProductCartRepository, ProductCartRepository>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

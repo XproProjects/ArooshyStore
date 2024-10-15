@@ -1,0 +1,48 @@
+﻿@model List<ArooshyStore.Models.ViewModels.ProductViewModel>
+
+<li class="nav-item dropdown dropdown-large">
+    <a href="@Url.Action("Cart","Shop")" class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative cart-link" data-bs-toggle="dropdown">
+        <span class="alert-count">@Model.Count</span>
+        <i class='bx bx-shopping-bag'></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end">
+        <a href="javascript:;">
+            <div class="cart-header">
+                <p class="cart-header-title mb-0">@Model.Count ITEMS</p>
+                <p class="cart-header-clear ms-auto mb-0">
+                    <a href="@Url.Action("Cart","Shop")">VIEW CART</a>
+                </p>
+            </div>
+        </a>
+        <div class="cart-list">
+            @foreach (var product in Model)
+            {
+                <a class="dropdown-item" href="javascript:;">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="cart-product-title">@product.ProductName</h6>
+                            <p class="cart-product-price">1 X $@product.SalePrice</p>
+                        </div>
+                        <div class="position-relative">
+                            <div class="cart-product-cancel position-absolute">
+                                <i class='bx bx-x' data-product-id="@product.ProductId"></i>
+                            </div>
+                            <div class="cart-product">
+                                <img src="@product.ImagePath" class="" alt="@product.ProductName">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+        <a href="javascript:;">
+            <div class="text-center cart-footer d-flex align-items-center">
+                <h5 class="mb-0">TOTAL</h5>
+                <h5 class="mb-0 ms-auto">$@(Model.Sum(x => x.SalePrice))</h5>
+            </div>
+        </a>
+        <div class="d-grid p-3 border-top">
+            <a href="@Url.Action("Checkout","Shop")" class="btn btn-dark btn-ecomm">CHECKOUT</a>
+        </div>
+    </div>
+</li>

@@ -365,7 +365,6 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductsReviewController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductTagController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryInfoController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryChargesController.cs" />
@@ -1483,6 +1482,7 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Expense\InsertUpdateExpense.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ExpenseType\InsertUpdateExpenseType.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductReview.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\InsertUpdateProduct.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\City\Index.js" />
@@ -2015,6 +2015,8 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-us-aea-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\InsertProductCart.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductWishlist\InsertProductWishlist.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductGridPagination.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductListPagination.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\Index.js" />
@@ -2451,12 +2453,15 @@
     <Content Include="Areas\User\Views\CustomerAccount\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\ProductsReview\Index.cshtml" />
     <Content Include="Areas\User\Views\ProductsReview\ProductReviews.cshtml" />
-    <Content Include="Areas\Admin\Views\ProductsReview\AllReviews.cshtml" />
     <Content Include="Areas\User\Views\Shop\Index.cshtml" />
     <Content Include="Areas\User\Views\Shop\GetProductsGrid.cshtml" />
     <Content Include="Areas\User\Views\Shop\ProductFilters.cshtml" />
     <Content Include="Areas\User\Views\Shop\GetProductsList.cshtml" />
     <Content Include="Areas\User\Views\Home\Header.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\CartItems.cshtml" />
+    <Content Include="Areas\User\Views\Shop\CartDropdown.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductReviews.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\Wishlist.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
