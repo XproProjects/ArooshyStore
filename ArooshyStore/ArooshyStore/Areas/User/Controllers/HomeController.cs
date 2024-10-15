@@ -26,6 +26,7 @@ namespace ArooshyStore.Areas.User.Controllers
         }
         public ActionResult Header()
         {
+          
             var model = _category.GetCategoriesForHeader();
             return PartialView(model); 
            

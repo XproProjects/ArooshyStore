@@ -15,17 +15,23 @@ using ArooshyStore.Authentication.FormsAuthentication;
 using ArooshyStore.Domain.DomainModels;
 using System.Web.Script.Serialization;
 using ArooshyStore.Areas.Admin.Authentication.Identity;
+using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace ArooshyStore.Areas.User.Controllers
 {
     public class CustomerAccountController : BaseController
     {
         private readonly ICustomerSupplierRepository _repository;
+        private readonly IProductWishlistRepository _wishlist;
+        private readonly IProductCartRepository _cart;
 
 
-        public CustomerAccountController(ICustomerSupplierRepository repository)
+        public CustomerAccountController(ICustomerSupplierRepository repository, IProductWishlistRepository wishlist, IProductCartRepository cart)
         {
             _repository = repository;
+            _wishlist = wishlist;
+            _cart = cart;
         }
         public ActionResult Register()
         {
@@ -229,8 +235,94 @@ namespace ArooshyStore.Areas.User.Controllers
                 return Json(new { status = false, message = "Failed to change the password." });
             }
         }
+
+        #region Wishlist items
+
+        [HttpPost]
+        public ActionResult InsertUpdateWishlist(ProductWishlistViewModel user)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+
+            if (User != null)
+            {
+                response = _wishlist.InsertUpdateProductWishlist(user, User.UserId);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+        }
+        public ActionResult Wishlist()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                int userId = User.UserId; 
+                System.Diagnostics.Debug.WriteLine($"User ID: {userId}"); 
+                var model = _wishlist.GetWishlistItemsByUserId(userId);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "CustomerAccount");
+            }
+        }
+        [HttpPost]
+        public ActionResult DeleteWishlistProduct(int id)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            if (User != null)
+            {
+                ProductWishlistViewModel user = new ProductWishlistViewModel();
+                user.WishlistId = id;
+                response = _wishlist.DeleteProductWishlist(id, User.UserId);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message } };
+        }
+        #endregion
+
+        #region Cart items
+        [HttpPost]
+        public ActionResult InsertUpdateCart(ProductCartViewModel user, string data)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            response = _cart.InsertUpdateProductCart(user, data);
+           return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+        }
+        [HttpGet]
+        public ActionResult CartItems(int userId)
+        {
+            var model = _cart.GetCartItemsByUserId(userId);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteCartProduct(int id)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            if (User != null)
+            {
+                ProductCartViewModel user = new ProductCartViewModel();
+                user.CartId = id;
+                response = _cart.DeleteProductCart(id);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message } };
+        }
+        #endregion
     }
 
-    }
+}
 
    

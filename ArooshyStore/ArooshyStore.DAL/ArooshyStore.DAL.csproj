@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblProductWishlist.cs" />
+    <Compile Include="Entities\tblProductCartAttributeDetail.cs" />
+    <Compile Include="Entities\tblProductCart.cs" />
     <Compile Include="Entities\tblProductReview.cs" />
     <Compile Include="Entities\tblContactUs.cs" />
     <Compile Include="Entities\tblDeliveryInfo.cs" />
@@ -239,6 +242,10 @@
     <Compile Include="Migrations\202410021249449_Added_Table_tblProductReview.designer.cs">
       <DependentUpon>202410021249449_Added_Table_tblProductReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410131118031_Added_Tables_tblCartWishlistAttributeDetail.cs" />
+    <Compile Include="Migrations\202410131118031_Added_Tables_tblCartWishlistAttributeDetail.designer.cs">
+      <DependentUpon>202410131118031_Added_Tables_tblCartWishlistAttributeDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -361,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410021249449_Added_Table_tblProductReview.resx">
       <DependentUpon>202410021249449_Added_Table_tblProductReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410131118031_Added_Tables_tblCartWishlistAttributeDetail.resx">
+      <DependentUpon>202410131118031_Added_Tables_tblCartWishlistAttributeDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

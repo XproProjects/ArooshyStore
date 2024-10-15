@@ -12,11 +12,13 @@
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-3 g-sm-4">
                 @foreach (var product in Model)
                 {
+                    <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
+
                     <div class="col">
-                        <div class="card">
+                        <div class="card" data-product-id="@product.ProductId" data-given-sale-price="@product.SalePrice" data-actual-sale-price="@product.CostPrice">
                             <div class="position-relative overflow-hidden">
                                 <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
-                                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                                    <a href="javascript:;" class="add-to-cart"><i class='bx bx-cart-add'></i></a>
                                 </div>
                                 <div class="quick-view position-absolute start-0 bottom-0 end-0">
                                     <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal">Quick View</a>
@@ -32,8 +34,9 @@
                                         <h6 class="mb-0 fw-bold product-short-title">@product.ProductName</h6>
                                     </div>
                                     <div class="icon-wishlist">
-                                        <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                                        <a href="javascript:;" class="add-to-wishlist" data-product-id="@product.ProductId"> <i class="bx bx-heart"></i> </a>
                                     </div>
+
                                 </div>
                                 <div class="cursor-pointer rating mt-2">
                                     <i class="bx bxs-star text-warning"></i>
@@ -130,4 +133,5 @@
         </div>
     </div>
 </section>
-
+<script src="~/Areas/User/Script/ArooshyStoreScripts/ProductWishlist/InsertProductWishlist.js"></script>
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/InsertProductCart.js"></script>

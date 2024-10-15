@@ -17,12 +17,14 @@ namespace ArooshyStore.Models.ViewModels
         public string Barcode { get; set; }
         public string TagName { get; set; }
         public string DeliveryInfoName { get; set; }
+        public int? LoggedUserId { get; set; }
+
         public int? UnitId { get; set; }
         public int? DeliveryInfoId { get; set; }
         public string UnitName { get; set; }
         public int? CategoryId { get; set; }
         public int? AttributeId { get; set; }
-
+        public int? UserId { get; set; }
         public string CategoryName { get; set; }
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
