@@ -1,0 +1,46 @@
+﻿@model ArooshyStore.Models.ViewModels.InvoiceStatusViewModel
+
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("InsertUpdateInvoiceStatus", "Invoice", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset style="padding:1.25rem;">
+            <div class="row" style="margin-top: 25px;">
+                <section class="col-md-12">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Status (*)</label>
+                        <input type="hidden" id="InvoiceStatusId" name="InvoiceStatusId" value="@Model.InvoiceStatusId" />
+                        <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-building"></i>
+                                </span>
+                            </div>
+                            <select id="Status" name="Status" class="form-control">
+                                <option value="" disabled>Select Status</option>
+                                <option value="Ordered" @(Model.Status == "Ordered" ? "selected" : "")>Ordered</option>
+                                <option value="Confirmed" @(Model.Status == "Confirmed" ? "selected" : "")>Confirmed</option>
+                                <option value="OnHold" @(Model.Status == "OnHold" ? "selected" : "")>OnHold</option>
+                                <option value="Dispatched" @(Model.Status == "Dispatched" ? "selected" : "")>Dispatched</option>
+                                <option value="Delivered" @(Model.Status == "Delivered" ? "selected" : "")>Delivered</option>
+                                <option value="Returned" @(Model.Status == "Returned" ? "selected" : "")>Returned</option>
+                                <option value="Pending" @(Model.Status == "Rejected" ? "selected" : "")>Rejected</option>
+                                <option value="Cancelled" @(Model.Status == "Cancelled" ? "selected" : "")>Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+    }
+</div>
+
+
+
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateInvoiceStatus.js"></script>

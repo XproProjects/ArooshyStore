@@ -1,0 +1,214 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model DateFilterReportViewModel
+@{
+    ViewBag.Title = "Print Attendance Report";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/PayrollCss/Report/PrintAttendanceDetail.css" rel="stylesheet" />
+<div class="mySelect" style="overflow: hidden;padding: 0px">
+    <main id="js-page-content" role="main" class="page-content">
+        <div class="row">
+            <div class="col-lg-6" style="margin-top:4px">
+            </div>
+            <div class="col-md-12" style="display:flex">
+                <table style="width: 100%">
+                    <tr>
+                        <th>
+                            <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-clipboard"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Attendance</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-list-ol"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Print Attendance Report</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </th>
+                        <th style="text-align:right">
+                            <button type="button" class="btn printBtn" onclick="window.print();" style=" background-color:#544D81; color: white;height:32px;width:65px;padding:6px">
+                                Print
+                            </button>
+                        </th>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("download", "pdf", FormMethod.Post, new { id = "downloadForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+        {
+            @*Header of The main Panel Ends*@
+
+
+            <input type="hidden" name="DocumentName" id="DocumentName" value="" />
+            <input type="hidden" name="FileName" id="FileName" value="TimesheetReport" />
+            <div id="HtmlData" style="margin-top:8px">
+                <div id="printable-content" class="panel printable-content rpt table-responsive" style=" padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                    <table style="padding: 30px;padding-top:0px;margin-top:-55px" id="myTable">
+                        <tr>
+                            <th style="font-weight: bold; font-size: 15px; text-align: right;font-weight:normal" colspan="12"><strong>Print Date:&nbsp;</strong>@*<span class="LocalDate"></span>*@@Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy hh:mm tt")</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: bold; font-size: 18px; text-align: center;text-decoration:underline" colspan="6">@Model.BranchName</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: bold; font-size: 16px; text-align: center;text-decoration:underline" colspan="6">Attendance Detail</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px; text-align: center;" colspan="6">
+                                <span>@Convert.ToDateTime(Model.MonthDate).ToString("MMMM, yyyy")</span>
+                            </th>
+                        </tr>
+                        <thead>
+                            <tr>
+                                <th style="font-weight: bold; font-size: 16px; text-align: center; padding-bottom: 10px" colspan="12">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="12">
+                                    @{
+                                        string marginTop = "";
+                                        if (Model != null)
+                                        {
+                                            marginTop = "-25px";
+                                        }
+                                        else
+                                        {
+                                            marginTop = "5px";
+                                        }
+                                    }
+                                    @if (Model.AttendancesList.Count != 0)
+                                    {
+                                        <table class="mainTable" style="margin-top:@marginTop;width:1300px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="font-weight: bold; font-size: 16px; text-align: center; padding: 13px; border: !important" colspan="12">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tr class="mainTr">
+                                                <th class="FontTh" style="text-align: center; width: 45px">Sr#</th>
+                                                @*<th style="text-align: center; width: 110px">Month</th>*@
+                                                <th class="FontTh" style="text-align:left">Employee</th>
+                                                @for (int j = 0; j < Model.AttendancesList[0].DateList.Count; j++)
+                                                {
+                                                    if (j != Model.AttendancesList[0].DateList.Count - 1)
+                                                    {
+                                                        <th class="FontTh" style="text-align: center;width:20px">@Model.AttendancesList[0].DateList[j].AttendanceDate.Value.Day</th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th class="FontTh borderRight" style="text-align: center; width: 20px ">@Model.AttendancesList[0].DateList[j].AttendanceDate.Value.Day</th>
+                                                    }
+                                                }
+                                            </tr>
+
+                                            <tbody>
+                                                @for (int i = 0; i < Model.AttendancesList.Count; i++)
+                                                {
+                                                    string bgColor = "";
+                                                    <tr class="mainTr">
+                                                        <td class="FontTh" style="text-align:center">@(i + 1)</td>
+                                                        <td class="FontTh" style="text-align: left">@Model.AttendancesList[i].EmployeeName</td>
+                                                        @for (int j = 0; j < Model.AttendancesList[i].DateList.Count; j++)
+                                                        {
+                                                            if (Model.AttendancesList[i].DateList[j].Attendance == "P")
+                                                            {
+                                                                bgColor = "#F0FFF0";
+                                                            }
+                                                            else if (Model.AttendancesList[i].DateList[j].Attendance == "A")
+                                                            {
+                                                                bgColor = "#F8A5A5";
+                                                            }
+                                                            else if (Model.AttendancesList[i].DateList[j].Attendance == "L")
+                                                            {
+                                                                bgColor = "#F8ED62";
+                                                            }
+                                                            else if (Model.AttendancesList[i].DateList[j].Attendance == "H")
+                                                            {
+                                                                bgColor = "#58CCED";
+                                                            }
+                                                            else
+                                                            {
+                                                                bgColor = "#fff";
+                                                            }
+                                                            if (j != Model.AttendancesList[i].DateList.Count - 1)
+                                                            {
+                                                                <td class="FontTh" style="text-align: center;background-color:@bgColor">@Model.AttendancesList[i].DateList[j].Attendance</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="FontTh borderRight" style="text-align: center;background-color:@bgColor">@Model.AttendancesList[i].DateList[j].Attendance</td>
+                                                            }
+                                                        }
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="font-weight: bold; font-size: 20px; text-align: center; padding: 50px;  border: none !important;" colspan="12">&nbsp;</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <table class="mainTable" style="margin-top:@marginTop;width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="font-weight: bold; font-size: 16px; text-align: center; padding: 13px; border: !important" colspan="12">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tr class="mainTr">
+                                                <th style="text-align: center; width: 45px">Sr#</th>
+                                                @*<th style="text-align: center; width: 110px">Month</th>*@
+                                                <th class="borderRight" style="text-align:left">Employee</th>
+                                            </tr>
+                                            <tbody>
+                                                <tr class="mainTr">
+                                                    <td class="borderRight" colspan="6" style="text-align:center;padding:10px">No record found.</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="font-weight: bold; font-size: 20px; text-align: center; padding: 50px;  border: none !important;" colspan="12">&nbsp;</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="PageEnd"></div>
+                @*<div id="printable-content2" class="panel rpt" style=" margin-top:-20px;padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                        <table style="padding: 30px;padding-top:0px;margin-top:-55px" id="myTable">
+                            <tr>
+                                <th style="font-weight: bold; font-size: 18px; text-align: center;" colspan="6">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="PageEnd"></div>*@
+                <br />
+            </div>
+        }
+    </main>
+</div>
+<script type="text/javascript">
+    //$(document).on("click", ".printBtn", function () {
+    //    $('.printable-content').removeClass('table-responsive');
+    //})
+    $(document).ready(function () {
+        $('.nav-menu li a[href="/employeeattendance/index"]').parent("li").addClass('active');
+    });
+</script>
+

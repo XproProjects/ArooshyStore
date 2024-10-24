@@ -129,12 +129,38 @@
                                         </a>
                                     </li>
                                 }
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a id="cart" class="nav-link cart-link">
                                         <i class='bx bx-cart'></i>
                                     </a>
 
-                                </li>
+                                </li>*@
+                            <li class="nav-item dropdown dropdown-large">
+                                <a href="#" class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative cart-link" data-bs-toggle="dropdown">
+                                    <span class="alert-count"></span>
+                                    <i class='bx bx-shopping-bag'></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" id="cartDropdown">
+                                    <a href="javascript:;">
+                                        <div class="cart-header">
+                                            <p class="cart-header-title mb-0">5 ITEMS</p>
+                                            <p class="cart-header-clear ms-auto mb-0" id="cart">
+                                                VIEW CART
+                                            </p>
+
+                                        </div>
+                                    </a>
+                                   
+                                    <div class="cart-list">
+                                        @Html.Action("CartDropdown", "CustomerAccount", new { area = "User" })
+                                    </div>
+                                    }
+
+                                    <div class="d-grid p-3 border-top">
+                                        <a href="javascript:;" class="btn btn-dark btn-ecomm" onclick="redirectToCheckout()">CHECKOUT</a>
+                                    </div>
+                                </div>
+                            </li>
                                
                             </ul>
                         </nav>
@@ -305,3 +331,9 @@
 </div>
 
 <script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/InsertProductCart.js"></script>
+<script>
+    function redirectToCheckout() {
+        var url = '/User/CheckOut/CheckOutDetail'; 
+        window.location.href = url;
+    }
+</script>

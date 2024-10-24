@@ -1,8 +1,8 @@
-﻿@model List<ArooshyStore.Models.ViewModels.ProductCartViewModel>
+﻿
+@model List<ArooshyStore.Models.ViewModels.ProductCartViewModel>
 
 <div class="page-wrapper">
     <div class="page-content">
-        <!-- Start Breadcrumb -->
         <section class="py-3 border-bottom border-top d-none d-md-flex bg-light">
             <div class="container">
                 <div class="page-breadcrumb d-flex align-items-center">
@@ -23,141 +23,147 @@
                 </div>
             </div>
         </section>
-        <!-- End Breadcrumb -->
-        <!-- Start Shop Cart -->
+        <!--end breadcrumb-->
+        <!--start shop cart-->
         <section class="py-4">
             <div class="container">
-                @if (Model != null && Model.Any())
-                {
-                    <div class="shop-cart">
+                <div class="shop-cart">
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <div class="shop-cart-list mb-3 p-3">
+                                <div class="row align-items-center g-3">
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var cart in Model)
+                                        {
+                                            <input type="hidden" id="UserId" name="UserId" value="@cart.LoggedInUserId" />
 
-                        <div class="row">
-                            <div class="col-12 col-xl-8">
-                                @foreach (var cart in Model)
-                                {
-                                    <div class="shop-cart-list mb-3 p-3">
-                                        <div class="row align-items-center g-3">
-                                            <div class="col-12 col-lg-6">
-                                                <div class="d-lg-flex align-items-center gap-3">
-                                                    <div class="cart-img text-center text-lg-start">
-                                                        <img src="@cart.ImagePath" width="130" alt="@cart.ProductId">
+                                            <div class="shop-cart-list mb-3 p-3">
+                                                <div class="row align-items-center g-3">
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="d-lg-flex align-items-center gap-3">
+                                                            <div class="cart-img text-center text-lg-start">
+                                                                <img src="@cart.ImagePath" width="130" alt="@cart.ProductId">
+                                                            </div>
+                                                            <div class="cart-detail text-center text-lg-start">
+                                                                <h6 class="mb-2">@cart.ProductName</h6>
+                                                                @if (cart.AttributesList != null && cart.AttributesList.Any())
+                                                                {
+                                                                    foreach (var attribute in cart.AttributesList)
+                                                                    {
+                                                                        <p class="mb-0">
+                                                                            @attribute.AttributeName:
+                                                                            @foreach (var detail in attribute.AttributeDetails)
+                                                                            {
+                                                                                <span>@detail.AttributeDetailName</span>
+                                                                            }
+                                                                        </p>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>No attributes available</span>
+                                                                }
+                                                                <h5 class="mb-0">Sale Price:</h5><span>@cart.ActualSalePrice</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="cart-detail text-center text-lg-start">
-                                                        <h6 class="mb-2"></h6>
-                                                        <p class="mb-0">
-                                                            Size: <span></span>
-                                                        </p>
-                                                        <p class="mb-2">
-                                                            Color: <span></span>
-                                                        </p>
-                                                        <h5 class="mb-0">$77</h5>
+                                                    <div class="col-12 col-lg-3">
+                                                        <div class="cart-action text-center">
+                                                            <input type="number" class="form-control rounded-0 product-quantity" value="1" min="1" data-product-id="@cart.ProductId">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-lg-3">
-                                                <div class="cart-action text-center">
-                                                    <input type="number" class="form-control rounded-0 product-quantity" value="1" min="1" data-product-id="@cart.ProductId">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-lg-3">
-                                                <div class="text-center">
-                                                    <div class="d-flex gap-3 justify-content-center justify-content-lg-end">
-                                                        <a href="javascript:;" class="btn remove-from-cart btn-outline-dark rounded-0 btn-ecomm remove-item" data-id="@cart.CartId">
-                                                            <i class='bx bx-x'></i> Remove
-                                                        </a>
+                                                    <div class="col-12 col-lg-3">
+                                                        <div class="text-center">
+                                                            <div class="d-flex gap-3 justify-content-center justify-content-lg-end">
+                                                                <a href="javascript:;" class="btn remove-from-cart btn-outline-dark rounded-0 btn-ecomm remove-item" data-id="@cart.CartId">
+                                                                    <i class='bx bx-x'></i> Remove
+                                                                </a>
 
-                                                        <a href="javascript:;" class="btn add-to-wishlist btn-light rounded-0 btn-ecomm" data-id="@cart.ProductId"><i class='bx bx-heart me-0'></i></a>
+                                                                <a href="javascript:;" class="btn add-to-wishlist btn-light rounded-0 btn-ecomm" data-id="@cart.ProductId"><i class='bx bx-heart me-0'></i></a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <hr>
                                             </div>
+                                        }
+                                        <div class="d-lg-flex align-items-center gap-2">
+                                            <a href="javascript:;" class="btn btn-dark btn-ecomm"><i class='bx bx-shopping-bag'></i> Continue Shopping</a>
+                                            <a href="javascript:;" class="btn  btn-light btn-ecomm ms-auto clear-cart"><i class='bx bx-x-circle'></i> Clear Cart</a>
+                                            <a href="javascript:;" class="btn btn-white btn-ecomm"><i class='bx bx-refresh'></i> Update Cart</a>
                                         </div>
-                                        <hr>
-                                    </div>
-
-                                }
-                                <div class="d-lg-flex align-items-center gap-2">
-                                    <a href="javascript:;" class="btn btn-dark btn-ecomm"><i class='bx bx-shopping-bag'></i> Continue Shopping</a>
-                                    <a href="javascript:;" class="btn  btn-light btn-ecomm ms-auto clear-cart"><i class='bx bx-x-circle'></i> Clear Cart</a>
-                                    <a href="javascript:;" class="btn btn-white btn-ecomm"><i class='bx bx-refresh'></i> Update Cart</a>
+                                    }
                                 </div>
+                             </div>
                             </div>
-
-
-                            <div class="col-12 col-xl-4">
-                                <div class="checkout-form p-3 bg-light">
-                                    <div class="card rounded-0 border bg-transparent shadow-none">
-                                        <div class="card-body">
-                                            <p class="fs-5">Apply Discount Code</p>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control rounded-0" placeholder="Enter discount code">
-                                                <button class="btn btn-dark btn-ecomm" type="button">Apply</button>
-                                            </div>
+                        <div class="col-12 col-xl-4">
+                            <div class="checkout-form p-3 bg-light">
+                                <div class="card rounded-0 border bg-transparent shadow-none">
+                                    <div class="card-body">
+                                        <p class="fs-5">Apply Discount Code</p>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control rounded-0" placeholder="Enter discount code">
+                                            <button class="btn btn-dark btn-ecomm" type="button">Apply</button>
                                         </div>
                                     </div>
-                                    <div class="card rounded-0 border bg-transparent shadow-none">
-                                        <div class="card-body">
-                                            <p class="fs-5">Estimate Shipping and Tax</p>
-                                            <div class="my-3 border-top"></div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Country Name</label>
-                                                <select class="form-select rounded-0">
-                                                    <option selected>United States</option>
-                                                    <option value="1">Australia</option>
-                                                    <option value="2">India</option>
-                                                    <option value="3">Canada</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">State/Province</label>
-                                                <select class="form-select rounded-0">
-                                                    <option selected>California</option>
-                                                    <option value="1">Texas</option>
-                                                    <option value="2">Canada</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-0">
-                                                <label class="form-label">Zip/Postal Code</label>
-                                                <input type="text" class="form-control rounded-0">
-                                            </div>
+                                </div>
+                                <div class="card rounded-0 border bg-transparent shadow-none">
+                                    <div class="card-body">
+                                        <p class="fs-5">Estimate Shipping and Tax</p>
+                                        <div class="my-3 border-top"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Country Name</label>
+                                            <select class="form-select rounded-0">
+                                                <option selected>United States</option>
+                                                <option value="1">Australia</option>
+                                                <option value="2">India</option>
+                                                <option value="3">Canada</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">State/Province</label>
+                                            <select class="form-select rounded-0">
+                                                <option selected>California</option>
+                                                <option value="1">Texas</option>
+                                                <option value="2">Canada</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label class="form-label">Zip/Postal Code</label>
+                                            <input type="email" class="form-control rounded-0">
                                         </div>
                                     </div>
-                                    <div class="card rounded-0 border bg-transparent mb-0 shadow-none">
-                                        <div class="card-body">
-                                            <p class="mb-2">
-                                                Subtotal: <span class="float-end">$44</span>
-                                            </p>
-                                            <p class="mb-2">
-                                                Shipping: <span class="float-end">--</span>
-                                            </p>
-                                            <p class="mb-2">
-                                                Taxes: <span class="float-end">$14.00</span>
-                                            </p>
-                                            <p class="mb-0">
-                                                Discount: <span class="float-end">--</span>
-                                            </p>
-                                            <div class="my-3 border-top"></div>
-                                            <h5 class="mb-0">Order Total: <span class="float-end">$44</span></h5>
-                                            <div class="my-4"></div>
-                                            <div class="d-grid">
-                                                <a href="javascript:;" class="btn btn-dark btn-ecomm">Proceed to Checkout</a>
-                                            </div>
+                                </div>
+                                <div class="card rounded-0 border bg-transparent mb-0 shadow-none">
+                                    <div class="card-body">
+                                        <p class="mb-2">
+                                            Subtotal: <span class="float-end">$198.00</span>
+                                        </p>
+                                        <p class="mb-2">
+                                            Shipping: <span class="float-end">--</span>
+                                        </p>
+                                        <p class="mb-2">
+                                            Taxes: <span class="float-end">$14.00</span>
+                                        </p>
+                                        <p class="mb-0">
+                                            Discount: <span class="float-end">--</span>
+                                        </p>
+                                        <div class="my-3 border-top"></div>
+                                        <h5 class="mb-0">Order Total: <span class="float-end">212.00</span></h5>
+                                        <div class="my-4"></div>
+                                        <div class="d-grid">
+                                            <a href="javascript:;" class="btn btn-dark btn-ecomm">Proceed to Checkout</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Row -->
                     </div>
-                }
-                else
-                {
-                    <div class="text-center my-5">
-                        <h2>No items in the cart</h2>
-                    </div>
-                }
+                    <!--end row-->
+                </div>
             </div>
         </section>
-        <!-- End Shop Cart -->
     </div>
 </div>
 <script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/InsertProductCart.js"></script>

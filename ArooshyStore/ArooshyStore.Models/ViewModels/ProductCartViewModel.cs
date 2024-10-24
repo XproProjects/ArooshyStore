@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ArooshyStore.Models.ViewModels
 {
@@ -7,6 +8,8 @@ namespace ArooshyStore.Models.ViewModels
         public int CartId { get; set; }
         public string CookieName { get; set; }
         public int? ProductId { get; set; }
+        public string ProductName { get; set; }
+        public int? LoggedInUserId { get; set; }
         public int? Quantity { get; set; }
         public int? DiscountId { get; set; }
         public int? UserId { get; set; }
@@ -15,6 +18,7 @@ namespace ArooshyStore.Models.ViewModels
         public decimal GivenSalePrice { get; set; }
         public int? CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public decimal TotalPrice { get; set; }
         public string ImagePath { get; set; }
         public int DocumentId { get; set; }
         public int? InfoId { get; set; }
@@ -25,5 +29,8 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public List<ProductCartViewModel> CartItems { get; set; }
+        public List<AttributeViewModel> AttributesList { get; set; }
+
     }
 }

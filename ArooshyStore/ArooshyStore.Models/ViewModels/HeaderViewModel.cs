@@ -8,5 +8,6 @@ namespace ArooshyStore.Models.ViewModels
     {
         public List<CategoryViewModel> MasterCategory { get; set; }
         public List<CategoryViewModel> ChildCategory { get; set; }
+        public int? ReviewByCustomerId { get; set; }
     }
 }

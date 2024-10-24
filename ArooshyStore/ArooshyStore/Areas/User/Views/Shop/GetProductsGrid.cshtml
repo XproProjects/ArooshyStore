@@ -12,7 +12,9 @@
                     <div class="card" data-product-id="@product.ProductId" data-given-sale-price="@product.SalePrice" data-actual-sale-price="@product.CostPrice">
                         <div class="position-relative overflow-hidden">
                             <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
-                                <a href="javascript:;" class="add-to-cart"><i class='bx bx-cart-add'></i></a>
+                                @*<a href="javascript:;" class="add-to-cart"><i class='bx bx-cart-add'></i></a>*@
+                                <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal"><i class='bx bx-cart-add'></i></a>
+
                             </div>
 
                             <div class="quick-view position-absolute start-0 bottom-0 end-0">

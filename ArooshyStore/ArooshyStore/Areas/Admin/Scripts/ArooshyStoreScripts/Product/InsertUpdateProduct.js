@@ -326,6 +326,7 @@ function getTagsData() {
         var id = $(this).val();
         var alldata = {
             'TagId': id,
+            'ProductId': productId
         }
         arrayData.push(alldata);
     });

@@ -33,6 +33,12 @@ namespace ArooshyStore.Areas.Admin.Controllers
             var result = select2pagedResult;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetSupplierOptionList(string searchTerm, int pageSize, int pageNumber, string type = "supplier")
+        {
+            var select2pagedResult = _repository.GetCustomerSupplierList(searchTerm, pageSize, pageNumber, type);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Attributes
         public JsonResult GetAttributesOptionList(string searchTerm, int pageSize, int pageNumber)
@@ -78,6 +84,14 @@ namespace ArooshyStore.Areas.Admin.Controllers
         public JsonResult GetCitiesOptionList(string searchTerm, int pageSize, int pageNumber)
         {
             var select2pagedResult = _repository.GetCitiesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Designation
+        public JsonResult GetDesignationsOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetDesignationsList(searchTerm, pageSize, pageNumber);
             var result = select2pagedResult;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -148,5 +162,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
+       
     }
 }

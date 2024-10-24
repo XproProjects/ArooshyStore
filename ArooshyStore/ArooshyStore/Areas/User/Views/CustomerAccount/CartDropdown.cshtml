@@ -1,0 +1,39 @@
+﻿@model List<ArooshyStore.Models.ViewModels.ProductCartViewModel>
+
+@{
+    decimal total = 0; 
+}
+
+    <div class="cart-list">
+        @foreach (var cart in Model)
+        {
+            total += cart.ActualSalePrice;
+
+            <a class="dropdown-item" href="javascript:;">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <h6 class="cart-product-title">@cart.ProductName</h6>
+                        <p class="cart-product-price">@cart.ActualSalePrice.ToString("C")</p>
+                    </div>
+                    <div class="position-relative">
+                        <div class="cart-product-cancel position-absolute">
+                            <i class='bx bx-x'></i>
+                        </div>
+                        <div class="cart-product">
+                            <img src="@cart.ImagePath" alt="@cart.ProductName" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+
+
+    </div>
+    <a href="javascript:;">
+        <div class="text-center cart-footer d-flex align-items-center">
+            <h5 class="mb-0">TOTAL</h5>
+            <h5 class="mb-0 ms-auto">@total.ToString("C")</h5> 
+        </div>
+    </a>
+
+  

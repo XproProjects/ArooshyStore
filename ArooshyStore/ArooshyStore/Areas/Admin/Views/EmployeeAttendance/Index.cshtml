@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Attendance";
+}
+@using ArooshyStore.Models.ViewModels
+
+@model List<ModuleViewModel>
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/EmployeeAttendance/Index.css" rel="stylesheet" />
+<div class="mySelect" style="overflow: hidden;padding: 0px">
+    <main id="js-page-content" role="main" class="page-content">
+        <div class="row">
+
+            <div class="col-md-12" style="display:flex">
+                <table style="width: 100%">
+                    <tr>
+                        <th>
+                            <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-clipboard"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Attendance</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-list-ol"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Employee Attendance</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </th>
+                        <th style="text-align:right">
+                            <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                        </th>
+                    </tr>
+                </table>
+
+            </div>
+            <fieldset>
+                <div class="well smart-form" style="border: 1px solid #bdbdbd; background-color: #F7F7F7;padding:10px">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <table class="" style="">
+                                <tr>
+                                    <td style="width: 10%; padding-right: 3px; padding-left: 7px" id="">
+                                        <span style="font-size:13px">Date</span>
+                                    </td>
+                                    <td style="width: 90%; padding-left: 3px; " id="">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fal fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="AttendanceDate" name="AttendanceDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" required />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-3">
+                            <table class="pull-left" style="margin-top:3px">
+                                <tr>
+                                    <td style="padding-left:7px">
+                                        <a href="javascript:void(0)" id="btnSearch" class="btn btn-primary" style="font-size: 13px; line-height: 16px; margin-top: -1px;">Search</a>
+                                    </td>
+                                    <td style="padding-left:7px">
+                                        <a href="javascript:void(0)" id="btnRefresh" class="btn btn-secondary" style="font-size: 13px; line-height: 16px; margin-top: -1px; ">Refresh</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            <table class="pull-right" style="margin-top:3px">
+                                <tr>
+                                    @*<td style="padding-left:7px">
+                                            <a href="javascript:void(0)" id="btnSaveAndPrint" class="btn btn-success" style="font-size: 13px; line-height: 16px; margin-top: -1px;">Save & Print</a>
+                                        </td>*@
+                                    <td style="padding-left:7px">
+                                        <button type="button" id="btnSave" class="btn btn-primary" style="font-size: 13px; line-height: 16px; margin-top: -1px;">
+                                            Save
+                                        </button>
+                                        <button type="button" id="btnSaveAndPrint" class="btn btn-primary" style="font-size: 13px; line-height: 16px; margin-top: -1px;">
+                                            Save & Print 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="myTableMinStockLevel" style="width:100%;border:1px solid #ddd" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr id="HeadingTr">
+                                <th style="text-align: left;width:300px !important"><i class="fal fa-users"></i>&nbsp;&nbsp;Employee</th>
+                                <th style="text-align: center; width: 240px"><i class="fal fa-sort-alpha-up"></i>&nbsp;&nbsp;Attendance</th>
+                                <th style="width: 110px; text-align: center; "><i class="fal fa-clock"></i>&nbsp;&nbsp;In Time</th>
+                                <th style="text-align: center; width: 110px; "><i class="fal fa-clock"></i>&nbsp;&nbsp;Out Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="TableBody">
+                            <tr class="noRecordTr">
+                                <td class="NoRecordTd" colspan="4" style="text-align: center; padding: 14px; background-color: #fff; font-size: 17px;">No Record Found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </main>
+</div>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/EmployeeAttendance/Index.js"></script>

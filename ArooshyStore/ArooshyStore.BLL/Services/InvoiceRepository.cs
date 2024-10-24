@@ -43,8 +43,7 @@ namespace ArooshyStore.BLL.Services
                     string query = "SELECT Count(s.[InvoiceNumber]) as MyRowCount FROM tblInvoice s where " + whereCondition + " ";
                     //Get List
                     //query += " select s.InvoiceNumber,isnull(s.InvoiceNumber,'') as InvoiceNumber,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblInvoice s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
-                    query += " select s.InvoiceNumber,isnull(s.InvoiceDate,'') as 'InvoiceDate',isnull(s.NetAmount,0) as NetAmount,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblInvoice s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
-
+                    query += " select s.InvoiceNumber,isnull(s.InvoiceDate,'') as 'InvoiceDate',isnull(s.NetAmount,0) as NetAmount,isnull(cc.Status,'') as Status,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblInvoice s left join tblInvoiceStatus cc on s.InvoiceNumber = cc.InvoiceNumber   where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.CommandType = CommandType.Text;
@@ -66,7 +65,7 @@ namespace ArooshyStore.BLL.Services
                                     InvoiceNumber = reader["InvoiceNumber"].ToString(),
                                     InvoiceDate = Convert.ToDateTime(reader["InvoiceDate"].ToString()),
                                     NetAmount = Convert.ToDecimal(reader["NetAmount"].ToString()),
-
+                                    Status = reader["Status"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
                                     UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"].ToString()),
@@ -90,7 +89,7 @@ namespace ArooshyStore.BLL.Services
             }
             return list;
         }
-        public InvoiceViewModel GetSaleInvoiceById(string id, string type)
+        public InvoiceViewModel GetInvoiceById(string id, string type)
         {
             InvoiceViewModel model = new InvoiceViewModel();
 
@@ -105,7 +104,6 @@ namespace ArooshyStore.BLL.Services
                              InvoiceDate = f.InvoiceDate ?? DateTime.Now,
                              TotalAmount = f.TotalAmount ?? 0,
                              CustomerSupplierId = f.CustomerSupplierId ?? 0,
-
                              DiscType = f.DiscType ?? "%",
                              DiscRate = f.DiscRate ?? 0,
                              DiscAmount = f.DiscAmount ?? 0,
@@ -140,7 +138,7 @@ namespace ArooshyStore.BLL.Services
             return model;
         }
 
-        public StatusMessageViewModel InsertUpdateSaleInvoice(InvoiceViewModel model, string detail, int loggedInUserId)
+        public StatusMessageViewModel InsertUpdateInvoice(InvoiceViewModel model, string detail, int loggedInUserId)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             try
@@ -185,7 +183,7 @@ namespace ArooshyStore.BLL.Services
                 {
                     insertUpdateStatus = "Save";
                 }
-                ResultViewModel result = InsertUpdateSaleInvoiceDb(model, dt, insertUpdateStatus, loggedInUserId);
+                ResultViewModel result = InsertUpdateInvoiceDb(model, dt, insertUpdateStatus, loggedInUserId);
 
                 if (result.Message == "Success")
                 {
@@ -211,9 +209,7 @@ namespace ArooshyStore.BLL.Services
 
             return response;
         }
-
-
-        private ResultViewModel InsertUpdateSaleInvoiceDb(InvoiceViewModel st, DataTable dt, string insertUpdateStatus, int loggedInUserId)
+        private ResultViewModel InsertUpdateInvoiceDb(InvoiceViewModel st, DataTable dt, string insertUpdateStatus, int loggedInUserId)
         {
             ResultViewModel result = new ResultViewModel();
             try
@@ -261,7 +257,7 @@ namespace ArooshyStore.BLL.Services
             }
             return result;
         }
-        public StatusMessageViewModel DeleteSaleInvoice(string id, int loggedInUserId)
+        public StatusMessageViewModel DeleteInvoice(string id, int loggedInUserId)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             InvoiceViewModel model = new InvoiceViewModel
@@ -287,7 +283,7 @@ namespace ArooshyStore.BLL.Services
             dt.Columns.Add("DiscAmount");
             dt.Columns.Add("NetAmount");
             dt.Rows.Add(new object[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0 });
-            ResultViewModel result = InsertUpdateSaleInvoiceDb(model, dt, "Delete", loggedInUserId);
+            ResultViewModel result = InsertUpdateInvoiceDb(model, dt, "Delete", loggedInUserId);
             if (result.Message == "Success")
             {
                 response.Status = true;
@@ -303,8 +299,43 @@ namespace ArooshyStore.BLL.Services
 
             return response;
         }
-
-
+        public List<InvoiceDetailViewModel> GetInvoiceDetailsList(string invoiceNo)
+        {
+            List<InvoiceDetailViewModel> list = new List<InvoiceDetailViewModel>();
+            try
+            {
+                list = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                        where c.InvoiceNumber == invoiceNo
+                        select new InvoiceDetailViewModel
+                        {
+                            WarehouseId = c.WarehouseId,
+                            MasterCategoryId = c.MasterCategoryId,
+                            MasterCategoryName = _unitOfWork.Db.Set<tblCategory>() .Where(x => x.CategoryId == c.MasterCategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? string.Empty,
+                            ChildCategoryId = c.ChildCategoryId,
+                            ChildCategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == c.ChildCategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? string.Empty,
+                            ProductId = c.ProductId,
+                            ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == c.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
+                            AttributeId = c.AttributeId,
+                            AttributeName = _unitOfWork.Db.Set<tblAttribute>().Where(x => x.AttributeId == c.AttributeId).Select(x => x.AttributeName).FirstOrDefault() ?? "",
+                            AttributeDetailId = c.AttributeDetailId,
+                            AttributeDetailName = _unitOfWork.Db.Set<tblAttributeDetail>().Where(x => x.AttributeDetailId == c.AttributeDetailId).Select(x => x.AttributeDetailName).FirstOrDefault() ?? "",
+                            TotalAmount = c.TotalAmount ?? 0,
+                            Rate = c.Rate ?? 0,
+                            Qty = c.Qty ?? 0,
+                            DiscType = c.DiscType ?? "%",
+                            DiscRate = c.DiscRate ?? 0,
+                            DiscAmount = c.DiscAmount ?? 0,
+                            NetAmount = c.NetAmount ?? 0,
+                        }).ToList();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(0, ex.Message, "Web Application",
+                    "InvoiceRepository", "GetInvoiceDetailsList");
+            }
+            return list;
+        }
         public string GetMaxCodeForInvoice(string type, int loggedInUserId)
         {
             string maxCode = "";
@@ -320,9 +351,9 @@ namespace ArooshyStore.BLL.Services
             {
                 InvoiceNo = "SI-" + currentYear + currentMonth;
             }
-            else if (type == "Purchase Invoice")
+            else if (type == "Sale Return")
             {
-                InvoiceNo = "PI-" + currentYear + currentMonth;
+                InvoiceNo = "SR-" + currentYear + currentMonth;
             }
             else if (type == "Purchase Invoice")
             {
@@ -370,6 +401,131 @@ namespace ArooshyStore.BLL.Services
             return maxCode;
         }
 
+        public StatusMessageViewModel InsertUpdateInvoiceStatus(InvoiceStatusViewModel model, int loggedInUserId)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            try
+            {
+                string insertUpdateStatus = "";
+                if (model.InvoiceStatusId > 0)
+                {
+                    bool check = _unitOfWork.Db.Set<tblInvoiceStatus>().Where(x => x.InvoiceStatusId == model.InvoiceStatusId).Any(x => x.InvoiceNumber.ToLower().Trim() == model.InvoiceNumber.ToLower().Trim());
+                    if (!check)
+                    {
+                        bool check2 = _unitOfWork.Db.Set<tblInvoiceStatus>().Any(x => x.InvoiceNumber.ToLower().Trim() == model.InvoiceNumber.ToLower().Trim());
+                        if (check2)
+                        {
+                            response.Status = false;
+                            response.Message = "Invoice Number already exists.";
+                            return response;
+                        }
+                    }
+                   
+                    insertUpdateStatus = "Update";
+                }
+                else
+                {
+                    bool check2 = _unitOfWork.Db.Set<tblInvoiceStatus>().Any(x => x.InvoiceNumber.ToLower().Trim() == model.InvoiceNumber.ToLower().Trim());
+                    if (check2)
+                    {
+                        response.Status = false;
+                        response.Message = "Status already exists.";
+                        return response;
+                    }
+                    insertUpdateStatus = "Save";
+                }
+                ResultViewModel result = InsertUpdateInvoiceStatusDb(model, insertUpdateStatus, loggedInUserId);
+                if (result.Message == "Success")
+                {
+                    response.Status = true;
+                    response.Message = "Status Saved Successfully";
+                    response.Id = result.Id;
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = result.Message;
+                    response.Id = result.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message.ToString();
+                response.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message.ToString(), "Web Application",
+                                "InvoiceRepository", "InsertUpdateInvoiceStatus");
+            }
+            return response;
+        }
+        private ResultViewModel InsertUpdateInvoiceStatusDb(InvoiceStatusViewModel st, string insertUpdateStatus, int loggedInUserId)
+        {
+            ResultViewModel result = new ResultViewModel();
+            try
+            {
+                string connection = System.Configuration.ConfigurationManager.ConnectionStrings["ADO"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connection))
+                {
+
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("spInsertUpdateInvoiceStatus", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.Add("@InvoiceStatusId", SqlDbType.Int).Value = st.InvoiceStatusId;
+                        cmd.Parameters.Add("@InvoiceNumber", SqlDbType.NVarChar).Value = st.InvoiceNumber;
+                        cmd.Parameters.Add("@Status", SqlDbType.NVarChar).Value = st.Status;
+                        cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
+                        cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
+                        cmd.Parameters.Add("@CheckReturn", SqlDbType.NVarChar, 300).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@CheckReturn2", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        result.Message = cmd.Parameters["@CheckReturn"].Value.ToString();
+                        result.Id = Convert.ToInt32(cmd.Parameters["@CheckReturn2"].Value.ToString());
+                        cmd.Dispose();
+                    }
+                    con.Close();
+                    con.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message.ToString();
+                result.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message.ToString(), "Web Application",
+                                "InvoiceRepository", "InsertUpdateInvoiceStatusDb");
+            }
+            return result;
+        }
+        public InvoiceStatusViewModel GetInvoiceStatusById(string id)
+        {
+            InvoiceStatusViewModel model = new InvoiceStatusViewModel();
+
+            if (id != "0")
+            {
+                model = (from f in _unitOfWork.Db.Set<tblInvoiceStatus>()
+                         where f.InvoiceNumber == id.ToLower()
+                         select new InvoiceStatusViewModel
+                         {
+                             InvoiceStatusId = f.InvoiceStatusId,
+                             InvoiceNumber = f.InvoiceNumber ?? "",
+                             Status = f.Status,
+                         }).FirstOrDefault();
+            }
+            else
+            {
+                model = new InvoiceStatusViewModel
+                {
+                    InvoiceNumber = "",
+                    Status = "",
+                   
+                };
+            }
+
+            return model;
+        }
 
 
         private bool disposed = false;

@@ -25,13 +25,16 @@ namespace ArooshyStore.Areas.User.Controllers
         private readonly ICustomerSupplierRepository _repository;
         private readonly IProductWishlistRepository _wishlist;
         private readonly IProductCartRepository _cart;
+        private readonly IInvoiceRepository _invoice;
 
 
-        public CustomerAccountController(ICustomerSupplierRepository repository, IProductWishlistRepository wishlist, IProductCartRepository cart)
+
+        public CustomerAccountController(ICustomerSupplierRepository repository, IProductWishlistRepository wishlist, IProductCartRepository cart, IInvoiceRepository invoice)
         {
             _repository = repository;
             _wishlist = wishlist;
             _cart = cart;
+            _invoice = invoice;
         }
         public ActionResult Register()
         {
@@ -142,6 +145,18 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             var customerSupplier = _repository.GetCustomerById(id);
             return View(customerSupplier);
+        }
+        [HttpGet]
+        public ActionResult Orders(int id)
+        {
+            var salesOrder = _repository.GetSalesOrderCustomerById(id);
+            return View(salesOrder);
+        }
+        [HttpGet]
+        public ActionResult OrderTracking(string invoiceNumber)
+        {
+            var salesOrder = _repository.GetSalesOrderById(invoiceNumber);
+            return View(salesOrder);
         }
 
 
@@ -258,8 +273,8 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                int userId = User.UserId; 
-                System.Diagnostics.Debug.WriteLine($"User ID: {userId}"); 
+                int userId = User.UserId;
+                System.Diagnostics.Debug.WriteLine($"User ID: {userId}");
                 var model = _wishlist.GetWishlistItemsByUserId(userId);
                 return View(model);
             }
@@ -293,36 +308,51 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             response = _cart.InsertUpdateProductCart(user, data);
-           return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
         }
-        [HttpGet]
-        public ActionResult CartItems(int userId)
-        {
-            var model = _cart.GetCartItemsByUserId(userId);
-            return View(model);
-        }
-
+       
 
         [HttpPost]
         public ActionResult DeleteCartProduct(int id)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
-            if (User != null)
-            {
-                ProductCartViewModel user = new ProductCartViewModel();
-                user.CartId = id;
-                response = _cart.DeleteProductCart(id);
-            }
-            else
-            {
-                BusinessInfo business = BusinessInfo.GetInstance;
-                response = business.UserLoggedOut();
-            }
+            ProductCartViewModel user = new ProductCartViewModel();
+            user.CartId = id;
+            response = _cart.DeleteProductCart(id);
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
+        [HttpGet]
+        public ActionResult CartItems(int? UserId,string CookieName)
+        {
+            if (string.IsNullOrEmpty(CookieName))
+            {
+                return HttpNotFound("Cookie name is required.");
+            }
+
+            var cartCount = _cart.GetCartItemCountByCookieName(UserId,CookieName);
+            if (cartCount == null) 
+            {
+                return HttpNotFound("No items found in the cart.");
+            }
+
+            return View(cartCount);
+        }
+        [HttpGet]
+        public ActionResult CartDropdown(string userIdOrCookieName)
+        {
+            var cartItems = _cart.GetLatestCartItemsByCookieName(userIdOrCookieName);
+            return PartialView("CartDropdown", cartItems);
+        }
+
+        [HttpGet]
+        public ActionResult GetCartItemCount(string cookieName)
+        {
+            int count = _cart.GetCartItemCount(cookieName); 
+            return Json(new { status = true, count = count }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 
 }
 
-   

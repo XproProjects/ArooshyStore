@@ -115,17 +115,107 @@ x.ModuleName.ToLower() == "expense"))
                     </a>
                 </li>
             }
-            @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "sale invoice"))
+            @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "sale invoice"))
             {
                 @*<li class="nav-title">Suppliers</li>*@
                 <li>
-                    <a href="/admin/invoice/saleinvoiceindex" title="Sale Invoice" data-filter-tags="Sale Invoice">
+                    <a href="/admin/invoice/saleinvoiceindex" title="Sale Invoice" data-filter-tags="sale invoice">
                         <i class="fas fa-align-justify"></i>
                         <span class="nav-link-text" data-i18n="nav.Invoice">Sale Invoice</span>
                     </a>
+                    <ul>
+                        @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "sale invoice"))
+                        {
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=ordered" title="Ordered" data-filter-tags="ordered">
+                                    <span class="nav-link-text" data-i18n="nav.Ordered">Ordered</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=confirmed" title="Confirmed" data-filter-tags="confirmed">
+                                    <span class="nav-link-text" data-i18n="nav.Confirmed">Confirmed</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=onhold" title="OnHold" data-filter-tags="onhold">
+                                    <span class="nav-link-text" data-i18n="nav.OnHold">OnHold</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=dispatched" title="Dispatched" data-filter-tags="dispatched">
+                                    <span class="nav-link-text" data-i18n="nav.Dispatched">Dispatched</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=delivered" title="Delivered" data-filter-tags="delivered">
+                                    <span class="nav-link-text" data-i18n="nav.Delivered">Delivered</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=returned" title="Returned" data-filter-tags="returned">
+                                    <span class="nav-link-text" data-i18n="nav.Returned">Returned</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=rejected" title="Rejected" data-filter-tags="rejected">
+                                    <span class="nav-link-text" data-i18n="nav.Rejected">Rejected</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/invoice/saleinvoiceindex/?from=canceled" title="Canceled" data-filter-tags="canceled">
+                                    <span class="nav-link-text" data-i18n="nav.Canceled">Canceled</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
                 </li>
 
+            }
+            @if (Model.ModuleList.Any(x =>
+           x.ModuleName.ToLower() == "sale return"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/invoice/salereturnindex" title="Sale Return" data-filter-tags="Sale Return">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span class="nav-link-text" data-i18n="nav.Invoice">Sale Return</span>
+                    </a>
+                </li>
+
+            }
+
+            @if (Model.ModuleList.Any(x =>
+            x.ModuleName.ToLower() == "purchase invoice"))
+            {
+                <li>
+                    <a href="/admin/invoice/purchaseinvoiceindex" title="Purchase Invoice" data-filter-tags="Purchase Invoice">
+                        <i class="fas fa-align-justify"></i>
+                        <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Invoice</span>
+                    </a>
+                </li>
+
+            }
+            @if (Model.ModuleList.Any(x =>
+            x.ModuleName.ToLower() == "purchase return"))
+            {
+                <li>
+                    <a href="/admin/invoice/purchasereturnindex" title="Purchase Return" data-filter-tags="Purchase Return">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Return</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "attendance"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/employeeattendance/index" title="Attendance" data-filter-tags="attendance">
+                        <i class="fas fa-clock"></i>
+                        <span class="nav-link-text" data-i18n="nav.Attendance">Attendance</span>
+                    </a>
+                </li>
             }
             @if (Model.ModuleList.Any(x =>
 x.ModuleName.ToLower() == "user" ||

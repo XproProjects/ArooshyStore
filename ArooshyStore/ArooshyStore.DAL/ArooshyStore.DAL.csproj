@@ -52,6 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblEmployeeAttendance.cs" />
+    <Compile Include="Entities\tblEmployee.cs" />
+    <Compile Include="Entities\tblDesignation.cs" />
+    <Compile Include="Entities\tblInvoiceStatus.cs" />
     <Compile Include="Entities\tblProductWishlist.cs" />
     <Compile Include="Entities\tblProductCartAttributeDetail.cs" />
     <Compile Include="Entities\tblProductCart.cs" />
@@ -246,6 +250,26 @@
     <Compile Include="Migrations\202410131118031_Added_Tables_tblCartWishlistAttributeDetail.designer.cs">
       <DependentUpon>202410131118031_Added_Tables_tblCartWishlistAttributeDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410171932540_Added_Table_tblInvoiceStatus.cs" />
+    <Compile Include="Migrations\202410171932540_Added_Table_tblInvoiceStatus.designer.cs">
+      <DependentUpon>202410171932540_Added_Table_tblInvoiceStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410180657398_Added_column_StatusType_tblInvoiceStatus.cs" />
+    <Compile Include="Migrations\202410180657398_Added_column_StatusType_tblInvoiceStatus.designer.cs">
+      <DependentUpon>202410180657398_Added_column_StatusType_tblInvoiceStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410222022234_Added_Tables_tblEmployee&amp;Designation.cs" />
+    <Compile Include="Migrations\202410222022234_Added_Tables_tblEmployee&amp;Designation.Designer.cs">
+      <DependentUpon>202410222022234_Added_Tables_tblEmployee&amp;Designation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410222146185_Added_ColumnDesignation_tblEmployee.cs" />
+    <Compile Include="Migrations\202410222146185_Added_ColumnDesignation_tblEmployee.Designer.cs">
+      <DependentUpon>202410222146185_Added_ColumnDesignation_tblEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410241124408_Added_Table_tblEmployeeAttendance.cs" />
+    <Compile Include="Migrations\202410241124408_Added_Table_tblEmployeeAttendance.Designer.cs">
+      <DependentUpon>202410241124408_Added_Table_tblEmployeeAttendance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -371,6 +395,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410131118031_Added_Tables_tblCartWishlistAttributeDetail.resx">
       <DependentUpon>202410131118031_Added_Tables_tblCartWishlistAttributeDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410171932540_Added_Table_tblInvoiceStatus.resx">
+      <DependentUpon>202410171932540_Added_Table_tblInvoiceStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410180657398_Added_column_StatusType_tblInvoiceStatus.resx">
+      <DependentUpon>202410180657398_Added_column_StatusType_tblInvoiceStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410222022234_Added_Tables_tblEmployee&amp;Designation.resx">
+      <DependentUpon>202410222022234_Added_Tables_tblEmployee&amp;Designation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410222146185_Added_ColumnDesignation_tblEmployee.resx">
+      <DependentUpon>202410222146185_Added_ColumnDesignation_tblEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410241124408_Added_Table_tblEmployeeAttendance.resx">
+      <DependentUpon>202410241124408_Added_Table_tblEmployeeAttendance.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

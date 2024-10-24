@@ -9,9 +9,9 @@ $(function () {
                 required: true,
                 email: true,
             },
-            //CityId: {
-            //    required: true
-            //},
+            CityId: {
+                required: true
+            },
             Password: {
                 required: true
             },
@@ -26,9 +26,9 @@ $(function () {
                 required: 'Email Is required.',
                 email: 'Please enter a valid email address.',
             },
-             //CityId: {
-            //    required: 'City is required.'
-            //},
+             CityId: {
+                required: 'City is required.'
+            },
             Password: {
                 required: 'Password is required.'
             },
@@ -82,9 +82,6 @@ $('#popupForm').on('submit', function (e) {
     var ColonyOrVillageName = $('#ColonyOrVillageName').val();
     var PostalCode = $('#PostalCode').val();
     var CityId = $('#CityId').val();
-    if (CityId == null || CityId == undefined) {
-        CityId = 0;
-    }
     var CompleteAddress = $('#CompleteAddress').val();
     var CreditDays = $('#CreditDays').val();
     var CreditLimit = $('#CreditLimit').val();

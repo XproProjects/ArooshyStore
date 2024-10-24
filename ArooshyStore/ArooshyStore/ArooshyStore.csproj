@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -55,10 +56,10 @@
       <HintPath>packages\Azure.Identity.1.6.0\lib\netstandard2.0\Azure.Identity.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
@@ -365,6 +366,9 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeAttendanceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DesignationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductTagController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryInfoController.cs" />
     <Compile Include="Areas\Admin\Controllers\DeliveryChargesController.cs" />
@@ -384,6 +388,7 @@
     <Compile Include="Areas\Admin\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
     <Compile Include="Areas\User\Controllers\BaseController.cs" />
+    <Compile Include="Areas\User\Controllers\CheckOutController.cs" />
     <Compile Include="Areas\User\Controllers\CustomerAccountController.cs" />
     <Compile Include="Areas\User\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\User\Controllers\ShopController.cs" />
@@ -426,6 +431,7 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\LoginPartial.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\EmployeeAttendance\Index.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Action\InsertUpdateAssign.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Home\QuickAccess.css" />
@@ -1469,8 +1475,18 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\InsertUpdateAbout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\EmployeeAttendance\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Employee\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Employee\InsertUpdateEmployee.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryInfo\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryInfo\InsertUpdateDeliveryInfo.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\InsertUpdateInvoiceStatus.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\InsertUpdatePurchaseReturn.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\InsertUpdatePurchaseInvoice.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\InsertUpdateSaleReturn.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\PurchaseReturnIndex.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\PurchaseInvoiceIndex.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Invoice\SaleReturnIndex.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ProductTag\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\ProductTag\InsertUpdateProductTag.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DeliveryCharges\Index.js" />
@@ -1493,6 +1509,8 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DiscountOffer\InsertUpdateDiscountOffer.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Company\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Company\InsertUpdateCompany.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Designation\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Designation\InsertUpdateDesignation.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Warehouse\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Warehouse\InsertUpdateWarehouse.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Category\Index.js" />
@@ -2016,6 +2034,7 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\InsertProductCart.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\CheckOutDetail\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductWishlist\InsertProductWishlist.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductGridPagination.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductListPagination.js" />
@@ -2459,9 +2478,27 @@
     <Content Include="Areas\User\Views\Shop\GetProductsList.cshtml" />
     <Content Include="Areas\User\Views\Home\Header.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\CartItems.cshtml" />
-    <Content Include="Areas\User\Views\Shop\CartDropdown.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\CartDropdown.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductReviews.cshtml" />
     <Content Include="Areas\User\Views\CustomerAccount\Wishlist.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\SaleReturnIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\PurchaseInvoiceIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\PurchaseReturnIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InsertUpdateSaleReturn.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InsertUpdatePurchaseReturn.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InsertUpdatePurchaseInvoice.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\Orders.cshtml" />
+    <Content Include="Areas\User\Views\CustomerAccount\OrderTracking.cshtml" />
+    <Content Include="Areas\User\Views\CheckOut\CheckOutDetail.cshtml" />
+    <Content Include="Areas\User\Views\CheckOut\CheckOutReview.cshtml" />
+    <Content Include="Areas\User\Views\CheckOut\CheckOutComplete.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InsertUpdateInvoiceStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\Designation\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Designation\InsertUpdateDesignation.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\InsertUpdateEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\EmployeeAttendance\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EmployeeAttendance\PrintAttendanceReport.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2515,8 +2552,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.5.0.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

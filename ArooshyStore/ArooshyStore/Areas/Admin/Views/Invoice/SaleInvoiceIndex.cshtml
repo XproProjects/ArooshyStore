@@ -5,7 +5,7 @@
 @model List<ModuleViewModel>
 <!-- END Page Header -->
 <!-- BEGIN Page Content -->
-<!-- the #js-page-content id is needed for some plugins to initialize -->
+<input type="hidden" id="From" value="@ViewBag.From" />
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
         <div class="col-md-12" style="display:flex">
@@ -130,4 +130,4 @@
 
 </main>
 <!-- this overlay is activated only when mobile menu is triggered -->
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js?v=2"></script>

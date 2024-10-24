@@ -19,6 +19,9 @@ namespace ArooshyStore.BLL.Interfaces
         Task<bool> ChangePassword(int userId, string password);
         StatusMessageViewModel ForgotPassword(string email);
         Task<bool> ResetPassword(int userId, string password);
+        List<InvoiceViewModel> GetSalesOrderCustomerById(int id);
+        InvoiceViewModel GetSalesOrderById(string invoiceNumber);
+
 
     }
 }

@@ -694,6 +694,46 @@ namespace ArooshyStore.BLL.Services
             }
             return status;
         }
+        public List<InvoiceViewModel> GetSalesOrderCustomerById(int id)
+        {
+            // Initialize the list to hold the invoice records
+            List<InvoiceViewModel> invoiceList = new List<InvoiceViewModel>();
+
+            if (id > 0)
+            {
+                invoiceList = (from i in _unitOfWork.Db.Set<tblInvoice>()
+                               where i.CustomerSupplierId == id && i.InvoiceType == "Sale Invoice"
+                               select new InvoiceViewModel
+                               {
+                                   InvoiceNumber = i.InvoiceNumber,
+                                   CustomerSupplierId = i.CustomerSupplierId,
+                                   InvoiceType = i.InvoiceType,
+                                   InvoiceDate = i.InvoiceDate,
+                                   TotalAmount = i.TotalAmount,
+                                   NetAmount = i.NetAmount,
+                                   Status = _unitOfWork.Db.Set<tblInvoiceStatus>().Where(x => x.InvoiceNumber == i.InvoiceNumber).Select(x => x.Status).FirstOrDefault() ?? "",
+                                   CreatedDate = i.CreatedDate,
+                               }).ToList();
+            }
+
+            return invoiceList;
+        }
+
+        public InvoiceViewModel GetSalesOrderById(string invoiceNumber)
+        {
+            var order = (from i in _unitOfWork.Db.Set<tblInvoice>()
+                         where i.InvoiceNumber == invoiceNumber
+                         select new InvoiceViewModel
+                         {
+                             InvoiceNumber = i.InvoiceNumber,
+                             InvoiceDate = i.InvoiceDate,
+                             Status = _unitOfWork.Db.Set<tblInvoiceStatus>().Where(x => x.InvoiceNumber == i.InvoiceNumber).Select(x => x.Status).FirstOrDefault() ?? "",
+                             CreatedDate = i.CreatedDate,
+                         }).FirstOrDefault();
+
+            return order;
+        }
+
 
         #endregion
 
