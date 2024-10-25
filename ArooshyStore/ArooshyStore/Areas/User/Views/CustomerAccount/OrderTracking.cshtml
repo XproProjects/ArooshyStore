@@ -1,0 +1,334 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model InvoiceViewModel
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--start breadcrumb-->
+        <section class="py-3 border-bottom border-top d-none d-md-flex bg-light">
+            <div class="container">
+                <div class="page-breadcrumb d-flex align-items-center">
+                    <h3 class="breadcrumb-title pe-3">Tracking</h3>
+                    <div class="ms-auto">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 p-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;"><i class="bx bx-home-alt"></i> Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;">Shop</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Order Tracking</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end breadcrumb-->
+        <!--start shop cart-->
+        <section class="py-4">
+            <div class="container">
+                <h6 class="mb-0">Order ID: @Model.InvoiceNumber</h6>
+                <hr>
+
+                @if (Model.Status == "Cancelled")
+                {
+                    <div class="row row-cols-1 row-cols-lg-3 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Cancelled:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else if (Model.Status == "Ordered")
+                {
+                    <div class="row row-cols-1 row-cols-lg-4 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Dispatched:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Delivered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else if (Model.Status == "OnHold")
+                {
+                    <div class="row row-cols-1 row-cols-lg-3 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">OnHold:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else if (Model.Status == "Rejected")
+                {
+                    <div class="row row-cols-1 row-cols-lg-2 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Rejected:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else if (Model.Status == "Returned")
+                {
+                    <div class="row row-cols-1 row-cols-lg-5 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Dispatched:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Delivered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Returned:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else if (Model.Status == "Delivered")
+                {
+                    <div class="row row-cols-1 row-cols-lg-4 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Dispatched:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Delivered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row row-cols-1 row-cols-lg-4 rounded-4 gx-3 m-0 border">
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Ordered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Confirmed:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Dispatched:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                        <div class="col p-4 text-center border-end">
+                            <h6 class="mb-1">Delivered:</h6>
+                            <p class="mb-0">@Model.CreatedDate</p>
+                        </div>
+                    </div>
+                }
+
+
+
+                <!--end row-->
+                <div class="mt-3"></div>
+                <div class="checkout-payment">
+                    <div class="card bg-transparent rounded-0 shadow-none">
+                        <div class="card-body">
+                            <div class="steps steps-light">
+
+                                @if (Model.Status == "Cancelled")
+                                {
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Order confirmed</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-user-circle'></i></span>
+                                        </div>
+                                        <div class="step-label">Picked by courier</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-car'></i></span>
+                                        </div>
+                                        <div class="step-label">Cancelled</div>
+                                    </a>
+                                }
+                                @if (Model.Status == "Rejected")
+                                {
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Order confirmed</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-user-circle'></i></span>
+                                        </div>
+                                        <div class="step-label">Rejected</div>
+                                    </a>
+
+                                }
+                                else if (Model.Status == "OnHold")
+                                {
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Order confirmed</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-user-circle'></i></span>
+                                        </div>
+                                        <div class="step-label">Picked by courier</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-pause'></i></span>
+                                        </div>
+                                        <div class="step-label">On Hold</div>
+                                    </a>
+                                }
+                                else if (Model.Status == "Returned")
+                                {
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Order confirmed</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Picked by courier</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">On The Way</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Ready For Pick Up</div>
+                                    </a>
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-pause'></i></span>
+                                        </div>
+                                        <div class="step-label">Returned</div>
+                                    </a>
+                                }
+                                else if (Model.Status == "Ordered")
+
+                                {
+                                    <a class="step-item active" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-check'></i></span>
+                                        </div>
+                                        <div class="step-label">Order confirmed</div>
+                                    </a>
+                                    <a class="step-item" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-user-circle'></i></span>
+                                        </div>
+                                        <div class="step-label">Picked by courier</div>
+                                    </a>
+                                    <a class="step-item" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-car'></i></span>
+                                        </div>
+                                        <div class="step-label">On the way</div>
+                                    </a>
+                                    <a class="step-item" href="javascript:;">
+                                        <div class="step-progress">
+                                            <span class="step-count"><i class='bx bx-planet'></i></span>
+                                        </div>
+                                        <div class="step-label">Delivered</div>
+                                    </a>
+                                }
+                                else
+                                {
+                                <a class="step-item active" href="javascript:;">
+                                    <div class="step-progress">
+                                        <span class="step-count"><i class='bx bx-check'></i></span>
+                                    </div>
+                                    <div class="step-label">Order confirmed</div>
+                                </a>
+                                <a class="step-item active" href="javascript:;">
+                                    <div class="step-progress">
+                                        <span class="step-count"><i class='bx bx-user-circle'></i></span>
+                                    </div>
+                                    <div class="step-label">Picked by courier</div>
+                                </a>
+                                <a class="step-item @(Model.Status == "Dispatched" || Model.Status == "Delivered" ? "active" : "")" href="javascript:;">
+                                    <div class="step-progress">
+                                        <span class="step-count"><i class='bx bx-car'></i></span>
+                                    </div>
+                                    <div class="step-label">On the way</div>
+                                </a>
+                                <a class="step-item @(Model.Status == "Delivered" ? "active" : "")" href="javascript:;">
+                                    <div class="step-progress">
+                                        <span class="step-count"><i class='bx bx-planet'></i></span>
+                                    </div>
+                                    <div class="step-label">Delivered</div>
+                                </a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!--end shop cart-->
+    </div>
+</div>

@@ -1,6 +1,10 @@
 ﻿
 ﻿$(function () {
-    $('#myTable').dataTable({
+     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").addClass('active');
+     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").css('display', "block");
+     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+     $('#myTable').dataTable({
 
         "autoWidth": true,
         "bLengthChange": false,
@@ -13,6 +17,10 @@
             "url": "/Admin/Invoice/GetAllInvoices",
             "type": "POST",
             "datatype": "json",
+            "data": function (d) {
+                d.Type = 'Sale Invoice';
+                d.From = $("#From").val();
+            },
             error: function (xhr, httpStatusMessage, customErrorMessage) {
                 if (xhr.status === 410) {
                     window.location.href = customErrorMessage;
@@ -52,7 +60,8 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
-
+                    div += '<a class="dropdown-item UpdateStatusRole btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Update Status">Update Status</a>';
+                    
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
@@ -122,7 +131,7 @@ $(document).off('click', '.btnYesDelete').on('click', '.btnYesDelete', function 
 });
 function DeleteRecord(id) {
     $.ajax({
-        url: '/Admin/Invoice/DeleteSaleInvoice/' + id,
+        url: '/Admin/Invoice/DeleteInvoice/' + id,
         type: "POST",
         dataType: 'json',
         success: function (data) {
@@ -136,3 +145,26 @@ function DeleteRecord(id) {
         }
     })
 }
+$(document).on('click', '.UpdateStatusRole', function () {
+    var id = $(this).attr("data-value");
+    if (id > 0) {
+        $('#ModelHeaderSpan').html('Edit Status');
+    }
+    else {
+        $('#ModelHeaderSpan').html('Add Status');
+    }
+    $('#modalDiv').html('');
+    // $('#modalDiv').load('@Url.Action("InsertUpdateCity", "City")?id=' + id + '');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Invoice/InsertUpdateInvoiceStatus/",
+        data: {
+            'id': id,
+        },
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $('#modalDiv').html(response);
+        }
+    })
+});

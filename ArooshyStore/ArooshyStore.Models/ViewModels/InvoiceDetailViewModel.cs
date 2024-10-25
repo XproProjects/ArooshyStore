@@ -8,10 +8,15 @@ namespace ArooshyStore.Models.ViewModels
         public string InvoiceNumber { get; set; }
         public int? WarehouseId { get; set; }
         public int? MasterCategoryId { get; set; }
+        public string MasterCategoryName { get; set; }
         public int? ChildCategoryId { get; set; }
+        public string ChildCategoryName { get; set; }
         public int? ProductId { get; set; }
+        public string ProductName { get; set; }
         public int? AttributeId { get; set; }
+        public string AttributeName { get; set; }
         public int? AttributeDetailId { get; set; }
+        public string AttributeDetailName { get; set; }
         public int? UnitId { get; set; }
         public int? DiscountOfferId { get; set; }
         public decimal? TotalAmount { get; set; }

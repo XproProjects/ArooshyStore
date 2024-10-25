@@ -1,5 +1,5 @@
 ﻿﻿@{
-    ViewBag.Title = "Add / Edit Incoming Preliminary Invoice";
+    ViewBag.Title = "Add / Edit Incoming Sale Invoice";
 }
 @using ArooshyStore.Models.ViewModels
 @model InvoiceViewModel
@@ -80,9 +80,8 @@
                         <div style="padding:5px;padding-top:0px">
                             <input type="hidden" id="IsNewOrEdit" name="IsNewOrEdit" value="@Model.IsNewOrEdit" />
                             <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
-                            <input type="hidden" id="HiddenCustomerSupplierId" name="HiddenCustomerSupplierId" value="@Model.CustomerSupplierId" />
-                            <input type="hidden" id="CustomerName" name="CustomerName" value="@Model.CustomerName" />
-
+                            <input type="hidden" id="HiddenCustomerSupplierId" name="CustomerSupplierId" value="@Model.CustomerSupplierId" />
+                            <input type="hidden" id="HiddenCustomerSupplierName" name="HiddenCustomerSupplierName" value="@Model.CustomerName" />
                             <input type="hidden" id="HiddenMasterCategoryId" name="HiddenMasterCategoryId" value="@Model.MasterCategoryId" />
                             <input type="hidden" id="HiddenChildCategoryId" name="HiddenChildCategoryId" value="@Model.ChildCategoryId" />
                             <input type="hidden" id="HiddenDiscountOfferId" name="HiddenDiscountOfferId" value="@Model.DiscountOfferId" />
@@ -161,7 +160,7 @@
                 </div>
 
             </fieldset>
-        <fieldset style="padding:1.25rem;margin-top:15px">
+            <fieldset style="padding:1.25rem;margin-top:15px">
                 <div class="row">
                     <section class="col-md-8">
                         <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Detail</label>
@@ -410,7 +409,7 @@
                                 <label style="text-align:center;">
                                     <span style="font-size: 14px">Gross Amount</span>
                                     <br />
-                                    <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="TotalAmount">0.00</span>
+                                    <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="TotalAmount" value="@Model.TotalAmount">0.00</span>
                                 </label>
                             </center>
                         </div>
@@ -488,7 +487,10 @@
                 <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm" style="margin-top:10px">Save</button>
             </footer>
         }
+
+       
     </main>
 </div>
+
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
 <script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateSaleInvoice.js?=2"></script>

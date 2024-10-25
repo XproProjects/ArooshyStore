@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace ArooshyStore.Areas.User.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _category;
@@ -26,9 +26,21 @@ namespace ArooshyStore.Areas.User.Controllers
         }
         public ActionResult Header()
         {
-          
-            var model = _category.GetCategoriesForHeader();
-            return PartialView(model); 
+
+            var model = new HeaderViewModel
+            {
+               
+            };
+
+            if (User != null)
+            {
+                var userId = User.UserId;
+                model.ReviewByCustomerId = userId;
+               
+            }
+
+            var categories = _category.GetCategoriesForHeader();
+            return PartialView(categories); 
            
         }
         public ActionResult FeaturedProducts()

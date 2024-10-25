@@ -1,0 +1,301 @@
+﻿
+@model ArooshyStore.Models.ViewModels.CustomerSupplierViewModel
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--start breadcrumb-->
+        <section class="py-3 border-bottom border-top d-none d-md-flex bg-light">
+            <div class="container">
+                <div class="page-breadcrumb d-flex align-items-center">
+                    <h3 class="breadcrumb-title pe-3">Checkout</h3>
+                    <div class="ms-auto">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 p-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;"><i class="bx bx-home-alt"></i> Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:;">Shop</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end breadcrumb-->
+        <!--start shop cart-->
+        <section class="py-4">
+            <div class="container">
+                <div class="shop-cart">
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <div class="checkout-details">
+                                <div class="card bg-transparent rounded-0 shadow-none">
+                                    <div class="card-body">
+                                        <div class="steps steps-light">
+                                            <a class="step-item active" href="">
+                                                <div class="step-progress">
+                                                    <span class="step-count">1</span>
+                                                </div>
+                                                <div class="step-label"><i class='bx bx-cart'></i>Cart</div>
+                                            </a>
+                                            <a class="step-item active current" href="@Url.Action("CheckOutDetail","CheckOut")">
+                                                <div class="step-progress">
+                                                    <span class="step-count">2</span>
+                                                </div>
+                                                <div class="step-label"><i class='bx bx-user-circle'></i>Details</div>
+                                            </a>
+
+                                            <a class="step-item" id="review-button" href="#">
+                                                <div class="step-progress">
+                                                    <span class="step-count">5</span>
+                                                </div>
+                                                <div class="step-label"><i class='bx bx-check-circle'></i>Review</div>
+                                            </a>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card rounded-0">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="">
+                                                <img src="assets/images/avatars/avatar-1.png" width="90" alt="" class="rounded-circle p-1 border">
+                                            </div>
+                                            <div class="ms-2">
+                                                <h6 class="mb-0">Jhon Michle</h6>
+                                                <p class="mb-0">michle@example.com</p>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <a href="javascript:;" class="btn btn-light btn-ecomm"><i class='bx bx-edit'></i> Edit Profile</a>
+                                            </div>
+                                        </div>
+                                        <div class="border p-3">
+                                            <h2 class="h5 mb-0">Shipping Address</h2>
+                                            <div class="my-3 border-bottom"></div>
+                                            <div class="card-body">
+                                                @using (Html.BeginForm("CheckOutDetail", "CheckOut", FormMethod.Post, new { id = "checkoutForm", @class = "row g-3" }))
+                                                {
+                                                    <input type="hidden" name="CustomerSupplierId" value="@Model.CustomerSupplierId" />
+                                                    <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
+                                                    <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
+                                                    <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="margin-top:23px">
+                                                            <div class="row">
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="CustomerSupplierName">Full Name (*)</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" id="CustomerSupplierName" class="form-control" name="CustomerSupplierName" value="@Model.CustomerSupplierName" placeholder="Enter Full Name">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="Email">Email (*)</label>
+                                                                        <div class="input-group">
+                                                                            <input type="email" id="Email" class="form-control" name="Email" value="@Model.Email" placeholder="Email">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row" style="margin-top:10px;">
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="Contact1">Contact 1 (*)</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" data-inputmask="'mask': '9999-9999999'" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="Contact2">Contact 2</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" data-inputmask="'mask': '9999-9999999'" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row" style="margin-top:10px;">
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="City">City </label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" id="City" class="form-control" name="City" value="@Model.City" placeholder="City">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="ColonyOrVillageName">Colony Or Village Name</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" id="ColonyOrVillageName" class="form-control" name="ColonyOrVillageName" value="@Model.ColonyOrVillageName" placeholder="Colony Or Village Name">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row" style="margin-top:10px;">
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="HouseNo">House No </label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" id="HouseNo" class="form-control" name="HouseNo" value="@Model.HouseNo" placeholder="House No">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+
+                                                                <section class="col-md-6">
+                                                                    <div style="padding:5px;">
+                                                                        <label for="Street">Street</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" id="Street" class="form-control" name="Street" value="@Model.Street" placeholder="Street">
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
+
+
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+
+                                                    <div class="col-md-12" style="margin-top:23px;">
+                                                        <div class="row">
+
+                                                            <div class="col-md-12" style="margin-top:10px;">
+                                                                <label for="Address" class="form-label">Complete Address (*)</label>
+                                                                <input type="text" id="CompleteAddress" class="form-control" name="CompleteAddress" placeholder="Enter Complete Address" value="@Model.CompleteAddress">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <h6 class="mb-0 h5">Billing Address</h6>
+                                                        <div class="my-3 border-bottom"></div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="gridCheck" checked>
+                                                            <label class="form-check-label" for="gridCheck">Same as shipping address</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="d-grid">
+                                                            <a href="javascript:;" class="btn btn-light btn-ecomm"><i class='bx bx-chevron-left'></i>Back to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="d-grid">
+                                                            <button type="submit" id="btn_Save" class="btn btn-dark btn-ecomm">Proceed to Checkout<i class='bx bx-chevron-right'></i></button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-4">
+                            <div class="order-summary">
+                                <div class="card rounded-0">
+                                    <div class="card-body">
+                                        <div class="card rounded-0 border bg-transparent shadow-none mb-3">
+                                            <div class="card-body">
+                                                <p class="fs-5">Apply Discount Code</p>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control rounded-0" placeholder="Enter discount code">
+                                                    <button class="btn btn-dark btn-ecomm" type="button">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-0 border bg-transparent shadow-none">
+                                            <div class="card-body">
+                                                <p class="fs-5">Order summary</p>
+                                                <div class="my-3 border-top"></div>
+                                                <div class="d-flex align-items-center">
+                                                    <a class="d-block flex-shrink-0" href="javascript:;">
+                                                        <img src="assets/images/products/01.png" width="75" alt="Product">
+                                                    </a>
+                                                    <div class="ps-2">
+                                                        <h6 class="mb-1"><a href="javascript:;" class="text-dark">White Polo T-Shirt</a></h6>
+                                                        <div class="widget-product-meta">
+                                                            <span class="me-2">$19.<small>00</small></span><span class="">x 1</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="my-3 border-top"></div>
+                                                <div class="d-flex align-items-center">
+                                                    <a class="d-block flex-shrink-0" href="javascript:;">
+                                                        <img src="assets/images/products/17.png" width="75" alt="Product">
+                                                    </a>
+                                                    <div class="ps-2">
+                                                        <h6 class="mb-1"><a href="javascript:;" class="text-dark">Fancy Red Sneakers</a></h6>
+                                                        <div class="widget-product-meta">
+                                                            <span class="me-2">$16.<small>00</small></span><span class="">x 2</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="my-3 border-top"></div>
+                                                <div class="d-flex align-items-center">
+                                                    <a class="d-block flex-shrink-0" href="javascript:;">
+                                                        <img src="assets/images/products/04.png" width="75" alt="Product">
+                                                    </a>
+                                                    <div class="ps-2">
+                                                        <h6 class="mb-1"><a href="javascript:;" class="text-dark">Yellow Shine Blazer</a></h6>
+                                                        <div class="widget-product-meta">
+                                                            <span class="me-2">$22.<small>00</small></span><span class="">x 1</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="my-3 border-top"></div>
+                                                <div class="d-flex align-items-center">
+                                                    <a class="d-block flex-shrink-0" href="javascript:;">
+                                                        <img src="assets/images/products/09.png" width="75" alt="Product">
+                                                    </a>
+                                                    <div class="ps-2">
+                                                        <h6 class="mb-1"><a href="javascript:;" class="text-dark">Men Black Hat Cap</a></h6>
+                                                        <div class="widget-product-meta">
+                                                            <span class="me-2">$14.<small>00</small></span><span class="">x 1</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card rounded-0 border bg-transparent mb-0 shadow-none">
+                                            <div class="card-body">
+                                                <p class="mb-2">
+                                                    Subtotal: <span class="float-end">$198.00</span>
+                                                </p>
+                                                <p class="mb-2">
+                                                    Shipping: <span class="float-end">--</span>
+                                                </p>
+                                                <p class="mb-2">
+                                                    Taxes: <span class="float-end">$14.00</span>
+                                                </p>
+                                                <p class="mb-0">
+                                                    Discount: <span class="float-end">--</span>
+                                                </p>
+                                                <div class="my-3 border-top"></div>
+                                                <h5 class="mb-0">Order Total: <span class="float-end">212.00</span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end row-->
+                </div>
+            </div>
+        </section>
+        <!--end shop cart-->
+    </div>
+</div>
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CheckOutDetail/Index.js"></script>
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/InsertProductCart.js"></script>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ArooshyStore.Models.ViewModels
@@ -22,7 +23,9 @@ namespace ArooshyStore.Models.ViewModels
         public string CompleteAddress { get; set; }
         public int? CreditDays { get; set; }
         public decimal? CreditLimit { get; set; }
+        public string InvoiceNumber { get; set; }
         public string Remarks { get; set; }
+        public string City { get; set; }
         public bool? Status { get; set; }
         public string StatusString { get; set; }
         public string ImagePath { get; set; }
@@ -35,5 +38,8 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public List<InvoiceViewModel> Invoices { get; set; }
+
+
     }
 }

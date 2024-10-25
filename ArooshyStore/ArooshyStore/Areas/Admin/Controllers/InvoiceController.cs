@@ -21,7 +21,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             _mapper = AutoMapperConfig.Mapper;
             _roles = roles;
         }
-        public ActionResult SaleInvoiceIndex()
+        public ActionResult SaleInvoiceIndex(string from = "ordered")
         {
             if (User != null)
             {
@@ -31,7 +31,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
                     actionList = _roles.ActionsList(User.UserId, "sale invoice");
-
+                    ViewBag.From = from;
                     return View(actionList);
                 }
                 else
@@ -46,10 +46,85 @@ namespace ArooshyStore.Areas.Admin.Controllers
 
         }
         // GET: /Home/
+        public ActionResult SaleReturnIndex()
+        {
+            if (User != null)
+            {
+                //Check if user has access of this module or not
+                if (_roles.CheckModuleRoleId(User.UserId, "sale return") > 0)
+                {
+                    //Get list of all actions of this module
+                    List<ModuleViewModel> actionList = new List<ModuleViewModel>();
+                    actionList = _roles.ActionsList(User.UserId, "sale return");
+
+                    return View(actionList);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+        public ActionResult PurchaseInvoiceIndex()
+        {
+            if (User != null)
+            {
+                //Check if user has access of this module or not
+                if (_roles.CheckModuleRoleId(User.UserId, "purchase invoice") > 0)
+                {
+                    //Get list of all actions of this module
+                    List<ModuleViewModel> actionList = new List<ModuleViewModel>();
+                    actionList = _roles.ActionsList(User.UserId, "purchase invoice");
+
+                    return View(actionList);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+        public ActionResult PurchaseReturnIndex()
+        {
+            if (User != null)
+            {
+                //Check if user has access of this module or not
+                if (_roles.CheckModuleRoleId(User.UserId, "purchase return") > 0)
+                {
+                    //Get list of all actions of this module
+                    List<ModuleViewModel> actionList = new List<ModuleViewModel>();
+                    actionList = _roles.ActionsList(User.UserId, "purchase return");
+
+                    return View(actionList);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+
         public ActionResult GetAllInvoices()
         {
             if (User != null)
             {
+                var From = Request.Form.GetValues("From").FirstOrDefault();
+                var Type = Request.Form.GetValues("Type").FirstOrDefault();
                 var draw = Request.Form.GetValues("draw").FirstOrDefault();
                 var start = Request.Form.GetValues("start").FirstOrDefault();
                 var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -60,7 +135,11 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                string whereCondition = " ";
+                string whereCondition = " Lower(s.InvoiceType)='" + Type.ToString().ToLower().Trim()+"' ";
+                if(!string.IsNullOrEmpty(From))
+                {
+                    whereCondition += " And s.InvoiceNumber in (select top(1) ist.InvoiceNumber from tblInvoiceStatus ist where lower(ist.Status) = '"+From.ToString().ToLower().Trim()+"' order by ist.InvoiceStatusId desc) ";
+                }
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
                 {
@@ -75,12 +154,12 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (!(string.IsNullOrEmpty(userName)))
                 {
-                    whereCondition += " LOWER(s.InvoiceNumber) like ('%" + userName.ToLower() + "%')";
+                    whereCondition += " And LOWER(s.InvoiceNumber) like ('%" + userName.ToLower() + "%')";
                 }
 
                 else
                 {
-                    whereCondition += " LOWER(s.InvoiceNumber) like ('%%')";
+                    whereCondition += " And LOWER(s.InvoiceNumber) like ('%%')";
                 }
                 List<InvoiceViewModel> listsub = new List<InvoiceViewModel>();
                 if (_roles.CheckActionRoleId(User.UserId, "sale invoice", "view") > 0)
@@ -105,9 +184,112 @@ namespace ArooshyStore.Areas.Admin.Controllers
         {
             if (User != null)
             {
-                string actionName = (id != "0") ? "update" : "create";
-                InvoiceViewModel invoice = _repository.GetSaleInvoiceById(id, type);
-                return View(invoice);
+                string actionName = "";
+                if (id != "0")
+                {
+                    actionName = "update";
+                }
+                else
+                {
+                    actionName = "create";
+                }
+                if (_roles.CheckActionRoleId(User.UserId, "sale invoice", actionName) > 0)
+                {
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    return View(invoice);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+        [HttpGet]
+        public ActionResult InsertUpdateSaleReturn(string id, string type)
+        {
+            if (User != null)
+            {
+                string actionName = "";
+                if (id != "0")
+                {
+                    actionName = "update";
+                }
+                else
+                {
+                    actionName = "create";
+                }
+                if (_roles.CheckActionRoleId(User.UserId, "sale return", actionName) > 0)
+                {
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    return View(invoice);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+        [HttpGet]
+        public ActionResult InsertUpdatePurchaseInvoice(string id, string type)
+        {
+            if (User != null)
+            {
+                string actionName = "";
+                if (id != "0")
+                {
+                    actionName = "update";
+                }
+                else
+                {
+                    actionName = "create";
+                }
+                if (_roles.CheckActionRoleId(User.UserId, "purchase invoice", actionName) > 0)
+                {
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    return View(invoice);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+        [HttpGet]
+        public ActionResult InsertUpdatePurchaseReturn(string id, string type)
+        {
+            if (User != null)
+            {
+                string actionName = "";
+                if (id != "0")
+                {
+                    actionName = "update";
+                }
+                else
+                {
+                    actionName = "create";
+                }
+                if (_roles.CheckActionRoleId(User.UserId, "purchase return", actionName) > 0)
+                {
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    return View(invoice);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
             }
             else
             {
@@ -117,12 +299,12 @@ namespace ArooshyStore.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult InsertUpdateSaleInvoice(InvoiceViewModel user, string detail)
+        public ActionResult InsertUpdateInvoice(InvoiceViewModel user, string detail)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
-                response = _repository.InsertUpdateSaleInvoice(user, detail, User.UserId);
+                response = _repository.InsertUpdateInvoice(user, detail, User.UserId);
             }
             else
             {
@@ -143,7 +325,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             if (User != null)
             {
 
-                response = _repository.DeleteSaleInvoice(id, User.UserId);
+                response = _repository.DeleteInvoice(id, User.UserId);
             }
             else
             {
@@ -153,6 +335,48 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
 
+
+        public ActionResult GetInvoiceDetailsList(string id)
+        {
+            List<InvoiceDetailViewModel> list = new List<InvoiceDetailViewModel>();
+            if (User != null)
+            {
+                list = _repository.GetInvoiceDetailsList(id);
+            }
+
+            return Json(new { data = list }, JsonRequestBehavior.AllowGet); 
+        }
+
+        [HttpGet]
+        public ActionResult InsertUpdateInvoiceStatus(string id)
+        {
+            if (User != null)
+            {
+                InvoiceStatusViewModel user = _repository.GetInvoiceStatusById(id);
+                return PartialView(user);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
+        [HttpPost]
+        public ActionResult InsertUpdateInvoiceStatus(InvoiceStatusViewModel user)
+        {
+            System.Diagnostics.Debug.WriteLine($"InvoiceNumber: {user.InvoiceNumber}");
+
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            if (User != null)
+            {
+                response = _repository.InsertUpdateInvoiceStatus(user, User.UserId);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+        }
 
 
     }

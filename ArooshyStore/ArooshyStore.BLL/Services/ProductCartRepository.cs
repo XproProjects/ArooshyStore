@@ -19,36 +19,108 @@ namespace ArooshyStore.BLL.Services
         {
             this._unitOfWork = unitOfWork;
         }
-        public List<ProductCartViewModel> GetCartItemsByUserId(int userId)
+        public List<ProductCartViewModel> GetCartItemCountByCookieName(int? UserId,string CookieName)
         {
-           
-                var cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
-                                     where f.UserId == userId
-                                     select new ProductCartViewModel
-                                     {
-                                         CartId = f.CartId,
-                                         UserId = f.UserId,
-                                         ProductId = f.ProductId,
-                                         Quantity = f.Quantity,
-                                         DiscountId = f.DiscountId,
-                                         CookieName = f.CookieName,
-                                         ActualSalePrice = f.ActualSalePrice ?? 0,
-                                         DiscountAmount = f.DiscountAmount ?? 0,
-                                         GivenSalePrice = f.GivenSalePrice ?? 0,
+            var cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
+                             where (UserId.HasValue && f.UserId == UserId) || f.CookieName == CookieName
+                             select new ProductCartViewModel
+                             {
+                                 CartId = f.CartId,
+                                 UserId = f.UserId,
+                                 ProductId = f.ProductId,
+                                 Quantity = f.Quantity,
+                                 DiscountId = f.DiscountId,
+                                 CookieName = f.CookieName,
+                                 ActualSalePrice = f.ActualSalePrice ?? 0,
+                                 DiscountAmount = f.DiscountAmount ?? 0,
+                                 GivenSalePrice = f.GivenSalePrice ?? 0,
 
-                                         //CategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.CategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? "",
-                                         ImagePath = _unitOfWork.Db.Set<tblDocument>()
-                                                           .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
-                                                           .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
-                                                           .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
-                                         DocumentId = _unitOfWork.Db.Set<tblDocument>()
-                                                           .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
-                                                           .Select(x => x.DocumentId)
-                                                           .FirstOrDefault(),
-                                     }).ToList();
-                return cartItems;
+                                 ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                             .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                 DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => x.DocumentId)
+                                             .FirstOrDefault(),
+                                 AttributesList = (from pad in _unitOfWork.Db.Set<tblProductCartAttributeDetail>()
+                                                   join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on pad.AttributeDetailId equals ad.AttributeDetailId
+                                                   join a in _unitOfWork.Db.Set<tblAttribute>() on ad.AttributeId equals a.AttributeId
+                                                   where pad.CartId == f.CartId && a.Status == true && ad.Status == true
+                                                   select new AttributeViewModel
+                                                   {
+                                                       AttributeId = a.AttributeId,
+                                                       AttributeName = a.AttributeName,
+                                                       AttributeDetails = new List<ProductAttributeDetailViewModel>
+                                                       {
+                                                   new ProductAttributeDetailViewModel
+                                                   {
+                                                       AttributeDetailId = ad.AttributeDetailId,
+                                                       AttributeDetailName = ad.AttributeDetailName
+                                                       }
+                                                    }
+                                                }).ToList(),
+                             }).ToList();
 
-           
+            return cartItems;
+        }
+        public List<ProductCartViewModel> GetLatestCartItemsByCookieName(string userIdOrCookieName)
+        {
+            // First, check for userId
+            var cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
+                             where f.UserId.ToString() == userIdOrCookieName
+                             orderby f.CartId descending
+                             select new ProductCartViewModel
+                             {
+                                 CartId = f.CartId,
+                                 UserId = f.UserId,
+                                 ProductId = f.ProductId,
+                                 Quantity = f.Quantity,
+                                 DiscountId = f.DiscountId,
+                                 CookieName = f.CookieName,
+                                 ActualSalePrice = f.ActualSalePrice ?? 0,
+                                 DiscountAmount = f.DiscountAmount ?? 0,
+                                 GivenSalePrice = f.GivenSalePrice ?? 0,
+                                 ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == f.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
+                                 ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                             .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                 DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => x.DocumentId)
+                                             .FirstOrDefault(),
+                             }).Take(4).ToList();
+
+            if (cartItems.Count == 0)
+            {
+                cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
+                             where f.CookieName == userIdOrCookieName
+                             orderby f.CartId descending
+                             select new ProductCartViewModel
+                             {
+                                 CartId = f.CartId,
+                                 UserId = f.UserId,
+                                 ProductId = f.ProductId,
+                                 Quantity = f.Quantity,
+                                 DiscountId = f.DiscountId,
+                                 CookieName = f.CookieName,
+                                 ActualSalePrice = f.ActualSalePrice ?? 0,
+                                 DiscountAmount = f.DiscountAmount ?? 0,
+                                 GivenSalePrice = f.GivenSalePrice ?? 0,
+                                 ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == f.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
+                                 ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                             .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                                 DocumentId = _unitOfWork.Db.Set<tblDocument>()
+                                             .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                             .Select(x => x.DocumentId)
+                                             .FirstOrDefault(),
+                             }).Take(3).ToList();
+            }
+
+            return cartItems;
         }
         public StatusMessageViewModel InsertUpdateProductCart(ProductCartViewModel model,string AttributeDetailData)
         {
@@ -200,6 +272,11 @@ namespace ArooshyStore.BLL.Services
                 response.Id = result.Id;
             }
             return response;
+        }
+
+        public int GetCartItemCount(string cookieName)
+        {
+            return _unitOfWork.Db.Set<tblProductCart>().Count(x => x.CookieName == cookieName);
         }
 
         private bool disposed = false;

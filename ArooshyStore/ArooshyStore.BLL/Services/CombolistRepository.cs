@@ -329,6 +329,31 @@ namespace ArooshyStore.BLL.Services
             return result;
         }
         #endregion
+        #region Designation
+        public Select2PagedResultViewModel GetDesignationsList(string searchTerm, int pageSize, int pageNumber)
+        {
+            AllItemsList = GetDesignationList();
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> GetDesignationList()
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblDesignation>()
+                    orderby c.DesignationId
+                    select new SelectListViewModel
+                    {
+                        id = c.DesignationId,
+                        text = c.DesignationName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
         #region Error Line Number
         public Select2PagedResultStringViewModel GetErrorLineNumberList(string searchTerm, int pageSize, int pageNumber)
         {
