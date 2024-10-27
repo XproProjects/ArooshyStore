@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using ArooshyStore.BLL.GenericRepository;
 using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.DAL.Entities;
@@ -88,6 +89,70 @@ namespace ArooshyStore.BLL.Services
                                 "InvoiceRepository", "GetInvoicesListAndCount");
             }
             return list;
+        }
+        public InvoiceViewModel GetInvoiceByIdForPrint(string id, string type)
+        {
+            InvoiceViewModel model = (from f in _unitOfWork.Db.Set<tblInvoice>()
+                                      where f.InvoiceNumber == id
+                                      select new InvoiceViewModel
+                                      {
+                                          InvoiceNumber = f.InvoiceNumber ?? "",
+                                          InvoiceType = f.InvoiceType ?? "",
+                                          InvoiceDate = f.InvoiceDate,
+                                          CustomerSupplierId = f.CustomerSupplierId ?? 0,
+                                          CustomerName = _unitOfWork.Db.Set<tblCustomerSupplier>()
+                                                              .Where(x => x.CustomerSupplierId == f.CustomerSupplierId)
+                                                              .Select(x => x.CustomerSupplierName)
+                                                              .FirstOrDefault() ?? "",
+                                          TotalAmount = f.TotalAmount ?? 0,
+                                          DiscType = f.DiscType ?? "%",
+                                          DiscRate = f.DiscRate ?? 0,
+                                          DeliveryCharges = f.DeliveryCharges ?? 0,
+                                          DiscAmount = f.DiscAmount ?? 0,
+                                          NetAmount = f.NetAmount ?? 0,
+                                          
+                                      }).FirstOrDefault() ?? new InvoiceViewModel();
+
+            model.InvoiceDetailsList = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                                        where c.InvoiceNumber == id
+                                        select new InvoiceDetailViewModel 
+                                        {
+                                            AttributeId = c.AttributeId,
+                                            AttributeName = _unitOfWork.Db.Set<tblAttribute>()
+                                                             .Where(x => x.AttributeId == c.AttributeId)
+                                                             .Select(x => x.AttributeName)
+                                                             .FirstOrDefault() ?? "",
+                                            AttributeDetailId = c.AttributeDetailId,
+                                            AttributeDetailName = _unitOfWork.Db.Set<tblAttributeDetail>()
+                                                                 .Where(x => x.AttributeDetailId == c.AttributeDetailId)
+                                                                 .Select(x => x.AttributeDetailName)
+                                                                 .FirstOrDefault() ?? "",
+                                            Rate = c.Rate ?? 0,
+                                            Qty = c.Qty ?? 0,
+                                            DiscType = c.DiscType ?? "%",
+                                            DiscRate = c.DiscRate ?? 0,
+                                            DiscAmount = c.DiscAmount ?? 0,
+                                            NetAmount = c.NetAmount ?? 0,
+                                            ProductId = c.ProductId ?? 0,
+                                            ProductName = _unitOfWork.Db.Set<tblProduct>()
+                                                            .Where(x => x.ProductId == c.ProductId)
+                                                            .Select(x => x.ProductName)
+                                                            .FirstOrDefault() ?? "",
+                                            SalePrice = _unitOfWork.Db.Set<tblProduct>()
+                                              .Where(x => x.ProductId == c.ProductId)
+                                              .Select(x => x.SalePrice)
+                                              .FirstOrDefault() ?? 0
+                                        }).ToList();
+            var companyInfo = _unitOfWork.Db.Set<tblCompany>().FirstOrDefault();
+            if (companyInfo != null)
+            {
+                model.CompanyEmail = companyInfo.Email ?? "";
+                model.CompanyAddress = companyInfo.Address ?? "";
+                model.CompanyContact = companyInfo.Contact1 ?? "";
+
+            }
+
+            return model;
         }
         public InvoiceViewModel GetInvoiceById(string id, string type)
         {

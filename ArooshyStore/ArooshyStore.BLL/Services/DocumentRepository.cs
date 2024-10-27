@@ -66,7 +66,10 @@ namespace ArooshyStore.BLL.Services
                         || (doc.DocumentType == "Category" && doc.Remarks == "ProfilePicture")
                         || (doc.DocumentType == "Supplier" && doc.Remarks == "ProfilePicture")
                         || (doc.DocumentType == "Customer" && doc.Remarks == "ProfilePicture")
-                        || (doc.DocumentType == "DiscountOffer" && doc.Remarks == "ProfilePicture")))
+                        || (doc.DocumentType == "DiscountOffer" && doc.Remarks == "ProfilePicture")
+                         || (doc.DocumentType == "Employee" && doc.Remarks == "ProfilePicture")
+                          || (doc.DocumentType == "Company" && doc.Remarks == "ProfilePicture")
+                           || (doc.DocumentType == "Carousel" && doc.Remarks == "ProfilePicture")))
 
 
                     {

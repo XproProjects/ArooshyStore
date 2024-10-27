@@ -37,6 +37,11 @@
                     }
                 }
             },
+            {
+                "data": "DateOfJoining", "name": "DateOfJoining", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
+                    return getDateTimeForDatatable(date);
+                }
+            },
             { "data": "Contact1", "name": "Contact1", "autoWidth": true },
             { "data": "Contact2", "name": "Contact2", "autoWidth": true },
             { "data": "HouseNo", "name": "HouseNo", "autoWidth": true }, 

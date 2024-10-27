@@ -56,7 +56,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
                     actionList = _roles.ActionsList(User.UserId, "sale return");
-
                     return View(actionList);
                 }
                 else
@@ -80,7 +79,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
                     actionList = _roles.ActionsList(User.UserId, "purchase invoice");
-
                     return View(actionList);
                 }
                 else
@@ -104,7 +102,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
                     actionList = _roles.ActionsList(User.UserId, "purchase return");
-
                     return View(actionList);
                 }
                 else
@@ -138,7 +135,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 string whereCondition = " Lower(s.InvoiceType)='" + Type.ToString().ToLower().Trim()+"' ";
                 if(!string.IsNullOrEmpty(From))
                 {
-                    whereCondition += " And s.InvoiceNumber in (select top(1) ist.InvoiceNumber from tblInvoiceStatus ist where lower(ist.Status) = '"+From.ToString().ToLower().Trim()+"' order by ist.InvoiceStatusId desc) ";
+                    whereCondition += " And s.InvoiceNumber in (select top(5) ist.InvoiceNumber from tblInvoiceStatus ist where lower(ist.Status) = '"+From.ToString().ToLower().Trim()+"' order by ist.InvoiceStatusId desc) ";
                 }
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
@@ -314,6 +311,23 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.IdString } };
         }
 
+        [HttpGet]
+        public ActionResult PrintInvoice(string id, string type = "")
+        {
+
+            if (User != null)
+            {
+               
+              InvoiceViewModel invoice = _repository.GetInvoiceByIdForPrint(id, type);
+              return View(invoice);
+               
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
         public ActionResult GetMaxCodeForInvoice(string type)
         {
             string maxCode = _repository.GetMaxCodeForInvoice(type, User.UserId);

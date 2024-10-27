@@ -46,7 +46,7 @@ namespace ArooshyStore.BLL.Services
                     con.Open();
 
                     string query = "SELECT Count(s.EmployeeId) as MyRowCount FROM tblEmployee s where " + whereCondition + " ";
-                    query += " select s.EmployeeId,isnull(s.EmployeeName,'') as EmployeeName,isnull(s.HouseNo,'') as HouseNo,isnull(cc.CityName,'') as CityName,isnull(s.Contact1,'') as 'Contact1',isnull(s.Contact2,'') as 'Contact2',isnull(s.Email,'') as 'Email',isnull(s.Gender,'') as 'Gender',isnull(s.MaritalStatus,'') as 'MaritalStatus',isnull(s.PostalCode,'') as 'PostalCode',isnull(s.Street,'') as 'Street',isnull(s.ColonyOrVillageName,'') as 'ColonyOrVillageName',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull((select '/Areas/Admin/FormsDocuments/Employee/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.EmployeeId as varchar)  and dc.DocumentType = 'Employee' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/dummy.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblEmployee s left join tblCity cc on s.CityId = cc.CityId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.EmployeeId,isnull(s.EmployeeName,'') as EmployeeName,isnull(s.DateOfJoining,'') as DateOfJoining,isnull(s.HouseNo,'') as HouseNo,isnull(cc.CityName,'') as CityName,isnull(s.Contact1,'') as 'Contact1',isnull(s.Contact2,'') as 'Contact2',isnull(s.Email,'') as 'Email',isnull(s.Gender,'') as 'Gender',isnull(s.MaritalStatus,'') as 'MaritalStatus',isnull(s.PostalCode,'') as 'PostalCode',isnull(s.Street,'') as 'Street',isnull(s.ColonyOrVillageName,'') as 'ColonyOrVillageName',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull((select '/Areas/Admin/FormsDocuments/Employee/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.EmployeeId as varchar)  and dc.DocumentType = 'Employee' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/dummy.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblEmployee s left join tblCity cc on s.CityId = cc.CityId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     //query += " ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -77,7 +77,7 @@ namespace ArooshyStore.BLL.Services
                                     Contact2 = reader["Contact2"].ToString(),
                                     MaritalStatus = reader["MaritalStatus"].ToString(),
                                     Street = reader["Street"].ToString(),
-                                    ////CreditLimit = reader["CreditLimit"].ToString(),
+                                    DateOfJoining = Convert.ToDateTime(reader["DateOfJoining"]).Date,
                                     //HouseNo = reader["HouseNo"].ToString(),
                                     PostalCode = reader["PostalCode"].ToString(),
                                     StatusString = reader["StatusString"].ToString(),
@@ -126,6 +126,8 @@ namespace ArooshyStore.BLL.Services
                              PostalCode= f.PostalCode,
                              CityId= f.CityId,
                              CityName = _unitOfWork.Db.Set<tblCity>().Where(x => x.CityId == f.CityId).Select(x => x.CityName).FirstOrDefault() ?? "",
+                             DesignationId = f.DesignationId,
+                             DesignationName = _unitOfWork.Db.Set<tblDesignation>().Where(x => x.DesignationId == f.DesignationId).Select(x => x.DesignationName).FirstOrDefault() ?? "",
                              Gender = f.Gender,
                              Salary = f.Salary,
                              MaritalStatus= f.MaritalStatus,
@@ -157,6 +159,8 @@ namespace ArooshyStore.BLL.Services
                     PostalCode = "",
                     CityId = 0,
                     CityName= "",
+                    DesignationId = 0,
+                    DesignationName = "",
                     Gender = "",
                     Salary = 0,
                     MaritalStatus = "",
@@ -259,11 +263,12 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Add("@ColonyOrVillageName", SqlDbType.NVarChar).Value = st.ColonyOrVillageName;
                         cmd.Parameters.Add("@PostalCode", SqlDbType.NVarChar).Value = st.PostalCode;
                         cmd.Parameters.Add("@CityId", SqlDbType.Int).Value = st.CityId;
+                        cmd.Parameters.Add("@DesignationId", SqlDbType.Int).Value = st.DesignationId;
                         cmd.Parameters.Add("@Gender", SqlDbType.NVarChar).Value = st.Gender;
                         cmd.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar).Value = st.MaritalStatus;
                         cmd.Parameters.Add("@Salary", SqlDbType.Decimal).Value = st.Salary;
                         cmd.Parameters.Add("@SalaryType", SqlDbType.NVarChar).Value = st.SalaryType;
-                        cmd.Parameters.Add("@DateOfJoining", SqlDbType.DateTime).Value = st.DateOfJoining;
+                        cmd.Parameters.Add("@DateOfJoining", SqlDbType.Date).Value = st.DateOfJoining;
                         cmd.Parameters.Add("@Status", SqlDbType.Bit).Value = st.Status;
                         cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
                         cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;

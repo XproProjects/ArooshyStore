@@ -366,6 +366,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\SalaryController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeAttendanceController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\DesignationController.cs" />
@@ -1475,6 +1476,8 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\InsertUpdateAbout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\InsertUpdateSalary.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\EmployeeAttendance\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Employee\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Employee\InsertUpdateEmployee.js" />
@@ -2499,6 +2502,9 @@
     <Content Include="Areas\Admin\Views\Employee\InsertUpdateEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeAttendance\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeAttendance\PrintAttendanceReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Salary\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Salary\InsertUpdateSalary.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\PrintInvoice.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

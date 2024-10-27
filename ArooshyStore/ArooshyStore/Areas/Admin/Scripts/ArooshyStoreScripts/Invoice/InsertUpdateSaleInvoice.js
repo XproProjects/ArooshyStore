@@ -585,7 +585,7 @@ $(function () {
                     "<span><input type='hidden' class='DiscountType' value=" + discountType + " />" + discountType + "</span>",
                     "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discountRate + " />" + ReplaceNumberWithCommas(parseFloat(discountRate).toFixed(2)) + "</span>",
                     "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discountAmount + " />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
-                    "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>", 
+                    "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>",
                     "<span><input type='hidden' class='MasterCategoryId' value=" + MasterCategoryId + " />" + MasterCategoryName + "</span>",
                     "<span><input type='hidden' class='ChildCategoryId' value=" + ChildCategoryId + " />" + ChildCategoryName + "</span>",
                     "<span><input type='hidden' class='AttributeId' value=" + AttributeId + " />" + AttributeName + "</span>",
@@ -657,9 +657,8 @@ $(function () {
 
     // Cancel button functionality
     $('#btnCancelDetail').click(function () {
-        $('#btnCancelDetail').hide();  // Hide Cancel button
-        $('#btnAddDetail').find('.btnLineSpan').html('Add');  // Change Update back to Add
-        // Clear form fields
+        $('#btnCancelDetail').hide();  
+        $('#btnAddDetail').find('.btnLineSpan').html('Add');  
         $('#Rate').val('0');
         $('#LineDiscType').val('%');
         $('#Qty').val('');
@@ -688,16 +687,50 @@ $(document).on('click', '.editRowBtn', function () {
     // Populate the form fields with data for editing
     var productId = $(data[3]).find('input.ProductId').val();
     var salesPrice = $(data[4]).find('input.SalesPrice').val();
+    var quantity = $(data[5]).text();
     var discountType = $(data[6]).find('input.DiscountType').val();
     var discountRate = $(data[7]).find('input.DiscountRate').val();
     var discountAmount = $(data[8]).find('input.DiscountAmount').val();
+    var netAmount = $(data[9]).find('input.NetAmount').val();
     var masterCategoryId = $(data[10]).find('input.MasterCategoryId').val();
     var childCategoryId = $(data[11]).find('input.ChildCategoryId').val();
     var attributeId = $(data[12]).find('input.AttributeId').val();
     var attributeDetailId = $(data[13]).find('input.AttributeDetailId').val();
-    var quantity = $(data[5]).text();
-    var netAmount = $(data[9]).find('input.NetAmount').val();
-
+    if ($('#ProductId').find("option[value='" + productId + "']").length) {
+        $('#ProductId').val(productId).trigger('change.select2');
+    } else {
+        var ProductName = data[3].split('/>')[1].split('</span>')[0].trim();
+        var newOption = new Option(ProductName, productId, true, true);
+        $('#ProductId').append(newOption).trigger('change.select2');
+    }
+    if ($('#MasterCategoryId').find("option[value='" + masterCategoryId + "']").length) {
+        $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
+    } else {
+        var MasterCategoryName = data[10].split('/>')[1].split('</span>')[0].trim();
+        var newOption = new Option(MasterCategoryName, masterCategoryId, true, true);
+        $('#MasterCategoryId').append(newOption).trigger('change.select2');
+    }
+    if ($('#ChildCategoryId').find("option[value='" + childCategoryId + "']").length) {
+        $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
+    } else {
+        var ChildCategoryName = data[11].split('/>')[1].split('</span>')[0].trim();
+        var newOption = new Option(ChildCategoryName, childCategoryId, true, true);
+        $('#ChildCategoryId').append(newOption).trigger('change.select2');
+    }
+    if ($('#AttributeId').find("option[value='" + attributeId + "']").length) {
+        $('#AttributeId').val(attributeId).trigger('change.select2');
+    } else {
+        var AttributeName = data[12].split('/>')[1].split('</span>')[0].trim();
+        var newOption = new Option(AttributeName, attributeId, true, true);
+        $('#AttributeId').append(newOption).trigger('change.select2');
+    }
+    if ($('#AttributeDetailId').find("option[value='" + attributeDetailId + "']").length) {
+        $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
+    } else {
+        var AttributeDetailName = data[13].split('/>')[1].split('</span>')[0].trim();
+        var newOption = new Option(AttributeDetailName, attributeDetailId, true, true);
+        $('#AttributeDetailId').append(newOption).trigger('change.select2');
+    }
     // Populate the fields
     $('#ProductId').val(productId).trigger('change.select2');
     $('#Rate').val(salesPrice);
@@ -710,8 +743,6 @@ $(document).on('click', '.editRowBtn', function () {
     $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
     $('#AttributeId').val(attributeId).trigger('change.select2');
     $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
-
-    // Change Add button text to Update and show Cancel button
     $('#btnAddDetail').find('.btnLineSpan').html('Update');
     $('#btnCancelDetail').show();
 });
@@ -1093,7 +1124,7 @@ $('#popupForm').on('submit', function (e) {
     var detailData = JSON.stringify(getAllData());
     $.ajax({
         type: "POST",
-        url: "/Admin/Invoice/InsertUpdateSaleInvoice/",
+        url: "/Admin/Invoice/InsertUpdateInvoice/",
         data: { 'user': st, 'detail': detailData },
 
         dataType: 'json',

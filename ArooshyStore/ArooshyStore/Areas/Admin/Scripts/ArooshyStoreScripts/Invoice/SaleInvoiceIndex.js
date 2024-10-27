@@ -61,7 +61,8 @@
                         '</button>' +
                         '<div class="dropdown-menu">';
                     div += '<a class="dropdown-item UpdateStatusRole btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Update Status">Update Status</a>';
-                    
+                    div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + data + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
+
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
@@ -70,6 +71,7 @@
                     }
                     div += '</div>' +
                         '</div>';
+                   
                     return div;
                 }
             },
@@ -104,7 +106,7 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Product Unit Name') {
+    if (BElement.html() == 'Invoice Number') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
     }
     else {

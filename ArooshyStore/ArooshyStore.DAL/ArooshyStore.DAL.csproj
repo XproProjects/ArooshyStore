@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblSalary.cs" />
     <Compile Include="Entities\tblEmployeeAttendance.cs" />
     <Compile Include="Entities\tblEmployee.cs" />
     <Compile Include="Entities\tblDesignation.cs" />
@@ -270,6 +271,14 @@
     <Compile Include="Migrations\202410241124408_Added_Table_tblEmployeeAttendance.Designer.cs">
       <DependentUpon>202410241124408_Added_Table_tblEmployeeAttendance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410251007160_Added_Table_tblSalary.cs" />
+    <Compile Include="Migrations\202410251007160_Added_Table_tblSalary.Designer.cs">
+      <DependentUpon>202410251007160_Added_Table_tblSalary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410261251440_Added_Column_DateInTblEmployee.cs" />
+    <Compile Include="Migrations\202410261251440_Added_Column_DateInTblEmployee.Designer.cs">
+      <DependentUpon>202410261251440_Added_Column_DateInTblEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -410,6 +419,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410241124408_Added_Table_tblEmployeeAttendance.resx">
       <DependentUpon>202410241124408_Added_Table_tblEmployeeAttendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410251007160_Added_Table_tblSalary.resx">
+      <DependentUpon>202410251007160_Added_Table_tblSalary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410261251440_Added_Column_DateInTblEmployee.resx">
+      <DependentUpon>202410261251440_Added_Column_DateInTblEmployee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

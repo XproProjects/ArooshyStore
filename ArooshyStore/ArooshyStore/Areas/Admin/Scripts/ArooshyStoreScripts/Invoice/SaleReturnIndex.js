@@ -14,7 +14,8 @@
             "type": "POST",
             "datatype": "json",
             "data": function (d) {
-                d.Type = 'Sale Return'
+                d.Type = 'Sale Return';
+                d.From = '';
             },
             error: function (xhr, httpStatusMessage, customErrorMessage) {
                 if (xhr.status === 410) {
@@ -98,7 +99,7 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Product Unit Name') {
+    if (BElement.html() == 'Invoice Number') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
     }
     else {
