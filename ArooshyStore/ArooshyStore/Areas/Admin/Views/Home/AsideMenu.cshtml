@@ -70,7 +70,17 @@
                     </a>
                 </li>
             }
-
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "attendance"))
+            {
+                @*<li class="nav-title">Suppliers</li>*@
+                <li>
+                    <a href="/admin/employeeattendance/index" title="Attendance" data-filter-tags="attendance">
+                        <i class="fas fa-clock"></i>
+                        <span class="nav-link-text" data-i18n="nav.Attendance">Attendance</span>
+                    </a>
+                </li>
+            }
             @if (Model.ModuleList.Any(x =>
           x.ModuleName.ToLower() == "product"))
             {
@@ -138,7 +148,7 @@ x.ModuleName.ToLower() == "expense"))
                             </li>
                             <li>
                                 <a href="/admin/invoice/saleinvoiceindex/?from=onhold" title="OnHold" data-filter-tags="onhold">
-                                    <span class="nav-link-text" data-i18n="nav.OnHold">OnHold</span>
+                                    <span class="nav-link-text" data-i18n="nav.OnHold">On Hold</span>
                                 </a>
                             </li>
                             <li>
@@ -207,13 +217,13 @@ x.ModuleName.ToLower() == "expense"))
                 </li>
             }
             @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "attendance"))
+x.ModuleName.ToLower() == "salary"))
             {
                 @*<li class="nav-title">Suppliers</li>*@
                 <li>
-                    <a href="/admin/employeeattendance/index" title="Attendance" data-filter-tags="attendance">
-                        <i class="fas fa-clock"></i>
-                        <span class="nav-link-text" data-i18n="nav.Attendance">Attendance</span>
+                    <a href="/admin/salary/index" title="Salary" data-filter-tags="salary">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span class="nav-link-text" data-i18n="nav.Salary">Salary</span>
                     </a>
                 </li>
             }

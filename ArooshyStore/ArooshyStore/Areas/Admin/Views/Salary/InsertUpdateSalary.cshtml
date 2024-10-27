@@ -1,0 +1,159 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model SalaryViewModel
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("InsertUpdateSalary", "Salary", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset style="padding:1.25rem;">
+            <div class="row" style="margin-top:15px">
+                <section class="col-md-6">
+                    <input type="hidden" id="HiddenSalaryId" name="SalaryId" value="@Model.SalaryId" />
+                    <input type="hidden" id="HiddenEmployeeName" name="HiddenEmployeeName" value="@Model.EmployeeName" />
+                    <input type="hidden" id="HiddenEmployeeId" name="HiddenEmployeeId" value="@Model.EmployeeId" />
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Employee (*)</label>
+                                        <div class="input-group">
+                                            <select id="EmployeeId" name="EmployeeId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/employee/index" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 14px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Employee">
+                                            <i class="fal fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Month (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-calendar"></i>
+                                </span>
+                            </div>
+                            @{
+                                string value = "";
+                                value = DateTime.Now.ToString("yyyy-MM-dd");
+
+                            }
+
+                            <input type="date" class="form-control" id="ForMonth" name="ForMonth" value="@value" />
+                        </div>
+                    </div>
+                </section>
+               
+            </div>
+
+            <div class="row" style="margin-top: 10px">
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Salary (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-dollar-sign"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.BasicSalary, new { @placeholder = "Basic Salary", @class = "form-control", id = "BasicSalary" })
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Advance Salary</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-dollar-sign"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.AdvanceSalary, new { @placeholder = "Advance Salary", @class = "form-control", id = "AdvanceSalary" })
+                        </div>
+                    </div>
+                </section>
+              
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:10px">
+                    <div class="row">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px;">
+                                <label>Bonus Amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-dollar-sign"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.BonusAmount, new { @placeholder = "Bonus Amount", @class = "form-control", id = "BonusAmount" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px;">
+                                <label>Deduction Amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-minus-circle"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.DeductionAmount, new { @placeholder = "Deduction Amount", @class = "form-control", id = "DeductionAmount" })
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:10px">
+                    <div class="row">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Loan</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-dollar-sign"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Loan, new { @placeholder = "Loan", @class = "form-control", id = "Loan" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px;">
+                                <label>Net Amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-dollar-sign"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.NetSalary, new { @placeholder = "Net Amount", @class = "form-control", id = "NetSalary", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </section>
+
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm">Save</button>
+        </footer>
+
+    }
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Salary/InsertUpdateSalary.js?v=2"></script>

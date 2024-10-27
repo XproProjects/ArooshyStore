@@ -155,9 +155,6 @@ $(function () {
         $('#CityId').val(null).trigger('change');
     }
     if ($('#EmployeeId').val() > 0) {
-        $('#Gender').val($('#HiddenGender').val()).trigger('change');
-        $('#MaritalStatus').val($('#HiddenMaritalStatus').val()).trigger('change');
-        $('#SalaryType').val($('#HiddenSalaryType').val()).trigger('change');
         if ($('#DesignationId').find("option[value='" + $('#HiddenDesignationId').val() + "']").length) {
             $('#DesignationId').val($('#HiddenDesignationId').val()).trigger('change');
         } else {
@@ -181,10 +178,10 @@ $(function () {
             Contact1: {
                 required: true
             },
-            Email: {
-                required: true,
-                email: true,
-            },
+            //Email: {
+            //    required: true,
+            //    email: true,
+            //},
             Password: {
                 required: true
             },
@@ -203,10 +200,10 @@ $(function () {
             Contact1: {
                 required: 'Contact 1 is required.'
             },
-            Email: {
-                required: 'Email is required.',
-                email: 'Please enter a valid email address.',
-            },
+            //Email: {
+            //    required: 'Email is required.',
+            //    email: 'Please enter a valid email address.',
+            //},
             Password: {
                 required: 'Password is required.'
             },
@@ -255,6 +252,7 @@ $('#popupForm').on('submit', function (e) {
     if (DesignationId == null || DesignationId == undefined) {
         DesignationId = 0;
     }
+    var DateOfJoining = $('#DateOfJoining').val();
     var Gender = $('#Gender').val();
     var MaritalStatus = $('#MaritalStatus').val();
     var Salary = $('#Salary').val();
@@ -281,6 +279,7 @@ $('#popupForm').on('submit', function (e) {
         Salary: Salary,
         SalaryType: SalaryType,
         StatusString: StatusString,
+        DateOfJoining: DateOfJoining,
     }
     //var queryData = JSON.stringify(st);
     $.ajax({

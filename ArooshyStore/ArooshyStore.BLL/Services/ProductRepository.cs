@@ -103,6 +103,7 @@ namespace ArooshyStore.BLL.Services
             if (id > 0)
             {
                 model = (from f in _unitOfWork.Db.Set<tblProduct>()
+                         join i in _unitOfWork.Db.Set<tblTagsForProducts>() on f.ProductId equals i.ProductId
                          where f.ProductId == id
                          select new ProductViewModel
                          {
@@ -119,6 +120,9 @@ namespace ArooshyStore.BLL.Services
                              DeliveryInfoName = _unitOfWork.Db.Set<tblDeliveryInfo>().Where(x => x.DeliveryInfoId == f.DeliveryInfoId).Select(x => x.DeliveryInfoName).FirstOrDefault() ?? "",
                              SalePrice = f.SalePrice ?? 0,
                              CostPrice = f.CostPrice ?? 0,
+                             TagId = i.TagId,
+                             TagName = _unitOfWork.Db.Set<tblProductTags>().Where(x => x.TagId == i.TagId).Select(x => x.TagName).FirstOrDefault() ?? "",
+
                              Status = f.Status,
                              IsFeatured = f.IsFeatured ?? false,
                              ImagePath = _unitOfWork.Db.Set<tblDocument>()
@@ -225,18 +229,17 @@ namespace ArooshyStore.BLL.Services
                 DataTable dtTags = new DataTable();
                 dtTags.Columns.Add("Id");
                 dtTags.Columns.Add("TagId");
-                dtTags.Columns.Add("ProductId");
                 if (tagsList.Count != 0)
                 {
                     dtTags.Rows.Clear();
                     for (int i = 0; i < tagsList.Count; i++)
                     {
-                        dtTags.Rows.Add(new object[] { i + 1, tagsList[i].TagId, tagsList[i].ProductId });
+                        dtTags.Rows.Add(new object[] { i + 1, tagsList[i].TagId });
                     }
                 }
                 else
                 {
-                    dtTags.Rows.Add(new object[] { 0, 0, 0 });
+                    dtTags.Rows.Add(new object[] { 0, 0});
                 }
                 if (model.ProductId > 0)
                 {
@@ -321,12 +324,13 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Add("@dtProductAttributeDetailType", SqlDbType.Structured).Value = dtAttributes;
                         cmd.Parameters.Add("@dtTagsForProductsType", SqlDbType.Structured).Value = dtTags;
                         cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
-                        cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar, 50).Value = insertUpdateStatus;
+                        cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
                         cmd.Parameters.Add("@CheckReturn", SqlDbType.NVarChar, 300).Direction = ParameterDirection.Output;
                         cmd.Parameters.Add("@CheckReturn2", SqlDbType.Int).Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         result.Message = cmd.Parameters["@CheckReturn"].Value.ToString();
-                        result.Id = Convert.ToInt32(cmd.Parameters["@CheckReturn2"].Value);
+                        result.Id = Convert.ToInt32(cmd.Parameters["@CheckReturn2"].Value.ToString());
+                        cmd.Dispose();
                     }
                 }
             }
@@ -353,11 +357,9 @@ namespace ArooshyStore.BLL.Services
             DataTable dtTags = new DataTable();
             dtTags.Columns.Add("Id");
             dtTags.Columns.Add("TagId");
-            dtTags.Columns.Add("ProductId");
-
 
             dtAttributes.Rows.Add(new object[] { 0, 0, 0, false });
-            dtTags.Rows.Add(new object[] { 0, 0, 0 });
+            dtTags.Rows.Add(new object[] { 0, 0 });
 
             ResultViewModel result = InsertUpdateProductDb(model, "Delete", dtAttributes, dtTags, loggedInUserId);
 

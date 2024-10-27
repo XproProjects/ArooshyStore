@@ -95,7 +95,17 @@ namespace ArooshyStore.Areas.Admin.Controllers
             var result = select2pagedResult;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
+        #region Employees
+        public JsonResult GetEmployeesOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetEmployeesList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region Products
         public JsonResult GetProductsOptionList(string searchTerm, int pageSize, int pageNumber)
         {

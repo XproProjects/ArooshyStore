@@ -245,6 +245,19 @@ $(function () {
     else {
         $('#DeliveryInfoId').val(null).trigger('change');
     }
+    if ($('#ProductId').val() > 0) {
+        if ($('#TagId').find("option[value='" + $('#HiddenTagId').val() + "']").length) {
+            $('#TagId').val($('#HiddenTagId').val()).trigger('change');
+        } else {
+            // Create a DOM Option and pre-select by default
+            var newOption = new Option($('#HiddenTagName').val(), $('#HiddenTagId').val(), true, true);
+            // Append it to the select
+            $('#TagId').append(newOption).trigger('change');
+        }
+    }
+    else {
+        $('#TagId').val(null).trigger('change');
+    }
 
     if ($('#ProductId').val() > 0) {
         if ($('#CategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
@@ -325,8 +338,7 @@ function getTagsData() {
     $('#TagId  > option:selected').each(function () {
         var id = $(this).val();
         var alldata = {
-            'TagId': id,
-            'ProductId': productId
+            'TagId': id
         }
         arrayData.push(alldata);
     });

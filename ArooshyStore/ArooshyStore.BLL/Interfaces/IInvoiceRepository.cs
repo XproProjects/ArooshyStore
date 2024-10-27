@@ -14,6 +14,8 @@ namespace ArooshyStore.BLL.Interfaces
         string GetMaxCodeForInvoice(string type, int loggedInUserId);
         StatusMessageViewModel InsertUpdateInvoiceStatus(InvoiceStatusViewModel model, int loggedInUserId);
         InvoiceStatusViewModel GetInvoiceStatusById(string id);
+        InvoiceViewModel GetInvoiceByIdForPrint(string id, string type);
+
 
 
     }

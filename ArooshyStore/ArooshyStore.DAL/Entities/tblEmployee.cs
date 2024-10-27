@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArooshyStore.DAL.Entities
 {
@@ -34,7 +35,8 @@ namespace ArooshyStore.DAL.Entities
         [StringLength(20)]
         public string MaritalStatus { get; set; }
         public Nullable<decimal> Salary { get; set; }
-        public DateTime? DateOfJoining { get; set; }
+        [Column(TypeName = "Date")]
+        public Nullable<System.DateTime> DateOfJoining { get; set; }
         [StringLength(50)]
         public string SalaryType { get; set; }
         public Nullable<bool> Status { get; set; }

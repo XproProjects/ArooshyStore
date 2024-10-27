@@ -15,6 +15,7 @@ namespace ArooshyStore.Models.ViewModels
         public string ChildCategoryName { get; set; }
         public string DeliveryInfoDetail { get; set; }
         public string Barcode { get; set; }
+        public int TagId { get; set; }
         public string TagName { get; set; }
         public string DeliveryInfoName { get; set; }
         public int? LoggedUserId { get; set; }

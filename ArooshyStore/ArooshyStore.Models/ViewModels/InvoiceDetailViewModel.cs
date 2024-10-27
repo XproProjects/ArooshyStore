@@ -26,6 +26,7 @@ namespace ArooshyStore.Models.ViewModels
         public decimal? DiscRate { get; set; }
         public decimal? DiscAmount { get; set; }
         public decimal? NetAmount { get; set; }
+        public decimal? SalePrice { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public string CreatedByString { get; set; }

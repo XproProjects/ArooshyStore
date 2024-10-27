@@ -677,45 +677,76 @@ $(function () {
 
 
 // Edit button functionality
-$(document).on('click', '.editRowBtn', function () {
-    var vtable = $('#detailTable').DataTable();
-    var rowIndex = vtable.row($(this).parents('tr')).index();
-    $('#HiddenTr').val(rowIndex);
+    $(document).on('click', '.editRowBtn', function () {
+        var vtable = $('#detailTable').DataTable();
+        var rowIndex = vtable.row($(this).parents('tr')).index();
+        $('#HiddenTr').val(rowIndex);
 
-    // Fetch row data
-    var data = vtable.row($(this).parents('tr')).data();
+        // Fetch row data
+        var data = vtable.row($(this).parents('tr')).data();
 
-    // Populate the form fields with data for editing
-    var productId = $(data[3]).find('input.ProductId').val();
-    var salesPrice = $(data[4]).find('input.SalesPrice').val();
-    var discountType = $(data[6]).find('input.DiscountType').val();
-    var discountRate = $(data[7]).find('input.DiscountRate').val();
-    var discountAmount = $(data[8]).find('input.DiscountAmount').val();
-    var masterCategoryId = $(data[10]).find('input.MasterCategoryId').val();
-    var childCategoryId = $(data[11]).find('input.ChildCategoryId').val();
-    var attributeId = $(data[12]).find('input.AttributeId').val();
-    var attributeDetailId = $(data[13]).find('input.AttributeDetailId').val();
-    var quantity = $(data[5]).text();
-    var netAmount = $(data[9]).find('input.NetAmount').val();
-
-    // Populate the fields
-    $('#ProductId').val(productId).trigger('change.select2');
-    $('#Rate').val(salesPrice);
-    $('#LineDiscType').val(discountType);
-    $('#LineDiscRate').val(discountRate);
-    $('#LineDiscAmount').val(discountAmount);
-    $('#Qty').val(quantity);
-    $('#NetAmount').val(netAmount);
-    $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
-    $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
-    $('#AttributeId').val(attributeId).trigger('change.select2');
-    $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
-
-    // Change Add button text to Update and show Cancel button
-    $('#btnAddDetail').find('.btnLineSpan').html('Update');
-    $('#btnCancelDetail').show();
-});
-
+        // Populate the form fields with data for editing
+        var productId = $(data[3]).find('input.ProductId').val();
+        var salesPrice = $(data[4]).find('input.SalesPrice').val();
+        var quantity = $(data[5]).text();
+        var discountType = $(data[6]).find('input.DiscountType').val();
+        var discountRate = $(data[7]).find('input.DiscountRate').val();
+        var discountAmount = $(data[8]).find('input.DiscountAmount').val();
+        var netAmount = $(data[9]).find('input.NetAmount').val();
+        var masterCategoryId = $(data[10]).find('input.MasterCategoryId').val();
+        var childCategoryId = $(data[11]).find('input.ChildCategoryId').val();
+        var attributeId = $(data[12]).find('input.AttributeId').val();
+        var attributeDetailId = $(data[13]).find('input.AttributeDetailId').val();
+        if ($('#ProductId').find("option[value='" + productId + "']").length) {
+            $('#ProductId').val(productId).trigger('change.select2');
+        } else {
+            var ProductName = data[3].split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(ProductName, productId, true, true);
+            $('#ProductId').append(newOption).trigger('change.select2');
+        }
+        if ($('#MasterCategoryId').find("option[value='" + masterCategoryId + "']").length) {
+            $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
+        } else {
+            var MasterCategoryName = data[10].split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(MasterCategoryName, masterCategoryId, true, true);
+            $('#MasterCategoryId').append(newOption).trigger('change.select2');
+        }
+        if ($('#ChildCategoryId').find("option[value='" + childCategoryId + "']").length) {
+            $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
+        } else {
+            var ChildCategoryName = data[11].split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(ChildCategoryName, childCategoryId, true, true);
+            $('#ChildCategoryId').append(newOption).trigger('change.select2');
+        }
+        if ($('#AttributeId').find("option[value='" + attributeId + "']").length) {
+            $('#AttributeId').val(attributeId).trigger('change.select2');
+        } else {
+            var AttributeName = data[12].split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(AttributeName, attributeId, true, true);
+            $('#AttributeId').append(newOption).trigger('change.select2');
+        }
+        if ($('#AttributeDetailId').find("option[value='" + attributeDetailId + "']").length) {
+            $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
+        } else {
+            var AttributeDetailName = data[13].split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(AttributeDetailName, attributeDetailId, true, true);
+            $('#AttributeDetailId').append(newOption).trigger('change.select2');
+        }
+        // Populate the fields
+        $('#ProductId').val(productId).trigger('change.select2');
+        $('#Rate').val(salesPrice);
+        $('#LineDiscType').val(discountType);
+        $('#LineDiscRate').val(discountRate);
+        $('#LineDiscAmount').val(discountAmount);
+        $('#Qty').val(quantity);
+        $('#NetAmount').val(netAmount);
+        $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
+        $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
+        $('#AttributeId').val(attributeId).trigger('change.select2');
+        $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
+        $('#btnAddDetail').find('.btnLineSpan').html('Update');
+        $('#btnCancelDetail').show();
+    });
 
     // Delete button functionality
     $(document).on('click', '.deleteRowBtn', function () {
