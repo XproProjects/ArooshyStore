@@ -49,17 +49,12 @@ namespace ArooshyStore.Areas.User.Controllers
             return PartialView(model);
         }
         public ActionResult SetSearchString(bool? categoryCheckbox, int[] category,bool? attributeCheckbox, int[] attribute,
-            bool? discountCheckbox, int[] discount, decimal? minPrice, decimal? maxPrice, string sortBy, string viewType)
+            bool? discountCheckbox, int[] discount, decimal? minPrice, decimal? maxPrice, string sortBy)
         {
             var filteredProducts = _repository.GetFilteredProducts(categoryCheckbox, category,attributeCheckbox, attribute, discountCheckbox, discount, minPrice, maxPrice, sortBy);
-            if (viewType == "list")
-            {
-                return PartialView("GetProductsList", filteredProducts); // Ensure this view exists
-            }
-            else
-            {
-                return PartialView("GetProductsGrid", filteredProducts); // Existing grid view
-            }
+            
+                return PartialView("GetProductsGrid", filteredProducts); 
+            
         }
 
     }
