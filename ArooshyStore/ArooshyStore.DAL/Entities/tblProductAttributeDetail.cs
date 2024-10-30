@@ -10,6 +10,8 @@ namespace ArooshyStore.DAL.Entities
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> AttributeId { get; set; }
         public Nullable<int> AttributeDetailId { get; set; }
+        [StringLength(100)]
+        public string Barcode { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

@@ -8,7 +8,8 @@ namespace ArooshyStore.BLL.Interfaces
     {
         List<ProductCartViewModel> GetCartItemCountByCookieName(int? UserId,string CookieName);
         List<ProductCartViewModel> GetLatestCartItemsByCookieName(string userIdOrCookieName);
-        StatusMessageViewModel InsertUpdateProductCart(ProductCartViewModel model, string AttributeDetailData);
+        List<ProductCartViewModel> GetLatestCheckOutSidebarByCookieName(string userIdOrCookieName);
+        StatusMessageViewModel InsertUpdateProductCart(ProductCartViewModel model, string AttributeDetailData, string cookieName);
         StatusMessageViewModel DeleteProductCart(int id);
          int GetCartItemCount(string cookieName);
 

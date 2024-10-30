@@ -2,7 +2,8 @@
 
 <section class="py-4">
     <div class="container">
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+        <!-- Set row-cols-2 to ensure two items per row -->
+        <div class="row row-cols-2 g-4">
             @if (Model != null && Model.Count > 0)
             {
                 var colors = new string[] { "bg-info bg-opacity-25", "bg-danger bg-opacity-25", "bg-warning bg-opacity-25" };
@@ -14,7 +15,7 @@
                         <div class="card rounded-0 shadow-none @colors[index]">
                             <div class="row g-0 align-items-center">
                                 <div class="col">
-                                    <img src="@category.ImagePath"  style="height: 200px; object-fit: cover;" class="img-fluid" alt="@category.CategoryName" />
+                                    <img src="@category.ImagePath" style="height: 200px; object-fit: cover;" class="img-fluid" alt="@category.CategoryName" />
                                 </div>
                                 <div class="col">
                                     <div class="card-body">
@@ -28,6 +29,24 @@
                     </div>
                     index = (index + 1) % colors.Length;
                 }
+
+                <!-- Hard-coded "Expired" category -->
+                <div class="col">
+                    <div class="card rounded-0 shadow-none bg-secondary bg-opacity-25">
+                        <div class="row g-0 align-items-center">
+                            <div class="col">
+                                <img src="~/Areas/Admin/Content/dummy.png" style="height: 200px; object-fit: cover;" class="img-fluid" alt="Expired" />
+                            </div>
+                            <div class="col">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase fw-bold">Expired</h5>
+                                    <p class="card-text text-uppercase">Not Available</p>
+                                    <a href="@Url.Action("ExpiredIndex", "Home")" class="btn btn-outline-dark btn-ecomm">SHOP NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     </div>

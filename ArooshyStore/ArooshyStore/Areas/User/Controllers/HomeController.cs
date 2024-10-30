@@ -69,6 +69,29 @@ namespace ArooshyStore.Areas.User.Controllers
             return PartialView("MasterCategories", masterCategories);
 
         }
+        [HttpGet]
+        public ActionResult ExpiredProducts()
+        {
+            var masterCategories = _repository.GetExpiredProducts();
+            return PartialView("ExpiredProducts", masterCategories);
+
+        }
+        public ActionResult ExpiredIndex()
+        {
+            return View();
+        }
+        public ActionResult SetSearchString(bool? categoryCheckbox, int[] category, bool? attributeCheckbox, int[] attribute,
+           bool? discountCheckbox, int[] discount, decimal? minPrice, decimal? maxPrice, string sortBy)
+        {
+            var filteredProducts = _repository.GetFilteredProductsForExpired(categoryCheckbox, category, attributeCheckbox, attribute, discountCheckbox, discount, minPrice, maxPrice, sortBy);
+            return PartialView("ExpiredProducts", filteredProducts);
+        }
+        [HttpGet]
+        public ActionResult ExpiredByMasterCategory(int masterCategoryId)
+        {
+            var expiredProducts = _repository.GetProductsByMasterCategory(masterCategoryId);
+            return View(expiredProducts);
+        }
         public ActionResult Carousels()
         {
             var carousels = _carousel.GetAllCarousels();

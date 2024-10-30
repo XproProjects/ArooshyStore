@@ -56,6 +56,7 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
+                    div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + data + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
 
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
@@ -65,6 +66,7 @@
                     }
                     div += '</div>' +
                         '</div>';
+
                     return div;
                 }
             },

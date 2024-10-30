@@ -301,6 +301,7 @@ $(function () {
                 required: true,
                 min: 1
             },
+
         },
         messages: {
             ProductName: {
@@ -446,6 +447,8 @@ $('#popupForm').on('submit', function (e) {
     var Barcode = $('#Barcode').val();
     var CostPrice = $('#CostPrice').val();
     var SalePrice = $('#SalePrice').val();
+    var SalePriceAfterExpired = $('#SalePriceAfterExpired').val();
+    var SalePriceForWebsite = $('#SalePriceForWebsite').val();
     if (CategoryId == null || CategoryId == undefined) {
         CategoryId = 0;
     }
@@ -456,6 +459,10 @@ $('#popupForm').on('submit', function (e) {
     var IsFeaturedString = "No";
     if ($("#Featured").is(":checked")) {
         IsFeaturedString = "Yes";
+    }
+    var IsExpiredString = "No";
+    if ($("#IsExpired").is(":checked")) {
+        IsExpiredString = "Yes";
     }
 
     var detail = JSON.stringify(getSectionsData());
@@ -470,11 +477,14 @@ $('#popupForm').on('submit', function (e) {
         DeliveryInfoId: DeliveryInfoId,
         SalePrice: SalePrice,
         CostPrice: CostPrice,
+        SalePriceForWebsite: SalePriceForWebsite,
+        SalePriceAfterExpired: SalePriceAfterExpired,
         UnitId: UnitId,
         CategoryId: CategoryId,
         Barcode: Barcode,
         StatusString: StatusString,
-        IsFeaturedString: IsFeaturedString
+        IsFeaturedString: IsFeaturedString,
+        IsExpiredString: IsExpiredString,
     }
    
     $.ajax({

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Web;
 using ArooshyStore.BLL.GenericRepository;
 using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.DAL.Entities;
@@ -60,8 +62,9 @@ namespace ArooshyStore.BLL.Services
                                                        }
                                                     }
                                                 }).ToList(),
-                             }).ToList();
-
+                               
+        }).ToList();
+           
             return cartItems;
         }
         public List<ProductCartViewModel> GetLatestCartItemsByCookieName(string userIdOrCookieName)
@@ -122,42 +125,78 @@ namespace ArooshyStore.BLL.Services
 
             return cartItems;
         }
-        public StatusMessageViewModel InsertUpdateProductCart(ProductCartViewModel model,string AttributeDetailData)
+        public List<ProductCartViewModel> GetLatestCheckOutSidebarByCookieName(string userIdOrCookieName)
+        {
+            var cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
+                             where f.UserId.ToString() == userIdOrCookieName || f.CookieName == userIdOrCookieName
+                             orderby f.CartId descending
+                             select new ProductCartViewModel
+                             {
+                                 CartId = f.CartId,
+                                 UserId = f.UserId,
+                                 ProductId = f.ProductId,
+                                 Quantity = f.Quantity,
+                                 DiscountId = f.DiscountId,
+                                 CookieName = f.CookieName,
+                                 ActualSalePrice = f.ActualSalePrice ?? 0,
+                                 DiscountAmount = f.DiscountAmount ?? 0,
+                                 GivenSalePrice = f.GivenSalePrice ?? 0,
+                                 ProductName = _unitOfWork.Db.Set<tblProduct>()
+                                                .Where(x => x.ProductId == f.ProductId)
+                                                .Select(x => x.ProductName)
+                                                .FirstOrDefault() ?? "",
+                                 ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                                .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                                .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                                .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png"
+                             }).Take(4).ToList();
+
+            return cartItems;
+        }
+
+        public StatusMessageViewModel InsertUpdateProductCart(ProductCartViewModel model, string AttributeDetailData, string cookieName)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             try
             {
                 string insertUpdateStatus = "";
                 List<ProductCartAttributeDetailViewModel> list = JsonConvert.DeserializeObject<List<ProductCartAttributeDetailViewModel>>(AttributeDetailData);
+
+                // Check if there is at least one AttributeDetailId
+                if (list == null || list.Count == 0 || list.All(x => x.AttributeDetailId <= 0))
+                {
+                    response.Status = false;
+                    response.Message = "Please select at least one Attribute Detail.";
+                    return response;
+                }
+
                 DataTable dtAttributes = new DataTable();
                 dtAttributes.Columns.Add("Id");
                 dtAttributes.Columns.Add("ProductId");
                 dtAttributes.Columns.Add("CartId");
                 dtAttributes.Columns.Add("AttributeDetailId");
 
-                if (list.Count != 0)
+                dtAttributes.Rows.Clear();
+                for (int i = 0; i < list.Count; i++)
                 {
-                    dtAttributes.Rows.Clear();
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        dtAttributes.Rows.Add(new object[] { i + 1, list[i].ProductId, list[i].CartId, list[i].AttributeDetailId });
-                    }
+                    dtAttributes.Rows.Add(new object[] { i + 1, list[i].ProductId, list[i].CartId, list[i].AttributeDetailId });
                 }
-                else
-                {
-                    dtAttributes.Rows.Add(new object[] { 0, 0, 0,0 });
-                }
+
                 if (model.CartId > 0)
                 {
-                    bool check = _unitOfWork.Db.Set<tblProductCart>().Any(x => x.CartId == model.CartId && x.ProductId == model.ProductId && x.UserId == model.UserId);
+                    bool check = _unitOfWork.Db.Set<tblProductCart>()
+                                .Where(x => x.ProductId == model.ProductId)
+                                .Any(x => x.CookieName == model.CookieName);
 
                     if (!check)
                     {
-                        bool check2 = _unitOfWork.Db.Set<tblProductCart>().Any(x => x.ProductId == model.ProductId && x.UserId == model.UserId);
-                        if (check2)
+                        bool productExists = _unitOfWork.Db.Set<tblProductCart>()
+                           .Any(x => x.ProductId == model.ProductId && x.CookieName == cookieName);
+
+                        if (productExists)
                         {
                             response.Status = false;
-                            response.Message = "Product Already Exists In Your Cart.";
+                            response.Message = "Product already exists for this cookie.";
                             return response;
                         }
                     }
@@ -165,15 +204,19 @@ namespace ArooshyStore.BLL.Services
                 }
                 else
                 {
-                    bool check2 = _unitOfWork.Db.Set<tblProductCart>().Any(x => x.ProductId == model.ProductId && x.UserId == model.UserId);
+                    bool check2 = _unitOfWork.Db.Set<tblProductCart>()
+                               .Any(x => x.ProductId == model.ProductId && x.CookieName == cookieName);
+
                     if (check2)
                     {
                         response.Status = false;
-                        response.Message = "Product Already Exists In Your Cart.";
+                        response.Message = "Product already exist for this.";
                         return response;
                     }
                     insertUpdateStatus = "Save";
                 }
+
+
                 ResultViewModel result = InsertUpdateCartDb(model, insertUpdateStatus, dtAttributes);
                 if (result.Message == "Success")
                 {
@@ -195,7 +238,7 @@ namespace ArooshyStore.BLL.Services
                 response.Id = 0;
                 ErrorHandler error = ErrorHandler.GetInstance;
                 error.InsertError(0, ex.Message.ToString(), "Web Application",
-                                "ProductCartRepository", "InsertUpdateCart");
+                                  "ProductCartRepository", "InsertUpdateCart");
             }
             return response;
         }

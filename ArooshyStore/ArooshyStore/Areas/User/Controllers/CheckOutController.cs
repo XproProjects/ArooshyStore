@@ -17,6 +17,7 @@ using System.Web.Script.Serialization;
 using ArooshyStore.Areas.Admin.Authentication.Identity;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace ArooshyStore.Areas.User.Controllers
 {
@@ -69,6 +70,13 @@ namespace ArooshyStore.Areas.User.Controllers
             }
 
             return View(cartItems);
+        }
+        [HttpGet]
+        public ActionResult CheckOutSidebar(string userIdOrCookieName)
+        {
+            var cartItems = _cart.GetLatestCheckOutSidebarByCookieName(userIdOrCookieName);
+            ViewBag.TotalAmount = cartItems.Sum(item => item.ActualSalePrice * item.Quantity);
+            return PartialView("CheckOutSidebar", cartItems);
         }
 
         public ActionResult CheckOutComplete()

@@ -1,10 +1,8 @@
-﻿
-$(document).ready(function () {
-    // Add to wishlist functionality
-    $(document).on('click', '.add-to-wishlist', function () {
+﻿$(document).ready(function () {
+    $(document).off('click', '.add-to-wishlist').on('click', '.add-to-wishlist', function () {
         var WishlistId = $('#WishlistId').val();
         var UserId = $('#UserId').val();
-        var ProductId = $(this).data('product-id'); // Use the product-id from the button
+        var ProductId = $(this).data('product-id');
 
         if (UserId === "") {
             toastr.error("You need to log in to add products to your wishlist.", "Error", { timeOut: 3000, "closeButton": true });
@@ -34,9 +32,9 @@ $(document).ready(function () {
             }
         });
     });
-})
-$(document).ready(function () {
-    $(document).on('click', '.remove-from-wishlist', function () {
+
+    // Remove from wishlist functionality
+    $(document).off('click', '.remove-from-wishlist').on('click', '.remove-from-wishlist', function () {
         var wishlistId = $(this).data('id');
         if (confirm('Are you sure you want to remove this item from your wishlist?')) {
             $.ajax({

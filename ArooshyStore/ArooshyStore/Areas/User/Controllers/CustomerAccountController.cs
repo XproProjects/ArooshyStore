@@ -304,10 +304,15 @@ namespace ArooshyStore.Areas.User.Controllers
 
         #region Cart items
         [HttpPost]
-        public ActionResult InsertUpdateCart(ProductCartViewModel user, string data)
+        public ActionResult InsertUpdateCart(ProductCartViewModel user, string data, string cookieName)
         {
+            if (string.IsNullOrEmpty(cookieName))
+            {
+                // Log an error or return an error response
+                return Json(new { status = false, message = "Cookie name cannot be null" });
+            }
             StatusMessageViewModel response = new StatusMessageViewModel();
-            response = _cart.InsertUpdateProductCart(user, data);
+            response = _cart.InsertUpdateProductCart(user, data, cookieName);
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
         }
        

@@ -176,30 +176,24 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     categoryId = product.CategoryId,
                     costPrice = product.CostPrice,
                     status = product.Status,
+                    masterCategoryId = product.MasterCategoryId,
                     masterCategoryName = product.MasterCategoryName,
+                    childCategoryId = product.ChildCategoryId,
                     childCategoryName = product.ChildCategoryName,
-                    CategoryName = product.CategoryName,
-                    attribute = "",
-                    attributeDetail = ""
+                    attributeId = product.AttributeId,
+                    attributeName = product.AttributeName,
+                    attributeDetailId = product.AttributeDetailId,
+                    attributeDetailName = product.AttributeDetailName
                 });
             }
 
             return Json(new
             {
-                productId = 0,
-                productName = "",
-                salePrice = 0,
-                barcode = "",
-                categoryId = 0,
-                costPrice = 0,
-                status = "",
-                CategoryName = "",
-                masterCategoryName = "",
-                childCategoryName = "",
-                attribute = "",
-                attributeDetail = ""
+                productId = 0, productName = "", salePrice = 0,  barcode = "", categoryId = 0, costPrice = 0, status = false,
+                masterCategoryId = 0,masterCategoryName = "",childCategoryId = 0, childCategoryName = "", attributeId = 0,  attributeName = "", attributeDetailId = 0, attributeDetailName = ""
             });
         }
+
         [HttpPost]
         public JsonResult GetProductSalePrice(int productId)
         {

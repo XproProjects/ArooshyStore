@@ -25,14 +25,24 @@ namespace ArooshyStore.Models.ViewModels
         public string UnitName { get; set; }
         public int? CategoryId { get; set; }
         public int? AttributeId { get; set; }
+        public int? MasterCategoryId { get; set; }
+        public int? ChildCategoryId { get; set; }
         public int? UserId { get; set; }
         public string CategoryName { get; set; }
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public decimal SalePriceForWebsite { get; set; }
+        public decimal SalePriceAfterExpired { get; set; }
+        public int AttributeDetailId { get; set; }
+        public string AttributeName { get; set; }
+        public string AttributeDetailName { get; set; }
         public bool? Status { get; set; }
         public string StatusString { get; set; }
         public bool? IsFeatured { get; set; }
+        public bool? IsExpired { get; set; }
         public string IsFeaturedString { get; set; }
+        public string IsExpiredString { get; set; }
+
         public string ImagePath { get; set; }
         public int DocumentId { get; set; }
         public int? InfoId { get; set; }

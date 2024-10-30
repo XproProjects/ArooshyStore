@@ -139,7 +139,7 @@
                                 </section>
                                 <section class="col-md-6">
                                     <div style="padding:5px;padding-top:0px">
-                                        <label>Sale Price (*)</label>
+                                        <label>Sale Price (Admin)</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
@@ -156,6 +156,40 @@
 
                 </div>
 
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" style="margin-top:3px">
+                    <div class="row">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Sale Price (Website)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-money-bill-alt"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.SalePriceForWebsite, new { @id = "SalePriceForWebsite", @placeholder = "Sale Price For Website", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Sale Price (Expired)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-money-bill-alt"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.SalePriceAfterExpired, new { @id = "SalePriceAfterExpired", @placeholder = "Sale Price After Expired", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12" style="margin-top:3px">
@@ -203,6 +237,8 @@
                 string ishidden = "hidden";
                 string ischeckedStatus = "";
                 string ischeckedFeatured = "";
+                string ischeckedExpired = "";
+
                 if (Model.ProductId > 0)
                 {
                     ishidden = "";
@@ -211,27 +247,41 @@
                         ischeckedStatus = "checked";
                     }
                 }
+
                 if (Model.IsFeatured == true)
                 {
                     ischeckedFeatured = "checked";
                 }
+
+                if (Model.IsExpired == true)
+                {
+                    ischeckedExpired = "checked";
+                }
             }
+
             <div class="row">
                 <section class="col-md-8">
                 </section>
-                <section class="col-md-2">
-                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;" @ishidden>
+                <section class="col-md-4 d-flex justify-content-end">
+                    <div class="custom-control custom-switch" style="margin-right:7px;" @ishidden>
                         <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischeckedStatus>
                         <label class="custom-control-label" for="Status">Active</label>
                     </div>
-                </section>
-                <section class="col-md-2">
-                    <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
-                        <input type="checkbox" class="custom-control-input" name="Featured" id="Featured" @ischeckedFeatured>
-                        <label class="custom-control-label" for="Featured">Featured</label>
+
+                    <div class="custom-control custom-switch" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="IsFeatured" id="IsFeatured" @ischeckedFeatured>
+                        <label class="custom-control-label" for="IsFeatured">Featured</label>
+                    </div>
+                    <div class="custom-control custom-switch" style="margin-right:7px;">
+                        <input type="checkbox" class="custom-control-input" name="IsExpired" id="IsExpired" @ischeckedExpired>
+                        <label class="custom-control-label" for="IsExpired">Expired</label>
                     </div>
                 </section>
             </div>
+
+
+
+
             <h1 class="heading-1" style="margin-top: 20px;color: #838383;font-weight:bold;font-size:17px "><span>Product Attributes</span></h1>
             <div class="row">
                 <div class="col-md-12" style="margin-top:13px;">
@@ -326,5 +376,5 @@
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=5"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js?v=8"></script>
 
