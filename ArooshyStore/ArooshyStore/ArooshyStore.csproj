@@ -2041,7 +2041,6 @@
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Home\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductWishlist\InsertProductWishlist.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductGridPagination.js" />
-    <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductListPagination.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductsReview\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\ChangePassword.js" />

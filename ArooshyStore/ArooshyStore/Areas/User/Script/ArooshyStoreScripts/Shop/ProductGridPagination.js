@@ -1,10 +1,15 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    let productsPerPage = 9; // Default value
-    const products = [...document.querySelectorAll('.product-grid .col')];
-    let totalPages = Math.ceil(products.length / productsPerPage);
-    let currentPage = 1;
+    const productsPerPage = 9; // Set the number of products per page
+    const gridProducts = [...document.querySelectorAll('.product-grid .col')];
+    const listProducts = [...document.querySelectorAll('.product-list .card')];
 
-    const displayProducts = (page) => {
+    const totalGridPages = Math.ceil(gridProducts.length / productsPerPage);
+    const totalListPages = Math.ceil(listProducts.length / productsPerPage);
+
+    let currentGridPage = 1;
+    let currentListPage = 1;
+
+    const displayProducts = (page, products, productsPerPage, type) => {
         const start = (page - 1) * productsPerPage;
         const end = start + productsPerPage;
 
@@ -12,11 +17,13 @@
             product.style.display = (index >= start && index < end) ? "block" : "none";
         });
 
-        updatePaginationButtons(page, totalPages);
+        const totalPages = type === "grid" ? totalGridPages : totalListPages;
+        updatePaginationButtons(page, totalPages, type);
     };
 
-    const updatePaginationButtons = (page, pagesCount) => {
-        const pageNumbersContainer = document.getElementById("page-numbers");
+    const updatePaginationButtons = (page, pagesCount, type) => {
+        const pageNumbersContainer = type === "grid" ? document.getElementById("page-numbers") : document.getElementById("page-numbers-list");
+
         pageNumbersContainer.innerHTML = '';
 
         for (let i = 1; i <= pagesCount; i++) {
@@ -24,41 +31,53 @@
             li.className = 'page-item' + (i === page ? ' active' : '');
             li.innerHTML = `<a class="page-link" href="javascript:;">${i}</a>`;
             li.addEventListener('click', () => {
-                currentPage = i; // Update currentPage
-                displayProducts(currentPage);
+                if (type === "grid") {
+                    currentGridPage = i;
+                    displayProducts(currentGridPage, gridProducts, productsPerPage, "grid");
+                } else {
+                    currentListPage = i;
+                    displayProducts(currentListPage, listProducts, productsPerPage, "list");
+                }
             });
             pageNumbersContainer.appendChild(li);
         }
 
-        document.getElementById("prev-page").classList.toggle('disabled', page === 1);
-        document.getElementById("next-page").classList.toggle('disabled', page === pagesCount);
+        const prevPageButton = type === "grid" ? document.getElementById("prev-page") : document.getElementById("prev-page-list");
+        const nextPageButton = type === "grid" ? document.getElementById("next-page") : document.getElementById("next-page-list");
+
+        prevPageButton.classList.toggle('disabled', page === 1);
+        nextPageButton.classList.toggle('disabled', page === pagesCount);
     };
 
+    // Event listeners for grid view pagination
     document.getElementById("prev-page").addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            displayProducts(currentPage);
+        if (currentGridPage > 1) {
+            currentGridPage--;
+            displayProducts(currentGridPage, gridProducts, productsPerPage, "grid");
         }
     });
 
     document.getElementById("next-page").addEventListener('click', () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayProducts(currentPage);
+        if (currentGridPage < totalGridPages) {
+            currentGridPage++;
+            displayProducts(currentGridPage, gridProducts, productsPerPage, "grid");
         }
     });
 
-    // Optional: If you want to implement products per page selection
-    const productsPerPageSelect = document.getElementById("productsPerPageSelect");
-    if (productsPerPageSelect) {
-        productsPerPageSelect.addEventListener('change', (event) => {
-            productsPerPage = parseInt(event.target.value, 10);
-            totalPages = Math.ceil(products.length / productsPerPage);
-            currentPage = 1; // Reset to first page
-            displayProducts(currentPage);
-        });
-    }
+    // Event listeners for list view pagination
+    document.getElementById("prev-page-list").addEventListener('click', () => {
+        if (currentListPage > 1) {
+            currentListPage--;
+            displayProducts(currentListPage, listProducts, productsPerPage, "list");
+        }
+    });
 
-    // Initial display call
-    displayProducts(currentPage);
+    document.getElementById("next-page-list").addEventListener('click', () => {
+        if (currentListPage < totalListPages) {
+            currentListPage++;
+            displayProducts(currentListPage, listProducts, productsPerPage, "list");
+        }
+    });
+    displayProducts(currentGridPage, gridProducts, productsPerPage, "grid");
+    displayProducts(currentListPage, listProducts, productsPerPage, "list");
 });

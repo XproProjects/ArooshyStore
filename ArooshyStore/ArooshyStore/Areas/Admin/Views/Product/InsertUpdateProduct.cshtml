@@ -233,6 +233,7 @@
                     </div>
                 </div>
             </div>
+           
             @{
                 string ishidden = "hidden";
                 string ischeckedStatus = "";
@@ -247,127 +248,124 @@
                         ischeckedStatus = "checked";
                     }
                 }
-
                 if (Model.IsFeatured == true)
                 {
                     ischeckedFeatured = "checked";
                 }
-
                 if (Model.IsExpired == true)
                 {
                     ischeckedExpired = "checked";
                 }
             }
-
-            <div class="row">
-                <section class="col-md-8">
-                </section>
-                <section class="col-md-4 d-flex justify-content-end">
-                    <div class="custom-control custom-switch" style="margin-right:7px;" @ishidden>
-                        <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischeckedStatus>
-                        <label class="custom-control-label" for="Status">Active</label>
-                    </div>
-
-                    <div class="custom-control custom-switch" style="margin-right:7px;">
-                        <input type="checkbox" class="custom-control-input" name="IsFeatured" id="IsFeatured" @ischeckedFeatured>
-                        <label class="custom-control-label" for="IsFeatured">Featured</label>
-                    </div>
-                    <div class="custom-control custom-switch" style="margin-right:7px;">
-                        <input type="checkbox" class="custom-control-input" name="IsExpired" id="IsExpired" @ischeckedExpired>
-                        <label class="custom-control-label" for="IsExpired">Expired</label>
-                    </div>
-                </section>
-            </div>
-
-
-
-
-            <h1 class="heading-1" style="margin-top: 20px;color: #838383;font-weight:bold;font-size:17px "><span>Product Attributes</span></h1>
-            <div class="row">
-                <div class="col-md-12" style="margin-top:13px;">
-                    <center>
-                        <a href="javascript:void(0);" class="btn btn-primary  selectAllBtn" style="margin-left:11px;" title="Select All">
-                            Select All
-                        </a>
-
-                        <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
-                            Clear All
-                        </a>
-                    </center>
+        <div class="row">
+            <section class="col-md-8">
+            </section>
+            <section class="col-md-2">
+                <div class="custom-control custom-switch  pull-right" style="margin-right:7px;" @ishidden>
+                    <input type="checkbox" class="custom-control-input" name="Status" id="Status" @ischeckedStatus>
+                    <label class="custom-control-label" for="Status">Active</label>
                 </div>
-            </div>
-            <div class="AllModules" style="">
+            </section>
+            <section class="col-md-2">
+                <div class="custom-control custom-switch  pull-right" style="margin-right:7px;">
+                    <input type="checkbox" class="custom-control-input" name="Featured" id="Featured" @ischeckedFeatured>
+                    <label class="custom-control-label" for="Featured">Featured</label>
+                </div>
+            </section>
+            <section class="col-md-2">
+                <div class="custom-control custom-switch" style="margin-right:7px;">
+                    <input type="checkbox" class="custom-control-input" name="IsExpired" id="IsExpired" @ischeckedExpired>
+                    <label class="custom-control-label" for="IsExpired">Expired</label>
+                </div>
+            </section>
+        </div>
+
+                <h1 class="heading-1" style="margin-top: 20px;color: #838383;font-weight:bold;font-size:17px "><span>Product Attributes</span></h1>
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <section class="tree">
-                            <ul>
-                                @{
-                                    int i = 0;
-                                }
-                                @foreach (AttributeViewModel u in Model.AttributesList)
-                                {
-                                    i++;
-                                    string checkTab = "";
-                                    string bgColor = "";
-                                    if (u.AllAttributes == "Yes")
-                                    {
-                                        checkTab = "checked";
-                                    }
-                                    if (u.AttributeDetails.Any(x => x.ProductAttributeDetailId > 0))
-                                    {
-                                        bgColor = "#1D2739";
-                                    }
-                                    else
-                                    {
-                                        bgColor = "#D69C1F";
-                                    }
-                                    string id = "module" + i;
-                                    int j = 0;
+                    <div class="col-md-12" style="margin-top:13px;">
+                        <center>
+                            <a href="javascript:void(0);" class="btn btn-primary  selectAllBtn" style="margin-left:11px;" title="Select All">
+                                Select All
+                            </a>
 
-                                    <li class="ModuleList" style="">
-                                        <span class="col-md-12" style=" padding: 15px; background-color: @bgColor; margin-bottom: 32px;font-size:17px;margin-left:-20px">
-                                            <input type="hidden" class="AttributeId" value="@u.AttributeId" />
-                                            <input type="checkbox" id="@id" class="moduleCheckbox" @checkTab />
-                                            <label for="@id" style="margin-right: 3px;float: left;"></label>
-                                            <a style="color:whitesmoke;margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#Web" aria-expanded="true" aria-controls="Web">
-                                                @u.AttributeName <span class="pull-right" style="font-size: 14px; font-weight: bold">(@u.AttributeDetails.Where(x => x.ProductAttributeDetailId > 0).Count() / @u.AttributeDetails.Count())</span>
-                                            </a>
-                                        </span>
-                                        <ul style="margin-top:-31px">
-                                            @foreach (ProductAttributeDetailViewModel m in u.AttributeDetails)
-                                            {
-                                                j++;
-                                                string checkAction = "";
-                                                string bgColor2 = "";
-                                                if (m.ProductAttributeDetailId > 0)
-                                                {
-                                                    checkAction = "checked";
-                                                    bgColor2 = "#727B84";
-                                                }
-                                                else
-                                                {
-                                                    bgColor2 = "#ECC87B";
-                                                }
-                                                string id2 = "action" + i + j;
-                                                <li style="display:none" class="ActionList">
-                                                    <span style="background-color: @bgColor2; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
-                                                        <input type="hidden" class="AttributeDetailId" value="@m.AttributeDetailId" />
-                                                        <input type="checkbox" id="@id2" class="actionCheckbox" @checkAction />
-                                                        <label for="@id2" style="margin-right: 3px;"></label>
-                                                        <b style="font-size:15px;margin-top:6px;text-decoration:none!important;">@m.AttributeDetailName</b>
-                                                    </span>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-                            </ul>
-                        </section>
+                            <a href="javascript:void(0);" class="btn btn-secondary waves-effect waves-themed clearAllBtn" title="Clear All" style="">
+                                Clear All
+                            </a>
+                        </center>
                     </div>
-                    <div class="col-md-2"></div>
                 </div>
-            </div>
+                <div class="AllModules" style="">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <section class="tree">
+                                <ul>
+                                    @{
+                                        int i = 0;
+                                    }
+                                    @foreach (AttributeViewModel u in Model.AttributesList)
+                                    {
+                                        i++;
+                                        string checkTab = "";
+                                        string bgColor = "";
+                                        if (u.AllAttributes == "Yes")
+                                        {
+                                            checkTab = "checked";
+                                        }
+                                        if (u.AttributeDetails.Any(x => x.ProductAttributeDetailId > 0))
+                                        {
+                                            bgColor = "#1D2739";
+                                        }
+                                        else
+                                        {
+                                            bgColor = "#D69C1F";
+                                        }
+                                        string id = "module" + i;
+                                        int j = 0;
+
+                                        <li class="ModuleList" style="">
+                                            <span class="col-md-12" style=" padding: 15px; background-color: @bgColor; margin-bottom: 32px;font-size:17px;margin-left:-20px">
+                                                <input type="hidden" class="AttributeId" value="@u.AttributeId" />
+                                                <input type="checkbox" id="@id" class="moduleCheckbox" @checkTab />
+                                                <label for="@id" style="margin-right: 3px;float: left;"></label>
+                                                <a style="color:whitesmoke;margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#Web" aria-expanded="true" aria-controls="Web">
+                                                    @u.AttributeName <span class="pull-right" style="font-size: 14px; font-weight: bold">(@u.AttributeDetails.Where(x => x.ProductAttributeDetailId > 0).Count() / @u.AttributeDetails.Count())</span>
+                                                </a>
+                                            </span>
+                                            <ul style="margin-top:-31px">
+                                                @foreach (ProductAttributeDetailViewModel m in u.AttributeDetails)
+                                                {
+                                                    j++;
+                                                    string checkAction = "";
+                                                    string bgColor2 = "";
+                                                    if (m.ProductAttributeDetailId > 0)
+                                                    {
+                                                        checkAction = "checked";
+                                                        bgColor2 = "#727B84";
+                                                    }
+                                                    else
+                                                    {
+                                                        bgColor2 = "#ECC87B";
+                                                    }
+                                                    string id2 = "action" + i + j;
+                                                    <li style="display:none" class="ActionList">
+                                                        <span style="background-color: @bgColor2; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
+                                                            <input type="hidden" class="AttributeDetailId" value="@m.AttributeDetailId" />
+                                                            <input type="checkbox" id="@id2" class="actionCheckbox" @checkAction />
+                                                            <label for="@id2" style="margin-right: 3px;"></label>
+                                                            <b style="font-size:15px;margin-top:6px;text-decoration:none!important;">@m.AttributeDetailName</b>
+                                                        </span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                            </section>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
         </fieldset>
         <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

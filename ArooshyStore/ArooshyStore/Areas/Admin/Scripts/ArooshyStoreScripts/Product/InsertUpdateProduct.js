@@ -422,7 +422,19 @@ function CheckSectionsData() {
     });
     return check;
 }
+$("#IsExpired").change(function (e) {
+    var salePriceAfterExpired = parseFloat($("#SalePriceAfterExpired").val()); 
 
+    if ($(this).is(":checked")) {
+        // Check if Sale Price After Expired is greater than 0
+        if (salePriceAfterExpired > 0) {
+            $(this).prop("checked", true); 
+        } else {
+            toastr.error("Sale Price must be greater than 0. Please enter a valid sale price.", "Error", { timeOut: 3000, "closeButton": true });
+            $(this).prop("checked", false); 
+        }
+    }
+});
 $('#popupForm').on('submit', function (e) {
     e.preventDefault();
     if (!$("#popupForm").valid()) {
@@ -433,7 +445,6 @@ $('#popupForm').on('submit', function (e) {
         toastr.error("Please select atleast one Attribute.", "Error", { timeOut: 3000, "closeButton": true });
         return false;
     }
-
     $('#btn_Save').attr('disabled', 'disabled');
     $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
 
