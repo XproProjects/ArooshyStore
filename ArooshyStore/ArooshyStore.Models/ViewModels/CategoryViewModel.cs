@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ArooshyStore.Models.ViewModels
@@ -21,5 +22,7 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public List<ProductViewModel> Products { get; set; }
+
     }
 }

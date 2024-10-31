@@ -56,15 +56,17 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
+                    div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + data + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
 
                     if ($('#EditActionRole').val() > 0) {
-                        div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Purchase Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
+                        div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
                     if ($('#DeleteActionRole').val() > 0) {
-                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Purchase Invoice" data-toggle="modal" data-target="#DeleteModal"  data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
+                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Sale Invoice" data-toggle="modal" data-target="#DeleteModal"  data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
                     }
                     div += '</div>' +
                         '</div>';
+
                     return div;
                 }
             },

@@ -2038,9 +2038,9 @@
     <Content Include="Areas\User\Content\plugins\vectormap\jvectormap.custom.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\InsertProductCart.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CheckOutDetail\Index.js" />
+    <Content Include="Areas\User\Script\ArooshyStoreScripts\Home\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductWishlist\InsertProductWishlist.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductGridPagination.js" />
-    <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\ProductListPagination.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\Shop\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\ProductsReview\Index.js" />
     <Content Include="Areas\User\Script\ArooshyStoreScripts\CustomerAccount\ChangePassword.js" />
@@ -2505,6 +2505,9 @@
     <Content Include="Areas\Admin\Views\Salary\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Salary\InsertUpdateSalary.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\PrintInvoice.cshtml" />
+    <Content Include="Areas\User\Views\CheckOut\CheckOutSidebar.cshtml" />
+    <Content Include="Areas\User\Views\Home\ExpiredProducts.cshtml" />
+    <Content Include="Areas\User\Views\Home\ExpiredIndex.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -179,8 +179,8 @@
                                                     <tr class="mainTr">
                                                         <td style="text-align: center; font-size: 14px !important; border: 1px solid #000; ">@(j)</td>
                                                         @*<td style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; border: 1px solid #000; width: @width3">
-                                            <label style="padding: 0px; margin-bottom: -5px ">&nbsp;@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy")</label>
-                                        </td>*@
+                    <label style="padding: 0px; margin-bottom: -5px ">&nbsp;@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy")</label>
+                </td>*@
                                                         <td style="text-align: center; font-size: 14px !important; border: 1px solid #000; ">@s.ProductName</td>
                                                         <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.SalePrice</td>
                                                         <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.Qty</td>
@@ -190,8 +190,8 @@
                                                     </tr>
                                                 }
                                                 <tr class="mainTr">
-                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold" colspan="6">Delivery Charges:&nbsp;&nbsp;</td>
-                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Model.DeliveryCharges</td>
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Gross Amount:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.TotalAmount).ToString("#,##0.00")</td>
                                                 </tr>
 
                                                 <tr class="mainTr">
@@ -199,10 +199,9 @@
                                                     <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.DiscAmount).ToString("#,##0.00")</td>
                                                 </tr>
                                                 <tr class="mainTr">
-                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Gross Amount:&nbsp;&nbsp;</td>
-                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.TotalAmount).ToString("#,##0.00")</td>
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold" colspan="6">Delivery Charges:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Model.DeliveryCharges</td>
                                                 </tr>
-
                                                 <tr class="mainTr">
                                                     <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Net Total:&nbsp;&nbsp;</td>
                                                     <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.NetAmount).ToString("#,##0.00")</td>

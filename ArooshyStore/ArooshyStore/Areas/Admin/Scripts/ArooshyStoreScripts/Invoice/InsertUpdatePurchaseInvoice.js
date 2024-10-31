@@ -682,10 +682,7 @@ $(function () {
         var rowIndex = vtable.row($(this).parents('tr')).index();
         $('#HiddenTr').val(rowIndex);
 
-        // Fetch row data
         var data = vtable.row($(this).parents('tr')).data();
-
-        // Populate the form fields with data for editing
         var productId = $(data[3]).find('input.ProductId').val();
         var salesPrice = $(data[4]).find('input.SalesPrice').val();
         var quantity = $(data[5]).text();
@@ -697,56 +694,33 @@ $(function () {
         var childCategoryId = $(data[11]).find('input.ChildCategoryId').val();
         var attributeId = $(data[12]).find('input.AttributeId').val();
         var attributeDetailId = $(data[13]).find('input.AttributeDetailId').val();
-        if ($('#ProductId').find("option[value='" + productId + "']").length) {
-            $('#ProductId').val(productId).trigger('change.select2');
-        } else {
-            var ProductName = data[3].split('/>')[1].split('</span>')[0].trim();
-            var newOption = new Option(ProductName, productId, true, true);
-            $('#ProductId').append(newOption).trigger('change.select2');
-        }
-        if ($('#MasterCategoryId').find("option[value='" + masterCategoryId + "']").length) {
-            $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
-        } else {
-            var MasterCategoryName = data[10].split('/>')[1].split('</span>')[0].trim();
-            var newOption = new Option(MasterCategoryName, masterCategoryId, true, true);
-            $('#MasterCategoryId').append(newOption).trigger('change.select2');
-        }
-        if ($('#ChildCategoryId').find("option[value='" + childCategoryId + "']").length) {
-            $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
-        } else {
-            var ChildCategoryName = data[11].split('/>')[1].split('</span>')[0].trim();
-            var newOption = new Option(ChildCategoryName, childCategoryId, true, true);
-            $('#ChildCategoryId').append(newOption).trigger('change.select2');
-        }
-        if ($('#AttributeId').find("option[value='" + attributeId + "']").length) {
-            $('#AttributeId').val(attributeId).trigger('change.select2');
-        } else {
-            var AttributeName = data[12].split('/>')[1].split('</span>')[0].trim();
-            var newOption = new Option(AttributeName, attributeId, true, true);
-            $('#AttributeId').append(newOption).trigger('change.select2');
-        }
-        if ($('#AttributeDetailId').find("option[value='" + attributeDetailId + "']").length) {
-            $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
-        } else {
-            var AttributeDetailName = data[13].split('/>')[1].split('</span>')[0].trim();
-            var newOption = new Option(AttributeDetailName, attributeDetailId, true, true);
-            $('#AttributeDetailId').append(newOption).trigger('change.select2');
-        }
+
+        updateSelect2Option('#ProductId', productId, data[3]);
+        updateSelect2Option('#MasterCategoryId', masterCategoryId, data[10]);
+        updateSelect2Option('#ChildCategoryId', childCategoryId, data[11]);
+        updateSelect2Option('#AttributeId', attributeId, data[12]);
+        updateSelect2Option('#AttributeDetailId', attributeDetailId, data[13]);
+
         // Populate the fields
-        $('#ProductId').val(productId).trigger('change.select2');
         $('#Rate').val(salesPrice);
         $('#LineDiscType').val(discountType);
         $('#LineDiscRate').val(discountRate);
         $('#LineDiscAmount').val(discountAmount);
         $('#Qty').val(quantity);
         $('#NetAmount').val(netAmount);
-        $('#MasterCategoryId').val(masterCategoryId).trigger('change.select2');
-        $('#ChildCategoryId').val(childCategoryId).trigger('change.select2');
-        $('#AttributeId').val(attributeId).trigger('change.select2');
-        $('#AttributeDetailId').val(attributeDetailId).trigger('change.select2');
         $('#btnAddDetail').find('.btnLineSpan').html('Update');
         $('#btnCancelDetail').show();
     });
+
+    function updateSelect2Option(selector, value, dataItem) {
+        if ($(selector).find("option[value='" + value + "']").length) {
+            $(selector).val(value).trigger('change.select2');
+        } else {
+            var displayText = dataItem.split('/>')[1].split('</span>')[0].trim();
+            var newOption = new Option(displayText, value, true, true);
+            $(selector).append(newOption).trigger('change.select2');
+        }
+    }
 
     // Delete button functionality
     $(document).on('click', '.deleteRowBtn', function () {
@@ -817,7 +791,7 @@ function BarcodeScan(barcode) {
         success: function (response) {
             console.log('AJAX success:', response);
             if (response.productId > 0) {
-                addToDataTable(response);
+                //addToDataTable(response);
 
             } else {
                 var errorMessage = "Product not found.";
@@ -887,8 +861,6 @@ $(document).ready(function () {
     }
     function addToDataTable(product) {
         var vtable = $('#detailTable').DataTable();
-
-        // Check if the product already exists in the table
         var exists = vtable.rows().data().toArray().some(function (row) {
             return $(row[3]).find('input').val() == product.productId;
         });
@@ -896,25 +868,27 @@ $(document).ready(function () {
         if (exists) {
             toastr.error("This product is already added in the list below.", "Error", { timeOut: 3000, closeButton: true });
         } else {
-            // Calculate the net price
-            var netPrice = (parseFloat(product.salePrice) - parseFloat(product.discountAmount || 0)).toFixed(2);
+            var salesPrice = product.salePrice || 0;
+            var discountAmount = product.discountAmount || 0;
+            var netPrice = (parseFloat(salesPrice) - parseFloat(discountAmount)).toFixed(2);
 
-            // Add new row to DataTable by enter key by bar code
+            // Add new row to DataTable
             vtable.row.add([
                 "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
                 "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
                 "<center><span class='SrNo'><input type='hidden' class='SR01' value='' /></span></center>",
-                "<span><input type='hidden' class='ProductId' value=" + ProductId + " />" + ProductName + "</span>",
-                "<span class='pull-right'><input type='hidden' class='SalesPrice' value=" + salesPrice + " />" + ReplaceNumberWithCommas(parseFloat(salesPrice).toFixed(2)) + "</span>",
-                "<span class='pull-right'>" + multiplier + "</span>",
-                "<span><input type='hidden' class='DiscountType' value=" + discountType + " />" + discountType + "</span>",
-                "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discountRate + " />" + ReplaceNumberWithCommas(parseFloat(discountRate).toFixed(2)) + "</span>",
-                "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discountAmount + " />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
+                "<span><input type='hidden' class='ProductId' value='" + product.productId + "' />" + product.productName + "</span>",
+                "<span class='pull-right'><input type='hidden' class='SalesPrice' value='" + salesPrice + "' />" + ReplaceNumberWithCommas(parseFloat(salesPrice).toFixed(2)) + "</span>",
+                "<span class='pull-right'>" + (product.multiplier || 1) + "</span>",
+                "<span><input type='hidden' class='DiscountType' value='" + (product.discountType || '%') + "' />" + (product.discountType || '%') + "</span>",
+                "<span class='pull-right'><input type='hidden' class='DiscountRate' value='" + (isNaN(product.discountRate) ? 0 : product.discountRate) + "' />" + ReplaceNumberWithCommas(parseFloat(isNaN(product.discountRate) ? 0 : product.discountRate).toFixed(2)) + "</span>",
+                "<span class='pull-right'><input type='hidden' class='DiscountAmount' value='" + (product.discountAmount || 0) + "' />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
                 "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>",
-                "<span><input type='hidden' class='MasterCategoryId' value=" + MasterCategoryId + " />" + MasterCategoryName + "</span>",
-                "<span><input type='hidden' class='ChildCategoryId' value=" + ChildCategoryId + " />" + ChildCategoryName + "</span>",
-                "<span><input type='hidden' class='AttributeId' value=" + AttributeId + " />" + AttributeName + "</span>",
-                "<span><input type='hidden' class='AttributeDetailId' value=" + AttributeDetailId + " />" + AttributeDetailName + "</span>",
+                "<span><input type='hidden' class='MasterCategoryId' value='" + product.masterCategoryId + "' />" + product.masterCategoryName + "</span>",
+                "<span><input type='hidden' class='ChildCategoryId' value='" + product.childCategoryId + "' />" + product.childCategoryName + "</span>",
+                "<span><input type='hidden' class='AttributeId' value='" + product.attributeId + "' />" + product.attributeName + "</span>",
+                "<span><input type='hidden' class='AttributeDetailId' value='" + product.attributeDetailId + "' />" + product.attributeDetailName + "</span>",
+
             ]).draw(false);
 
             updateTotalAmount();
@@ -995,10 +969,10 @@ function getInvoiceDetail(id, vtable) {
                         "<span class='pull-right'><input type='hidden' class='DiscountRate' value='" + response.data[key].DiscRate + "' />" + response.data[key].DiscRate + "</span>",
                         "<span class='pull-right'><input type='hidden' class='DiscountAmount' value='" + response.data[key].DiscAmount + "' />" + response.data[key].DiscAmount + "</span>",
                         "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + response.data[key].NetAmount + "' />" + response.data[key].NetAmount + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='MasterCategoryName' value='" + response.data[key].MasterCategoryName + "' />" + response.data[key].MasterCategoryName + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='ChildCategoryName' value='" + response.data[key].ChildCategoryName + "' />" + response.data[key].ChildCategoryName + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='AttributeName' value='" + response.data[key].AttributeName + "' />" + response.data[key].AttributeName + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='AttributeDetailName' value='" + response.data[key].AttributeDetailName + "' />" + response.data[key].AttributeDetailName + "</span>",
+                        "<span><input type='hidden' class='MasterCategoryName' value='" + response.data[key].MasterCategoryName + "' />" + response.data[key].MasterCategoryName + "</span>",
+                        "<span><input type='hidden' class='ChildCategoryName' value='" + response.data[key].ChildCategoryName + "' />" + response.data[key].ChildCategoryName + "</span>",
+                        "<span><input type='hidden' class='AttributeName' value='" + response.data[key].AttributeName + "' />" + response.data[key].AttributeName + "</span>",
+                        "<span><input type='hidden' class='AttributeDetailName' value='" + response.data[key].AttributeDetailName + "' />" + response.data[key].AttributeDetailName + "</span>",
                     ]).draw(false);
                 }
                 vtable.draw(false);

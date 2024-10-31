@@ -52,7 +52,9 @@ namespace ArooshyStore.Areas.User.Controllers
             bool? discountCheckbox, int[] discount, decimal? minPrice, decimal? maxPrice, string sortBy)
         {
             var filteredProducts = _repository.GetFilteredProducts(categoryCheckbox, category,attributeCheckbox, attribute, discountCheckbox, discount, minPrice, maxPrice, sortBy);
-            return PartialView("GetProductsGrid", filteredProducts);
+            
+                return PartialView("GetProductsGrid", filteredProducts); 
+            
         }
 
     }

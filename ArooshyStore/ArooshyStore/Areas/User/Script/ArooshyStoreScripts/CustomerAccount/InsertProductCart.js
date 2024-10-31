@@ -9,7 +9,6 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-// Function to get a cookie by name
 function getCookie(name) {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
@@ -19,10 +18,35 @@ function getCookie(name) {
     }
     return null;
 }
+
 function generateUniqueCookieId() {
     return 'cookie_' + Math.random().toString(36).substring(2, 9);
 }
 
+function loadCheckOutItems(cookieName) {
+    if (cookieName) {
+        $.ajax({
+            type: "GET",
+            url: "/User/CheckOut/CheckOutSidebar",
+            data: { userIdOrCookieName: cookieName },
+            success: function (response) {
+                $('#checkout-sidebar-container').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading checkout items:", error);
+            }
+        });
+    }
+}
+
+$(document).ready(function () {
+    let cookieName = getCookie('checkoutCookie');
+    if (!cookieName) {
+        cookieName = generateUniqueCookieId();
+        setCookie('checkoutCookie', cookieName, 7);
+    }
+    loadCheckOutItems(cookieName);
+});
 
 // Function to update cart count
 function updateCartCount(cookieName) {
@@ -69,19 +93,23 @@ $(document).ready(function () {
     const cookieName = getCookie('CookieName') || generateUniqueCookieId();
     setCookie('CookieName', cookieName, 7);
 
-    updateCartCount(cookieName); 
+    updateCartCount(cookieName);
+    loadCheckOutItems(cookieName); 
     loadCartItems(); 
 
-    $(document).on('click', '.add-to-cart', function () {
+    $(document).off('click', '.add-to-cart').on('click', '.add-to-cart', function () {
         const $card = $(this).closest('.card');
         const CartId = $('#CartId').val();
         const Quantity = $('#Quantity').val();
         const DiscountId = $('#DiscountId').val();
-        const ProductId = $card.data('product-id');
-        const GivenSalePrice = $card.data('given-sale-price');
-        const ActualSalePrice = $card.data('actual-sale-price');
+        //const ProductId = $card.data('product-id');
+        const ProductId = $('#product-container').data('product-id');
+
+        const GivenSalePrice = $('#product-container').data('given-sale-price');
+        const ActualSalePrice = $('#product-container').data('actual-sale-price');
         const DiscountAmount = $('#DiscountAmount').val();
         let UserId = $('#UserId').val() || (getCookie('UserId') || generateUniqueCookieId());
+
         if (!$('#UserId').val()) {
             setCookie('UserId', UserId, 7);
         }
@@ -89,7 +117,7 @@ $(document).ready(function () {
         const wishlistData = {
             CartId: CartId,
             CookieName: cookieName,
-            Quantity: Quantity ,
+            Quantity: Quantity,
             DiscountId: DiscountId,
             UserId: UserId,
             ActualSalePrice: ActualSalePrice,
@@ -97,6 +125,7 @@ $(document).ready(function () {
             GivenSalePrice: GivenSalePrice,
             ProductId: ProductId
         };
+
         function getSectionsData() {
             const arrayData = [];
             const productId = $('#product-container').data('product-id');
@@ -117,17 +146,18 @@ $(document).ready(function () {
         }
 
         const detail = JSON.stringify(getSectionsData());
+
         $.ajax({
             type: "POST",
             url: "/User/CustomerAccount/InsertUpdateCart/",
-            data: { 'user': wishlistData, 'data': detail },
+            data: { 'user': wishlistData, 'data': detail, 'cookieName': cookieName },
             dataType: 'json',
             success: function (data) {
                 $('#btn_Save').html("Save").prop('disabled', false);
                 if (data.status) {
                     toastr.success("Product successfully added to cart", "Success", { timeOut: 3000, "closeButton": true });
                     updateCartCount(cookieName); // Update cart count after adding item
-                    loadCartItems(); 
+                    loadCartItems();
                 } else {
                     toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
                 }
@@ -176,7 +206,7 @@ $(document).ready(function () {
     });
 
     //review produts button
-    $('#review-button').on('click', function (e) {
+    $('#review-button').off('click').on('click', function (e) {
         e.preventDefault();
         if (!$('#checkoutForm').valid()) {
             toastr.error('Please fill in all required information before reviewing your cart.', 'Error', { timeOut: 3000, closeButton: true });
@@ -215,7 +245,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.complete-order').on('click', function (e) {
+    $('.complete-order').off('click').on('click', function (e) {
         e.preventDefault();
         toastr.success("Your order has been saved successfully", "Success", {
             timeOut: 3000,  

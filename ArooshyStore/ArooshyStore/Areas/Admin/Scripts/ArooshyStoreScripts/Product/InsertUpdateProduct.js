@@ -301,6 +301,7 @@ $(function () {
                 required: true,
                 min: 1
             },
+
         },
         messages: {
             ProductName: {
@@ -421,7 +422,19 @@ function CheckSectionsData() {
     });
     return check;
 }
+$("#IsExpired").change(function (e) {
+    var salePriceAfterExpired = parseFloat($("#SalePriceAfterExpired").val()); 
 
+    if ($(this).is(":checked")) {
+        // Check if Sale Price After Expired is greater than 0
+        if (salePriceAfterExpired > 0) {
+            $(this).prop("checked", true); 
+        } else {
+            toastr.error("Sale Price must be greater than 0. Please enter a valid sale price.", "Error", { timeOut: 3000, "closeButton": true });
+            $(this).prop("checked", false); 
+        }
+    }
+});
 $('#popupForm').on('submit', function (e) {
     e.preventDefault();
     if (!$("#popupForm").valid()) {
@@ -432,7 +445,6 @@ $('#popupForm').on('submit', function (e) {
         toastr.error("Please select atleast one Attribute.", "Error", { timeOut: 3000, "closeButton": true });
         return false;
     }
-
     $('#btn_Save').attr('disabled', 'disabled');
     $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
 
@@ -446,6 +458,8 @@ $('#popupForm').on('submit', function (e) {
     var Barcode = $('#Barcode').val();
     var CostPrice = $('#CostPrice').val();
     var SalePrice = $('#SalePrice').val();
+    var SalePriceAfterExpired = $('#SalePriceAfterExpired').val();
+    var SalePriceForWebsite = $('#SalePriceForWebsite').val();
     if (CategoryId == null || CategoryId == undefined) {
         CategoryId = 0;
     }
@@ -456,6 +470,10 @@ $('#popupForm').on('submit', function (e) {
     var IsFeaturedString = "No";
     if ($("#Featured").is(":checked")) {
         IsFeaturedString = "Yes";
+    }
+    var IsExpiredString = "No";
+    if ($("#IsExpired").is(":checked")) {
+        IsExpiredString = "Yes";
     }
 
     var detail = JSON.stringify(getSectionsData());
@@ -470,11 +488,14 @@ $('#popupForm').on('submit', function (e) {
         DeliveryInfoId: DeliveryInfoId,
         SalePrice: SalePrice,
         CostPrice: CostPrice,
+        SalePriceForWebsite: SalePriceForWebsite,
+        SalePriceAfterExpired: SalePriceAfterExpired,
         UnitId: UnitId,
         CategoryId: CategoryId,
         Barcode: Barcode,
         StatusString: StatusString,
-        IsFeaturedString: IsFeaturedString
+        IsFeaturedString: IsFeaturedString,
+        IsExpiredString: IsExpiredString,
     }
    
     $.ajax({

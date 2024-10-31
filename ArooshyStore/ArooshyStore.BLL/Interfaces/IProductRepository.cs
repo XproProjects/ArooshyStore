@@ -12,6 +12,9 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel InsertUpdateProduct(ProductViewModel model,string AttributeDetailData, string Tagsdata, int loggedInUserId);
         StatusMessageViewModel DeleteProduct(int id, int loggedInUserId);
         List<ProductViewModel> GetFeaturedProducts();
+        List<ProductViewModel> GetExpiredProducts();
+        List<ProductViewModel> GetProductsByMasterCategory(int masterCategoryId);
+
         List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);
         ProductViewModel GetProductByBarcode(string barcode);
@@ -25,7 +28,11 @@ namespace ArooshyStore.BLL.Interfaces
                                                            decimal? minPrice, decimal? maxPrice,
                                                            string sortBy);
 
-
+        List<ProductViewModel> GetFilteredProductsForExpired(bool? categoryCheckbox, int[] category,
+                                                                  bool? attributeCheckbox, int[] attribute,
+                                                                  bool? discountCheckbox, int[] discount,
+                                                                  decimal? minPrice, decimal? maxPrice,
+                                                                  string sortBy);
 
     }
 }

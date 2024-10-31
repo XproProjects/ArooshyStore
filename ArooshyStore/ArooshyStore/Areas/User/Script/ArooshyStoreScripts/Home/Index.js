@@ -52,7 +52,7 @@ $(document).ready(function () {
         // AJAX call
         $.ajax({
             type: "POST",
-            url: "/User/Shop/SetSearchString",
+            url: "/User/Home/SetSearchString",
             dataType: 'html',
             data: {
                 categoryCheckbox: categoryArray.length > 0,

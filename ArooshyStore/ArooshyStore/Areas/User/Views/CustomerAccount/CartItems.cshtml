@@ -64,13 +64,13 @@
                                                                 {
                                                                     <span>No attributes available</span>
                                                                 }
-                                                                <h5 class="mb-0">Sale Price:</h5><span>@cart.ActualSalePrice</span>
-                                                            </div>
+                                                            <span>Sale Price:</span><span>@cart.ActualSalePrice</span>
+</div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-lg-3">
                                                         <div class="cart-action text-center">
-                                                            <input type="number" class="form-control rounded-0 product-quantity" value="1" min="1" data-product-id="@cart.ProductId">
+                                                            <input type="number" class="form-control rounded-0 product-quantity" value="@cart.Quantity" min="@cart.Quantity" data-product-id="@cart.ProductId">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-lg-3">

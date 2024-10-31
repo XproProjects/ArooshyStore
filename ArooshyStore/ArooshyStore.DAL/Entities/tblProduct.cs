@@ -22,6 +22,10 @@ namespace ArooshyStore.DAL.Entities
         public Nullable<int> CategoryId { get; set; }
         public Nullable<decimal> CostPrice { get; set; }
         public Nullable<decimal> SalePrice { get; set; }
+        public Nullable<decimal> SalePriceForWebsite { get; set; }
+        public Nullable<decimal> SalePriceAfterExpired { get; set; }
+        public Nullable<bool> IsExpired { get; set; }
+
         public Nullable<bool> Status { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
 
