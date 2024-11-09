@@ -27,7 +27,11 @@
         <section class="py-4">
             <div class="container">
                 <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
-                <div class="card" id="product-container" data-product-id="@Model.ProductId" data-given-sale-price="@Model.SalePriceForWebsite" data-actual-sale-price="@Model.CostPrice">
+                <input type="hidden" id="ProductId" name="ProductId" value="@Model.ProductId" />
+                <input type="hidden" id="CartId" name="CartId" value="@Model.CartId" />
+                <input type="hidden" id="ActualSalePrice" value="@Model.SalePriceForWebsite">
+
+                <div class="card" id="product-container">
 
                     <div class="product-detail-card">
                         <div class="product-detail-body">
@@ -41,19 +45,19 @@
 
                                         </div>
                                         @*<div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
-                                                <button class="owl-thumb-item">
-                                                    <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                                </button>
-                                                <button class="owl-thumb-item">
-                                                    <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                                </button>
-                                                <button class="owl-thumb-item">
-                                                    <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                                </button>
-                                                <button class="owl-thumb-item">
-                                                    <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
-                                                </button>
-                                            </div>*@
+                                    <button class="owl-thumb-item">
+                                        <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+                                    </button>
+                                    <button class="owl-thumb-item">
+                                        <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+                                    </button>
+                                    <button class="owl-thumb-item">
+                                        <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+                                    </button>
+                                    <button class="owl-thumb-item">
+                                        <img src="@Model.ImagePath" class="img-fluid" alt="@Model.ProductName">
+                                    </button>
+                                </div>*@
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-7">
@@ -73,7 +77,7 @@
                                         </div>
                                         <div class="d-flex align-items-center mt-3 gap-2">
                                             <h5 class="mb-0 text-decoration-line-through text-light-3">@Model.CostPrice</h5>
-                                            <h4 class="mb-0">@Model.SalePriceForWebsite</h4>
+                                            <h4 class="mb-0" data-actual-sale-price="@Model.SalePriceForWebsite">@Model.SalePriceForWebsite</h4>
                                         </div>
                                         <div class="mt-3">
                                             <h6>Discription :</h6>
@@ -97,28 +101,28 @@
                                                 </select>
                                             </div>
                                             <div class="mt-3">
-                                                <div class="row" id="product-container" data-product-id="@Model.ProductId" data-given-sale-price="@Model.SalePriceForWebsite" data-actual-sale-price="@Model.CostPrice">
-                                                        @if (Model.AttributesList != null && Model.AttributesList.Any())
+                                                <div class="row" id="product-container">
+                                                    @if (Model.AttributesList != null && Model.AttributesList.Any())
+                                                    {
+                                                        foreach (var attribute in Model.AttributesList)
                                                         {
-                                                            foreach (var attribute in Model.AttributesList)
-                                                            {
-                                                                <div class="col mb-2">
-                                                                    <label class="form-label">@attribute.AttributeName</label>
-                                                                    <select class="form-select attribute-select" data-attribute-detail-id="@attribute.AttributeDetailId">
-                                                                        <option value="">Select an option</option>
-                                                                        @foreach (var detail in attribute.AttributeDetails)
-                                                                        {
-                                                                            <option value="@detail.AttributeDetailId">@detail.AttributeDetailName</option>
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                            }
+                                                            <div class="col mb-2">
+                                                                <label class="form-label">@attribute.AttributeName</label>
+                                                                <select class="form-select attribute-select" data-attribute-detail-id="@attribute.AttributeDetailId">
+                                                                    <option value="">Select an option</option>
+                                                                    @foreach (var detail in attribute.AttributeDetails)
+                                                                    {
+                                                                        <option value="@detail.AttributeDetailId">@detail.AttributeDetailName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
                                                         }
+                                                    }
 
-                                                        else
-                                                        {
-                                                            <span>No attributes available</span>
-                                                        }
+                                                    else
+                                                    {
+                                                        <span>No attributes available</span>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -187,7 +191,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#reviews">
                                 <div class="d-flex align-items-center">
-                                    <div class="tab-title text-uppercase fw-500">(3) Reviews</div>
+                                    <div class="tab-title text-uppercase fw-500">Reviews</div>
                                 </div>
                             </a>
                         </li>

@@ -75,7 +75,6 @@ namespace ArooshyStore.Areas.User.Controllers
         public ActionResult CheckOutSidebar(string userIdOrCookieName)
         {
             var cartItems = _cart.GetLatestCheckOutSidebarByCookieName(userIdOrCookieName);
-            ViewBag.TotalAmount = cartItems.Sum(item => item.ActualSalePrice * item.Quantity);
             return PartialView("CheckOutSidebar", cartItems);
         }
 

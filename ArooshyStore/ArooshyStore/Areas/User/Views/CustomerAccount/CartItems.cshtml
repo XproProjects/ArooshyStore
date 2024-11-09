@@ -1,6 +1,21 @@
-﻿
-@model List<ArooshyStore.Models.ViewModels.ProductCartViewModel>
+﻿@model PagedList.IPagedList<ArooshyStore.Models.ViewModels.ProductCartViewModel>
+<style>
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
 
+        .pagination .page-link {
+            color: #000;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #09172E;
+            color: #fff;
+            border-color: #09172E;
+        }
+</style>
 <div class="page-wrapper">
     <div class="page-content">
         <section class="py-3 border-bottom border-top d-none d-md-flex bg-light">
@@ -36,8 +51,8 @@
                                     {
                                         foreach (var cart in Model)
                                         {
-                                            <input type="hidden" id="UserId" name="UserId" value="@cart.LoggedInUserId" />
-
+                                            <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
+                                            <input type="hidden" id="ProductId" name="ProductId" value="@cart.ProductId" />
                                             <div class="shop-cart-list mb-3 p-3">
                                                 <div class="row align-items-center g-3">
                                                     <div class="col-12 col-lg-6">
@@ -64,8 +79,8 @@
                                                                 {
                                                                     <span>No attributes available</span>
                                                                 }
-                                                            <span>Sale Price:</span><span>@cart.ActualSalePrice</span>
-</div>
+                                                                <span>Sale Price:</span><span>@cart.ActualSalePrice</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-lg-3">
@@ -79,8 +94,9 @@
                                                                 <a href="javascript:;" class="btn remove-from-cart btn-outline-dark rounded-0 btn-ecomm remove-item" data-id="@cart.CartId">
                                                                     <i class='bx bx-x'></i> Remove
                                                                 </a>
+                                                                @*<a href="javascript:;" class="add-to-wishlist" data-product-id="@cart.ProductId"> <i class="bx bx-heart"></i> </a>*@
 
-                                                                <a href="javascript:;" class="btn add-to-wishlist btn-light rounded-0 btn-ecomm" data-id="@cart.ProductId"><i class='bx bx-heart me-0'></i></a>
+                                                                <a href="javascript:;" class="btn add-to-wishlist btn-light rounded-0 btn-ecomm" data-product-id="@cart.ProductId"><i class='bx bx-heart me-0'></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,76 +104,53 @@
                                                 <hr>
                                             </div>
                                         }
+                                        <div class="pagination mt-4">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center">
+                                                    @if (Model.HasPreviousPage)
+                                                    {
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="@Url.Action("CartItems", new { page = Model.PageNumber - 1, UserId = ViewBag.UserId, CookieName = ViewBag.CookieName })" aria-label="Previous">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    @for (int i = 1; i <= Model.PageCount; i++)
+                                                    {
+                                                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                                            <a class="page-link" href="@Url.Action("CartItems", new { page = i, UserId = ViewBag.UserId, CookieName = ViewBag.CookieName })">@i</a>
+                                                        </li>
+                                                    }
+                                                    @if (Model.HasNextPage)
+                                                    {
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="@Url.Action("CartItems", new { page = Model.PageNumber + 1, UserId = ViewBag.UserId, CookieName = ViewBag.CookieName })" aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </nav>
+                                        </div>
+
+
                                         <div class="d-lg-flex align-items-center gap-2">
                                             <a href="javascript:;" class="btn btn-dark btn-ecomm"><i class='bx bx-shopping-bag'></i> Continue Shopping</a>
                                             <a href="javascript:;" class="btn  btn-light btn-ecomm ms-auto clear-cart"><i class='bx bx-x-circle'></i> Clear Cart</a>
                                             <a href="javascript:;" class="btn btn-white btn-ecomm"><i class='bx bx-refresh'></i> Update Cart</a>
                                         </div>
                                     }
+                                    else
+                                    {
+                                        <p>Your cart is empty.</p>
+                                    }
                                 </div>
-                             </div>
+                            
                             </div>
+                        </div>
+
                         <div class="col-12 col-xl-4">
-                            <div class="checkout-form p-3 bg-light">
-                                <div class="card rounded-0 border bg-transparent shadow-none">
-                                    <div class="card-body">
-                                        <p class="fs-5">Apply Discount Code</p>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control rounded-0" placeholder="Enter discount code">
-                                            <button class="btn btn-dark btn-ecomm" type="button">Apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card rounded-0 border bg-transparent shadow-none">
-                                    <div class="card-body">
-                                        <p class="fs-5">Estimate Shipping and Tax</p>
-                                        <div class="my-3 border-top"></div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Country Name</label>
-                                            <select class="form-select rounded-0">
-                                                <option selected>United States</option>
-                                                <option value="1">Australia</option>
-                                                <option value="2">India</option>
-                                                <option value="3">Canada</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">State/Province</label>
-                                            <select class="form-select rounded-0">
-                                                <option selected>California</option>
-                                                <option value="1">Texas</option>
-                                                <option value="2">Canada</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-0">
-                                            <label class="form-label">Zip/Postal Code</label>
-                                            <input type="email" class="form-control rounded-0">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card rounded-0 border bg-transparent mb-0 shadow-none">
-                                    <div class="card-body">
-                                        <p class="mb-2">
-                                            Subtotal: <span class="float-end">$198.00</span>
-                                        </p>
-                                        <p class="mb-2">
-                                            Shipping: <span class="float-end">--</span>
-                                        </p>
-                                        <p class="mb-2">
-                                            Taxes: <span class="float-end">$14.00</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            Discount: <span class="float-end">--</span>
-                                        </p>
-                                        <div class="my-3 border-top"></div>
-                                        <h5 class="mb-0">Order Total: <span class="float-end">212.00</span></h5>
-                                        <div class="my-4"></div>
-                                        <div class="d-grid">
-                                            <a href="javascript:;" class="btn btn-dark btn-ecomm">Proceed to Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @Html.Action("CheckOutSidebar", "CheckOut", new { area = "User" })
                         </div>
                     </div>
                     <!--end row-->

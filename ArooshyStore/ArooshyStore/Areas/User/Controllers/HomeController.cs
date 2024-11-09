@@ -1,6 +1,8 @@
 ﻿using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.BLL.Services;
 using ArooshyStore.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -45,21 +47,46 @@ namespace ArooshyStore.Areas.User.Controllers
         }
         public ActionResult FeaturedProducts()
         {
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
+
+            }
             var featuredProducts = _repository.GetFeaturedProducts();
             return PartialView("FeaturedProducts", featuredProducts);
         }
         public ActionResult GetProductDetails(int productId)
         {
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
+
+            }
             var product = _repository.GetProductWithAttributes(productId);
+
             return View(product);
         }
         public ActionResult GetSimilarProducts(int productId)
         {
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
+
+            }
             var product = _repository.GetSimilrProducts(productId);
             return PartialView("GetSimilarProducts", product);
         }
         public ActionResult NewArrivalProducts()
         {
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
+
+            }
             var newArrivalProducts = _repository.GetNewArrivalProducts();
             return PartialView("NewArrivalProducts", newArrivalProducts);
         }
@@ -72,6 +99,12 @@ namespace ArooshyStore.Areas.User.Controllers
         [HttpGet]
         public ActionResult ExpiredProducts()
         {
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
+
+            }
             var masterCategories = _repository.GetExpiredProducts();
             return PartialView("ExpiredProducts", masterCategories);
 

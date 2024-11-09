@@ -17,6 +17,7 @@ using System.Web.Script.Serialization;
 using ArooshyStore.Areas.Admin.Authentication.Identity;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace ArooshyStore.Areas.User.Controllers
 {
@@ -269,20 +270,43 @@ namespace ArooshyStore.Areas.User.Controllers
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
         }
-        public ActionResult Wishlist()
+        public ActionResult Wishlist(int? page)
         {
             if (User.Identity.IsAuthenticated)
             {
                 int userId = User.UserId;
-                System.Diagnostics.Debug.WriteLine($"User ID: {userId}");
-                var model = _wishlist.GetWishlistItemsByUserId(userId);
-                return View(model);
+                ViewBag.UserId = userId;
+
+                var wishlistItems = _wishlist.GetWishlistItemsByUserId(userId);
+                int pageSize = 8;
+                int pageNumber = page ?? 1;
+
+                var paginatedItems = wishlistItems.ToPagedList(pageNumber, pageSize);
+
+                return View(paginatedItems);
             }
             else
             {
                 return RedirectToAction("Login", "CustomerAccount");
             }
         }
+
+        //public ActionResult Wishlist()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        int userId = User.UserId;
+        //        ViewBag.UserId = userId;
+
+        //        System.Diagnostics.Debug.WriteLine($"User ID: {userId}");
+        //        var model = _wishlist.GetWishlistItemsByUserId(userId);
+        //        return View(model);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "CustomerAccount");
+        //    }
+        //}
         [HttpPost]
         public ActionResult DeleteWishlistProduct(int id)
         {
@@ -308,9 +332,9 @@ namespace ArooshyStore.Areas.User.Controllers
         {
             if (string.IsNullOrEmpty(cookieName))
             {
-                // Log an error or return an error response
                 return Json(new { status = false, message = "Cookie name cannot be null" });
             }
+           
             StatusMessageViewModel response = new StatusMessageViewModel();
             response = _cart.InsertUpdateProductCart(user, data, cookieName);
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
@@ -327,20 +351,28 @@ namespace ArooshyStore.Areas.User.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
         [HttpGet]
-        public ActionResult CartItems(int? UserId,string CookieName)
+        public ActionResult CartItems(int? UserId,string CookieName, int? page)
         {
             if (string.IsNullOrEmpty(CookieName))
             {
                 return HttpNotFound("Cookie name is required.");
             }
+            ViewBag.CookieName = CookieName;
+            if (User != null)
+            {
+                var userId = User.UserId;
+                ViewBag.UserId = userId;
 
+            }
             var cartCount = _cart.GetCartItemCountByCookieName(UserId,CookieName);
             if (cartCount == null) 
             {
                 return HttpNotFound("No items found in the cart.");
             }
-
-            return View(cartCount);
+            int pageSize = 8;
+            int pageNumber = page ?? 1;
+            var paginatedItems = cartCount.ToPagedList(pageNumber, pageSize);
+            return View(paginatedItems);
         }
         [HttpGet]
         public ActionResult CartDropdown(string userIdOrCookieName)

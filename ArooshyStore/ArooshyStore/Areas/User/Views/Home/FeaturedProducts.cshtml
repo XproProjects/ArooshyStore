@@ -13,15 +13,17 @@
                 @foreach (var product in Model)
                 {
                     <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
-
+                    <input type="hidden" id="ProductId" name="ProductId" value="@product.ProductId" />
+                    <input type="hidden" id="CartId" name="CartId" value="@product.CartId" />
+                    <input type="hidden" id="ActualSalePrice" value="@product.SalePriceForWebsite">
                     <div class="col">
-                        <div class="card" data-product-id="@product.ProductId" data-given-sale-price="@product.SalePriceForWebsite" data-actual-sale-price="@product.CostPrice">
+                        <div class="card">
                             <div class="position-relative overflow-hidden">
                                 <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
-                                    <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal"><i class='bx bx-cart-add'></i></a>
+                                    <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal" data-product-id="@product.ProductId"><i class='bx bx-cart-add'></i></a>
                                 </div>
                                 <div class="quick-view position-absolute start-0 bottom-0 end-0">
-                                    <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal">Quick View</a>
+                                    <a href="#QuickViewProduct_@product.ProductId" data-bs-toggle="modal" data-product-id="@product.ProductId" class='bx bx-cart-add'>Quick View</a>
                                 </div>
                                 <a href="@Url.Action("GetProductDetails", "Home", new { productId = product.ProductId })">
                                     <img src="@product.ImagePath" class="img-fluid" style="height: 200px; width: 100%; object-fit: cover;" alt="@product.ProductName">
@@ -51,90 +53,7 @@
                                     {
                                         <div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$@product.CostPrice</div>
                                     }
-                                    <div class="h6 fw-bold">$@product.SalePriceForWebsite</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick View Modal -->
-                    <div class="modal fade" id="QuickViewProduct_@product.ProductId" tabindex="-1" aria-labelledby="quickViewLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-xl-down">
-                            <div class="modal-content rounded-0 border-0">
-                                <div class="modal-body">
-                                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
-                                    <div class="row g-0">
-                                        <div class="col-12 col-lg-6">
-                                            <div class="image-zoom-section">
-                                                <div class="product-gallery owl-carousel owl-theme border mb-3 p-3" data-slider-id="1">
-                                                    <div class="item">
-                                                        <img src="@product.ImagePath" class="img-fluid" style="height: 300px; width: 100%; object-fit: cover;" alt="@product.ProductName">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            <div class="product-info-section p-3">
-                                                <h3 class="mt-3 mt-lg-0 mb-0">@product.ProductName</h3>
-                                                <div class="product-rating d-flex align-items-center mt-2">
-                                                    <div class="rates cursor-pointer font-13">
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                        <i class="bx bxs-star text-warning"></i>
-                                                    </div>
-                                                    <div class="ms-1">
-                                                        <p class="mb-0">(0 Ratings)</p>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center mt-3 gap-2">
-                                                    <h4 class="mb-0">$@product.SalePriceForWebsite</h4>
-                                                </div>
-                                                <div class="row row-cols-auto align-items-center mt-3">
-                                                    <div class="col">
-                                                        <label class="form-label">Quantity</label>
-                                                        <select class="form-select form-select" id="Quantity_@product.ProductId">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <div class="d-flex flex-wrap gap-3 align-items-center" id="product-container" data-product-id="@product.ProductId" data-given-sale-price="@product.SalePriceForWebsite" data-actual-sale-price="@product.CostPrice">
-                                                            @if (product.AttributesList != null && product.AttributesList.Any())
-                                                            {
-                                                                foreach (var attribute in product.AttributesList)
-                                                                {
-                                                                    <div class="flex-item">
-                                                                        <label class="form-label">@attribute.AttributeName</label>
-                                                                        <select class="form-select attribute-select" data-attribute-detail-id="@attribute.AttributeDetailId">
-                                                                            <option value="">Select an option</option>
-                                                                            @foreach (var detail in attribute.AttributeDetails)
-                                                                            {
-                                                                                <option value="@detail.AttributeDetailId">@detail.AttributeDetailName</option>
-                                                                            }
-                                                                        </select>
-                                                                    </div>
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <span>No attributes available</span>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="d-flex gap-2 mt-3">
-                                                    <a href="javascript:;" class="btn add-to-cart btn-dark btn-ecomm" data-product-id="@product.ProductId"><i class="bx bxs-cart-add"></i>Add to Cart</a>
-                                                    <a href="javascript:;" class="btn add-to-wishlist btn-light btn-ecomm" data-product-id="@product.ProductId"><i class="bx bx-heart"></i>Add to Wishlist</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="h6 fw-bold" data-actual-sale-price="@product.SalePriceForWebsite">@product.SalePriceForWebsite</div>
                                 </div>
                             </div>
                         </div>
@@ -144,3 +63,90 @@
         </div>
     </div>
 </section>
+@foreach (var product in Model)
+{
+    <div class="modal fade" id="QuickViewProduct_@product.ProductId" tabindex="-1" aria-labelledby="quickViewLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-xl-down">
+            <div class="modal-content rounded-0 border-0">
+                <div class="modal-body">
+                    <input type="hidden" id="ProductId" value="@product.ProductId">
+                    <input type="hidden" id="ActualSalePrice" value="@product.SalePriceForWebsite">
+
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
+                    <div class="row g-0">
+                        <div class="col-12 col-lg-6">
+                            <div class="image-zoom-section">
+                                <div class="product-gallery owl-carousel owl-theme border mb-3 p-3" data-slider-id="1">
+                                    <div class="item">
+                                        <img src="@product.ImagePath" class="img-fluid" style="height: 300px; width: 100%; object-fit: cover;" alt="@product.ProductName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="product-info-section p-3">
+                                <h3 class="mt-3 mt-lg-0 mb-0">@product.ProductName</h3>
+                                <div class="product-rating d-flex align-items-center mt-2">
+                                    <div class="rates cursor-pointer font-13">
+                                        <i class="bx bxs-star text-warning"></i>
+                                        <i class="bx bxs-star text-warning"></i>
+                                        <i class="bx bxs-star text-warning"></i>
+                                        <i class="bx bxs-star text-warning"></i>
+                                        <i class="bx bxs-star text-warning"></i>
+                                    </div>
+                                    <div class="ms-1">
+                                        <p class="mb-0">(0 Ratings)</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mt-3 gap-2">
+                                    <h4 class="mb-0" data-actual-sale-price="@product.SalePriceForWebsite">$@product.SalePriceForWebsite</h4>
+                                </div>
+                                <div class="row row-cols-auto align-items-center mt-3">
+                                    <div class="col">
+                                        <label class="form-label">Quantity</label>
+                                        <select class="form-select form-select" id="Quantity">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="d-flex flex-wrap gap-3 align-items-center" id="product-container">
+                                            @if (product.AttributesList != null && product.AttributesList.Any())
+                                            {
+                                                foreach (var attribute in product.AttributesList)
+                                                {
+                                                    <div class="flex-item">
+                                                        <label class="form-label">@attribute.AttributeName</label>
+                                                        <select class="form-select attribute-select" data-attribute-detail-id="@attribute.AttributeDetailId">
+                                                            <option value="">Select an option</option>
+                                                            @foreach (var detail in attribute.AttributeDetails)
+                                                            {
+                                                                <option value="@detail.AttributeDetailId">@detail.AttributeDetailName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>No attributes available</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 mt-3">
+                                    <a href="javascript:;" class="btn add-to-cart btn-dark btn-ecomm"><i class="bx bxs-cart-add"></i>Add to Cart</a>
+                                    <a href="javascript:;" class="btn add-to-wishlist btn-light btn-ecomm" data-product-id="@product.ProductId"><i class="bx bx-heart"></i>Add to Wishlist</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
