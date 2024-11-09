@@ -209,16 +209,10 @@ $(document).ready(function () {
     });
 
     //review produts button
-    // review products button
     $('#review-button').off('click').on('click', function (e) {
         e.preventDefault();
-
-        // Get UserId from hidden input or variable
-        const userId = $('#UserId').val(); // Ensure UserId is available on the page as a hidden input or variable
-
-        // Check if UserId exists and is greater than 0
+        const userId = $('#UserId').val();
         if (userId && parseInt(userId) > 0) {
-            // If UserId exists, bypass validation and proceed
             const cookieName = getCookie('CookieName');
             if (cookieName) {
                 window.location.href = "/User/CheckOut/CheckOutReview?cookieName=" + cookieName + "&userId=" + userId;
@@ -226,12 +220,10 @@ $(document).ready(function () {
                 toastr.error('No cart cookie found!', 'Error', { timeOut: 3000, closeButton: true });
             }
         } else {
-            // If UserId does not exist, enforce validation
             if (!$('#checkoutForm').valid()) {
                 toastr.error('Please fill in all required information before reviewing your cart.', 'Error', { timeOut: 3000, closeButton: true });
                 return;
             }
-
             const cookieName = getCookie('CookieName');
             if (cookieName) {
                 window.location.href = "/User/CheckOut/CheckOutReview?cookieName=" + cookieName;
