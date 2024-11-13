@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ArooshyStore.Models.ViewModels
 {
@@ -15,6 +16,7 @@ namespace ArooshyStore.Models.ViewModels
         public string ImagePath { get; set; }
         public int DocumentId { get; set; }
         public int? InfoId { get; set; }
+        public decimal SalePriceForWebsite { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public string CreatedByString { get; set; }
@@ -22,5 +24,7 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public List<AttributeViewModel> AttributesList { get; set; }
+
     }
 }

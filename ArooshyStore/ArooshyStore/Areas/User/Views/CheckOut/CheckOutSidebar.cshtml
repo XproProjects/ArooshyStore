@@ -1,5 +1,10 @@
 ﻿@model List<ArooshyStore.Models.ViewModels.ProductCartViewModel>
+<style>
+    #checkout-sidebar-container {
+        will-change: transform, opacity;
+    }
 
+</style>
 <div id="checkout-sidebar-container">
     <div class="card rounded-0 border bg-transparent shadow-none">
         <div class="card-body">
@@ -20,14 +25,16 @@
                     </div>
                 </div>
             }
+          
         </div>
     </div>
     <div class="card rounded-0 border bg-transparent mb-0 shadow-none">
         <div class="card-body">
-            <p class="mb-2">Subtotal: <span class="float-end">@Model.Sum(item => (item.ActualSalePrice * item.Quantity))</span></p>
+            <p class="mb-2">Subtotal: <span class="float-end"></span></p>
             <p class="mb-0">Discount: <span class="float-end">0.00</span></p>
             <div class="my-3 border-top"></div>
-            <h5 class="mb-0">Order Total: <span class="float-end">@Model.Sum(item => (item.ActualSalePrice * item.Quantity))</span></h5>
+            <h5 class="mb-0">Order Total: <span class="float-end"></span></h5>
         </div>
     </div>
 </div>
+<script src="~/Areas/User/Script/ArooshyStoreScripts/CustomerAccount/InsertProductCart.js"></script>

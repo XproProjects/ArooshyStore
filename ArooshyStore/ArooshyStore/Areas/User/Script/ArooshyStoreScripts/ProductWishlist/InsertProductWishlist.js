@@ -2,8 +2,8 @@
     $(document).off('click', '.add-to-wishlist').on('click', '.add-to-wishlist', function () {
         var WishlistId = $('#WishlistId').val();
         var UserId = $('#UserId').val();
-        var ProductId = $(this).data('product-id');
-
+        //var ProductId = $('#ProductId').val();
+        var ProductId = $(this).data('product-id'); 
         if (UserId === "") {
             toastr.error("You need to log in to add products to your wishlist.", "Error", { timeOut: 3000, "closeButton": true });
             return;

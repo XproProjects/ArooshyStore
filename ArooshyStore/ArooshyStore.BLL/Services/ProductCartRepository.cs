@@ -69,7 +69,6 @@ namespace ArooshyStore.BLL.Services
         }
         public List<ProductCartViewModel> GetLatestCartItemsByCookieName(string userIdOrCookieName)
         {
-            // First, check for userId
             var cartItems = (from f in _unitOfWork.Db.Set<tblProductCart>()
                              where f.UserId.ToString() == userIdOrCookieName
                              orderby f.CartId descending
@@ -196,7 +195,7 @@ namespace ArooshyStore.BLL.Services
                         if (productExists)
                         {
                             response.Status = false;
-                            response.Message = "Product already exists for this cookie.";
+                            response.Message = "Product Already Exist In Your Cart.";
                             return response;
                         }
                     }
@@ -210,7 +209,7 @@ namespace ArooshyStore.BLL.Services
                     if (check2)
                     {
                         response.Status = false;
-                        response.Message = "Product already exist for this.";
+                        response.Message = "Product Already Exist In Your Cart.";
                         return response;
                     }
                     insertUpdateStatus = "Save";

@@ -54,6 +54,7 @@ namespace ArooshyStore.Models.ViewModels
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
         public string AllAttributes { get; set; }
+        public int CartId { get; set; }
         public List<AttributeViewModel> AttributesList { get; set; }
         public List<ProductViewModel> Products { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
