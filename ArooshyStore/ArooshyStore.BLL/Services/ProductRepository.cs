@@ -5,9 +5,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using ArooshyStore.BLL.GenericRepository;
 using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.DAL.Entities;
+using ArooshyStore.Domain.DomainModels;
 using ArooshyStore.Models.ViewModels;
 using Newtonsoft.Json;
 
@@ -16,6 +18,7 @@ namespace ArooshyStore.BLL.Services
     public class ProductRepository : IProductRepository
     {
         private readonly IUnitOfWork _unitOfWork;
+        List<string> barcodesList = new List<string>();
         public ProductRepository(IUnitOfWork unitOfWork)
         {
             this._unitOfWork = unitOfWork;
@@ -41,8 +44,8 @@ namespace ArooshyStore.BLL.Services
                 {
                     con.Open();
 
-                    string query = "SELECT Count(s.ProductId) as MyRowCount FROM tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId where " + whereCondition + " ";
-                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.ProductDescription,'') as ProductDescription,isnull(s.Barcode,'') as Barcode,isnull(c.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    string query = "SELECT Count(s.ProductId) as MyRowCount FROM tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId left join tblCategory p on c.ParentCategoryId = p.CategoryId where " + whereCondition + " ";
+                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.ArticleNumber,'') as ArticleNumber,isnull(s.ProductDescription,'') as ProductDescription,isnull(c.CategoryName,'') + ' - ' + isnull(p.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.SalePriceForWebsite,0) as SalePriceForWebsite,isnull(s.SalePriceAfterExpired,0) as SalePriceAfterExpired,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsExpired,0) = 0 then 'No' else 'Yes' end) as 'IsExpiredString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId left join tblCategory p on c.ParentCategoryId = p.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     //query += " ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -66,12 +69,15 @@ namespace ArooshyStore.BLL.Services
                                     ProductName = reader["ProductName"].ToString(),
                                     ProductNameUrdu = reader["ProductNameUrdu"].ToString(),
                                     ProductDescription = reader["ProductDescription"].ToString(),
-                                    Barcode = reader["Barcode"].ToString(),
+                                    ArticleNumber = reader["ArticleNumber"].ToString(),
                                     CategoryName = reader["CategoryName"].ToString(),
                                     CostPrice = Convert.ToDecimal(reader["CostPrice"].ToString()),
                                     SalePrice = Convert.ToDecimal(reader["SalePrice"].ToString()),
+                                    SalePriceForWebsite = Convert.ToDecimal(reader["SalePriceForWebsite"].ToString()),
+                                    SalePriceAfterExpired = Convert.ToDecimal(reader["SalePriceAfterExpired"].ToString()),
                                     StatusString = reader["StatusString"].ToString(),
                                     IsFeaturedString = reader["IsFeaturedString"].ToString(),
+                                    IsExpiredString = reader["IsExpiredString"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
@@ -103,7 +109,8 @@ namespace ArooshyStore.BLL.Services
             if (id > 0)
             {
                 model = (from f in _unitOfWork.Db.Set<tblProduct>()
-                         join i in _unitOfWork.Db.Set<tblTagsForProducts>() on f.ProductId equals i.ProductId
+                         join c in _unitOfWork.Db.Set<tblCategory>() on f.CategoryId equals c.CategoryId
+                         join p in _unitOfWork.Db.Set<tblCategory>() on c.ParentCategoryId equals p.CategoryId
                          where f.ProductId == id
                          select new ProductViewModel
                          {
@@ -111,19 +118,19 @@ namespace ArooshyStore.BLL.Services
                              ProductName = f.ProductName,
                              ProductNameUrdu = f.ProductNameUrdu,
                              ProductDescription = f.ProductDescription,
-                             Barcode = f.Barcode,
+                             ArticleNumber = f.ArticleNumber ?? "",
                              UnitId = f.UnitId ?? 0,
                              UnitName = _unitOfWork.Db.Set<tblUnit>().Where(x => x.UnitId == f.UnitId).Select(x => x.UnitName).FirstOrDefault() ?? "",
                              CategoryId = f.CategoryId ?? 0,
-                             CategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.CategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? "",
+                             CategoryName = (c.CategoryName + " - " +p.CategoryName) ?? "",
                              DeliveryInfoId = f.DeliveryInfoId ?? 0,
                              DeliveryInfoName = _unitOfWork.Db.Set<tblDeliveryInfo>().Where(x => x.DeliveryInfoId == f.DeliveryInfoId).Select(x => x.DeliveryInfoName).FirstOrDefault() ?? "",
                              SalePrice = f.SalePrice ?? 0,
                              CostPrice = f.CostPrice ?? 0,
-                             SalePriceAfterExpired= f.SalePriceForWebsite ?? 0,
-                             SalePriceForWebsite = f.SalePriceForWebsite ??0,
-                             TagId = i.TagId,
-                             TagName = _unitOfWork.Db.Set<tblProductTags>().Where(x => x.TagId == i.TagId).Select(x => x.TagName).FirstOrDefault() ?? "",
+                             SalePriceAfterExpired = f.SalePriceAfterExpired ?? 0,
+                             SalePriceForWebsite = f.SalePriceForWebsite ?? 0,
+                             //TagId = i.TagId,
+                             //TagName = _unitOfWork.Db.Set<tblProductTags>().Where(x => x.TagId == i.TagId).Select(x => x.TagName).FirstOrDefault() ?? "",
                              IsExpired = f.IsExpired,
                              Status = f.Status,
                              IsFeatured = f.IsFeatured ?? false,
@@ -148,7 +155,7 @@ namespace ArooshyStore.BLL.Services
                     ProductDescription = "",
                     DeliveryInfoId = 0,
                     DeliveryInfoName = "",
-                    Barcode = "",
+                    ArticleNumber = "",
                     UnitId = 0,
                     CategoryId = 0,
                     CategoryName = "",
@@ -164,6 +171,11 @@ namespace ArooshyStore.BLL.Services
                     DocumentId = 0,
                 };
             }
+            return model;
+        }
+        public ProductViewModel GetProductAttributesById(int id)
+        {
+            ProductViewModel model = new ProductViewModel();
             List<AttributeViewModel> AttributesList = (from a in _unitOfWork.Db.Set<tblAttribute>()
                                                        where a.Status == true
                                                        && _unitOfWork.Db.Set<tblAttributeDetail>().Where(x => x.AttributeId == a.AttributeId).Count() > 0
@@ -208,6 +220,7 @@ namespace ArooshyStore.BLL.Services
 
                 DataTable dtAttributes = new DataTable();
                 dtAttributes.Columns.Add("Id");
+                dtAttributes.Columns.Add("ProductAttributeDetailId");
                 dtAttributes.Columns.Add("AttributeId");
                 dtAttributes.Columns.Add("AttributeDetailId");
                 dtAttributes.Columns.Add("Status");
@@ -222,14 +235,14 @@ namespace ArooshyStore.BLL.Services
                             if (j.IsChecked.ToLower() == "yes")
                             {
                                 k++;
-                                dtAttributes.Rows.Add(new object[] { k, list[i].AttributeId, j.AttributeDetailId, true });
+                                dtAttributes.Rows.Add(new object[] { k, j.ProductAttributeDetailId, list[i].AttributeId, j.AttributeDetailId, true });
                             }
                         }
                     }
                 }
                 else
                 {
-                    dtAttributes.Rows.Add(new object[] { 0, 0, 0, false });
+                    dtAttributes.Rows.Add(new object[] { 0, 0, 0, 0, false });
                 }
                 DataTable dtTags = new DataTable();
                 dtTags.Columns.Add("Id");
@@ -244,18 +257,18 @@ namespace ArooshyStore.BLL.Services
                 }
                 else
                 {
-                    dtTags.Rows.Add(new object[] { 0, 0});
+                    dtTags.Rows.Add(new object[] { 0, 0 });
                 }
                 if (model.ProductId > 0)
                 {
-                    bool check = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == model.ProductId).Any(x => x.ProductName.ToLower().Trim() == model.ProductName.ToLower().Trim());
+                    bool check = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == model.ProductId).Any(x => x.ArticleNumber.ToLower().Trim() == model.ArticleNumber.ToLower().Trim());
                     if (!check)
                     {
-                        bool check2 = _unitOfWork.Db.Set<tblProduct>().Any(x => x.ProductName.ToLower().Trim() == model.ProductName.ToLower().Trim());
+                        bool check2 = _unitOfWork.Db.Set<tblProduct>().Any(x => x.ArticleNumber.ToLower().Trim() == model.ArticleNumber.ToLower().Trim());
                         if (check2)
                         {
                             response.Status = false;
-                            response.Message = "Product Name already exists.";
+                            response.Message = "Article Number already exists.";
                             return response;
                         }
                     }
@@ -264,11 +277,11 @@ namespace ArooshyStore.BLL.Services
                 }
                 else
                 {
-                    bool check2 = _unitOfWork.Db.Set<tblProduct>().Any(x => x.ProductName.ToLower().Trim() == model.ProductName.ToLower().Trim());
+                    bool check2 = _unitOfWork.Db.Set<tblProduct>().Any(x => x.ArticleNumber.ToLower().Trim() == model.ArticleNumber.ToLower().Trim());
                     if (check2)
                     {
                         response.Status = false;
-                        response.Message = "Product Name already exists.";
+                        response.Message = "Article Number already exists.";
                         return response;
                     }
                     model.Status = true;
@@ -281,6 +294,8 @@ namespace ArooshyStore.BLL.Services
                 ResultViewModel result = InsertUpdateProductDb(model, insertUpdateStatus, dtAttributes, dtTags, loggedInUserId);
                 if (result.Message == "Success")
                 {
+                    SaveBarcodes(result.Id, insertUpdateStatus, loggedInUserId);
+
                     response.Status = true;
                     response.Message = "Product Saved Successfully";
                     response.Id = result.Id;
@@ -303,6 +318,54 @@ namespace ArooshyStore.BLL.Services
             return response;
         }
 
+        public StatusMessageViewModel UpdateCostPrice(ProductViewModel model, int loggedInUserId)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            try
+            {
+                string insertUpdateStatus = "Update Cost";
+
+                DataTable dtAttributes = new DataTable();
+                dtAttributes.Columns.Add("Id");
+                dtAttributes.Columns.Add("ProductAttributeDetailId");
+                dtAttributes.Columns.Add("AttributeId");
+                dtAttributes.Columns.Add("AttributeDetailId");
+                dtAttributes.Columns.Add("Status");
+
+                dtAttributes.Rows.Add(new object[] { 0, 0, 0, 0, false });
+                DataTable dtTags = new DataTable();
+                dtTags.Columns.Add("Id");
+                dtTags.Columns.Add("TagId");
+                dtTags.Rows.Add(new object[] { 0, 0 });
+
+                // Call method to interact with DB
+                ResultViewModel result = InsertUpdateProductDb(model, insertUpdateStatus, dtAttributes, dtTags, loggedInUserId);
+                if (result.Message == "Success")
+                {
+                    SaveBarcodes(result.Id, insertUpdateStatus, loggedInUserId);
+
+                    response.Status = true;
+                    response.Message = "Product Cost Saved Successfully";
+                    response.Id = result.Id;
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = result.Message;
+                    response.Id = result.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                response.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message, "Web Application", "ProductRepository", "UpdateCostPrice");
+            }
+            return response;
+        }
+
         private ResultViewModel InsertUpdateProductDb(ProductViewModel model, string insertUpdateStatus, DataTable dtAttributes, DataTable dtTags, int loggedInUserId)
         {
             ResultViewModel result = new ResultViewModel();
@@ -320,7 +383,7 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = model.ProductName;
                         cmd.Parameters.Add("@ProductNameUrdu", SqlDbType.NVarChar).Value = model.ProductNameUrdu;
                         cmd.Parameters.Add("@ProductDescription", SqlDbType.NVarChar).Value = model.ProductDescription;
-                        cmd.Parameters.Add("@Barcode", SqlDbType.NVarChar).Value = model.Barcode;
+                        cmd.Parameters.Add("@ArticleNumber", SqlDbType.NVarChar).Value = model.ArticleNumber;
                         cmd.Parameters.Add("@DeliveryInfoId", SqlDbType.Int).Value = model.DeliveryInfoId;
                         cmd.Parameters.Add("@UnitId", SqlDbType.Int).Value = model.UnitId;
                         cmd.Parameters.Add("@CategoryId", SqlDbType.Int).Value = model.CategoryId;
@@ -361,6 +424,7 @@ namespace ArooshyStore.BLL.Services
             model.ProductId = id;
             DataTable dtAttributes = new DataTable();
             dtAttributes.Columns.Add("Id");
+            dtAttributes.Columns.Add("ProductAttributeDetailId");
             dtAttributes.Columns.Add("AttributeId");
             dtAttributes.Columns.Add("AttributeDetailId");
             dtAttributes.Columns.Add("Status");
@@ -368,7 +432,7 @@ namespace ArooshyStore.BLL.Services
             dtTags.Columns.Add("Id");
             dtTags.Columns.Add("TagId");
 
-            dtAttributes.Rows.Add(new object[] { 0, 0, 0, false });
+            dtAttributes.Rows.Add(new object[] { 0, 0, 0, 0, false });
             dtTags.Rows.Add(new object[] { 0, 0 });
 
             ResultViewModel result = InsertUpdateProductDb(model, "Delete", dtAttributes, dtTags, loggedInUserId);
@@ -401,6 +465,263 @@ namespace ArooshyStore.BLL.Services
             }
             return response;
         }
+        public void SaveBarcodes(int productId, string insertUpdateStatus, int loggedInUserId)
+        {
+            try
+            {
+                barcodesList = new List<string>();
+                List<ProductAttributeDetailViewModel> AttributesList = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                                        join a in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId equals a.AttributeId
+                                                                        where ap.ProductId == productId
+                                                                        select new ProductAttributeDetailViewModel
+                                                                        {
+                                                                            AttributeId = a.AttributeId,
+                                                                            AttributeName = a.AttributeName,
+                                                                        }).Distinct().OrderBy(x => x.AttributeId).ToList() ?? new List<ProductAttributeDetailViewModel>();
+                if (AttributesList.Count > 0)
+                {
+                    List<ProductAttributeDetailViewModel> AttributesDetailsList1 = new List<ProductAttributeDetailViewModel>();
+                    List<ProductAttributeDetailViewModel> AttributesDetailsList2 = new List<ProductAttributeDetailViewModel>();
+                    List<ProductAttributeDetailViewModel> AttributesDetailsList3 = new List<ProductAttributeDetailViewModel>();
+                    for (int i = 0; i < AttributesList.Count; i++)
+                    {
+                        int attributeId = AttributesList[i].AttributeId ?? 0;
+                        if (i == 0)
+                        {
+                            AttributesDetailsList1 = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                      where ap.ProductId == productId && ap.AttributeId == attributeId
+                                                      select new ProductAttributeDetailViewModel
+                                                      {
+                                                          AttributeId = ap.AttributeId,
+                                                          AttributeDetailId = ap.AttributeDetailId,
+                                                          Status = ap.Status
+                                                      }).ToList() ?? new List<ProductAttributeDetailViewModel>();
+                        }
+                        else if (i == 1)
+                        {
+                            AttributesDetailsList2 = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                      where ap.ProductId == productId && ap.AttributeId == attributeId
+                                                      select new ProductAttributeDetailViewModel
+                                                      {
+                                                          AttributeId = ap.AttributeId,
+                                                          AttributeDetailId = ap.AttributeDetailId,
+                                                          Status = ap.Status
+                                                      }).ToList() ?? new List<ProductAttributeDetailViewModel>();
+                        }
+                        else if (i == 2)
+                        {
+                            AttributesDetailsList3 = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                      where ap.ProductId == productId && ap.AttributeId == attributeId
+                                                      select new ProductAttributeDetailViewModel
+                                                      {
+                                                          AttributeId = ap.AttributeId,
+                                                          AttributeDetailId = ap.AttributeDetailId,
+                                                          Status = ap.Status
+                                                      }).ToList() ?? new List<ProductAttributeDetailViewModel>();
+                        }
+                    }
+
+                    DataTable dtAttributes = new DataTable();
+                    dtAttributes.Columns.Add("Id");
+                    dtAttributes.Columns.Add("ProductAttributeDetailBarcodeId");
+                    dtAttributes.Columns.Add("AttributeId1");
+                    dtAttributes.Columns.Add("AttributeDetailId1");
+                    dtAttributes.Columns.Add("AttributeId2");
+                    dtAttributes.Columns.Add("AttributeDetailId2");
+                    dtAttributes.Columns.Add("Barcode");
+                    dtAttributes.Columns.Add("Status");
+
+                    int j = 0;
+                    string barcode = "";
+                    foreach (ProductAttributeDetailViewModel p1 in AttributesDetailsList1)
+                    {
+                        foreach (ProductAttributeDetailViewModel p2 in AttributesDetailsList2)
+                        {
+                            j++;
+                            barcode = GetBarcode();
+                            bool status = p1.Status == true && p2.Status == true ? true : false;
+                            dtAttributes.Rows.Add(new object[] { j, 0, p1.AttributeId, p1.AttributeDetailId, p2.AttributeId, p2.AttributeDetailId, barcode, status });
+                        }
+                    }
+
+                    ResultViewModel result = InsertUpdateProductAttributeBarcodesDb(productId, insertUpdateStatus, dtAttributes, loggedInUserId);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message, "Web Application", "ProductRepository", "SaveBarcodes");
+            }
+        }
+
+        private ResultViewModel InsertUpdateProductAttributeBarcodesDb(int productId, string insertUpdateStatus, DataTable dtAttributes, int loggedInUserId)
+        {
+            ResultViewModel result = new ResultViewModel();
+            try
+            {
+                string connection = System.Configuration.ConfigurationManager.ConnectionStrings["ADO"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connection))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("spInsertUpdateProductAttributeBarcodes", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.Add("@ProductId", SqlDbType.Int).Value = productId;
+                        cmd.Parameters.Add("@dtProductAttributeDetailBarcodeType", SqlDbType.Structured).Value = dtAttributes;
+                        cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
+                        cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
+                        cmd.Parameters.Add("@CheckReturn", SqlDbType.NVarChar, 300).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@CheckReturn2", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        result.Message = cmd.Parameters["@CheckReturn"].Value.ToString();
+                        result.Id = Convert.ToInt32(cmd.Parameters["@CheckReturn2"].Value.ToString());
+                        cmd.Dispose();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message, "Web Application", "ProductRepository", "InsertUpdateProductAttributeBarcodesDb");
+            }
+            return result;
+        }
+        public string GetBarcode()
+        {
+            string barcode = "";
+            Random rnd = new Random();
+
+        GenerateRandomNumber:
+            int myRandomNo = rnd.Next(10000000, 99999999);
+            bool checkRandomNumber = _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>().Any(x => x.Barcode.ToLower().Trim() == myRandomNo.ToString().ToLower().Trim());
+            if (checkRandomNumber)
+            {
+                goto GenerateRandomNumber;
+            }
+
+            bool checkRandomNumber2 = barcodesList.Any(s => myRandomNo.ToString().ToLower().Trim().Contains(s.ToLower().Trim()));
+            if (checkRandomNumber2)
+            {
+                goto GenerateRandomNumber;
+            }
+
+            barcode = myRandomNo.ToString();
+            barcodesList.Add(barcode);
+            return barcode;
+        }
+        public List<ProductAttributeDetailViewModel> GetProductAttributesListByProductId(int productId)
+        {
+            List<ProductAttributeDetailViewModel> AttributesList = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                                                                    join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                                                    join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                                                    join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                                                    join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                                                                    where ap.Status == true && ap.ProductId == productId
+                                                                    select new ProductAttributeDetailViewModel
+                                                                    {
+                                                                        ProductAttributeDetailBarcodeId = ap.ProductAttributeDetailBarcodeId,
+                                                                        ProductId = ap.ProductId ?? 0,
+                                                                        AttributeId1 = ap.AttributeId1,
+                                                                        AttributeName1 = a1.AttributeName,
+                                                                        AttributeId2 = ap.AttributeId2,
+                                                                        AttributeName2 = a2.AttributeName,
+                                                                        AttributeDetailId1 = ap.AttributeDetailId1,
+                                                                        AttributeDetailName1 = ad1.AttributeDetailName,
+                                                                        AttributeDetailId2 = ap.AttributeDetailId2,
+                                                                        AttributeDetailName2 = ad2.AttributeDetailName,
+                                                                        Barcode = ap.Barcode ?? "",
+                                                                        Status = ap.Status
+                                                                    }).OrderBy(x => x.AttributeDetailName1).ThenBy(x => x.AttributeDetailName2).ToList() ?? new List<ProductAttributeDetailViewModel>();
+
+            return AttributesList;
+        }
+        public List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data)
+        {
+            List<ProductAttributeDetailViewModel> barcodesList = JsonConvert.DeserializeObject<List<ProductAttributeDetailViewModel>>(data);
+            foreach (ProductAttributeDetailViewModel p in barcodesList)
+            {
+                p.ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == p.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "";
+                p.ArticleNumber = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == p.ProductId).Select(x => x.ArticleNumber).FirstOrDefault() ?? "";
+                p.Price = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == p.ProductId).Select(x => x.SalePrice).FirstOrDefault() ?? 0;
+                p.AttributeDetailName1 = _unitOfWork.Db.Set<tblAttributeDetail>().Where(x => x.AttributeDetailId == p.AttributeDetailId1).Select(x => x.AttributeDetailName).FirstOrDefault() ?? "";
+                p.AttributeDetailName2 = _unitOfWork.Db.Set<tblAttributeDetail>().Where(x => x.AttributeDetailId == p.AttributeDetailId2).Select(x => x.AttributeDetailName).FirstOrDefault() ?? "";
+            }
+            return barcodesList;
+        }
+
+        public ProductViewModel GetProductDetailById(int id)
+        {
+            ProductViewModel model = new ProductViewModel();
+            model = (from f in _unitOfWork.Db.Set<tblProduct>()
+                     join c in _unitOfWork.Db.Set<tblCategory>() on f.CategoryId equals c.CategoryId
+                     join p in _unitOfWork.Db.Set<tblCategory>() on c.ParentCategoryId equals p.CategoryId
+                     where f.ProductId == id
+                     select new ProductViewModel
+                     {
+                         ProductId = f.ProductId,
+                         ProductName = f.ProductName,
+                         ProductNameUrdu = f.ProductNameUrdu,
+                         ProductDescription = f.ProductDescription,
+                         ArticleNumber = f.ArticleNumber ?? "",
+                         CategoryId = f.CategoryId ?? 0,
+                         CategoryName = (c.CategoryName + " - " + p.CategoryName) ?? "",
+                         DeliveryInfoId = f.DeliveryInfoId ?? 0,
+                         DeliveryInfoName = _unitOfWork.Db.Set<tblDeliveryInfo>().Where(x => x.DeliveryInfoId == f.DeliveryInfoId).Select(x => x.DeliveryInfoName).FirstOrDefault() ?? "",
+                         SalePrice = f.SalePrice ?? 0,
+                         CostPrice = f.CostPrice ?? 0,
+                         SalePriceAfterExpired = f.SalePriceAfterExpired ?? 0,
+                         SalePriceForWebsite = f.SalePriceForWebsite ?? 0,
+                         //TagId = i.TagId,
+                         //TagName = _unitOfWork.Db.Set<tblProductTags>().Where(x => x.TagId == i.TagId).Select(x => x.TagName).FirstOrDefault() ?? "",
+                         IsExpired = f.IsExpired,
+                         Status = f.Status,
+                         IsFeatured = f.IsFeatured ?? false,
+                         ImagePath = _unitOfWork.Db.Set<tblDocument>()
+                                                       .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
+                                                       .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
+                                                       .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png",
+                     }).FirstOrDefault();
+            List<AttributeViewModel> AttributesList = (from a in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                       join at in _unitOfWork.Db.Set<tblAttribute>() on a.AttributeId equals at.AttributeId
+                                                       join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on a.AttributeDetailId equals ad.AttributeDetailId
+                                                       where a.Status == true && a.ProductId == id
+                                                       select new AttributeViewModel
+                                                       {
+                                                           AttributeId = a.AttributeId ?? 0,
+                                                           AttributeName = at.AttributeName ?? "",
+                                                       }).Distinct().ToList();
+            List<AttributeViewModel> AttributeDetailsList = (from a in _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                                                             join at in _unitOfWork.Db.Set<tblAttribute>() on a.AttributeId equals at.AttributeId
+                                                             join ad in _unitOfWork.Db.Set<tblAttributeDetail>() on a.AttributeDetailId equals ad.AttributeDetailId
+                                                             where a.Status == true && a.ProductId == id
+                                                             select new AttributeViewModel
+                                                             {
+                                                                 AttributeId = a.AttributeId ?? 0,
+                                                                 AttributeName = at.AttributeName ?? "",
+                                                                 AttributeDetailId = a.AttributeDetailId ?? 0,
+                                                                 AttributeDetailName = ad.AttributeDetailName
+                                                             }).ToList();
+
+            List<DocumentViewModel> documents = (from d in _unitOfWork.Db.Set<tblDocument>()
+                                                 where d.TypeId == id.ToString() && d.DocumentType == "Product"
+                                                 select new DocumentViewModel
+                                                 {
+                                                     DocumentId = d.DocumentId,
+                                                     DocumentExtension = d.DocumentExtension,
+                                                     DocumentType = d.DocumentType,
+                                                     TypeId = d.TypeId,
+                                                     Remarks = d.Remarks ?? "",
+                                                     ImagePath = "/Areas/Admin/FormsDocuments/" + d.DocumentType + "/" + d.DocumentId.ToString() + "." + d.DocumentExtension
+                                                 }).ToList() ?? new List<DocumentViewModel>();
+
+            model.AttributesList = AttributesList.ToList();
+            model.AttributeDetailsList = AttributeDetailsList.ToList();
+            model.DocumentsList = documents.ToList();
+            return model;
+        }
         public ProductViewModel GetProductSalePrice(int productId)
         {
             var product = _unitOfWork.Db.Set<tblProduct>()
@@ -429,18 +750,18 @@ namespace ArooshyStore.BLL.Services
 
             if (!string.IsNullOrEmpty(barcode))
             {
-                var productAttributeDetail = _unitOfWork.Db.Set<tblProductAttributeDetail>()
+                var productAttributeDetail = _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
                     .Where(f => f.Barcode == barcode)
                     .Select(f => new
                     {
                         ProductId = f.ProductId,
-                        AttributeId = f.AttributeId,
-                        AttributeDetailId = f.AttributeDetailId,
+                        AttributeId = f.AttributeId1,
+                        AttributeDetailId = f.AttributeDetailId1,
                         Status = f.Status,
                         SalePrice = _unitOfWork.Db.Set<tblProduct>().Where(c => c.ProductId == f.ProductId).Select(c => c.SalePrice).FirstOrDefault() ?? 0,
                         ProductName = _unitOfWork.Db.Set<tblProduct>().Where(c => c.ProductId == f.ProductId).Select(c => c.ProductName).FirstOrDefault() ?? "",
-                        AttributeDetailName = _unitOfWork.Db.Set<tblAttributeDetail>().Where(c => c.AttributeDetailId == f.AttributeDetailId).Select(c => c.AttributeDetailName).FirstOrDefault() ?? "",
-                        AttributeName = _unitOfWork.Db.Set<tblAttribute>().Where(c => c.AttributeId == f.AttributeId).Select(c => c.AttributeName).FirstOrDefault() ?? "",
+                        AttributeDetailName = _unitOfWork.Db.Set<tblAttributeDetail>().Where(c => c.AttributeDetailId == f.AttributeDetailId1).Select(c => c.AttributeDetailName).FirstOrDefault() ?? "",
+                        AttributeName = _unitOfWork.Db.Set<tblAttribute>().Where(c => c.AttributeId == f.AttributeId1).Select(c => c.AttributeName).FirstOrDefault() ?? "",
 
                         // Get the category details
                         CategoryId = _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault(),
@@ -463,7 +784,7 @@ namespace ArooshyStore.BLL.Services
                         AttributeName = productAttributeDetail.AttributeName,
                         AttributeDetailName = productAttributeDetail.AttributeDetailName,
                         MasterCategoryName = productAttributeDetail.MasterCategoryName,
-                        ChildCategoryId = productAttributeDetail.ChildCategoryId , 
+                        ChildCategoryId = productAttributeDetail.ChildCategoryId,
                         ChildCategoryName = productAttributeDetail.ChildCategoryName,
                         SalePrice = productAttributeDetail.SalePrice,
                         Status = productAttributeDetail.Status ?? false
@@ -479,7 +800,7 @@ namespace ArooshyStore.BLL.Services
                     AttributeId = 0,
                     AttributeDetailId = 0,
                     MasterCategoryId = 0,
-                    ChildCategoryId= 0,
+                    ChildCategoryId = 0,
                     AttributeName = "",
                     AttributeDetailName = "",
                     MasterCategoryName = "",
@@ -503,7 +824,6 @@ namespace ArooshyStore.BLL.Services
                         ProductId = f.ProductId,
                         ProductName = f.ProductName,
                         ProductNameUrdu = f.ProductNameUrdu,
-                        Barcode = f.Barcode,
                         UnitId = f.UnitId ?? 0,
                         CategoryId = f.CategoryId ?? 0,
                         CategoryName = _unitOfWork.Db.Set<tblCategory>()
@@ -599,13 +919,13 @@ namespace ArooshyStore.BLL.Services
         .Select(x => x.CategoryId)
         .FirstOrDefault() ?? 0;
             return (from f in _unitOfWork.Db.Set<tblProduct>()
-                    where f.CategoryId == categoryid && f.ProductId != productId 
+                    where f.CategoryId == categoryid && f.ProductId != productId
                     select new ProductViewModel
                     {
                         ProductId = f.ProductId,
                         ProductName = f.ProductName,
                         ProductNameUrdu = f.ProductNameUrdu,
-                        Barcode = f.Barcode,
+                        ArticleNumber = f.ArticleNumber ?? "",
                         UnitId = f.UnitId ?? 0,
                         CategoryId = f.CategoryId ?? 0,
                         CategoryName = _unitOfWork.Db.Set<tblCategory>()
@@ -651,7 +971,7 @@ namespace ArooshyStore.BLL.Services
                     {
                         ProductId = f.ProductId,
                         ProductName = f.ProductName,
-                        Barcode = f.Barcode,
+                        ArticleNumber = f.ArticleNumber ?? "",
                         CategoryId = f.CategoryId ?? 0,
                         CategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.CategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? "",
                         UnitName = _unitOfWork.Db.Set<tblUnit>()
@@ -806,7 +1126,7 @@ namespace ArooshyStore.BLL.Services
                                        ProductId = f.ProductId,
                                        ProductName = f.ProductName,
                                        ProductNameUrdu = f.ProductNameUrdu,
-                                       Barcode = f.Barcode,
+                                       ArticleNumber = f.ArticleNumber ?? "",
                                        UnitId = f.UnitId ?? 0,
                                        CategoryId = f.CategoryId ?? 0,
                                        CategoryName = _unitOfWork.Db.Set<tblCategory>()
@@ -878,7 +1198,7 @@ namespace ArooshyStore.BLL.Services
                                    {
                                        ProductId = product.ProductId,
                                        ProductName = product.ProductName,
-                                       Barcode = product.Barcode,
+                                       ArticleNumber = product.ArticleNumber ?? "",
                                        UnitId = product.UnitId ?? 0,
                                        CostPrice = product.CostPrice ?? 0,
                                        SalePriceForWebsite = product.SalePriceForWebsite ?? 0,
@@ -998,13 +1318,13 @@ namespace ArooshyStore.BLL.Services
             if (attributeCheckbox == true && attribute != null && attribute.Length > 0)
             {
                 var productIdsWithAttributes = _unitOfWork.Db.Set<tblProductAttributeDetail>()
-                    .Where(pad => attribute.Contains(pad.AttributeDetailId ?? 0)) 
+                    .Where(pad => attribute.Contains(pad.AttributeDetailId ?? 0))
                     .Select(pad => pad.ProductId)
                     .Distinct();
 
                 query = query.Where(p => productIdsWithAttributes.Contains(p.ProductId));
             }
-           
+
 
             if (minPrice.HasValue)
             {
@@ -1018,7 +1338,7 @@ namespace ArooshyStore.BLL.Services
             switch (sortBy)
             {
                 case "date":
-                    query = query.OrderByDescending(p => p.CreatedDate); 
+                    query = query.OrderByDescending(p => p.CreatedDate);
                     break;
                 case "price":
                     query = query.OrderBy(p => p.SalePriceForWebsite);

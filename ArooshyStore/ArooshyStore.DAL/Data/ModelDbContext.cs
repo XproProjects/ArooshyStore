@@ -57,8 +57,14 @@ namespace ArooshyStore.DAL.Data
         public virtual DbSet<tblEmployee> tblEmployee { get; set; }
         public virtual DbSet<tblEmployeeAttendance> tblEmployeeAttendance { get; set; }
         public virtual DbSet<tblSalary> tblSalary { get; set; }
-
-
+        public virtual DbSet<tblProductAttributeDetailBarcode> tblProductAttributeDetailBarcode { get; set; }
+        public virtual DbSet<tblAttributeLog> tblAttributeLog { get; set; }
+        public virtual DbSet<tblAttributeDetailLog> tblAttributeDetailLog { get; set; }
+        public virtual DbSet<tblProductLog> tblProductLog { get; set; }
+        public virtual DbSet<tblProductAttributeDetailLog> tblProductAttributeDetailLog { get; set; }
+        public virtual DbSet<tblProductAttributeDetailBarcodeLog> tblProductAttributeDetailBarcodeLog { get; set; }
+        public virtual DbSet<tblProductStock> tblProductStock { get; set; }
+        public virtual DbSet<tblProductStockLog> tblProductStockLog { get; set; }
     }
 
 }

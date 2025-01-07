@@ -1,56 +1,4 @@
-﻿$(document).ready(function () {
-    $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
-    $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function (e) {
-        var children = $(this).parent('li.parent_li').find(' > ul > li');
-        if (children.is(':visible')) {
-            children.hide('fast');
-            $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
-        } else {
-            children.show('fast');
-            $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
-        }
-        e.stopPropagation();
-    });
-});
-$(document).on('change', '.moduleCheckbox', function () {
-    var check = $(this).is(':checked');
-    if (check == true) {
-        $(this).parents('.ModuleList').find('input[type=checkbox]').prop('checked', true);
-    }
-    else {
-        $(this).parents('.ModuleList').find('input[type=checkbox]').prop('checked', false);
-    }
-})
-$(document).on('change', '.actionCheckbox', function () {
-    var checkCampus = $(this).is(':checked');
-    if (checkCampus == true) {
-        $(this).parents('.ActionList').find('input[type=checkbox]').prop('checked', true);
-    }
-    else {
-        $(this).parents('.ActionList').find('input[type=checkbox]').prop('checked', false);
-    }
-    var checked = 0;
-    $(this).parents('.ModuleList').find('.actionCheckbox').each(function () {
-        var check = $(this).is(':checked');
-        if (check == false) {
-            checked += 1;
-        }
-    })
-    if (checked > 0) {
-        $(this).parents('.ModuleList').find('.moduleCheckbox').prop('checked', false);
-    }
-    else {
-        $(this).parents('.ModuleList').find('.moduleCheckbox').prop('checked', true);
-    }
-})
-$('.selectAllBtn').click(function () {
-    $('.AllModules').find('input[type=checkbox]').prop('checked', true);
-})
-$('.clearAllBtn').click(function () {
-    $('.AllModules').find('input[type=checkbox]').prop('checked', false);
-})
-
-$(document).keypress(function (event) {
+﻿$(document).keypress(function (event) {
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
         event.preventDefault();
@@ -140,8 +88,44 @@ function DeleteImage(id) {
         return false;
     }
 }
-
+function LoadAttributesDiv() {
+    $(".AllModules").html('<center>' +
+        '<div class="demo">' +
+        '<div class="spinner-grow text-primary" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-secondary" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-success" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-danger" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-warning" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-info" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-light" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '</div>' +
+        '</center>');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Product/AttributesList/?id=" + $("#ProductId").val(),
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $(".AllModules").html(response);
+        }
+    })
+}
 $(function () {
+    LoadAttributesDiv();
     $('#TagId').select2({
         ajax: {
             delay: 150,
@@ -233,33 +217,7 @@ $(function () {
     });
    
     if ($('#ProductId').val() > 0) {
-        if ($('#DeliveryInfoId').find("option[value='" + $('#HiddenDeliveryInfoId').val() + "']").length) {
-            $('#DeliveryInfoId').val($('#HiddenDeliveryInfoId').val()).trigger('change');
-        } else {
-            // Create a DOM Option and pre-select by default
-            var newOption = new Option($('#HiddenDeliveryInfoName').val(), $('#HiddenDeliveryInfoId').val(), true, true);
-            // Append it to the select
-            $('#DeliveryInfoId').append(newOption).trigger('change');
-        }
-    }
-    else {
-        $('#DeliveryInfoId').val(null).trigger('change');
-    }
-    if ($('#ProductId').val() > 0) {
-        if ($('#TagId').find("option[value='" + $('#HiddenTagId').val() + "']").length) {
-            $('#TagId').val($('#HiddenTagId').val()).trigger('change');
-        } else {
-            // Create a DOM Option and pre-select by default
-            var newOption = new Option($('#HiddenTagName').val(), $('#HiddenTagId').val(), true, true);
-            // Append it to the select
-            $('#TagId').append(newOption).trigger('change');
-        }
-    }
-    else {
-        $('#TagId').val(null).trigger('change');
-    }
 
-    if ($('#ProductId').val() > 0) {
         if ($('#CategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
             $('#CategoryId').val($('#HiddenCategoryId').val()).trigger('change');
         } else {
@@ -269,18 +227,31 @@ $(function () {
             $('#CategoryId').append(newOption).trigger('change');
         }
 
-        //if ($('#UnitId').find("option[value='" + $('#HiddenUnitId').val() + "']").length) {
-        //    $('#UnitId').val($('#HiddenUnitId').val()).trigger('change');
+        if ($('#HiddenDeliveryInfoId').val() > 0) {
+            if ($('#DeliveryInfoId').find("option[value='" + $('#HiddenDeliveryInfoId').val() + "']").length) {
+                $('#DeliveryInfoId').val($('#HiddenDeliveryInfoId').val()).trigger('change');
+            } else {
+                // Create a DOM Option and pre-select by default
+                var newOption = new Option($('#HiddenDeliveryInfoName').val(), $('#HiddenDeliveryInfoId').val(), true, true);
+                // Append it to the select
+                $('#DeliveryInfoId').append(newOption).trigger('change');
+            }
+        }
+        
+
+        //if ($('#TagId').find("option[value='" + $('#HiddenTagId').val() + "']").length) {
+        //    $('#TagId').val($('#HiddenTagId').val()).trigger('change');
         //} else {
         //    // Create a DOM Option and pre-select by default
-        //    var newOption = new Option($('#HiddenUnitName').val(), $('#HiddenUnitId').val(), true, true);
+        //    var newOption = new Option($('#HiddenTagName').val(), $('#HiddenTagId').val(), true, true);
         //    // Append it to the select
-        //    $('#UnitId').append(newOption).trigger('change');
+        //    $('#TagId').append(newOption).trigger('change');
         //}
     }
     else {
         $('#CategoryId').val(null).trigger('change');
-        //$('#UnitId').val(null).trigger('change');
+        $('#DeliveryInfoId').val(null).trigger('change');
+        $('#TagId').val(null).trigger('change');
     }
     var $checkoutForm = $('#popupForm').validate({
         rules: {
@@ -290,15 +261,22 @@ $(function () {
             CategoryId: {
                 required: true
             },
+            ArticleNumber: {
+                required: true
+            },
             Barcode: {
                 required: true
             },
-            CostPrice: {
+            SalePrice: {
                 required: true,
                 min: 1
             },
-            SalePrice: {
+            SalePriceForWebsite: {
                 required: true,
+                min: 1
+            },
+            SalePriceAfterExpired: {
+                required: "#IsExpired:checked",
                 min: 1
             },
 
@@ -310,16 +288,23 @@ $(function () {
             CategoryId: {
                 required: 'Category is required.'
             },
+            ArticleNumber: {
+                required: 'Article Number is required.'
+            },
             Barcode: {
                 required: 'Barcode is required.'
             },
-            CostPrice: {
-                required: 'Cost Price is required.',
-                min : 'Cost Price should be greater than zero.'
-            },
             SalePrice: {
-                required: 'Sale Price is required.',
-                min: 'Sale Price should be greater than zero.'
+                required: 'Sale Price (Admin) is required.',
+                min: 'Sale Price (Admin) should be greater than zero.'
+            },
+            SalePriceForWebsite: {
+                required: 'Sale Price (Website) is required.',
+                min: 'Sale Price (Website) should be greater than zero.'
+            },
+            SalePriceAfterExpired: {
+                required: 'Sale Price (Exired) is required.',
+                min: 'Sale Price (Expired) should be greater than zero.'
             },
         },
         errorPlacement: function (error, element) {
@@ -359,6 +344,7 @@ function getSectionsData() {
             //this will be incremented if module has any action. Otherwise it will remain zero.
             checkSectionList++;
             ///
+            var ProductAttributeDetailId = $(this).find('.ProductAttributeDetailId').val();
             var AttributeDetailId = $(this).find('.AttributeDetailId').val();
             var sectionCheckbox = $(this).find('.actionCheckbox').is(':checked');
             var isChecked = '';
@@ -373,6 +359,7 @@ function getSectionsData() {
             check++;
             var action =
             {
+                ProductAttributeDetailId: ProductAttributeDetailId,
                 AttributeDetailId: AttributeDetailId,
                 IsChecked: isChecked,
             }
@@ -395,7 +382,8 @@ function getSectionsData() {
                 var emptyArray = new Array();
                 var action =
                 {
-                    AttributeDetailId: '',
+                    AttriProductAttributeDetailIdbuteDetailId: 0,
+                    AttributeDetailId: 0,
                     IsChecked: "no",
                 }
                 emptyArray.push(action);
@@ -410,29 +398,44 @@ function getSectionsData() {
     return tabsData;
 }
 function CheckSectionsData() {
-    var check = 0;
+    var check = "";
+    var checkModule = 0;
+    var checkedActionsInAllModules = 0;
     $('.ModuleList').each(function () {
+        debugger;
+        checkModule++;
+        var count = 0;
         //Loop on all actions of module
         $(this).find('.ActionList').each(function () {
+            debugger;
             var sectionCheckbox = $(this).find('.actionCheckbox').is(':checked');
             if (sectionCheckbox == true) {
                 check++;
+                count++;
+                if (count == 1) {
+                    checkedActionsInAllModules++;
+                }
             }
         });
     });
+    debugger;
+    if (parseInt(checkModule) == parseInt(checkedActionsInAllModules)) {
+        check = "Pass";
+    }
+    else {
+        check = "Fail";
+    }
     return check;
 }
 $("#IsExpired").change(function (e) {
-    var salePriceAfterExpired = parseFloat($("#SalePriceAfterExpired").val()); 
-
+    $("#ExpiredTextboxDiv").find("label.error").remove();
+    $("#SalePriceAfterExpired").removeClass("error");
     if ($(this).is(":checked")) {
-        // Check if Sale Price After Expired is greater than 0
-        if (salePriceAfterExpired > 0) {
-            $(this).prop("checked", true); 
-        } else {
-            toastr.error("Sale Price must be greater than 0. Please enter a valid sale price.", "Error", { timeOut: 3000, "closeButton": true });
-            $(this).prop("checked", false); 
-        }
+        $("#SalePriceAfterExpired").prop("disabled", false);
+    }
+    else {
+        $("#SalePriceAfterExpired").val(0);
+        $("#SalePriceAfterExpired").prop("disabled", true);
     }
 });
 $('#popupForm').on('submit', function (e) {
@@ -441,8 +444,8 @@ $('#popupForm').on('submit', function (e) {
         return false;
     }
 
-    if (CheckSectionsData() == 0) {
-        toastr.error("Please select atleast one Attribute.", "Error", { timeOut: 3000, "closeButton": true });
+    if (CheckSectionsData() == "Fail") {
+        toastr.error("Please select atleast one Attribute Detail in each Attribute.", "Error", { timeOut: 3000, "closeButton": true });
         return false;
     }
     $('#btn_Save').attr('disabled', 'disabled');
@@ -455,8 +458,9 @@ $('#popupForm').on('submit', function (e) {
     var DeliveryInfoId = $('#DeliveryInfoId').val();
     var UnitId = 0;
     var CategoryId = $('#CategoryId').val();
+    var ArticleNumber = $('#ArticleNumber').val();
     var Barcode = $('#Barcode').val();
-    var CostPrice = $('#CostPrice').val();
+    var CostPrice = 0;
     var SalePrice = $('#SalePrice').val();
     var SalePriceAfterExpired = $('#SalePriceAfterExpired').val();
     var SalePriceForWebsite = $('#SalePriceForWebsite').val();
@@ -492,6 +496,7 @@ $('#popupForm').on('submit', function (e) {
         SalePriceAfterExpired: SalePriceAfterExpired,
         UnitId: UnitId,
         CategoryId: CategoryId,
+        ArticleNumber: ArticleNumber,
         Barcode: Barcode,
         StatusString: StatusString,
         IsFeaturedString: IsFeaturedString,
@@ -570,9 +575,12 @@ $('#popupForm').on('submit', function (e) {
     })
 
 })
-$("#CostPrice").on('input keypress', function (event) {
+$("#SalePrice").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 5, 2);
 });
-$("#SalePrice").on('input keypress', function (event) {
+$("#SalePriceForWebsite").on('input keypress', function (event) {
+    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
+});
+$("#SalePriceAfterExpired").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 5, 2);
 });

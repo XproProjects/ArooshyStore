@@ -70,13 +70,13 @@
                         '</button>' +
                         '<div class="dropdown-menu">';
                     div += '<a class="dropdown-item btnManageRecord btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Manage Attribute Detail">Manage Attribute Detail</a>';
-                    if ($('#EditActionRole').val() > 0) {
-                        div += '<a class="dropdown-item AddEditRecord btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Edit Attribute" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
-                    }
+                    //if ($('#EditActionRole').val() > 0) {
+                    //    div += '<a class="dropdown-item AddEditRecord btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Edit Attribute" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
+                    //}
 
-                    if ($('#DeleteActionRole').val() > 0) {
-                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Attribute" data-toggle="modal" data-target="#DeleteModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
-                    }
+                    //if ($('#DeleteActionRole').val() > 0) {
+                    //    div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Attribute" data-toggle="modal" data-target="#DeleteModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
+                    //}
 
 
                     div += '</div>' +
@@ -244,7 +244,9 @@ function getPropertyTypeDetailsList(attributeId, tr, i) {
                 $.each(data.data, function (index, obj) {
                     color = obj.StatusString == 'Active' ? '#1DC9B7' : '#FD3995';
                     var edit = '<a title="Edit Attribute Detail" data-toggle="modal" data-target="#MyModal" class="btnManageRecordDetail btn btn-primary btnOpenModal" href="javascript:void(0)" data-value="' + obj.AttributeDetailId + '" style="border-radius:20px;padding:5px;color:#fff;padding-left:15px;padding-right:15px"><i class="fas fa-fw fa-edit"></i></a>&nbsp;';
-                    var del = '<a title="Delete Attribute Detail" class="deleteAttributeDetail btn btn-danger" href="javascript:void(0)" data-toggle="modal" data-target="#DeleteModal" data-id="' + obj.AttributeDetailId + '" style="border-radius:20px;padding:5px;color:#fff;padding-left:15px;padding-right:15px"><i class="fas fa-fw fa-times-circle"></i></a>&nbsp;';
+                    /*var del = '<a title="Delete Attribute Detail" class="deleteAttributeDetail btn btn-danger" href="javascript:void(0)" data-toggle="modal" data-target="#DeleteModal" data-id="' + obj.AttributeDetailId + '" style="border-radius:20px;padding:5px;color:#fff;padding-left:15px;padding-right:15px"><i class="fas fa-fw fa-times-circle"></i></a>&nbsp;';*/
+                    //var edit = '';
+                    var del = '';
 
                     rows += '<tr class="newDocumentsRow' + attributeId + '">' +
                         '<td style="vertical-align: middle; text-align: center; padding: 10px; font-size: 15px; border-bottom: 1px solid #D8D8D8; width: 20.75px;">' +

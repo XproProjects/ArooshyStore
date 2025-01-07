@@ -14,8 +14,6 @@ namespace ArooshyStore.DAL.Entities
         public string ProductNameUrdu { get; set; }
         public string ProductDescription { get; set; }
 
-        [StringLength(50)]
-        public string Barcode { get; set; }
         public Nullable<int> DeliveryInfoId { get; set; }
 
         public Nullable<int> UnitId { get; set; }
@@ -28,6 +26,9 @@ namespace ArooshyStore.DAL.Entities
 
         public Nullable<bool> Status { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
+
+        [StringLength(50)]
+        public string ArticleNumber { get; set; }
 
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

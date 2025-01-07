@@ -18,14 +18,25 @@
                 }
             }
         },
+        "responsive": {
+            "details": {
+                "type": "column",
+                "target": 1
+            }
+        },
+        "columnDefs": [{
+            "className": "control",
+            "orderable": false,
+            "targets": 1
+        }],
         "columns": [
             {
-                "data": "ImagePath", "width": "45px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
-                    return '<img src="' + data + '" style="height:45px;width:45px;" />';
+                "data": "ImagePath", "width": "55px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
+                    return '<a href="' + data + '" target="_blank"><img src="' + data + '" style="height:55px;width:55px;" /></a>';
                 }
             },
-            { "data": "Barcode", "name": "Barcode", "autoWidth": true },
-            { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+            { "data": "ArticleNumber", "name": "ArticleNumber", "class": "ArticleNumberClass control", "autoWidth": true },
+            { "data": "ProductName", "name": "ProductName", "class": "ProductNameClass", "autoWidth": true },
             { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
             {
                 "data": "StatusString", "name": "StatusString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
@@ -37,11 +48,8 @@
                     }
                 }
             },
-            //{ "data": "ProductNameUrdu", "name": "ProductNameUrdu", "autoWidth": true },
-            { "data": "CostPrice", "name": "CostPrice", "autoWidth": true },
-            { "data": "SalePrice", "name": "SalePrice", "autoWidth": true },
             {
-                "data": "IsFeaturedString", "name": "IsFeaturedString", "orderable": true, "autoWidth": false, 'render': function (data) {
+                "data": "IsFeaturedString", "name": "IsFeaturedString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
                     if (data.toString() == "Yes") {
                         return '<span class="badge badge-success badge-pill">Yes</span>';
                     }
@@ -50,6 +58,32 @@
                     }
                 }
             },
+            {
+                "data": "SalePrice", "name": "SalePrice", "width": "130px", "class": "Aright", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
+                }
+            },
+            {
+                "data": "SalePriceForWebsite", "name": "SalePriceForWebsite", "width": "130px", "class": "Aright", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
+                }
+            },
+            {
+                "data": "IsExpiredString", "name": "IsExpiredString", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    if (data.toString() == "Yes") {
+                        return '<span class="badge badge-success badge-pill">Yes</span>';
+                    }
+                    else {
+                        return '<span class="badge badge-danger badge-pill">No</span>';
+                    }
+                }
+            },
+            {
+                "data": "SalePriceAfterExpired", "name": "SalePriceAfterExpired", "width": "130px", "class": "Aright", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
+                }
+            },
+            { "data": "ProductDescription", "name": "ProductDescription", "autoWidth": true },
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -63,6 +97,18 @@
             },
             { "data": "UpdatedByString", "name": "UpdatedBy", "autoWidth": true },
             {
+                "data": "ProductId", "width": "70px", "class": "Acenter", "orderable": false, "render": function (data) {
+                    var detail = '<a title="View Product Detail" href ="/admin/product/productdetail/?id=' + data + '" target="_blank" class="btn btn-secondary" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Detail</a>&nbsp';
+                    return detail;
+                }
+            },
+            {
+                "data": "ProductId", "width": "120px", "class": "Acenter", "orderable": false, "render": function (data) {
+                    var print = '<a title="Print Barcode Stickers" data-toggle="modal" data-target="#MyModal" class="btn btn-secondary btnPrint btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Print Barcode</a>&nbsp';
+                    return print;
+                }
+            },
+            {
                 "data": "ProductId", "width": "130px", "class": "Acenter", "orderable": false, "render": function (data) {
                     var div = '';
                     div += '<div class="btn-group">' +
@@ -71,7 +117,12 @@
                         '</button>' +
                         '<div class="dropdown-menu">';
                     div += '<a class="dropdown-item btnProductReview" href="javascript:void(0)" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Product Reviews">Product Reviews</a>';
-                    div += '<a class="dropdown-item btnAttachDocument btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Attach Document">Attach Documents</a>';
+                    if ($('#DocumentActionRole').val() > 0) {
+                        div += '<a class="dropdown-item btnAttachDocument btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Attach Document">Attach Documents</a>';
+                    }
+                    if ($('#ProductCostActionRole').val() > 0) {
+                        div += '<a class="dropdown-item btnProductCost btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Show / Edit Product Cost" style="text-decoration:none !important;font-weight:normal !important">Product Cost</a>';
+                    }
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal" data-toggle="modal" data-target="#MyModal" href="javascript:void(0)" data-value="' + data + '" title="Edit Product" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
@@ -94,7 +145,6 @@
 $(document).on('click', '.btnProductReview', function () {
 
     var id = $(this).attr("data-value"); // Get the ProductId
-    alert(id);
     window.location.href = "/Admin/Product/ProductReviews?productId=" + id;
 });
 
@@ -125,6 +175,7 @@ $(document).on('keydown', function (event) {
 $(document).on('shown.bs.modal', "#MyModal", function () {
     $('#ProductName').focus();
 });
+
 $(document).on('click', '.AddEditRecord', function () {
     $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
     var id = $(this).attr("data-value");
@@ -149,6 +200,47 @@ $(document).on('click', '.AddEditRecord', function () {
         }
     })
 });
+
+$(document).on('click', '.btnProductCost', function () {
+    $("#MyModal").find('.modal-dialog').removeClass("modal-lg");
+    var id = $(this).attr("data-value");
+    $('#ModelHeaderSpan').html('Product Cost');
+    $('#modalDiv').html('');
+    // $('#modalDiv').load('@Url.Action("InsertUpdateProduct", "Product")?id=' + id + '');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Product/UpdateCostPrice/",
+        data: {
+            'id': id,
+        },
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $('#modalDiv').html(response);
+        }
+    })
+});
+$(document).on('click', '.btnPrint', function () {
+    $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
+    var id = $(this).attr("data-value");
+    var articleNumber = $(this).parents("tr").find(".ArticleNumberClass").text();
+    var productName = $(this).parents("tr").find(".ProductNameClass").text();
+    $('#ModelHeaderSpan').html('Print Barcode Stickers (' + articleNumber + ' - ' + productName + ')');
+    $('#modalDiv').html('');
+    // $('#modalDiv').load('@Url.Action("InsertUpdateProduct", "Product")?id=' + id + '');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Product/ProductAttributesBarcodesList/",
+        data: {
+            'id': id,
+        },
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $('#modalDiv').html(response);
+        }
+    })
+});
 $('#btnSearch').click(function () {
     SearchItem();
 });
@@ -159,14 +251,17 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Product Name') {
+    if (BElement.html() == 'Article #') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
     }
-    else if (BElement.html() == 'Barcode') {
+    else if (BElement.html() == 'Product Name') {
         oTable.columns(1).search($('#txtSearch').val().trim()).draw();
     }
     else if (BElement.html() == 'Category') {
         oTable.columns(2).search($('#txtSearch').val().trim()).draw();
+    }
+    else if (BElement.html() == 'Barcode') {
+        oTable.columns(3).search($('#txtSearch').val().trim()).draw();
     }
     else {
         alert("Error! try again.");

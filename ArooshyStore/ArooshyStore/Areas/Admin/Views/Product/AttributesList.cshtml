@@ -1,0 +1,76 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model ProductViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/User/AssignModule.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <section class="tree">
+            <ul>
+                @{
+                    int i = 0;
+                }
+                @foreach (AttributeViewModel u in Model.AttributesList)
+                {
+                    i++;
+                    string checkTab = "";
+                    string bgColor = "";
+                    if (u.AllAttributes == "Yes")
+                    {
+                        checkTab = "checked";
+                    }
+                    if (u.AttributeDetails.Any(x => x.ProductAttributeDetailId > 0))
+                    {
+                        bgColor = "#7453A6";
+                    }
+                    else
+                    {
+                        bgColor = "#D69C1F";
+                    }
+                    string id = "module" + i;
+                    int j = 0;
+
+                    <li class="ModuleList" style="">
+                        <span class="col-md-12" style=" padding: 15px; background-color: @bgColor; margin-bottom: 32px;font-size:17px;margin-left:-20px">
+                            <input type="hidden" class="AttributeId" value="@u.AttributeId" />
+                            <input type="checkbox" id="@id" class="moduleCheckbox" @checkTab />
+                            <label for="@id" style="margin-right: 3px;float: left;"></label>
+                            <a style="color:whitesmoke;margin-left: 8px; text-decoration:none;" data-toggle="collapse" href="#Web" aria-expanded="true" aria-controls="Web">
+                                @u.AttributeName <span class="pull-right" style="font-size: 14px; font-weight: bold">(@u.AttributeDetails.Where(x => x.ProductAttributeDetailId > 0).Count() / @u.AttributeDetails.Count())</span>
+                            </a>
+                        </span>
+                        <ul style="margin-top:-31px">
+                            @foreach (ProductAttributeDetailViewModel m in u.AttributeDetails)
+                            {
+                                j++;
+                                string checkAction = "";
+                                string bgColor2 = "";
+                                if (m.ProductAttributeDetailId > 0)
+                                {
+                                    checkAction = "checked";
+                                    bgColor2 = "#727B84";
+                                }
+                                else
+                                {
+                                    bgColor2 = "#ECC87B";
+                                }
+                                string id2 = "action" + i + j;
+                                <li style="display:none" class="ActionList">
+                                    <span style="background-color: @bgColor2; color: white; padding: 5px; padding-bottom: 12px" class="col-md-10">
+                                        <input type="hidden" class="ProductAttributeDetailId" value="@m.ProductAttributeDetailId" />
+                                        <input type="hidden" class="AttributeDetailId" value="@m.AttributeDetailId" />
+                                        <input type="checkbox" id="@id2" class="actionCheckbox" @checkAction />
+                                        <label for="@id2" style="margin-right: 3px;"></label>
+                                        <b style="font-size:15px;margin-top:6px;text-decoration:none!important;">@m.AttributeDetailName</b>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </section>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/AttributesList.js"></script>
+

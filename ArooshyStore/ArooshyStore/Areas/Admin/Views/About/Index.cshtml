@@ -50,11 +50,11 @@
                             <div class="col-lg-5" style="margin-top:4px">
                                 @if (Model.Any(x => x.ActionName.ToLower() == "create"))
                                 {
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
+                                @*<a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
                                     <i class="fal fa-plus-circle"></i>
                                     &nbsp;
                                     New About
-                                </a>
+                                </a>*@
                                 }
                                 @if (Model.Any(x => x.ActionName.ToLower() == "update"))
                                 {
@@ -74,11 +74,11 @@
                                 }
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
-                                <div class="input-group">
+                                @*<div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Name</button>
+                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Description</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
-                                            <a class="dropdown-item" href="#">About Name</a>
+                                            <a class="dropdown-item" href="#">Description</a>
 
                                         </div>
                                     </div>
@@ -86,15 +86,7 @@
                                     <div class="input-group-append">
                                         <button id="btnSearch" class="btn btn-outline-default btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false">Go</button>
                                     </div>
-                                </div>
-                                @*<div class="pull-right top_search" style="width:100%">
-                                        <div class="input-group">
-                                            <input type="text" id="txtSearch" class="form-control" placeholder="Search here...">
-                                            <span class="input-group-btn">
-                                                <button id="btnSearch" class="btn btn-outline-primary waves-effect waves-themed btnSearchGo" type="button">Go</button>
-                                            </span>
-                                        </div>
-                                    </div>*@
+                                </div>*@
                             </div>
                         </div>
 

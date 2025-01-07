@@ -9,11 +9,16 @@ namespace ArooshyStore.BLL.Interfaces
     {
         List<ProductViewModel> GetProductsListAndCount(string whereCondition, string start, string length, string sorting);
         ProductViewModel GetProductById(int id);
+        ProductViewModel GetProductAttributesById(int id);
         StatusMessageViewModel InsertUpdateProduct(ProductViewModel model,string AttributeDetailData, string Tagsdata, int loggedInUserId);
+        StatusMessageViewModel UpdateCostPrice(ProductViewModel model, int loggedInUserId);
         StatusMessageViewModel DeleteProduct(int id, int loggedInUserId);
         List<ProductViewModel> GetFeaturedProducts();
         List<ProductViewModel> GetExpiredProducts();
         List<ProductViewModel> GetProductsByMasterCategory(int masterCategoryId);
+        List<ProductAttributeDetailViewModel> GetProductAttributesListByProductId(int productId);
+        List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data);
+        ProductViewModel GetProductDetailById(int id);
 
         List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);

@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Print Barcode Stickers";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Product/Print.css" rel="stylesheet" />
+<div class="mySelect" style="overflow: hidden;padding: 0px">
+    <main id="js-page-content" role="main" class="page-content">
+        <div class="row">
+            <div class="col-lg-6" style="margin-top:4px">
+            </div>
+            <div class="col-md-12" style="display:flex">
+                <table style="width: 100%">
+                    <tr>
+                        <th>
+                            <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-clipboard"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Test</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-list-ol"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Print Barcode Stickers</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </th>
+                        <th style="text-align:right">
+                            <button type="button" class="btn printBtn" onclick="window.print();" style=" background-color:#544D81; color: white;height:32px;width:65px;padding:6px">
+                                Print
+                            </button>
+                        </th>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("download", "pdf", FormMethod.Post, new { id = "downloadForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+        {
+            @*Header of The main Panel Ends*@<input type="hidden" name="DocumentName" id="DocumentName" value="" /><input type="hidden" name="FileName" id="FileName" value="TimesheetReport" /><div id="HtmlData" style="margin-top:8px">
+                <div id="printable-content" class="panel printable-content rpt table-responsive" style="padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                    @for (int j = 0; j < 4; j++)
+                    {
+                        <table style="padding-top:0px;" id="myTable">
+                            <tr>
+                                <th class="ArooshyStoreTag" style="font-weight: bold; text-align: center;" colspan="12">Arooshy Store</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center;text-decoration:underline" colspan="12">
+                                    <input type="hidden" class="HiddenBarcode" value="12345678" />
+                                    <img class="BarcodeTag" style="width:300px" />
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="ProductNameTag" style=" text-align: center; font-weight: bold" colspan="12">
+                                    1234 - M - 32
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="PriceTag" style=" text-align: center;font-weight:bold" colspan="12">
+                                    Price 100 /-
+                                </th>
+                            </tr>
+                        </table>
+                        <div class="PageEnd"></div>
+                    }
+                    @for (int k = 0; k < 5; k++)
+                    {
+                        <table style="padding-top:0px;" id="myTable">
+                            <tr>
+                                <th class="ArooshyStoreTag" style="font-weight: bold; text-align: center;" colspan="12">&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center;text-decoration:underline" colspan="12">
+                                    &nbsp;
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="ProductNameTag" style=" text-align: center; font-weight: bold" colspan="12">
+                                    &nbsp;
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="PriceTag" style=" text-align: center;font-weight:bold" colspan="12">
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </table>
+                    }
+                    @*<h1 class="ArooshyStoreTag" style="margin-bottom:-20px">Arooshy Store</h1>
+                        <br />
+                        <input type="hidden" class="HiddenBarcode" value="12345678" />
+                        <svg class="BarcodeTag" style=""></svg>
+                        <h1 class="ProductNameTag" style="">12345435344 - 12 - Blue</h1>
+                        <h1 class="PriceTag" style="">Price 2000 /-</h1>*@
+
+                    @*<center>
+                            <h1 class="ArooshyStoreTag" style="margin-bottom:-20px">Arooshy Store</h1>
+                            <br />
+                            <input type="hidden" class="HiddenBarcode" value="12345678" />
+                            <svg class="BarcodeTag" style=""></svg>
+                            <h1 class="ProductNameTag" style="">12345435344 - 12 - Blue</h1>
+                            <h1 class="PriceTag" style="">Price 2000 /-</h1>
+                        </center>
+                        <div class="PageEnd"></div>*@
+                    <!--<table style="padding: 30px;padding-top:0px;margin-top:-55px" id="myTable">
+                    <tr>
+                        <th class="barcodeText" style="font-weight: bold;text-align: center;text-decoration:underline;" colspan="6">Awais</th>
+                    </tr>
+                    <tr>
+                        <th class="barcodeText" style="font-weight: bold;  text-align: center;text-decoration:underline" colspan="6">Attendance Detail</th>
+                    </tr>
+                    <tr>
+                        <th class="barcodeText" style="font-weight: normal;  text-align: center;" colspan="6">-->
+                    @*<span>@Convert.ToDateTime(Model.MonthDate).ToString("MMMM dd, yyyy")</span>*@
+                    <!--<span class="barcodeText">Jun 13, 2024</span>
+                            </th>
+                        </tr>
+                        <thead>
+                            <tr>
+                                <th style="font-weight: bold; font-size: 16px; text-align: center; padding-bottom: 10px" colspan="12">&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>-->
+                </div>
+
+                @*<div id="printable-content2" class="panel rpt" style=" margin-top:-20px;padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                        <table style="padding: 30px;padding-top:0px;margin-top:-55px" id="myTable">
+                            <tr>
+                                <th style="font-weight: bold; font-size: 18px; text-align: center;" colspan="6">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="PageEnd"></div>*@
+                <br />
+            </div>
+        }
+    </main>
+</div>
+<script src="~/Areas/Admin/Scripts/JsBarcode.all.min.js"></script>
+<script type="text/javascript">
+    JsBarcode(".BarcodeTag", $(".HiddenBarcode").val(), {
+        //format: "pharmacode",
+        //lineColor: "#0aa",
+        width: 4,
+        height: 40,
+        displayValue: false,
+        fontSize: 50,
+    });
+    // $(".BarcodeTag").JsBarcode($(".HiddenBarcode").val());
+    //$(document).on("click", ".printBtn", function () {
+    //    $('.printable-content').removeClass('table-responsive');
+    //})
+    $(document).ready(function () {
+        $('.nav-menu li a[href="/attendance/index"]').parent("li").addClass('active');
+        $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").css('display', "block");
+        $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+        $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+    });
+</script>
+

@@ -60,9 +60,10 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var productName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
-                var barcode = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
+                var articleNumber = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var productName = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
                 var categoryName = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
+                var barcode = Request.Form.GetValues("columns[3][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
@@ -79,17 +80,21 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.ProductId asc";
                 }
-                if (!(string.IsNullOrEmpty(productName)))
+                if (!(string.IsNullOrEmpty(articleNumber)))
+                {
+                    whereCondition += " LOWER(s.ArticleNumber) like ('%" + articleNumber.ToLower() + "%')";
+                }
+                else if (!(string.IsNullOrEmpty(productName)))
                 {
                     whereCondition += " LOWER(s.ProductName) like ('%" + productName.ToLower() + "%')";
                 }
-                else if (!(string.IsNullOrEmpty(barcode)))
-                {
-                    whereCondition += " LOWER(s.Barcode) like ('%" + barcode.ToLower() + "%')";
-                }
                 else if (!(string.IsNullOrEmpty(categoryName)))
                 {
-                    whereCondition += " LOWER(c.CategoryName) like ('%" + categoryName.ToLower() + "%')";
+                    whereCondition += " (LOWER(c.CategoryName) like ('%" + categoryName.ToLower() + "%') or LOWER(p.CategoryName) like ('%" + categoryName.ToLower() + "%') )";
+                }
+                else if (!(string.IsNullOrEmpty(barcode)))
+                {
+                    whereCondition += " s.ProductId in (select pd.ProductId from tblProductAttributeDetailBarcode pd where pd.Barcode = '"+barcode+"' ) ";
                 }
                 else
                 {
@@ -126,6 +131,19 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 return PartialView("_UserLoggedOut");
             }
         }
+        [HttpGet]
+        public ActionResult AttributesList(int id = 0)
+        {
+            if (User != null)
+            {
+                ProductViewModel user = _repository.GetProductAttributesById(id);
+                return PartialView(user);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
         [HttpPost]
         public ActionResult InsertUpdateProduct(ProductViewModel user, string data,string tags)
         {
@@ -134,6 +152,37 @@ namespace ArooshyStore.Areas.Admin.Controllers
             {
 
                 response = _repository.InsertUpdateProduct(user, data,tags, User.UserId);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+        }
+
+        [HttpGet]
+        public ActionResult UpdateCostPrice(int id = 0)
+        {
+            if (User != null)
+            {
+                ProductViewModel user = _repository.GetProductById(id);
+                return PartialView(user);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCostPrice(ProductViewModel user)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            if (User != null)
+            {
+
+                response = _repository.UpdateCostPrice(user, User.UserId);
             }
             else
             {
@@ -160,6 +209,67 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
 
+        [HttpGet]
+        public ActionResult ProductAttributesBarcodesList(int id = 0)
+        {
+            if (User != null)
+            {
+                List<ProductAttributeDetailViewModel> list = _repository.GetProductAttributesListByProductId(id);
+                return PartialView(list);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
+
+        public ActionResult PrintBarcodeStickers(string data)
+        {
+            if (User != null)
+            {
+                List<ProductAttributeDetailViewModel> list = _repository.GetBarcodesDataForPrint(data);
+                return View(list);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+        public ActionResult PrintBarcodeStickersForTesting()
+        {
+            if (User != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+
+        public ActionResult ProductDetail(int id)
+        {
+            if (User != null)
+            {
+                ProductViewModel model = _repository.GetProductDetailById(id);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+        }
+        //public ActionResult PrintBarcodeStickers()
+        //{
+        //    if (User != null)
+        //    {
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("login", "account");
+        //    }
+        //}
         [HttpPost]
         public JsonResult GetProductDetailsByBarcode(string barcode)
         {

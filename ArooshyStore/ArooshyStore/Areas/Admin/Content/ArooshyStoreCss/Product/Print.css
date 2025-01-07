@@ -1,0 +1,86 @@
+﻿@media print {
+    /*@page:first {
+                size: A4;
+                width: 5.67in;
+                height: 8.6in;
+                margin-top: -30px;
+                margin-left: 80px;
+                margin-bottom: 0mm;
+            }
+
+            @page {
+                size: A4;
+                width: 5.67in;
+                height: 8.6in;
+                margin-top: 5px;
+                margin-bottom: 0mm;
+                margin-left: 80px;
+            }*/
+
+
+    @page {
+        size: landscape;
+        text-align: center;
+        /* height: 0.94in;
+        width: 1.89in;*/
+        /*margin-top: -11px;
+        margin-left: 36px;
+        margin-bottom: 0mm;*/
+        margin-left: -39px;
+        height: 4in;
+        margin-top: -10px;
+    }
+
+    @page:first {
+        size: landscape;
+        text-align: center;
+        margin-top: -205px !important;
+        margin-left: -39px;
+    }
+
+    .ArooshyStoreTag {
+        font-size: 45px !important;
+    }
+
+    .ProductNameTag {
+        font-size: 30px !important;
+    }
+
+    .PriceTag {
+        font-size: 30px !important;
+    }
+
+    .PageEnd {
+        page-break-after: always !important;
+    }
+
+    .BarcodeTag {
+        width: 480px !important;
+    }
+    /*.Font17 {
+        font-size: 17px !important;
+    }
+
+    .Font18 {
+        font-size: 18px !important;
+    }*/
+
+
+}
+/*
+.ArooshyStoreTag {
+    font-size: 65px !important;
+}
+
+.ProductNameTag {
+    font-size: 55px !important;
+}
+
+.PriceTag {
+    font-size: 60px !important;
+}
+*/
+
+/*.PageEnd {
+    page-break-after: always !important;
+}*/

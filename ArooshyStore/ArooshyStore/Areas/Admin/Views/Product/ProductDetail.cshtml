@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Product";
+}
+@using ArooshyStore.Models.ViewModels
+@model ProductViewModel
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-md-12" style="display:flex">
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-clipboard"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Product Detail</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-list-ol"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">@Model.ArticleNumber - @Model.ProductName</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </th>
+                    <th style="text-align:right">
+                        <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="panel" style="padding:10px">
+        <div class="row">
+            <div class="col-md-6">
+                @if (Model.DocumentsList.Count > 0)
+                {
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            @{
+                                string hasProfile = "No";
+                                int counter = 0;
+                                string activeClass = "";
+                            }
+                            @foreach (DocumentViewModel d in Model.DocumentsList)
+                            {
+                                if (d.Remarks == "ProfilePicture")
+                                {
+                                    hasProfile = "Yes";
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="@d.ImagePath" data-src="holder.js/800x400?auto=yes&bg=37e2d0&fg=ffffff&text=First slide" alt="First slide">
+                                    </div>
+                                }
+                            }
+                            @foreach (DocumentViewModel d in Model.DocumentsList)
+                            {
+                                counter++;
+                                if (hasProfile == "No" && counter == 1)
+                                {
+                                    activeClass = "active";
+                                }
+                                else
+                                {
+                                    activeClass = "";
+                                }
+                                if (d.Remarks != "ProfilePicture")
+                                {
+                                    <div class="carousel-item @activeClass">
+                                        <img class="d-block w-100" src="@d.ImagePath" data-src="holder.js/800x400?auto=yes&bg=1dc9b7&fg=ffffff&text=Third slide" alt="Third slide">
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="/Areas/Admin/Content/noimage.png" data-src="holder.js/800x400?auto=yes&bg=37e2d0&fg=ffffff&text=First slide" alt="First slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped table-bordered" style="border:1px solid #ddd">
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Article Number</th>
+                        <td style=" border: 1px solid #ddd">@Model.ArticleNumber</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Product Name</th>
+                        <td style=" border: 1px solid #ddd">@Model.ProductName</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Category</th>
+                        <td style=" border: 1px solid #ddd">@Model.CategoryName</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Sale Price (Admin)</th>
+                        <td style=" border: 1px solid #ddd;color:green; font-weight:bold">@Model.SalePrice</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Sale Price (Website)</th>
+                        <td style=" border: 1px solid #ddd;color:green; font-weight:bold">@Model.SalePriceForWebsite</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Expired?</th>
+                        <td style=" border: 1px solid #ddd;">@(Model.IsExpired == true ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Sale Price (Expired)</th>
+                        <td style=" border: 1px solid #ddd;color:green; font-weight:bold">@Model.SalePriceAfterExpired</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Featured?</th>
+                        <td style=" border: 1px solid #ddd;">@(Model.IsFeatured == true ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Active?</th>
+                        <td style=" border: 1px solid #ddd;">@(Model.Status == true ? "Yes" : "No")</td>
+                    </tr>
+                    @foreach (AttributeViewModel at in Model.AttributesList)
+                    {
+                        <tr>
+                            <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">@at.AttributeName</th>
+                            <td style=" border: 1px solid #ddd;">
+                                <ul>
+                                    @foreach (AttributeViewModel ad in Model.AttributeDetailsList.Where(x => x.AttributeId == at.AttributeId))
+                                    {
+                                        <li>@ad.AttributeDetailName</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.7/holder.min.js"></script>
+<!-- this overlay is activated only when mobile menu is triggered -->
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductDetail.js"></script>

@@ -74,6 +74,7 @@ $(document).on('shown.bs.modal', "#MyModal", function () {
     $('#DeliveryInfoName').focus();
 });
 $(document).on('click', '.AddEditRecord', function () {
+    $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
     var id = $(this).attr("data-value");
     if (id > 0) {
         $('#ModelHeaderSpan').html('Edit Delivery Information');

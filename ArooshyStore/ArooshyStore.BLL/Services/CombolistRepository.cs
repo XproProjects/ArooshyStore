@@ -24,7 +24,15 @@ namespace ArooshyStore.BLL.Services
         #region Master Category
         public Select2PagedResultViewModel GetCategoriesList(string searchTerm, int pageSize, int pageNumber, string type)
         {
-            AllItemsList = AllCategoriesList(type);
+            if (type.ToLower() == "master")
+            {
+                AllItemsList = AllParentCategoriesList(type);
+            }
+            else
+            {
+                AllItemsList = AllChildCategoriesList(type);
+            }
+            
             var select2pagedResult = new Select2PagedResultViewModel();
             var totalResults = 0;
             select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
@@ -32,17 +40,33 @@ namespace ArooshyStore.BLL.Services
             return select2pagedResult;
         }
 
-        public IQueryable<SelectListViewModel> AllCategoriesList(string type)
+        public IQueryable<SelectListViewModel> AllParentCategoriesList(string type)
         {
             List<SelectListViewModel> item = new List<SelectListViewModel>();
             item = (from c in _unitOfWork.Db.Set<tblCategory>()
                     orderby c.CategoryName
-                    where type.ToLower() == "master" ? c.ParentCategoryId == 0 : c.ParentCategoryId != 0
+                    where c.ParentCategoryId == 0
                     && c.Status == true
                     select new SelectListViewModel
                     {
                         id = c.CategoryId,
                         text = c.CategoryName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        public IQueryable<SelectListViewModel> AllChildCategoriesList(string type)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblCategory>()
+                    join p in _unitOfWork.Db.Set<tblCategory>() on c.ParentCategoryId equals p.CategoryId
+                    orderby c.CategoryName
+                    where c.ParentCategoryId != 0
+                    && c.Status == true
+                    select new SelectListViewModel
+                    {
+                        id = c.CategoryId,
+                        text = c.CategoryName + " - " + p.CategoryName
                     }).ToList();
             var result = item.AsQueryable();
             return result;

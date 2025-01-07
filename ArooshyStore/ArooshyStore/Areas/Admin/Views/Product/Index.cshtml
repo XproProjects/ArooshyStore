@@ -50,11 +50,11 @@
                             <div class="col-lg-5" style="margin-top:4px">
                                 @if (Model.Any(x => x.ActionName.ToLower() == "create"))
                                 {
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
-                                    <i class="fal fa-plus-circle"></i>
-                                    &nbsp;
-                                    New Product
-                                </a>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
+                                        <i class="fal fa-plus-circle"></i>
+                                        &nbsp;
+                                        New Product
+                                    </a>
                                 }
                                 @if (Model.Any(x => x.ActionName.ToLower() == "update"))
                                 {
@@ -72,15 +72,32 @@
                                 {
                                     <input type="hidden" id="DeleteActionRole" value="0" />
                                 }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "product cost"))
+                                {
+                                    <input type="hidden" id="ProductCostActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="ProductCostActionRole" value="0" />
+                                }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "documents"))
+                                {
+                                    <input type="hidden" id="DocumentActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="DocumentActionRole" value="0" />
+                                }
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product Name</button>
+                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Article #</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
+                                            <a class="dropdown-item" href="#">Article #</a>
                                             <a class="dropdown-item" href="#">Product Name</a>
-                                            <a class="dropdown-item" href="#">Barcode</a>
                                             <a class="dropdown-item" href="#">Category</a>
+                                            <a class="dropdown-item" href="#">Barcode</a>
                                         </div>
                                     </div>
                                     <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
@@ -103,18 +120,22 @@
                             <thead>
                                 <tr>
                                     <th class="min-mobile"></th>
-                                    <th class="min-mobile">Barcode</th>
+                                    <th class="control">Article #</th>
                                     <th class="min-tablet">Product Name</th>
-                                    <th class="min-tablet">Category</th>
-                                    <th class="min-desktop">Status</th>
-                                    @*<th class="none">Product Name Urdu</th>*@
-                                    <th class="none">Cost Price</th>
-                                    <th class="none">Sales Price</th>
+                                    <th class="min-desktop">Category</th>
+                                    <th class="none">Status</th>
                                     <th class="none">Featured?</th>
+                                    <th class="none">Sales Price (Admin)</th>
+                                    <th class="none">Sales Price (Website)</th>
+                                    <th class="none">Expired?</th>
+                                    <th class="none">Sales Price (Expired)</th>
+                                    <th class="none">Product Description</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>
                                     <th class="none">Updated By</th>
+                                    <th class="min-mobile">Detail</th>
+                                    <th class="min-mobile">Print Barcode</th>
                                     <th class="min-mobile">Edit</th>
                                 </tr>
                             </thead>

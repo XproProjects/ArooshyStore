@@ -52,6 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ModelDbContext.cs" />
+    <Compile Include="Entities\tblAttributeDetailLog.cs" />
+    <Compile Include="Entities\tblAttributeLog.cs" />
+    <Compile Include="Entities\tblProductAttributeDetailBarcode.cs" />
+    <Compile Include="Entities\tblProductAttributeDetailBarcodeLog.cs" />
+    <Compile Include="Entities\tblProductAttributeDetailLog.cs" />
+    <Compile Include="Entities\tblProductLog.cs" />
+    <Compile Include="Entities\tblProductStock.cs" />
+    <Compile Include="Entities\tblProductStockLog.cs" />
     <Compile Include="Entities\tblSalary.cs" />
     <Compile Include="Entities\tblEmployeeAttendance.cs" />
     <Compile Include="Entities\tblEmployee.cs" />
@@ -283,6 +291,46 @@
     <Compile Include="Migrations\202410291018130_Added_Column_IsExpired&amp;BarcodeinTblProduct&amp;AttributeDetail.Designer.cs">
       <DependentUpon>202410291018130_Added_Column_IsExpired&amp;BarcodeinTblProduct&amp;AttributeDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412261153593_Added_Column_ArticleNumber_tblProduct.cs" />
+    <Compile Include="Migrations\202412261153593_Added_Column_ArticleNumber_tblProduct.Designer.cs">
+      <DependentUpon>202412261153593_Added_Column_ArticleNumber_tblProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412291043014_Dropped_Column_Barcode_tblProduct.cs" />
+    <Compile Include="Migrations\202412291043014_Dropped_Column_Barcode_tblProduct.Designer.cs">
+      <DependentUpon>202412291043014_Dropped_Column_Barcode_tblProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501011209231_Added_Table_tblProductAttributeDetailBarcode.cs" />
+    <Compile Include="Migrations\202501011209231_Added_Table_tblProductAttributeDetailBarcode.Designer.cs">
+      <DependentUpon>202501011209231_Added_Table_tblProductAttributeDetailBarcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501011211275_Dropped_Table_tblProductAttributeDetailBarcode.cs" />
+    <Compile Include="Migrations\202501011211275_Dropped_Table_tblProductAttributeDetailBarcode.Designer.cs">
+      <DependentUpon>202501011211275_Dropped_Table_tblProductAttributeDetailBarcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501011212144_Added_Table_tblProductAttributeDetailBarcode_Again.cs" />
+    <Compile Include="Migrations\202501011212144_Added_Table_tblProductAttributeDetailBarcode_Again.Designer.cs">
+      <DependentUpon>202501011212144_Added_Table_tblProductAttributeDetailBarcode_Again.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501011213067_Dropped_Table_tblProductAttributeDetailBarcode_Again.cs" />
+    <Compile Include="Migrations\202501011213067_Dropped_Table_tblProductAttributeDetailBarcode_Again.Designer.cs">
+      <DependentUpon>202501011213067_Dropped_Table_tblProductAttributeDetailBarcode_Again.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501011214223_Added_Table_tblProductAttributeDetailBarcode_Again_2.cs" />
+    <Compile Include="Migrations\202501011214223_Added_Table_tblProductAttributeDetailBarcode_Again_2.Designer.cs">
+      <DependentUpon>202501011214223_Added_Table_tblProductAttributeDetailBarcode_Again_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501020926517_Added_Table_tblAttributeLog.cs" />
+    <Compile Include="Migrations\202501020926517_Added_Table_tblAttributeLog.Designer.cs">
+      <DependentUpon>202501020926517_Added_Table_tblAttributeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501020931441_Added_Log_Table.cs" />
+    <Compile Include="Migrations\202501020931441_Added_Log_Table.Designer.cs">
+      <DependentUpon>202501020931441_Added_Log_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501071952309_Added_Stock_Table.cs" />
+    <Compile Include="Migrations\202501071952309_Added_Stock_Table.Designer.cs">
+      <DependentUpon>202501071952309_Added_Stock_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -432,6 +480,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410291018130_Added_Column_IsExpired&amp;BarcodeinTblProduct&amp;AttributeDetail.resx">
       <DependentUpon>202410291018130_Added_Column_IsExpired&amp;BarcodeinTblProduct&amp;AttributeDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412261153593_Added_Column_ArticleNumber_tblProduct.resx">
+      <DependentUpon>202412261153593_Added_Column_ArticleNumber_tblProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412291043014_Dropped_Column_Barcode_tblProduct.resx">
+      <DependentUpon>202412291043014_Dropped_Column_Barcode_tblProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011209231_Added_Table_tblProductAttributeDetailBarcode.resx">
+      <DependentUpon>202501011209231_Added_Table_tblProductAttributeDetailBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011211275_Dropped_Table_tblProductAttributeDetailBarcode.resx">
+      <DependentUpon>202501011211275_Dropped_Table_tblProductAttributeDetailBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011212144_Added_Table_tblProductAttributeDetailBarcode_Again.resx">
+      <DependentUpon>202501011212144_Added_Table_tblProductAttributeDetailBarcode_Again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011213067_Dropped_Table_tblProductAttributeDetailBarcode_Again.resx">
+      <DependentUpon>202501011213067_Dropped_Table_tblProductAttributeDetailBarcode_Again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501011214223_Added_Table_tblProductAttributeDetailBarcode_Again_2.resx">
+      <DependentUpon>202501011214223_Added_Table_tblProductAttributeDetailBarcode_Again_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501020926517_Added_Table_tblAttributeLog.resx">
+      <DependentUpon>202501020926517_Added_Table_tblAttributeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501020931441_Added_Log_Table.resx">
+      <DependentUpon>202501020931441_Added_Log_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501071952309_Added_Stock_Table.resx">
+      <DependentUpon>202501071952309_Added_Stock_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

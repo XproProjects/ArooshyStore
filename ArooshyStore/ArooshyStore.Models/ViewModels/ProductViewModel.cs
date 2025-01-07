@@ -42,6 +42,7 @@ namespace ArooshyStore.Models.ViewModels
         public bool? IsExpired { get; set; }
         public string IsFeaturedString { get; set; }
         public string IsExpiredString { get; set; }
+        public string ArticleNumber { get; set; }
 
         public string ImagePath { get; set; }
         public int DocumentId { get; set; }
@@ -56,11 +57,11 @@ namespace ArooshyStore.Models.ViewModels
         public string AllAttributes { get; set; }
         public int CartId { get; set; }
         public List<AttributeViewModel> AttributesList { get; set; }
+        public List<AttributeViewModel> AttributeDetailsList { get; set; }
+        public List<DocumentViewModel> DocumentsList { get; set; }
         public List<ProductViewModel> Products { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<TagsForProductsViewModel> Tags { get; set; }
         public List<DiscountOfferViewModel> DiscountOffer { get; set; }
-
-
     }
 }

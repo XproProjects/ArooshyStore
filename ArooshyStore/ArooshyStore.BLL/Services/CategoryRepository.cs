@@ -264,20 +264,24 @@ namespace ArooshyStore.BLL.Services
                 response.Message = "Unit Deleted Successfully";
                 response.Id = result.Id;
             }
-            //else if (result.Message == "Fail")
-            //{
-            //    response.Status = false;
+            else if (result.Message == "Fail")
+            {
+                response.Status = false;
 
-            //    if (result.Id == -1)
-            //    {
-            //        response.Message = "Error! Please delete all data from Technician Accounts against this Designation first.";
-            //    }
-            //    else
-            //    {
-            //        response.Message = "Error! Please delete all data against this Designation first.";
-            //    }
-            //    response.Id = result.Id;
-            //}
+                if (result.Id == -1)
+                {
+                    response.Message = "Error! Please delete all Products against this Category first.";
+                }
+                else if (result.Id == -2)
+                {
+                    response.Message = "Error! Please delete all Child Categories against this Master Category first.";
+                }
+                else
+                {
+                    response.Message = "Error! Please delete all data against this Category first.";
+                }
+                response.Id = result.Id;
+            }
             else
             {
                 response.Status = false;

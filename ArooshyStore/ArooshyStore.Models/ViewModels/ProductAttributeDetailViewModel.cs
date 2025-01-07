@@ -8,7 +8,7 @@ namespace ArooshyStore.Models.ViewModels
     {
         public int? ProductAttributeDetailId { get; set; }
         public string ProductAttributeDetailName { get; set; }
-
+        public int? ProductAttributeDetailBarcodeId { get; set; }
         public int? ProductId { get; set; }
         public int? AttributeId { get; set; }
         public int? AttributeDetailId { get; set; }
@@ -16,7 +16,18 @@ namespace ArooshyStore.Models.ViewModels
         public string StatusString { get; set; }
         public string AttributeDetailName { get; set; }
         public string AttributeName { get; set; }
-
+        public int? AttributeId1 { get; set; }
+        public string AttributeName1 { get; set; }
+        public int? AttributeId2 { get; set; }
+        public string AttributeName2 { get; set; }
+        public int? AttributeDetailId1 { get; set; }
+        public string AttributeDetailName1 { get; set; }
+        public int? AttributeDetailId2 { get; set; }
+        public string AttributeDetailName2 { get; set; }
+        public string ProductName { get; set; }
+        public string ArticleNumber { get; set; }
+        public string Barcode { get; set; }
+        public decimal? Price { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public string CreatedByString { get; set; }

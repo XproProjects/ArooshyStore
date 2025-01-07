@@ -439,6 +439,7 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\EmployeeAttendance\Index.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\Print.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Action\InsertUpdateAssign.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Home\QuickAccess.css" />
@@ -1482,6 +1483,10 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\InsertUpdateAbout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\AttributesList.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\UpdateCostPrice.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductDetail.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductAttributesBarcodesList.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\InsertUpdateSalary.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\EmployeeAttendance\Index.js" />
@@ -1683,6 +1688,7 @@
     <Content Include="Areas\Admin\Scripts\jqxWidget\knockout-mapping-2.0.0.js" />
     <Content Include="Areas\Admin\Scripts\jqxWidget\ReadMe.txt" />
     <Content Include="Areas\Admin\Scripts\jqxWidget\require.js" />
+    <Content Include="Areas\Admin\Scripts\JsBarcode.all.min.js" />
     <Content Include="Areas\Admin\Scripts\miscellaneous\fullcalendar\fullcalendar.bundle.js" />
     <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\jqvmap.bundle.js" />
     <Content Include="Areas\Admin\Scripts\miscellaneous\jqvmap\maps\jquery.vmap.algeria.js" />
@@ -2515,6 +2521,12 @@
     <Content Include="Areas\User\Views\CheckOut\CheckOutSidebar.cshtml" />
     <Content Include="Areas\User\Views\Home\ExpiredProducts.cshtml" />
     <Content Include="Areas\User\Views\Home\ExpiredIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductAttributesBarcodesList.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\PrintBarcodeStickers.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\UpdateCostPrice.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\AttributesList.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\PrintBarcodeStickersForTesting.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

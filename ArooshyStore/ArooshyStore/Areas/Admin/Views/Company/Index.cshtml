@@ -50,11 +50,11 @@
                             <div class="col-lg-5" style="margin-top:4px">
                                 @if (Model.Any(x => x.ActionName.ToLower() == "create"))
                                 {
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
+                                @*<a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
                                     <i class="fal fa-plus-circle"></i>
                                     &nbsp;
                                     New Company
-                                </a>
+                                </a>*@
                                 }
                                 @if (Model.Any(x => x.ActionName.ToLower() == "update"))
                                 {
@@ -109,7 +109,7 @@
                                     <th class="none"> Address</th>
                                     <th class="none"> Facebook</th>
                                     <th class="none"> Instagram</th>
-                                    <th class="none"> LinkedIn</th>
+                                    <th class="none"> Youtube</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>

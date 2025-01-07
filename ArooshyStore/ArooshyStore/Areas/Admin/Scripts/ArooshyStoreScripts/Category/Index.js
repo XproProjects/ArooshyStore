@@ -23,13 +23,24 @@
                     }
                 }
             },
+            "responsive": {
+                "details": {
+                    "type": "column",
+                    "target": 1
+                }
+            },
+            "columnDefs": [{
+                "className": "control",
+                "orderable": false,
+                "targets": 1
+            }],
             "columns": [
                 {
                     "data": "ImagePath", "width": "45px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
-                        return '<img src="' + data + '" style="height:45px;width:45px;" />';
+                        return '<a href="' + data + '" target="_blank"><img src="' + data + '" style="height:55px;width:55px;" /></a>';
                     }
                 },
-                { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
+                { "data": "CategoryName", "name": "CategoryName", "class": "control", "autoWidth": true },
                 {
                     "data": "StatusString", "name": "StatusString", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
                         if (data === "Active") {
@@ -92,13 +103,24 @@
                     }
                 }
             },
+            "responsive": {
+                "details": {
+                    "type": "column",
+                    "target": 1
+                }
+            },
+            "columnDefs": [{
+                "className": "control",
+                "orderable": false,
+                "targets": 1
+            }],
             "columns": [
                 {
                     "data": "ImagePath", "width": "45px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
-                        return '<img src="' + data + '" style="height:45px;width:45px;" />';
+                        return '<a href="' + data + '" target="_blank"><img src="' + data + '" style="height:55px;width:55px;" /></a>';
                     }
                 },
-                { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
+                { "data": "CategoryName", "name": "CategoryName", "class": "control", "autoWidth": true },
                 { "data": "ParentCategoryName", "name": "ParentCategoryName", "autoWidth": true },
                 {
                     "data": "StatusString", "name": "StatusString", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
