@@ -8,7 +8,8 @@ namespace ArooshyStore.BLL.Interfaces
     {
         List<DiscountOfferViewModel> GetDiscountOffersListAndCount(string whereCondition, string start, string length, string sorting);
         DiscountOfferViewModel GetDiscountOfferById(int id);
-        StatusMessageViewModel InsertUpdateDiscountOffer(DiscountOfferViewModel model, int loggedInUserId);
+        List<DiscountOfferViewModel> ProductsList(int id);
+        StatusMessageViewModel InsertUpdateDiscountOffer(DiscountOfferViewModel model, string data, int loggedInUserId);
         StatusMessageViewModel DeleteDiscountOffer(int id, int loggedInUserId);
     }
 }

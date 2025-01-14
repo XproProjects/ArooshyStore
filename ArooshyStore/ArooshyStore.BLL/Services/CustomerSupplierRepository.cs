@@ -47,7 +47,7 @@ namespace ArooshyStore.BLL.Services
                     con.Open();
 
                     string query = "SELECT Count(s.CustomerSupplierId) as MyRowCount FROM tblCustomerSupplier s where " + whereCondition + " ";
-                    query += " select s.CustomerSupplierId,isnull(s.CustomerSupplierName,'') as CustomerSupplierName,isnull(s.HouseNo,'') as HouseNo,isnull(cc.CityName,'') as CityName,isnull(s.Contact1,'') as 'Contact1',isnull(s.Contact2,'') as 'Contact2',isnull(s.Email,'') as 'Email',isnull(s.CompleteAddress,'') as 'CompleteAddress',isnull(s.Remarks,'') as 'Remarks',isnull(s.PostalCode,'') as 'PostalCode',isnull(s.Street,'') as 'Street',isnull(s.ColonyOrVillageName,'') as 'ColonyOrVillageName',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull((select '/Areas/Admin/FormsDocuments/'+s.CustomerSupplierType+'/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.CustomerSupplierId as varchar)  and dc.DocumentType = s.CustomerSupplierType and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/dummy.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblCustomerSupplier s left join tblCity cc on s.CityId = cc.CityId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.CustomerSupplierId,isnull(s.CustomerSupplierName,'') as CustomerSupplierName,isnull(s.CreditDays,0) as CreditDays,isnull(s.CreditLimit,0) as CreditLimit,isnull(s.HouseNo,'') as HouseNo,isnull(cc.CityName,'') as CityName,isnull(s.Contact1,'') as 'Contact1',isnull(s.Contact2,'') as 'Contact2',isnull(s.Email,'') as 'Email',isnull(s.CompleteAddress,'') as 'CompleteAddress',isnull(s.Remarks,'') as 'Remarks',isnull(s.PostalCode,'') as 'PostalCode',isnull(s.Street,'') as 'Street',isnull(s.ColonyOrVillageName,'') as 'ColonyOrVillageName',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',isnull((select '/Areas/Admin/FormsDocuments/'+s.CustomerSupplierType+'/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.CustomerSupplierId as varchar)  and dc.DocumentType = s.CustomerSupplierType and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/dummy.png') as 'ImagePath',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblCustomerSupplier s left join tblCity cc on s.CityId = cc.CityId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     //query += " ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -69,21 +69,19 @@ namespace ArooshyStore.BLL.Services
                                 {
                                     CustomerSupplierId = Convert.ToInt32(reader["CustomerSupplierId"]),
                                     CustomerSupplierName = reader["CustomerSupplierName"].ToString(),
-                                    CityName = reader["CityName"].ToString(),
+                                    CreditDays = Convert.ToInt32(reader["CreditDays"]),
+                                    CreditLimit = Convert.ToDecimal(reader["CreditLimit"]),
                                     HouseNo = reader["HouseNo"].ToString(),
+                                    CityName = reader["CityName"].ToString(),
                                     Contact1 = reader["Contact1"].ToString(),
+                                    Contact2 = reader["Contact2"].ToString(),
                                     Email = reader["Email"].ToString(),
                                     CompleteAddress = reader["CompleteAddress"].ToString(),
-                                    ColonyOrVillageName = reader["ColonyOrVillageName"].ToString(),
-                                    Contact2 = reader["Contact2"].ToString(),
                                     Remarks = reader["Remarks"].ToString(),
-                                    Street = reader["Street"].ToString(),
-                                    ////CreditLimit = reader["CreditLimit"].ToString(),
-                                    //HouseNo = reader["HouseNo"].ToString(),
                                     PostalCode = reader["PostalCode"].ToString(),
-
+                                    Street = reader["Street"].ToString(),
+                                    ColonyOrVillageName = reader["ColonyOrVillageName"].ToString(),
                                     StatusString = reader["StatusString"].ToString(),
-
                                     ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
@@ -119,22 +117,22 @@ namespace ArooshyStore.BLL.Services
                          {
                              CustomerSupplierId = f.CustomerSupplierId,
                              CustomerSupplierName = f.CustomerSupplierName,
-                             CustomerSupplierType = f.CustomerSupplierType,
-                             Contact1= f.Contact1,
-                             Contact2= f.Contact2,
-                             Email= f.Email,
-                             Password = f.Password,
-                             HouseNo = f.HouseNo,
-                             Street= f.Street,
-                             ColonyOrVillageName= f.ColonyOrVillageName,
-                             PostalCode= f.PostalCode,
-                             CityId= f.CityId,
+                             CustomerSupplierType = f.CustomerSupplierType ?? "",
+                             Contact1= f.Contact1 ?? "",
+                             Contact2= f.Contact2 ?? "",
+                             Email= f.Email ?? "",
+                             Password = f.Password ?? "",
+                             HouseNo = f.HouseNo ?? "",
+                             Street= f.Street ?? "",
+                             ColonyOrVillageName= f.ColonyOrVillageName ?? "",
+                             PostalCode= f.PostalCode ?? "",
+                             CityId= f.CityId ?? 0,
                              CityName = _unitOfWork.Db.Set<tblCity>().Where(x => x.CityId == f.CityId).Select(x => x.CityName).FirstOrDefault() ?? "",
-                             CompleteAddress = f.CompleteAddress,
-                             CreditDays = f.CreditDays,
-                             CreditLimit= f.CreditLimit,
-                             Remarks= f.Remarks,
-                             Status = f.Status,
+                             CompleteAddress = f.CompleteAddress ?? "",
+                             CreditDays = f.CreditDays ?? 0,
+                             CreditLimit= f.CreditLimit ?? 0,
+                             Remarks= f.Remarks ?? "",
+                             Status = f.Status ?? false,
                              ImagePath = _unitOfWork.Db.Set<tblDocument>()
                                                            .Where(x => x.TypeId == f.CustomerSupplierId.ToString() && x.DocumentType == f.CustomerSupplierType && x.Remarks == "ProfilePicture")
                                                            .Select(x => "/Areas/Admin/FormsDocuments/"+f.CustomerSupplierType+"/" + x.DocumentId + "." + x.DocumentExtension)
@@ -185,7 +183,7 @@ namespace ArooshyStore.BLL.Services
                     bool check = _unitOfWork.Db.Set<tblCustomerSupplier>().Where(x => x.CustomerSupplierId == model.CustomerSupplierId).Any(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim());
                     if (!check)
                     {
-                        bool check2 = _unitOfWork.Db.Set<tblCustomerSupplier>().Any(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim() && x.CustomerSupplierType == model.CustomerSupplierType);
+                        bool check2 = _unitOfWork.Db.Set<tblCustomerSupplier>().Any(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim() && x.CustomerSupplierType.ToLower().Trim() == model.CustomerSupplierType.ToLower().Trim());
                         if (check2)
                         {
                             response.Status = false;
@@ -222,7 +220,7 @@ namespace ArooshyStore.BLL.Services
                 }
                 else 
                 {
-                    bool check2 = _unitOfWork.Db.Set<tblCustomerSupplier>().Any(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim() && x.CustomerSupplierType == model.CustomerSupplierType);
+                    bool check2 = _unitOfWork.Db.Set<tblCustomerSupplier>().Any(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim() && x.CustomerSupplierType.ToLower().Trim() == model.CustomerSupplierType.ToLower().Trim());
                     if (check2)
                     {
                         response.Status = false;

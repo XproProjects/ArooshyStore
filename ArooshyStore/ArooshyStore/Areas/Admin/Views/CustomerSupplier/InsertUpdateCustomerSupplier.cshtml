@@ -26,6 +26,7 @@
                                 <input type="hidden" id="HiddenDocumentId" name="HiddenDocumentId" value="@Model.DocumentId" />
                                 <input type="hidden" id="HiddenCityId" name="HiddenCityId" value="@Model.CityId" />
                                 <input type="hidden" id="HiddenCityName" name="HiddenCityName" value="@Model.CityName" />
+                                <input type="hidden" id="IsChangePassword" name="IsChangePassword" value="0" />
                                 <label>Name (*)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -37,40 +38,7 @@
                                 </div>
                             </div>
                         </section>
-
-
                     </div>
-                    <div class="row" style="margin-top:10px">
-                        <section class="col-md-6">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Contact 1 (*)</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-mobile"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" data-inputmask="'mask': '9999-9999999'" class="form-control">
-                                </div>
-                            </div>
-
-                        </section>
-
-                        <section class="col-md-6">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Contact 2</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-mobile"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" data-inputmask="'mask': '9999-9999999'" class="form-control">
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
                     <div class="row" style="margin-top:10px">
                         <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px">
@@ -85,79 +53,78 @@
                                 </div>
                             </div>
                         </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                @if (Model != null && Model.CustomerSupplierId > 0)
+                                {
+                                    <label>
+                                        Password
+                                        (<a href="javascript:void(0)" class="btnChangeUserPassword">Change</a>)
+                                        (<a href="javascript:void(0)" class="btnCancelUserPassword">Cancel</a>)
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-hashtag"></i>
+                                            </span>
+                                        </div>
+                                        @Html.TextBoxFor(a => a.Password, "", new { @placeholder = "Password", @type = "password", @disabled = "disabled", @class = "form-control", @style = "margin-right: 3.5px;" })
+                                        @*<span data-toggle="#Password" id="eyeIcon" style="" class="fa fa-fw fa-eye field-icon toggle-password"></span>*@
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label>Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-hashtag"></i>
+                                            </span>
+                                        </div>
+                                        @Html.TextBoxFor(a => a.Password, new { @placeholder = "Password", @autocomplete = "new-password", @type = "password", @class = "form-control", @style = "margin-right: 3.5px;" })
+                                    </div>
+                                }
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Contact 1 (*)</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-mobile"></i>
+                                        </span>
+                                    </div>
+                                    @*<input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" data-inputmask="'mask': '9999-9999999'" class="form-control">*@
+                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact1" name="Contact1" value="@Model.Contact1" class="form-control">
+                                </div>
+                            </div>
+
+                        </section>
 
                         <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px">
-                                <label>House #</label>
+                                <label>Contact 2</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-home"></i>
+                                            <i class="fal fa-mobile"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.HouseNo, new { @placeholder = "House #", @class = "form-control" })
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-md-12" style="margin-top:13px">
-                    <div class="row">
-
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Street</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-map-pin"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.Street, new { @placeholder = "Street", @class = "form-control" })
-                                </div>
-                            </div>
-                        </section>
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Colony / Village Name</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-home"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.ColonyOrVillageName, new { @placeholder = "Colony / Village Name", @class = "form-control" })
-
-                                </div>
-                            </div>
-                        </section>
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Postal Code</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-envelope"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.PostalCode, new { @placeholder = "Postal Code", @class = "form-control" })
+                                    @*<input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" data-inputmask="'mask': '9999-9999999'" class="form-control">*@
+                                    <input type="text" placeholder="03XX-XXXXXXX" id="Contact2" name="Contact2" value="@Model.Contact2" class="form-control">
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
-
-
             <div class="row">
-                <div class="col-md-12" style="margin-top:13px">
+                <div class="col-md-12" style="margin-top:23px">
                     <div class="row">
-
-                        <section class="col-md-4">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px;padding-right:0px">
                                 <div class="input-group">
                                     <table class="" style="width: 100%;">
@@ -178,41 +145,73 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="col-md-4">
+                        <section class="col-md-6">
                             <div style="padding:5px;padding-top:0px">
-                                <label>Credit Days</label>
+                                <label>Colony / Village Name</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fal fa-calendar"></i>
+                                            <i class="fal fa-home"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(a => a.CreditDays, new { @placeholder = "Credit Days", @class = "form-control" })
+                                    @Html.TextBoxFor(a => a.ColonyOrVillageName, new { @placeholder = "Colony / Village Name", @class = "form-control" })
 
-                                </div>
-                            </div>
-                        </section>
-                        <section class="col-md-4">
-                            <div style="padding:5px;padding-top:0px">
-                                <label>Credit Limit</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fal fa-credit-card fa-fw"></i>
-                                        </span>
-                                    </div>
-                                    @Html.TextBoxFor(a => a.CreditLimit, new { @placeholder = "Credit Limit", @class = "form-control" })
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:13px">
+                    <div class="row">
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>House #</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-home"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.HouseNo, new { @placeholder = "House #", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-md-6">
+                            <div style="padding:5px;padding-top:0px">
+                                <label>Street</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fal fa-map-pin"></i>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(a => a.Street, new { @placeholder = "Street", @class = "form-control" })
+                                </div>
+                            </div>
+                        </section>
 
+                    </div>
+                </div>
+            </div>
             <div class="row" style="margin-top: 10px;">
-                <section class="col-md-12">
+                <section class="col-md-6">
                     <div style="padding:5px;padding-top:0px">
-                        <label>Complete Address (*)</label>
+                        <label>Postal Code</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-envelope"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.PostalCode, new { @placeholder = "Postal Code", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Complete Address</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -220,6 +219,35 @@
                                 </span>
                             </div>
                             @Html.TextBoxFor(a => a.CompleteAddress, new { @placeholder = "Complete Address", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Credit Limit</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-credit-card fa-fw"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.CreditLimit, new { @placeholder = "Credit Limit", @class = "form-control" })
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Credit Days</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-calendar"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(a => a.CreditDays, new { @placeholder = "Credit Days", @class = "form-control" })
+
                         </div>
                     </div>
                 </section>
@@ -238,40 +266,6 @@
                         </div>
                     </div>
                 </section>
-                <section class="col-md-12">
-                    <div style="padding:5px;padding-top:0px">
-                        @if (Model != null && Model.CustomerSupplierId > 0)
-                        {
-                            <label>
-                                Password (*)
-                                (<a href="javascript:void(0)" class="btnChangeUserPassword">Change</a>)
-                                (<a href="javascript:void(0)" class="btnCancelUserPassword">Cancel</a>)
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fal fa-hashtag"></i>
-                                    </span>
-                                </div>
-                                @Html.TextBoxFor(a => a.Password, "", new { @placeholder = "Password", @type = "password", @disabled = "disabled", @class = "form-control", @style = "margin-right: 3.5px;" })
-                                <span data-toggle="#Password" id="eyeIcon" style="" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                        }
-                        else
-                        {
-                            <label>Password (*)</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fal fa-hashtag"></i>
-                                    </span>
-                                </div>
-                                @Html.TextBoxFor(a => a.Password, new { @placeholder = "Password", @autocomplete = "new-password", @type = "password", @class = "form-control", @style = "margin-right: 3.5px;" })
-                            </div>
-                        }
-                    </div>
-                </section>
-
             </div>
 
             @{
@@ -302,4 +296,4 @@
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/CustomerSupplier/InsertUpdateCustomerSupplier.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/CustomerSupplier/InsertUpdateCustomerSupplier.js?v=1"></script>

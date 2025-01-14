@@ -21,7 +21,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             _mapper = AutoMapperConfig.Mapper;
             _roles = roles;
         }
-        public ActionResult SaleInvoiceIndex(string from = "ordered")
+        public ActionResult SaleInvoiceIndex(string from = "all")
         {
             if (User != null)
             {
@@ -132,10 +132,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                string whereCondition = " Lower(s.InvoiceType)='" + Type.ToString().ToLower().Trim()+"' ";
-                if(!string.IsNullOrEmpty(From))
+                string whereCondition = " Lower(s.InvoiceType)='" + Type.ToString().ToLower().Trim() + "' ";
+                if (!string.IsNullOrEmpty(From))
                 {
-                    whereCondition += " And s.InvoiceNumber in (select top(5) ist.InvoiceNumber from tblInvoiceStatus ist where lower(ist.Status) = '"+From.ToString().ToLower().Trim()+"' order by ist.InvoiceStatusId desc) ";
+                    if (From.ToLower().Trim() != "all")
+                    {
+                        whereCondition += " And (select top(1) lower(ist.Status) from tblInvoiceStatus ist where ist.InvoiceNumber = s.InvoiceNumber order by ist.InvoiceStatusId desc) = '" + (From.ToString().ToLower().Trim() == "onhold" ? "on hold" : From.ToString().ToLower().Trim()) + "' ";
+                    }
                 }
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
@@ -159,7 +162,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     whereCondition += " And LOWER(s.InvoiceNumber) like ('%%')";
                 }
                 List<InvoiceViewModel> listsub = new List<InvoiceViewModel>();
-                if (_roles.CheckActionRoleId(User.UserId, "sale invoice", "view") > 0)
+                if (_roles.CheckActionRoleId(User.UserId, Type.ToString().ToLower().Trim(), "view") > 0)
                 {
                     listsub = _repository.GetInvoicesListAndCount(whereCondition, start, length, sorting);
                     if (listsub.Count > 0)
@@ -177,7 +180,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        public ActionResult InsertUpdateSaleInvoice(string id, string type)
+        public ActionResult InsertUpdateSaleInvoice(string id)
         {
             if (User != null)
             {
@@ -192,7 +195,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (_roles.CheckActionRoleId(User.UserId, "sale invoice", actionName) > 0)
                 {
-                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id);
                     return View(invoice);
                 }
                 else
@@ -207,7 +210,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
 
         }
         [HttpGet]
-        public ActionResult InsertUpdateSaleReturn(string id, string type)
+        public ActionResult InsertUpdateSaleReturn(string id)
         {
             if (User != null)
             {
@@ -222,7 +225,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (_roles.CheckActionRoleId(User.UserId, "sale return", actionName) > 0)
                 {
-                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id);
                     return View(invoice);
                 }
                 else
@@ -236,7 +239,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        public ActionResult InsertUpdatePurchaseInvoice(string id, string type)
+        public ActionResult InsertUpdatePurchaseInvoice(string id)
         {
             if (User != null)
             {
@@ -251,7 +254,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (_roles.CheckActionRoleId(User.UserId, "purchase invoice", actionName) > 0)
                 {
-                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id);
                     return View(invoice);
                 }
                 else
@@ -265,7 +268,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        public ActionResult InsertUpdatePurchaseReturn(string id, string type)
+        public ActionResult InsertUpdatePurchaseReturn(string id)
         {
             if (User != null)
             {
@@ -280,7 +283,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (_roles.CheckActionRoleId(User.UserId, "purchase return", actionName) > 0)
                 {
-                    InvoiceViewModel invoice = _repository.GetInvoiceById(id, type);
+                    InvoiceViewModel invoice = _repository.GetInvoiceById(id);
                     return View(invoice);
                 }
                 else
@@ -311,29 +314,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.IdString } };
         }
 
-        [HttpGet]
-        public ActionResult PrintInvoice(string id, string type = "")
-        {
-
-            if (User != null)
-            {
-               
-              InvoiceViewModel invoice = _repository.GetInvoiceByIdForPrint(id, type);
-              return View(invoice);
-               
-            }
-            else
-            {
-                return RedirectToAction("login", "account");
-            }
-
-        }
-        public ActionResult GetMaxCodeForInvoice(string type)
-        {
-            string maxCode = _repository.GetMaxCodeForInvoice(type, User.UserId);
-            return Json(maxCode, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult DeleteSaleInvoice(string id)
+        public ActionResult DeleteInvoice(string id)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
@@ -349,6 +330,30 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
 
+        [HttpGet]
+        public ActionResult PrintInvoice(string id)
+        {
+
+            if (User != null)
+            {
+
+                InvoiceViewModel invoice = _repository.GetInvoiceByIdForPrint(id);
+                return View(invoice);
+
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+        public ActionResult GetMaxCodeForInvoice(string type)
+        {
+            string maxCode = _repository.GetMaxCodeForInvoice(type, User.UserId);
+            return Json(maxCode, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult GetInvoiceDetailsList(string id)
         {
@@ -358,7 +363,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 list = _repository.GetInvoiceDetailsList(id);
             }
 
-            return Json(new { data = list }, JsonRequestBehavior.AllowGet); 
+            return Json(new { data = list }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -377,8 +382,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult InsertUpdateInvoiceStatus(InvoiceStatusViewModel user)
         {
-            System.Diagnostics.Debug.WriteLine($"InvoiceNumber: {user.InvoiceNumber}");
-
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
@@ -391,7 +394,16 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
         }
+        public ActionResult GetCashCustomer()
+        {
+            InvoiceViewModel model = new InvoiceViewModel();
+            if (User != null)
+            {
+                model = _repository.GetCashCustomer();
+            }
 
+            return Json(new { data = model }, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

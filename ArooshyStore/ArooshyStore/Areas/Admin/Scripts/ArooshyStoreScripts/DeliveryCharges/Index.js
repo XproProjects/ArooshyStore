@@ -97,7 +97,7 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Delivery Charges') {
+    if (BElement.html() == 'City Name') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
     }
     else {

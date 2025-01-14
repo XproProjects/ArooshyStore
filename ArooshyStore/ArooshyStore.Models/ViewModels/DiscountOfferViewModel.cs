@@ -4,14 +4,18 @@ namespace ArooshyStore.Models.ViewModels
     public class DiscountOfferViewModel
     {
         public int OfferId { get; set; }
+        public int OfferDetailId { get; set; }
         public string DiscountName { get; set; }
-        public decimal DiscPercent { get; set; }
-        public string SelectType { get; set; }
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
         public DateTime? ExpiredOn { get; set; }
+        public string DiscountType { get; set; }
+        public decimal DiscountRate { get; set; }
+        public int? ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ArticleNumber { get; set; }
         public int? CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public int? ParentCategoryId { get; set; }
+        public string ParentCategoryName { get; set; }
         public bool? Status { get; set; }
         public string StatusString { get; set; }
         public string ImagePath { get; set; }

@@ -16,14 +16,14 @@
                                 <a href="javascript:void(0)">
                                     <i class="fal fa-clipboard"></i>
                                     &nbsp;
-                                    <span class="hidden-md-down">Purchase Return Invoice</span>
+                                    <span class="hidden-md-down">Purchase Return</span>
                                 </a>
                             </li>
                             <li class="">
                                 <a href="javascript:void(0)">
                                     <i class="fal fa-list-ol"></i>
                                     &nbsp;
-                                    <span class="hidden-md-down">Purchase Return Invoices List</span>
+                                    <span class="hidden-md-down">Purchase Returns List</span>
                                 </a>
                             </li>
                         </ol>
@@ -53,7 +53,7 @@
                                     <a href="javascript:void(0)" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal btnAddEdit" id="AddEditRecord">
                                         <i class="fal fa-plus-circle"></i>
                                         &nbsp;
-                                        New Purchase Return Invoice
+                                        New Purchase Return
                                     </a>
                                 }
                                 @if (Model.Any(x => x.ActionName.ToLower() == "update"))
@@ -99,16 +99,10 @@
                         <table id="myTable" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th class="min-mobile">Invoice Number #</th>
+                                    <th class="min-mobile">Invoice #</th>
                                     <th class="min-tablet">Invoice Date</th>
-                                    @*<th class="min-desktop">Customer</th>*@
+                                    <th class="min-desktop">Suppler</th>
                                     <th class="min-tablet">Net Amount</th>
-                                    @*<th class="none">Delivery Charges</th>
-                                        <th class="none">Invoice Type</th>
-                                        <th class="none">Total Amount</th>
-                                        <th class="none">Discount Type</th>
-                                        <th class="none">Discount Rate</th>
-                                        <th class="none">Discount Amount</th>*@
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>

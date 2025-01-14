@@ -23,18 +23,26 @@
                 }
             }
         },
+        "responsive": {
+            "details": {
+                "type": "column",
+                "target": 1
+            }
+        },
+        "columnDefs": [{
+            "className": "control",
+            "orderable": true,
+            "targets": 1
+        }],
         "columns": [
             {
-                "data": "ImagePath", "width": "45px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
-                    return '<img src="' + data + '" style="height:45px;width:45px;" />';
+                "data": "ImagePath", "width": "55px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
+                    return '<a href="' + data + '" target="_blank"><img src="' + data + '" style="height:55px;width:55px;" /></a>';
                 }
             },
-            { "data": "CustomerSupplierName", "name": "CustomerSupplierName", "autoWidth": true },
+            { "data": "CustomerSupplierName", "name": "CustomerSupplierName", "class": "control", "autoWidth": true },
             { "data": "Email", "name": "Email", "autoWidth": true },
-
             { "data": "CityName", "name": "CityName", "autoWidth": true },
-            
-
             {
                 "data": "StatusString", "name": "StatusString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
                     if (data.toString() == "Active") {
@@ -52,6 +60,8 @@
             { "data": "ColonyOrVillageName", "name": "ColonyOrVillageName", "autoWidth": true },
             { "data": "PostalCode", "name": "PostalCode", "autoWidth": true },
             { "data": "CompleteAddress", "name": "CompleteAddress", "autoWidth": true },
+            { "data": "CreditDays", "name": "CreditDays", "autoWidth": true },
+            { "data": "CreditLimit", "name": "CreditLimit", "autoWidth": true },
             { "data": "Remarks", "name": "Remarks", "autoWidth": true },
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {

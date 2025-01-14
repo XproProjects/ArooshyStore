@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Product Stock";
+}
+@using ArooshyStore.Models.ViewModels
+@model List<ModuleViewModel>
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-md-12" style="display:flex">
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-clipboard"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Products Stock</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-list-ol"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Products Stock</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </th>
+                    <th style="text-align:right">
+                        <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-hdr bg-primary-500 bg-info-gradient" role="heading">
+                    <h2>Products Stock</h2>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="row" style="padding-left: 0px;padding-right: 0px;padding-top:0px">
+                            <div class="col-lg-5" style="margin-top:4px">
+                                <div class="input-group">
+                                    @*<div class="input-group-prepend">
+                                            <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Article #</button>
+                                            <div class="dropdown-menu" id="ulSearchJobType">
+                                                <a class="dropdown-item" href="#">Article #</a>
+                                                <a class="dropdown-item" href="#">Product Name</a>
+                                                <a class="dropdown-item" href="#">Category</a>
+                                                <a class="dropdown-item" href="#">Barcode</a>
+                                            </div>
+                                        </div>*@
+                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search barcode here..." aria-label="Text input with dropdown button">
+                                    <div class="input-group-append">
+                                        <button id="btnSearch" class="btn btn-secondary" type="button" aria-haspopup="true" aria-expanded="false">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pull-right" style="margin-top:4px">
+                            </div>
+                            <div class="col-lg-3 pull-right" style="margin-top:4px">
+                                @if (Model.Any(x => x.ActionName.ToLower() == "update stock"))
+                                {
+                                    <button type="button" class="btn btn-primary waves-effect waves-themed btnSave pull-right" id="btnSave" hidden>
+                                        Save
+                                    </button>
+                                }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "update stock"))
+                                {
+                                    <input type="hidden" id="CreateActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="CreateActionRole" value="0" />
+                                }
+                            </div>
+                        </div>
+
+                        <div id="ProductAttributesDiv">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- this overlay is activated only when mobile menu is triggered -->
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductStock.js"></script>

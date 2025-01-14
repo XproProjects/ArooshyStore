@@ -67,7 +67,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 string sorting = "";
                 if (Type.ToLower() == "customer")
                 {
-                    whereCondition = " s.CustomerSupplierType = 'Customer' ";
+                    whereCondition = " s.CustomerSupplierType = 'Customer' and lower(s.Email) != 'cashcustomer@yahoo.com' ";
                 }
                 else
                 {
@@ -170,6 +170,5 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(new { deliveryCharges = deliveryCharges });
 
         }
-
     }
 }

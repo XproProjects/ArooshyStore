@@ -49,7 +49,7 @@
                     <div class="panel-content">
                         <div class="row" style="padding-left: 0px;padding-right: 0px;padding-top:0px">
                             <div class="col-lg-5" style="margin-top:4px">
-                                @if (Model.Any(x => x.ActionName.ToLower() == "create"))
+                                @if (Model.Any(x => x.ActionName.ToLower() == "create") && ViewBag.From.ToLower() == "all")
                                 {
                                     <a href="javascript:void(0)" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal btnAddEdit" id="AddEditRecord">
                                         <i class="fal fa-plus-circle"></i>
@@ -73,14 +73,6 @@
                                 {
                                     <input type="hidden" id="DeleteActionRole" value="0" />
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "approve"))
-                                {
-                                    <input type="hidden" id="ApproveActionRole" value="1" />
-                                }
-                                else
-                                {
-                                    <input type="hidden" id="ApproveActionRole" value="0" />
-                                }
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
@@ -100,16 +92,11 @@
                         <table id="myTable" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th class="min-mobile">Invoice Number #</th>
+                                    <th class="min-mobile">Invoice #</th>
                                     <th class="min-tablet">Invoice Date</th>
-                                    @*<th class="min-desktop">Customer</th>*@
+                                    <th class="min-desktop">Customer</th>
+                                    <th class="min-desktop">Status</th>
                                     <th class="min-tablet">Net Amount</th>
-                                    @*<th class="none">Delivery Charges</th>
-                                        <th class="none">Invoice Type</th>
-                                        <th class="none">Total Amount</th>
-                                        <th class="none">Discount Type</th>
-                                        <th class="none">Discount Rate</th>
-                                        <th class="none">Discount Amount</th>*@
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>
@@ -130,4 +117,4 @@
 
 </main>
 <!-- this overlay is activated only when mobile menu is triggered -->
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js?v=2"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js?v=3"></script>

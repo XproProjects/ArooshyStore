@@ -1,0 +1,48 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<ProductAttributeDetailViewModel>
+<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    <table class="table table-striped table-bordered" style="width:100%;margin-top:30px">
+        <thead class="thead-themed">
+            <tr>
+                <th style="text-align: left; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Article #</th>
+                <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000">Product Name</th>
+                <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">@Model.Select(x => x.AttributeName1).FirstOrDefault()</th>
+                <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">@Model.Select(x => x.AttributeName2).FirstOrDefault()</th>
+                <th style="text-align: center; color: #fff; background-color: #727B84; width: 180px; border: 1px solid #000 ">Barcode</th>
+                <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000">Stock</th>
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @if (Model.Count > 0)
+            {
+                foreach (ProductAttributeDetailViewModel p in Model)
+                {
+                    <tr class="DataTr">
+                        <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">
+                            <input type="hidden" class="ProductAttributeDetailBarcodeId" name="ProductAttributeDetailBarcodeId" value="@p.ProductAttributeDetailBarcodeId" />
+                            @p.ArticleNumber
+                        </td>
+                        <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">
+                            @p.ProductName
+                        </td>
+                        <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@p.AttributeDetailName1</td>
+                        <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@p.AttributeDetailName2</td>
+                        <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.Barcode</td>
+                        <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">
+                            <input type="number" style="font-weight: bold; color: green; font-size: 15px;" class="form-control Stock" value="@p.Stock" placeholder="Numbers" min="0" max="999" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td style="text-align: center; font-weight: normal; background-color: #F7F7F7;padding:20px" colspan="6">No record found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/GetProductAttributes.js"></script>
+

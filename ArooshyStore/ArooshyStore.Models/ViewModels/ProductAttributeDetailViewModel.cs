@@ -34,6 +34,10 @@ namespace ArooshyStore.Models.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
+        public string StockType { get; set; }
+        public int Stock { get; set; }
+        public string ReferenceId { get; set; }
+        public int WarehouseId { get; set; }
         public int TotalRecords { get; set; }
         public string AllAttributes { get; set; }
         public string IsChecked { get; set; }

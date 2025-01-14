@@ -92,15 +92,7 @@
                                     <div class="input-group-prepend">
                                         <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@typeName Name</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
-                                            @if (ViewBag.Type.ToLower() == "customer")
-                                            {
-                                                <a class="dropdown-item" href="#">Customer Name</a>
-                                            }
-                                            else
-                                            {
-                                                <a class="dropdown-item" href="#">Supplier Name</a>
-
-                                            }
+                                            <a class="dropdown-item" href="#">@typeName Name</a>
                                         </div>
                                     </div>
                                     <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
@@ -123,18 +115,10 @@
                             <thead>
                                 <tr>
                                     <th></th>
-
-                                    @if (ViewBag.Type.ToLower() == "customer")
-                                    {
-                                        <th class="min-tablet">Customer Name</th>
-                                    }
-                                    else
-                                    {
-                                        <th class="min-tablet">Supplier Name</th>
-                                    }
+                                    <th class="control">@typeName Name</th>
                                     <th class="min-desktop">Email</th>
-                                    <th class="min-desktop">City</th>
-                                    <th class="min-desktop">Status</th>
+                                    <th class="min-tablet">City</th>
+                                    <th class="min-tablet">Status</th>
                                     <th class="none">Contact 1</th>
                                     <th class="none">Contact 2</th>
                                     <th class="none">House #</th>
@@ -142,6 +126,8 @@
                                     <th class="none">Colony / Village Name</th>
                                     <th class="none">Postal Code</th>
                                     <th class="none">Address</th>
+                                    <th class="none">Credit Days</th>
+                                    <th class="none">Credit Limit</th>
                                     <th class="none">Remarks</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>

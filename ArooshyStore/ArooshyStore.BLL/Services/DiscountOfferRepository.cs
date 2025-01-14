@@ -8,6 +8,7 @@ using ArooshyStore.BLL.GenericRepository;
 using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.DAL.Entities;
 using ArooshyStore.Models.ViewModels;
+using Newtonsoft.Json;
 
 namespace ArooshyStore.BLL.Services
 {
@@ -38,10 +39,10 @@ namespace ArooshyStore.BLL.Services
                 {
                     con.Open();
                     //Get Count
-                    string query = "SELECT Count(s.OfferId) as MyRowCount FROM tblDiscountOffer s left join tblCategory c on s.CategoryId = c.CategoryId left join tblProduct p on s.ProductId = p.ProductId LEFT JOIN tblDocument dc ON s.OfferId = dc.TypeId AND dc.DocumentType = 'DiscountOffer' AND dc.Remarks = 'ProfilePicture' where " + whereCondition + " ";
+                    string query = "SELECT Count(s.OfferId) as MyRowCount FROM tblDiscountOffer s LEFT JOIN tblDocument dc ON s.OfferId = dc.TypeId AND dc.DocumentType = 'DiscountOffer' AND dc.Remarks = 'ProfilePicture' where " + whereCondition + " ";
                     //Get List
                     //query += " select s.OfferId,isnull(s.DiscountName,'') as DiscountName,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblDiscountOffer s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
-                    query += " select s.OfferId,isnull(s.DiscountName,'') as DiscountName,(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when ISNULL(dc.DocumentId , 0) = 0 then  '/Areas/Admin/Content/noimage.png' else  '/Areas/Admin/FormsDocuments/DiscountOffer/' + CAST(ISNULL(dc.DocumentId , 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') end ) as ImagePath,isnull(s.DiscPercent,0) as DiscPercent,isnull(s.ExpiredOn,'') as 'ExpiredOn',isnull(s.SelectType,'') as 'SelectType',isnull(c.CategoryName,'') as 'CategoryName',isnull(p.ProductName,'') as 'ProductName',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy'  from tblDiscountOffer s left join tblCategory c on s.CategoryId = c.CategoryId left join tblProduct p on s.ProductId = p.ProductId LEFT JOIN tblDocument dc ON s.OfferId = dc.TypeId AND dc.DocumentType = 'DiscountOffer' AND dc.Remarks = 'ProfilePicture'  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.OfferId,isnull(s.DiscountName,'') as DiscountName,(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when ISNULL(dc.DocumentId , 0) = 0 then  '/Areas/Admin/Content/noimage.png' else  '/Areas/Admin/FormsDocuments/DiscountOffer/' + CAST(ISNULL(dc.DocumentId , 0) AS VARCHAR) + '.' + ISNULL(dc.DocumentExtension, '') end ) as ImagePath,isnull(s.ExpiredOn,'') as 'ExpiredOn',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy'  from tblDiscountOffer s LEFT JOIN tblDocument dc ON s.OfferId = dc.TypeId AND dc.DocumentType = 'DiscountOffer' AND dc.Remarks = 'ProfilePicture'  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
@@ -63,11 +64,7 @@ namespace ArooshyStore.BLL.Services
                                 {
                                     OfferId = Convert.ToInt32(reader["OfferId"]),
                                     DiscountName = reader["DiscountName"].ToString(),
-                                    DiscPercent = Convert.ToDecimal(reader["DiscPercent"].ToString()),
                                     ExpiredOn = Convert.ToDateTime(reader["ExpiredOn"].ToString()),
-                                    SelectType = reader["SelectType"].ToString(),
-                                    CategoryName = reader["CategoryName"].ToString(),
-                                    ProductName = reader["ProductName"].ToString(),
                                     StatusString = reader["StatusString"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
@@ -104,12 +101,6 @@ namespace ArooshyStore.BLL.Services
                          {
                              OfferId = f.OfferId,
                              DiscountName = f.DiscountName,
-                             ProductId = f.ProductId ?? 0,
-                             ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == f.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
-                             CategoryId = f.CategoryId ?? 0,
-                             CategoryName = _unitOfWork.Db.Set<tblCategory>().Where(x => x.CategoryId == f.CategoryId).Select(x => x.CategoryName).FirstOrDefault() ?? "",
-                             SelectType = f.SelectType ,
-                             DiscPercent = f.DiscPercent ?? 0,
                              ExpiredOn = f.ExpiredOn ?? DateTime.Now,
                              Status = f.Status ?? false,
                              ImagePath = _unitOfWork.Db.Set<tblDocument>()
@@ -128,12 +119,6 @@ namespace ArooshyStore.BLL.Services
                 {
                     OfferId = 0,
                     DiscountName = "",
-                    CategoryId = 0,
-                    CategoryName ="",
-                    ProductId = 0,
-                    ProductName = "",
-                    SelectType = "",
-                    DiscPercent = 0,
                     ExpiredOn = DateTime.Now.AddDays(7),
                     Status = false,
                     ImagePath = "/Areas/Admin/Content/noimage.png",
@@ -142,13 +127,31 @@ namespace ArooshyStore.BLL.Services
             }
             return model;
         }
-
-        public StatusMessageViewModel InsertUpdateDiscountOffer(DiscountOfferViewModel model, int loggedInUserId)
+        public StatusMessageViewModel InsertUpdateDiscountOffer(DiscountOfferViewModel model, string data, int loggedInUserId)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             try
             {
                 string insertUpdateStatus = "";
+                List<DiscountOfferViewModel> list = JsonConvert.DeserializeObject<List<DiscountOfferViewModel>>(data);
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Id");
+                dt.Columns.Add("OfferDetailId");
+                dt.Columns.Add("ProductId");
+                dt.Columns.Add("DiscountType");
+                dt.Columns.Add("DiscountRate");
+
+                if (list.Count != 0)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        dt.Rows.Add(new object[] { i + 1, list[i].OfferDetailId, list[i].ProductId, list[i].DiscountType, list[i].DiscountRate });
+                    }
+                }
+                else
+                {
+                    dt.Rows.Add(new object[] { 0, 0, 0, "", 0 });
+                }
                 if (model.OfferId > 0)
                 {
                     //bool check = _unitOfWork.Db.Set<tblDiscountOffer>().Where(x => x.OfferId == model.OfferId).Any(x => x.DiscountName.ToLower().Trim() == model.DiscountName.ToLower().Trim());
@@ -184,7 +187,7 @@ namespace ArooshyStore.BLL.Services
                     model.Status = true;
                     insertUpdateStatus = "Save";
                 }
-                ResultViewModel result = InsertUpdateDiscountOfferDb(model, insertUpdateStatus, loggedInUserId);
+                ResultViewModel result = InsertUpdateDiscountOfferDb(model, dt, insertUpdateStatus, loggedInUserId);
                 if (result.Message == "Success")
                 {
                     response.Status = true;
@@ -209,7 +212,7 @@ namespace ArooshyStore.BLL.Services
             }
             return response;
         }
-        private ResultViewModel InsertUpdateDiscountOfferDb(DiscountOfferViewModel st, string insertUpdateStatus, int loggedInUserId)
+        private ResultViewModel InsertUpdateDiscountOfferDb(DiscountOfferViewModel st, DataTable dt, string insertUpdateStatus, int loggedInUserId)
         {
             ResultViewModel result = new ResultViewModel();
             try
@@ -225,12 +228,9 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Clear();
                         cmd.Parameters.Add("@OfferId", SqlDbType.Int).Value = st.OfferId;
                         cmd.Parameters.Add("@DiscountName", SqlDbType.NVarChar).Value = st.DiscountName;
-                        cmd.Parameters.Add("@SelectType", SqlDbType.NVarChar).Value = st.SelectType;
-                        cmd.Parameters.Add("@CategoryId", SqlDbType.Int).Value = st.CategoryId;
-                        cmd.Parameters.Add("@ProductId", SqlDbType.Int).Value = st.ProductId;
-                        cmd.Parameters.Add("@DiscPercent", SqlDbType.Decimal).Value = st.DiscPercent;
                         cmd.Parameters.Add("@ExpiredOn", SqlDbType.DateTime).Value = st.ExpiredOn;
                         cmd.Parameters.Add("@Status", SqlDbType.Bit).Value = st.Status;
+                        cmd.Parameters.Add("@dtDiscountOfferDetail", SqlDbType.Structured).Value = dt;
                         cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
                         cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
                         cmd.Parameters.Add("@CheckReturn", SqlDbType.NVarChar, 300).Direction = ParameterDirection.Output;
@@ -259,14 +259,23 @@ namespace ArooshyStore.BLL.Services
             StatusMessageViewModel response = new StatusMessageViewModel();
             DiscountOfferViewModel model = new DiscountOfferViewModel();
             model.OfferId = id;
-            ResultViewModel result = InsertUpdateDiscountOfferDb(model, "Delete", loggedInUserId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
+            dt.Columns.Add("OfferDetailId");
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("DiscountType");
+            dt.Columns.Add("DiscountRate");
+
+            dt.Rows.Add(new object[] { 0, 0, 0, "", 0 });
+            ResultViewModel result = InsertUpdateDiscountOfferDb(model, dt, "Delete", loggedInUserId);
             if (result.Message == "Success")
             {
                 response.Status = true;
                 response.Message = "Discount Offer Deleted Successfully";
                 response.Id = result.Id;
             }
-           
+
             else
             {
                 response.Status = false;
@@ -276,8 +285,27 @@ namespace ArooshyStore.BLL.Services
             return response;
         }
 
-
-      
+        public List<DiscountOfferViewModel> ProductsList(int id)
+        {
+            List<DiscountOfferViewModel> model = new List<DiscountOfferViewModel>();
+            model = (from f in _unitOfWork.Db.Set<tblProduct>()
+                     join c in _unitOfWork.Db.Set<tblCategory>() on f.CategoryId equals c.CategoryId
+                     join p in _unitOfWork.Db.Set<tblCategory>() on c.ParentCategoryId equals p.CategoryId
+                     where f.Status == true
+                     select new DiscountOfferViewModel
+                     {
+                         ProductId = f.ProductId,
+                         ProductName = f.ProductName,
+                         ArticleNumber = f.ArticleNumber ?? "",
+                         CategoryId = f.CategoryId ?? 0,
+                         CategoryName = c.CategoryName ?? "",
+                         ParentCategoryId = p.CategoryId,
+                         ParentCategoryName = p.CategoryName ?? "",
+                         DiscountType = _unitOfWork.Db.Set<tblDiscountOfferDetail>().Where(x => x.OfferId == id && x.ProductId == f.ProductId).Select(x => x.DiscountType).FirstOrDefault() ?? "",
+                         DiscountRate = _unitOfWork.Db.Set<tblDiscountOfferDetail>().Where(x => x.OfferId == id && x.ProductId == f.ProductId).Select(x => x.DiscountRate).FirstOrDefault() ?? 0,
+                     }).OrderBy(x=>x.ParentCategoryName).OrderBy(x => x.CategoryName).ToList();
+            return model;
+        }
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

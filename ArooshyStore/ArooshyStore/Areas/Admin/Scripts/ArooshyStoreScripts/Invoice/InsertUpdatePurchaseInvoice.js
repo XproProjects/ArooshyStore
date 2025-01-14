@@ -259,7 +259,6 @@ $(function () {
                     searchTerm: params.term,
                     pageSize: 20,
                     pageNumber: params.page,
-                    employeeId: 0,
                 };
             },
             processResults: function (data, params) {

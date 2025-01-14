@@ -45,7 +45,7 @@ namespace ArooshyStore.BLL.Services
                     con.Open();
 
                     string query = "SELECT Count(s.ProductId) as MyRowCount FROM tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId left join tblCategory p on c.ParentCategoryId = p.CategoryId where " + whereCondition + " ";
-                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.ArticleNumber,'') as ArticleNumber,isnull(s.ProductDescription,'') as ProductDescription,isnull(c.CategoryName,'') + ' - ' + isnull(p.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.SalePriceForWebsite,0) as SalePriceForWebsite,isnull(s.SalePriceAfterExpired,0) as SalePriceAfterExpired,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsExpired,0) = 0 then 'No' else 'Yes' end) as 'IsExpiredString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId left join tblCategory p on c.ParentCategoryId = p.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.ProductId,isnull(s.ProductName,'') as ProductName,isnull(s.ArticleNumber,'') as ArticleNumber,isnull(s.ProductDescription,'') as ProductDescription,isnull(c.CategoryName,'') + ' - ' + isnull(p.CategoryName,'') as CategoryName,isnull(s.ProductNameUrdu,'') as 'ProductNameUrdu',isnull(s.SalePrice,0) as SalePrice,isnull(s.SalePriceForWebsite,0) as SalePriceForWebsite,isnull(s.SalePriceAfterExpired,0) as SalePriceAfterExpired,isnull(s.CostPrice,0) as 'CostPrice',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'StatusString',(case when isnull(s.IsExpired,0) = 0 then 'No' else 'Yes' end) as 'IsExpiredString',(case when isnull(s.ShowOnWebsite,0) = 0 then 'No' else 'Yes' end) as 'ShowOnWebsiteString',(case when isnull(s.IsFeatured,0) = 0 then 'No' else 'Yes' end) as 'IsFeaturedString',isnull((select '/Areas/Admin/FormsDocuments/Product/' + cast(isnull(dc.DocumentId,0) as varchar) + '.' +  isnull(dc.DocumentExtension,'')  from tblDocument dc where dc.TypeId = CAST(s.ProductId as varchar)  and dc.DocumentType = 'Product' and dc.Remarks = 'ProfilePicture' ),'/Areas/Admin/Content/noimage.png') as 'ImagePath',(case when isnull(s.Status,0) = 0 then 'In-Active' else 'Active' end) as 'Status',isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblProduct s left join tblCategory c on s.CategoryId = c.CategoryId left join tblCategory p on c.ParentCategoryId = p.CategoryId  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     //query += " ";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -78,6 +78,7 @@ namespace ArooshyStore.BLL.Services
                                     StatusString = reader["StatusString"].ToString(),
                                     IsFeaturedString = reader["IsFeaturedString"].ToString(),
                                     IsExpiredString = reader["IsExpiredString"].ToString(),
+                                    ShowOnWebsiteString = reader["ShowOnWebsiteString"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
@@ -134,6 +135,7 @@ namespace ArooshyStore.BLL.Services
                              IsExpired = f.IsExpired,
                              Status = f.Status,
                              IsFeatured = f.IsFeatured ?? false,
+                             ShowOnWebsite = f.ShowOnWebsite ?? false,
                              ImagePath = _unitOfWork.Db.Set<tblDocument>()
                                                            .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
                                                            .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
@@ -167,6 +169,7 @@ namespace ArooshyStore.BLL.Services
                     Status = false,
                     IsFeatured = false,
                     IsExpired = false,
+                    ShowOnWebsite = false,
                     ImagePath = "/Areas/Admin/Content/noimage.png",
                     DocumentId = 0,
                 };
@@ -289,6 +292,7 @@ namespace ArooshyStore.BLL.Services
                 }
                 model.IsFeatured = true ? model.IsFeaturedString == "Yes" : false;
                 model.IsExpired = true ? model.IsExpiredString == "Yes" : false;
+                model.ShowOnWebsite = true ? model.ShowOnWebsiteString == "Yes" : false;
 
                 // Call method to interact with DB
                 ResultViewModel result = InsertUpdateProductDb(model, insertUpdateStatus, dtAttributes, dtTags, loggedInUserId);
@@ -394,6 +398,7 @@ namespace ArooshyStore.BLL.Services
                         cmd.Parameters.Add("@Status", SqlDbType.Bit).Value = model.Status;
                         cmd.Parameters.Add("@IsFeatured", SqlDbType.Bit).Value = model.IsFeatured;
                         cmd.Parameters.Add("@IsExpired", SqlDbType.Bit).Value = model.IsExpired;
+                        cmd.Parameters.Add("@ShowOnWebsite", SqlDbType.Bit).Value = model.ShowOnWebsite;
                         cmd.Parameters.Add("@dtProductAttributeDetailType", SqlDbType.Structured).Value = dtAttributes;
                         cmd.Parameters.Add("@dtTagsForProductsType", SqlDbType.Structured).Value = dtTags;
                         cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
@@ -633,10 +638,134 @@ namespace ArooshyStore.BLL.Services
                                                                         AttributeDetailId2 = ap.AttributeDetailId2,
                                                                         AttributeDetailName2 = ad2.AttributeDetailName,
                                                                         Barcode = ap.Barcode ?? "",
-                                                                        Status = ap.Status
+                                                                        Status = ap.Status ?? false,
+                                                                        Stock = (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.InQty) ?? 0) - (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.OutQty) ?? 0)
                                                                     }).OrderBy(x => x.AttributeDetailName1).ThenBy(x => x.AttributeDetailName2).ToList() ?? new List<ProductAttributeDetailViewModel>();
 
             return AttributesList;
+        }
+        public List<ProductAttributeDetailViewModel> GetProductAttributesListByBarcode(string barcode)
+        {
+            int productId = _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>().Where(x => x.Barcode.ToLower().Trim() == barcode.ToLower().Trim()).Select(x => x.ProductId).FirstOrDefault() ?? 0;
+            List<ProductAttributeDetailViewModel> AttributesList = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                                                                    join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                                                    join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                                                    join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                                                    join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                                                                    where ap.Status == true && ap.ProductId == productId
+                                                                    select new ProductAttributeDetailViewModel
+                                                                    {
+                                                                        ProductAttributeDetailBarcodeId = ap.ProductAttributeDetailBarcodeId,
+                                                                        ProductId = ap.ProductId ?? 0,
+                                                                        ArticleNumber = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == ap.ProductId).Select(x => x.ArticleNumber).FirstOrDefault() ?? "",
+                                                                        ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == ap.ProductId).Select(x => x.ProductName).FirstOrDefault() ?? "",
+                                                                        AttributeId1 = ap.AttributeId1,
+                                                                        AttributeName1 = a1.AttributeName,
+                                                                        AttributeId2 = ap.AttributeId2,
+                                                                        AttributeName2 = a2.AttributeName,
+                                                                        AttributeDetailId1 = ap.AttributeDetailId1,
+                                                                        AttributeDetailName1 = ad1.AttributeDetailName,
+                                                                        AttributeDetailId2 = ap.AttributeDetailId2,
+                                                                        AttributeDetailName2 = ad2.AttributeDetailName,
+                                                                        Barcode = ap.Barcode ?? "",
+                                                                        Status = ap.Status,
+                                                                        Stock = (_unitOfWork.Db.Set<tblProductStock>().Where(x=>x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x=>x.InQty) ?? 0) - (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.OutQty) ?? 0)
+                                                                    }).OrderBy(x => x.AttributeDetailName1).ThenBy(x => x.AttributeDetailName2).ToList() ?? new List<ProductAttributeDetailViewModel>();
+
+            return AttributesList;
+        }
+
+        public StatusMessageViewModel InsertUpdateProductStock(string AttributeDetailData, int loggedInUserId)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            try
+            {
+                string insertUpdateStatus = "Save";
+                List<ProductAttributeDetailViewModel> list = JsonConvert.DeserializeObject<List<ProductAttributeDetailViewModel>>(AttributeDetailData);
+
+                DataTable dtAttributes = new DataTable();
+                dtAttributes.Columns.Add("Id");
+                dtAttributes.Columns.Add("ProductStockId");
+                dtAttributes.Columns.Add("StockType");
+                dtAttributes.Columns.Add("ProductAttributeDetailBarcodeId");
+                dtAttributes.Columns.Add("Qty");
+                dtAttributes.Columns.Add("ReferenceId");
+                dtAttributes.Columns.Add("WarehouseId");
+
+                if (list.Count != 0)
+                {
+                    int k = 0;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        dtAttributes.Rows.Add(new object[] { i + 1, 0, list[i].StockType, list[i].ProductAttributeDetailBarcodeId, list[i].Stock, list[i].ReferenceId,list[i].WarehouseId });
+                    }
+                }
+                else
+                {
+                    dtAttributes.Rows.Add(new object[] { 0, 0, "", 0, 0, "", 0 });
+                }
+
+                // Call method to interact with DB
+                ResultViewModel result = InsertUpdateProductStockDb(insertUpdateStatus, dtAttributes, loggedInUserId);
+                if (result.Message == "Success")
+                {
+                    SaveBarcodes(result.Id, insertUpdateStatus, loggedInUserId);
+
+                    response.Status = true;
+                    response.Message = "Product Saved Successfully";
+                    response.Id = result.Id;
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = result.Message;
+                    response.Id = result.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                response.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message, "Web Application", "ProductRepository", "InsertUpdateProductStock");
+            }
+            return response;
+        }
+
+        private ResultViewModel InsertUpdateProductStockDb(string insertUpdateStatus, DataTable dtAttributes, int loggedInUserId)
+        {
+            ResultViewModel result = new ResultViewModel();
+            try
+            {
+                string connection = System.Configuration.ConfigurationManager.ConnectionStrings["ADO"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connection))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("spInsertUpdateProductStock", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.Add("@dtProductStock", SqlDbType.Structured).Value = dtAttributes;
+                        cmd.Parameters.Add("@ActionByUserId", SqlDbType.Int).Value = loggedInUserId;
+                        cmd.Parameters.Add("@InsertUpdateStatus", SqlDbType.NVarChar).Value = insertUpdateStatus;
+                        cmd.Parameters.Add("@CheckReturn", SqlDbType.NVarChar, 300).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("@CheckReturn2", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        result.Message = cmd.Parameters["@CheckReturn"].Value.ToString();
+                        result.Id = Convert.ToInt32(cmd.Parameters["@CheckReturn2"].Value.ToString());
+                        cmd.Dispose();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Id = 0;
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(loggedInUserId, ex.Message, "Web Application", "ProductRepository", "InsertUpdateProductStockDb");
+            }
+            return result;
         }
         public List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data)
         {
@@ -679,6 +808,7 @@ namespace ArooshyStore.BLL.Services
                          IsExpired = f.IsExpired,
                          Status = f.Status,
                          IsFeatured = f.IsFeatured ?? false,
+                         ShowOnWebsite = f.ShowOnWebsite ?? false,
                          ImagePath = _unitOfWork.Db.Set<tblDocument>()
                                                        .Where(x => x.TypeId == f.ProductId.ToString() && x.DocumentType == "Product" && x.Remarks == "ProfilePicture")
                                                        .Select(x => "/Areas/Admin/FormsDocuments/Product/" + x.DocumentId + "." + x.DocumentExtension)
@@ -1102,9 +1232,9 @@ namespace ArooshyStore.BLL.Services
                                  {
                                      OfferId = d.OfferId,
                                      DiscountName = d.DiscountName ?? "",
-                                     DiscPercent = d.DiscPercent ?? 0,
+                                     //DiscPercent = d.DiscPercent ?? 0,
                                      Status = d.Status ?? false,
-                                     SelectType = d.SelectType ?? "",
+                                     //SelectType = d.SelectType ?? "",
                                  }).ToList();
 
             return new List<ProductFilterViewModel>

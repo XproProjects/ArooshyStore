@@ -25,6 +25,23 @@ function getRowsData() {
     });
     return arrayData;
 }
+function getRowsDataForUpdateStock() {
+    var arrayData = [];
+    $('.DataTr').each(function () {
+        var id = $(this).val();
+        var ProductAttributeDetailBarcodeId = $(this).find('.ProductAttributeDetailBarcodeId').val();
+        var Stock = $(this).find('.Stock').val();
+        var alldata = {
+            'ProductAttributeDetailBarcodeId': ProductAttributeDetailBarcodeId,
+            'StockType': 'Product Stock Page',
+            'Stock': Stock,
+            'ReferenceId': '',
+            'WarehouseId': 0,
+        }
+        arrayData.push(alldata);
+    });
+    return arrayData;
+}
 function CheckSectionsData() {
     var check = 0;
     $('.DataTr').each(function () {
@@ -41,14 +58,29 @@ $('#popupPrintForm').on('submit', function (e) {
     if (!$("#popupPrintForm").valid()) {
         return false;
     }
+    var titleVal = $(this).find("button:focus").attr("data-value");
+    $('.btnSaveForm').attr('disabled', 'disabled');
+    $('.btnSaveForm').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
+    if (titleVal == 0) {
+        PrintBarcodes();
+    }
+    else if (titleVal == 1) {
+        UpdateStock("");
+    }
+    else if (titleVal == 2) {
+        UpdateStock("print");
+    }
+})
 
+function PrintBarcodes() {
     if (CheckSectionsData() == 0) {
         toastr.error("Please print atleast one barcode.", "Error", { timeOut: 3000, "closeButton": true });
+        $('.btnSaveForm').prop('disabled', false);
+        $('#btnSavePrint').html("Print Barcodes");
+        $('#btnUpdateStock').html("Update Stock");
+        $('#btnUpdateStockPrintBarcode').html("Update Stock and Print Barcodes");
         return false;
     }
-    $('#btnSavePrint').attr('disabled', 'disabled');
-    $('#btnSavePrint').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
-
     var detail = JSON.stringify(getRowsData());
 
     $.ajax({
@@ -63,24 +95,43 @@ $('#popupPrintForm').on('submit', function (e) {
             //$('#btn_Save').prop('disabled', false);
             //if (data.status) {
             //    var extension = $('#ProfileImage').val().split('.').pop().toLowerCase();
-               
+
             //}
             //else {
             //    toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
             //}
         }
     })
+}
 
-})
-$("#CostPrice").on('input keypress', function (event) {
-    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
-});
-$("#SalePrice").on('input keypress', function (event) {
-    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
-});
-$("#SalePriceForWebsite").on('input keypress', function (event) {
-    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
-});
-$("#SalePriceAfterExpired").on('input keypress', function (event) {
-    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
-});
+function UpdateStock(print) {
+    var detail = JSON.stringify(getRowsDataForUpdateStock());
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/Product/InsertUpdateProductStock/",
+        data: JSON.stringify({ 'data': detail }),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.status) {
+                if (print == "print") {
+                    toastr.success("Product Stock Updated Successfully", "Success", { timeOut: 3000, "closeButton": true });
+                    setTimeout(function () {
+                        PrintBarcodes();
+                    }, 2000);
+                }
+                else {
+                    $('.btnSaveForm').prop('disabled', false);
+                    $('#btnSavePrint').html("Print Barcodes");
+                    $('#btnUpdateStock').html("Update Stock");
+                    $('#btnUpdateStockPrintBarcode').html("Update Stock and Print Barcodes");
+                    toastr.success("Product Stock Updated Successfully", "Success", { timeOut: 3000, "closeButton": true });
+                }
+            }
+            else {
+                toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
+            }
+        }
+    })
+}

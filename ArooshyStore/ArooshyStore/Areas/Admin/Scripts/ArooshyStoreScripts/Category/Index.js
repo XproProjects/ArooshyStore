@@ -31,7 +31,7 @@
             },
             "columnDefs": [{
                 "className": "control",
-                "orderable": false,
+                "orderable": true,
                 "targets": 1
             }],
             "columns": [
@@ -111,7 +111,7 @@
             },
             "columnDefs": [{
                 "className": "control",
-                "orderable": false,
+                "orderable": true,
                 "targets": 1
             }],
             "columns": [

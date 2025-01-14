@@ -83,6 +83,7 @@ function DeleteImage(id) {
     }
 }
 $(function () {
+    $('.nav-menu li a[href="/admin/home/setting"]').parent("li").addClass('active');
     $('#MasterCategoryId').select2({
         ajax: {
             delay: 150,
@@ -173,72 +174,17 @@ $(function () {
         dropdownParent: $(".mySelect"),
         allowClear: true,
     });
-    if ($('#OfferId').val() > 0) {
-        if ($('#HiddenSelectType').val() == 'Master Category') {
-            if ($('#HiddenCategoryId').val() > 0 && $('#HiddenCategoryName').val() != null && $('#HiddenCategoryName').val() != '') {
-                if ($('#MasterCategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
-                    $('#MasterCategoryId').val($('#HiddenCategoryId').val()).trigger('change');
-                } else {
-                    var newOption = new Option($('#HiddenCategoryName').val(), $('#HiddenCategoryId').val(), true, true);
-                    $('#MasterCategoryId').append(newOption).trigger('change');
-                }
-            }
-            else {
-                $('#MasterCategoryId').val(null).trigger('change');
-            }
-        }
-        else if ($('#HiddenSelectType').val() == 'Child Category') {
-            if ($('#HiddenCategoryId').val() > 0 && $('#HiddenCategoryName').val() != null && $('#HiddenCategoryName').val() != '') {
-                if ($('#ChildCategoryId').find("option[value='" + $('#HiddenCategoryId').val() + "']").length) {
-                    $('#ChildCategoryId').val($('#HiddenCategoryId').val()).trigger('change');
-                } else {
-                    var newOption = new Option($('#HiddenCategoryName').val(), $('#HiddenCategoryId').val(), true, true);
-                    $('#ChildCategoryId').append(newOption).trigger('change');
-                }
-            }
-            else {
-                $('#ChildCategoryId').val(null).trigger('change');
-            }
-        }
-        else if ($('#HiddenSelectType').val() == 'Product') {
-            if ($('#HiddenProductId').val() > 0 && $('#HiddenProductName').val() != null && $('#HiddenProductName').val() != '') {
-                if ($('#ProductId').find("option[value='" + $('#HiddenProductId').val() + "']").length) {
-                    $('#ProductId').val($('#HiddenProductId').val()).trigger('change');
-                } else {
-                    var newOption = new Option($('#HiddenProductName').val(), $('#HiddenProductId').val(), true, true);
-                    $('#ProductId').append(newOption).trigger('change');
-                }
-            }
-            else {
-                $('#ProductId').val(null).trigger('change');
-            }
-        }
-    }
-    else {
-        $('#MasterCategoryId').val(null).trigger('change');
-        $('#ChildCategoryId').val(null).trigger('change');
-        $('#ProductId').val(null).trigger('change');
-    }
+    LoadProductsList();
+    $('#MasterCategoryId').val(null).trigger('change');
+    $('#ChildCategoryId').val(null).trigger('change');
+    $('#ProductId').val(null).trigger('change');
     var $checkoutForm = $('#popupForm').validate({
         ignore: ":not(:visible)",
         rules: {
             DiscountName: {
                 required: true
             },
-            DiscPercent: {
-                required: true,
-                min: 1,
-            },
             ExpiredOn: {
-                required: true
-            },
-            MasterCategoryId: {
-                required: true
-            },
-            ChildCategoryId: {
-                required: true
-            },
-            ProductId: {
                 required: true
             },
         },
@@ -246,21 +192,8 @@ $(function () {
             DiscountName: {
                 required: 'Offer Name is required.'
             },
-            DiscPercent: {
-                required: 'Disc Percent is required.',
-                min: 'Disc Percent should be greater than zero.'
-            },
             ExpiredOn: {
                 required: 'Expiry Date is required.'
-            },
-            MasterCategoryId: {
-                required: 'Master Category is required.'
-            },
-            ChildCategoryId: {
-                required: 'Child Category is required.'
-            },
-            ProductId: {
-                required: 'Product is required.'
             },
         },
         errorPlacement: function (error, element) {
@@ -271,31 +204,116 @@ $(function () {
         }
     });
 })
-$('input[type=radio][name=AssignType]').change(function () {
-    var radioValue = $("input[name='AssignType']:checked").val();
-    if (radioValue == 'Master Category') {
-        $('#MasterCategoryDiv').removeAttr("hidden");
-        $('#ChildCategoryDiv').attr("hidden", "hidden");
-        $('#ProductDiv').attr("hidden", "hidden");
-    }
-    else if (radioValue == 'Child Category') {
-        $('#MasterCategoryDiv').attr("hidden", "hidden");
-        $('#ChildCategoryDiv').removeAttr("hidden");
-        $('#ProductDiv').attr("hidden", "hidden");
+function LoadProductsList() {
+    $("#ProductsListDiv").html('<center>' +
+        '<div class="demo" style="margin-top:60px">' +
+        '<div class="spinner-grow text-primary" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-secondary" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-success" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-danger" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-warning" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-info" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '<div class="spinner-grow text-light" role="status">' +
+        '<span class="sr-only">Loading...</span>' +
+        '</div>' +
+        '</div>' +
+        '</center>');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/DiscountOffer/ProductsList/?id=" + $('#OfferId').val(),
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $("#ProductsListDiv").html(response);
+        }
+    })
+}
+$(document).off("click", "#btnFilter").on("click", "#btnFilter", function () {
+    if ($(this).attr("data-value") == "0") {
+        $(this).attr("data-value", "1");
+        $(this).html("Hide Filters");
+        $("#FiltersDiv").removeAttr("hidden");
     }
     else {
-        $('#MasterCategoryDiv').attr("hidden", "hidden");
-        $('#ChildCategoryDiv').attr("hidden", "hidden");
-        $('#ProductDiv').removeAttr("hidden");
+        $(this).attr("data-value", "0");
+        $(this).html("Show Filters");
+        $("#FiltersDiv").attr("hidden", "hidden");
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".ParentCategoryId").val().indexOf("") > -1)
+        });
     }
-    $('#MasterCategoryId').val(null).trigger('change');
-    $('#ChildCategoryId').val(null).trigger('change');
-    $('#ProductId').val(null).trigger('change');
-});
-$(document).on('change', 'select', function () {
-    $(this).parents('td').siblings('td').find('.btn').css("margin-top", "16px");
-    $(this).parents('label').siblings('em').remove();
+    $('#MasterCategoryId').val(null).trigger('change.select2');
+    $('#ChildCategoryId').val(null).trigger('change.select2');
+    $('#ProductId').val(null).trigger('change.select2');
 })
+$("#MasterCategoryId").change(function () {
+    var value = $(this).val();
+    if (value != null && value != 0 && value != "" && value != undefined) {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".ParentCategoryId").val().indexOf(value) > -1)
+        });
+    }
+    else {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".ParentCategoryId").val().indexOf("") > -1)
+        });
+    }
+})
+$("#ChildCategoryId").change(function () {
+    var value = $(this).val();
+    if (value != null && value != 0 && value != "" && value != undefined) {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".CategoryId").val().indexOf(value) > -1)
+        });
+    }
+    else {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".CategoryId").val().indexOf("") > -1)
+        });
+    }
+})
+$("#ProductId").change(function () {
+    var value = $(this).val();
+    if (value != null && value != 0 && value != "" && value != undefined) {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".ProductId").val().indexOf(value) > -1)
+        });
+    }
+    else {
+        $(".DataTr").filter(function () {
+            $(this).toggle($(this).find(".ProductId").val().indexOf("") > -1)
+        });
+    }
+})
+function getRowsDataList() {
+    var arrayData = [];
+    $('.DataTr').each(function () {
+        var ProductId = $(this).find('.ProductId').val();
+        var DiscountType = $(this).find('.DiscountType').val();
+        var DiscountRate = $(this).find('.DiscountRate').val();
+        if (DiscountRate > 0) {
+            var alldata = {
+                'ProductId': ProductId,
+                'DiscountType': DiscountType,
+                'DiscountRate': DiscountRate,
+            }
+            arrayData.push(alldata);
+        }
+    });
+    return arrayData;
+}
 $('#popupForm').on('submit', function (e) {
     e.preventDefault();
     if (!$("#popupForm").valid()) {
@@ -303,16 +321,7 @@ $('#popupForm').on('submit', function (e) {
     }
     var OfferId = $('#OfferId').val();
     var DiscountName = $('#DiscountName').val();
-    var DiscPercent = $('#DiscPercent').val();
     var ExpiredOn = $('#ExpiredOn').val();
-    var MasterCategoryId = $('#MasterCategoryId').val();
-    var ChildCategoryId = $('#ChildCategoryId').val();
-    var ProductId = $('#ProductId').val();
-    var radioValue = $("input[name='AssignType']:checked").val();
-    var CategoryId = radioValue == 'Master Category' ? MasterCategoryId : ChildCategoryId;
-    if (CategoryId == null) {
-        CategoryId = 0;
-    }
     var StatusString = "No";
     if ($("#Status").is(":checked")) {
         StatusString = "Yes";
@@ -322,21 +331,18 @@ $('#popupForm').on('submit', function (e) {
 
     var st =
     {
-        DiscPercent: DiscPercent,
+        OfferId: OfferId,
         DiscountName: DiscountName,
         ExpiredOn: ExpiredOn,
-        CategoryId: CategoryId,
-        SelectType: radioValue,
-        OfferId: OfferId,
-        ProductId: ProductId,
         StatusString: StatusString,
     }
-    //var queryData = JSON.stringify(st);
+    var detail = JSON.stringify(getRowsDataList());
     $.ajax({
         type: "POST",
         url: "/Admin/DiscountOffer/InsertUpdateDiscountOffer/",
-        data: { 'user': st },
+        data: JSON.stringify({ 'user': st, 'data': detail }),
         dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
         success: function (data) {
             $('#btn_Save').html("Save");
             $('#btn_Save').prop('disabled', false);
@@ -377,8 +383,7 @@ $('#popupForm').on('submit', function (e) {
                                 xhr.onload = function (e) {
                                     var response = $.parseJSON(e.target.response);
                                     toastr.success("Discount Offer Saved Successfully", "Success", { timeOut: 3000, "closeButton": true });
-                                    $('.close').click();
-                                    oTable.ajax.reload(null, false);
+                                    window.location.href = "/admin/discountoffer/index";
                                     //location.reload();
                                 };
                                 xhr.send(formData);  // multipart/form-data
@@ -391,8 +396,7 @@ $('#popupForm').on('submit', function (e) {
                 }
                 else {
                     toastr.success("Discount Offer Saved Successfully", "Success", { timeOut: 3000, "closeButton": true });
-                    $('.close').click();
-                    oTable.ajax.reload(null, false);
+                    window.location.href = "/admin/discountoffer/index";
                     // location.reload();
                 }
             }
@@ -403,5 +407,12 @@ $('#popupForm').on('submit', function (e) {
     })
 })
 $("#DiscPercent").on('input keypress', function (event) {
-    NumberPostiveNegativeWithDecimal(event, this, 2,2);
+    NumberPostiveNegativeWithDecimal(event, this, 2, 2);
+});
+
+$(document).keypress(function (event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
+        event.preventDefault();
+    }
 });

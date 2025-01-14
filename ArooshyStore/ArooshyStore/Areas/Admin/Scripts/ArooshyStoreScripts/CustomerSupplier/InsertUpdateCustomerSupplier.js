@@ -83,8 +83,8 @@ function DeleteImage(id) {
     }
 }
 $(function () {
-    $("#Contact1").inputmask();
-    $("#Contact2").inputmask();
+    //$("#Contact1").inputmask();
+    //$("#Contact2").inputmask();
     var $checkoutForm = $('#popupForm').validate({
         rules: {
             CustomerSupplierName: {
@@ -97,13 +97,7 @@ $(function () {
                 required: true,
                 email: true,
             },
-            Password: {
-                required: true
-            },
             CityId: {
-                required: true
-            },
-            CompleteAddress: {
                 required: true
             },
         },
@@ -118,14 +112,8 @@ $(function () {
                 required: 'Email is required.',
                 email: 'Please enter a valid email address.',
             },
-            Password: {
-                required: 'Password is required.'
-            },
             CityId: {
                 required: 'City is required.'
-            },
-            CompleteAddress: {
-                required: 'Complete Address is required.'
             },
         },
         errorPlacement: function (error, element) {
@@ -201,6 +189,9 @@ $('#popupForm').on('submit', function (e) {
     var Contact2 = $('#Contact2').val();
     var Email = $('#Email').val();
     var Password = $('#Password').val();
+    if (Password == '' || Password == null || Password == undefined || Password == 0) {
+        Password = '1234';
+    }
     var isChangePassword = $('#IsChangePassword').val();
     var HouseNo = $('#HouseNo').val();
     var Street = $('#Street').val();

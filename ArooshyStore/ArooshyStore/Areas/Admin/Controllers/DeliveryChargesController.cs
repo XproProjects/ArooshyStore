@@ -56,11 +56,11 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var userName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var cityName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                string whereCondition = " ";
+                string whereCondition = " LOWER(c.CityName) != 'shop' ";
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
                 {
@@ -73,14 +73,14 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.DeliveryId asc";
                 }
-                if (!(string.IsNullOrEmpty(userName)))
+                if (!(string.IsNullOrEmpty(cityName)))
                 {
-                    whereCondition += " LOWER(s.DeliveryCharges) like ('%" + userName.ToLower() + "%')";
+                    whereCondition += " and LOWER(c.CityName) like ('%" + cityName.ToLower() + "%')";
                 }
                
                 else
                 {
-                    whereCondition += " LOWER(s.DeliveryCharges) like ('%%')";
+                    whereCondition += " and LOWER(c.CityName) like ('%%')";
                 }
                 List<DeliveryChargesViewModel> listsub = new List<DeliveryChargesViewModel>();
                 if (_roles.CheckActionRoleId(User.UserId, "delivery charges", "view") > 0)

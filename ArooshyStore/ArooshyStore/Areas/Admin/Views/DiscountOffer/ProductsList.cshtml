@@ -1,0 +1,53 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<DiscountOfferViewModel>
+@{
+    string isSelectedRs = "";
+    string isSelectedPercent = "";
+}
+<table class="table table-striped table-bordered" style="width:100%;margin-top:30px">
+    <thead class="thead-themed">
+        <tr>
+            <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000; width: 150px ">Article #</th>
+            <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000 ">Product Name</th>
+            <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000 ">Category</th>
+            <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Discount Type</th>
+            <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Discount Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DiscountOfferViewModel p in Model)
+        {
+            if (p.DiscountType == "%")
+            {
+                isSelectedPercent = "selected";
+                isSelectedRs = "";
+            }
+            else
+            {
+                isSelectedRs = "selected";
+                isSelectedPercent = "";
+            }
+            <tr class="DataTr">
+                <td style="text-align: left; background-color: #F7F7F7; border: 1px solid #ddd">
+                    <input type="hidden" class="ParentCategoryId" name="ParentCategoryId" value="@p.ParentCategoryId" />
+                    <input type="hidden" class="CategoryId" name="CategoryId" value="@p.CategoryId" />
+                    <input type="hidden" class="ProductId" name="ProductId" value="@p.ProductId" />
+                    @p.ArticleNumber
+                </td>
+                <td style="text-align: left;  background-color: #F7F7F7; border: 1px solid #ddd ">@p.ProductName</td>
+                <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.CategoryName - @p.ParentCategoryName</td>
+                <td style="text-align: center; background-color: #F7F7F7; border: 1px solid #ddd ">
+                    <select class="custom-select DiscountType">
+                        <option value="Rs." @isSelectedRs>Rs.</option>
+                        <option value="%" @isSelectedPercent>%</option>
+                    </select>
+                </td>
+                <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">
+                    <input type="number" style="font-weight: bold; color: green; font-size: 15px;" class="form-control DiscountRate" placeholder="Numbers" value="@p.DiscountRate" min="0" max="9999" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/DiscountOffer/ProductsList.js"></script>
+

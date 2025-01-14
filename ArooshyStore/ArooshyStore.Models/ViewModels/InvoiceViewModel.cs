@@ -18,6 +18,8 @@ namespace ArooshyStore.Models.ViewModels
         public decimal? NetAmount { get; set; }
         public decimal? DeliveryCharges { get; set; }
         public string IsNewOrEdit { get; set; }
+        public string CashOrCredit { get; set; }
+        public string AdminOrClient { get; set; }
         public decimal? Rate { get; set; }
         public decimal? Qty { get; set; }
         public int? DiscountOfferId { get; set; }

@@ -18,7 +18,7 @@ $("#btnRefreshModal").on("click", function () {
 
 function SearchTextModal() {
     var value = $("#txtSearchModal").val().toLowerCase();
-    $(".roleRows").filter(function () {
+    $(".DataTr").filter(function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 }

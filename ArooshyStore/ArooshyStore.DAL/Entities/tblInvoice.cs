@@ -19,7 +19,8 @@ namespace ArooshyStore.DAL.Entities
         public Nullable<decimal> DiscAmount { get; set; }
         public Nullable<decimal> NetAmount { get; set; }
         public Nullable<decimal> DeliveryCharges { get; set; }
-
+        [StringLength(50)]
+        public string CashOrCredit { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }

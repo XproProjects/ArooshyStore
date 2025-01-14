@@ -26,7 +26,7 @@
         },
         "columnDefs": [{
             "className": "control",
-            "orderable": false,
+            "orderable": true,
             "targets": 1
         }],
         "columns": [
@@ -39,7 +39,7 @@
             { "data": "ProductName", "name": "ProductName", "class": "ProductNameClass", "autoWidth": true },
             { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
             {
-                "data": "StatusString", "name": "StatusString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
+                "data": "StatusString", "name": "StatusString", "orderable": true, "autoWidth": false, 'render': function (data) {
                     if (data.toString() == "Active") {
                         return '<span class="badge badge-success badge-pill">Active</span>';
                     }
@@ -49,7 +49,17 @@
                 }
             },
             {
-                "data": "IsFeaturedString", "name": "IsFeaturedString", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
+                "data": "IsFeaturedString", "name": "IsFeaturedString", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    if (data.toString() == "Yes") {
+                        return '<span class="badge badge-success badge-pill">Yes</span>';
+                    }
+                    else {
+                        return '<span class="badge badge-danger badge-pill">No</span>';
+                    }
+                }
+            },
+            {
+                "data": "ShowOnWebsiteString", "name": "ShowOnWebsiteString", "orderable": true, "autoWidth": false, 'render': function (data) {
                     if (data.toString() == "Yes") {
                         return '<span class="badge badge-success badge-pill">Yes</span>';
                     }
@@ -79,7 +89,7 @@
                 }
             },
             {
-                "data": "SalePriceAfterExpired", "name": "SalePriceAfterExpired", "width": "130px", "class": "Aright", "orderable": true, "autoWidth": false, 'render': function (data) {
+                "data": "SalePriceAfterExpired", "name": "SalePriceAfterExpired", "width": "130px", "orderable": true, "autoWidth": false, 'render': function (data) {
                     return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
                 }
             },
@@ -103,8 +113,8 @@
                 }
             },
             {
-                "data": "ProductId", "width": "120px", "class": "Acenter", "orderable": false, "render": function (data) {
-                    var print = '<a title="Print Barcode Stickers" data-toggle="modal" data-target="#MyModal" class="btn btn-secondary btnPrint btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Print Barcode</a>&nbsp';
+                "data": "ProductId", "width": "160px", "class": "Acenter", "orderable": false, "render": function (data) {
+                    var print = '<a title="View and Update / Print Barcode Stickers" data-toggle="modal" data-target="#MyModal" class="btn btn-secondary btnPrint btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Stock / Print Barcode</a>&nbsp';
                     return print;
                 }
             },
@@ -225,7 +235,7 @@ $(document).on('click', '.btnPrint', function () {
     var id = $(this).attr("data-value");
     var articleNumber = $(this).parents("tr").find(".ArticleNumberClass").text();
     var productName = $(this).parents("tr").find(".ProductNameClass").text();
-    $('#ModelHeaderSpan').html('Print Barcode Stickers (' + articleNumber + ' - ' + productName + ')');
+    $('#ModelHeaderSpan').html('Stock / Print Barcode Stickers (<span style="font-weight:bold;color:yellow">' + articleNumber + ' - ' + productName + '</span>)');
     $('#modalDiv').html('');
     // $('#modalDiv').load('@Url.Action("InsertUpdateProduct", "Product")?id=' + id + '');
     $.ajax({

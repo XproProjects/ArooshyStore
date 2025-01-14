@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Configuration;
 using ArooshyStore.BLL.GenericRepository;
 using ArooshyStore.BLL.Interfaces;
 using ArooshyStore.DAL.Entities;
@@ -89,7 +90,7 @@ namespace ArooshyStore.BLL.Services
             item = (from c in _unitOfWork.Db.Set<tblCustomerSupplier>()
                     orderby c.CustomerSupplierName
                     where (type.ToLower() == "customer" ? c.CustomerSupplierType.ToLower() == "customer" : c.CustomerSupplierType.ToLower() == "supplier")
-
+                    && c.Status == true
                     select new SelectListViewModel
                     {
                         id = c.CustomerSupplierId,
@@ -240,7 +241,7 @@ namespace ArooshyStore.BLL.Services
         {
             List<SelectListViewModel> item = new List<SelectListViewModel>();
             item = (from c in _unitOfWork.Db.Set<tblCity>()
-                    where  c.Status == true
+                    where  c.Status == true && c.CityName.ToLower() != "shop"
                     orderby c.CityName
                     select new SelectListViewModel
                     {
@@ -271,7 +272,7 @@ namespace ArooshyStore.BLL.Services
                     select new SelectListViewModel
                     {
                         id = c.ProductId,
-                        text = c.ProductName
+                        text = c.ArticleNumber + " - " + c.ProductName
                     }).ToList();
             var result = item.AsQueryable();
             return result;

@@ -93,6 +93,17 @@ x.ModuleName.ToLower() == "attendance"))
                 </li>
             }
             @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "product"))
+            {
+                @*<li class="nav-title">Products</li>*@
+                <li>
+                    <a href="/admin/product/productstock" title="Products Stock" data-filter-tags="products stock">
+                        <i class="fas fa-box"></i>
+                        <span class="nav-link-text" data-i18n="nav.ProductsStock">Products Stock</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ModuleList.Any(x =>
 x.ModuleName.ToLower() == "customer"))
             {
                 @*<li class="nav-title">Customers</li>*@
@@ -129,55 +140,56 @@ x.ModuleName.ToLower() == "expense"))
             {
                 @*<li class="nav-title">Suppliers</li>*@
                 <li>
-                    <a href="/admin/invoice/saleinvoiceindex" title="Sale Invoice" data-filter-tags="sale invoice">
+                    <a href="javascript:void(0)" title="Sale Invoice" data-filter-tags="sale invoice">
                         <i class="fas fa-align-justify"></i>
                         <span class="nav-link-text" data-i18n="nav.Invoice">Sale Invoice</span>
                     </a>
                     <ul>
-                        @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "sale invoice"))
-                        {
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=ordered" title="Ordered" data-filter-tags="ordered">
-                                    <span class="nav-link-text" data-i18n="nav.Ordered">Ordered</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=confirmed" title="Confirmed" data-filter-tags="confirmed">
-                                    <span class="nav-link-text" data-i18n="nav.Confirmed">Confirmed</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=onhold" title="OnHold" data-filter-tags="onhold">
-                                    <span class="nav-link-text" data-i18n="nav.OnHold">On Hold</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=dispatched" title="Dispatched" data-filter-tags="dispatched">
-                                    <span class="nav-link-text" data-i18n="nav.Dispatched">Dispatched</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=delivered" title="Delivered" data-filter-tags="delivered">
-                                    <span class="nav-link-text" data-i18n="nav.Delivered">Delivered</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=returned" title="Returned" data-filter-tags="returned">
-                                    <span class="nav-link-text" data-i18n="nav.Returned">Returned</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=rejected" title="Rejected" data-filter-tags="rejected">
-                                    <span class="nav-link-text" data-i18n="nav.Rejected">Rejected</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/admin/invoice/saleinvoiceindex/?from=canceled" title="Canceled" data-filter-tags="canceled">
-                                    <span class="nav-link-text" data-i18n="nav.Canceled">Canceled</span>
-                                </a>
-                            </li>
-                        }
-
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=all" title="All" data-filter-tags="all">
+                                <span class="nav-link-text" data-i18n="nav.All">All</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=ordered" title="Ordered" data-filter-tags="ordered">
+                                <span class="nav-link-text" data-i18n="nav.Ordered">Ordered</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=confirmed" title="Confirmed" data-filter-tags="confirmed">
+                                <span class="nav-link-text" data-i18n="nav.Confirmed">Confirmed</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=onhold" title="OnHold" data-filter-tags="onhold">
+                                <span class="nav-link-text" data-i18n="nav.OnHold">On Hold</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=dispatched" title="Dispatched" data-filter-tags="dispatched">
+                                <span class="nav-link-text" data-i18n="nav.Dispatched">Dispatched</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=delivered" title="Delivered" data-filter-tags="delivered">
+                                <span class="nav-link-text" data-i18n="nav.Delivered">Delivered</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=returned" title="Returned" data-filter-tags="returned">
+                                <span class="nav-link-text" data-i18n="nav.Returned">Returned</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=rejected" title="Rejected" data-filter-tags="rejected">
+                                <span class="nav-link-text" data-i18n="nav.Rejected">Rejected</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=cancelled" title="Canceled" data-filter-tags="canceled">
+                                <span class="nav-link-text" data-i18n="nav.Canceled">Canceled</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -195,7 +207,7 @@ x.ModuleName.ToLower() == "expense"))
 
             }
 
-            @if (Model.ModuleList.Any(x =>
+            @*@if (Model.ModuleList.Any(x =>
             x.ModuleName.ToLower() == "purchase invoice"))
             {
                 <li>
@@ -215,7 +227,7 @@ x.ModuleName.ToLower() == "expense"))
                         <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Return</span>
                     </a>
                 </li>
-            }
+            }*@
             @if (Model.ModuleList.Any(x =>
 x.ModuleName.ToLower() == "salary"))
             {

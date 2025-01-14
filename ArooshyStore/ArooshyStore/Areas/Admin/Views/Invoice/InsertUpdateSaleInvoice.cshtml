@@ -3,26 +3,7 @@
 }
 @using ArooshyStore.Models.ViewModels
 @model InvoiceViewModel
-<link href="~/Content/ArooshyStoreCss/Invoice/InsertUpdateSaleInvoice.css" rel="stylesheet" />
-<style>
-    fieldset {
-        display: block;
-        padding: 25px 14px 5px;
-        border: none;
-        background: rgba(255,255,255,.9) !important;
-        position: relative;
-        box-shadow: 0px 0px 28px 0px rgba(86, 61, 124, 0.13);
-    }
-    /*////For Summernote//////*/
-    .card, .card-group {
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-    }
-
-    .modal-backdrop, .modal-backdrop.in {
-        display: none !important;
-    }
-</style>
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Invoice/InsertUpdateSaleInvoice.css" rel="stylesheet" />
 <div class="mySelect" style="overflow: hidden;padding: 0px">
     <main id="js-page-content" role="main" class="page-content">
         <div class="row">
@@ -71,30 +52,29 @@
 
             <fieldset style="padding:1.25rem;margin-top:15px">
                 <div class="row">
-                    <section class="col-md-12">
+                    <section class="col-md-10">
                         <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Information</label>
                     </section>
+                    <section class="col-md-1">
+                        <div class="custom-control custom-radio custom-control-inline pull-right">
+                            <input type="radio" class="custom-control-input" id="Cash" value="Cash" name="CashOrCredit" @(Model.CashOrCredit == "Cash" ? "checked" : "")>
+                            <label class="custom-control-label" for="Cash">Cash</label>
+                        </div>
+                    </section>
+                    <section class="col-md-1">
+                        <div class="custom-control custom-radio custom-control-inline pull-right">
+                            <input type="radio" class="custom-control-input" id="Credit" value="Credit" name="CashOrCredit" @(Model.CashOrCredit == "Credit" ? "checked" : "")>
+                            <label class="custom-control-label" for="Credit">Credit</label>
+                        </div>
+                    </section>
                 </div>
-                <div class="row" style="margin-top: 25px;">
+                <div class="row" style="margin-top: 15px;">
                     <section class="col-md-12">
                         <div style="padding:5px;padding-top:0px">
                             <input type="hidden" id="IsNewOrEdit" name="IsNewOrEdit" value="@Model.IsNewOrEdit" />
                             <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
-                            <input type="hidden" id="HiddenCustomerSupplierId" name="CustomerSupplierId" value="@Model.CustomerSupplierId" />
+                            <input type="hidden" id="HiddenCustomerSupplierId" name="HiddenCustomerSupplierId" value="@Model.CustomerSupplierId" />
                             <input type="hidden" id="HiddenCustomerSupplierName" name="HiddenCustomerSupplierName" value="@Model.CustomerName" />
-                            <input type="hidden" id="HiddenMasterCategoryId" name="HiddenMasterCategoryId" value="@Model.MasterCategoryId" />
-                            <input type="hidden" id="HiddenChildCategoryId" name="HiddenChildCategoryId" value="@Model.ChildCategoryId" />
-                            <input type="hidden" id="HiddenDiscountOfferId" name="HiddenDiscountOfferId" value="@Model.DiscountOfferId" />
-                            <input type="hidden" id="DiscountName" name="DiscountName" value="@Model.DiscountName" />
-
-                            <input type="hidden" id="HiddenProductId" name="HiddenProductId" value="@Model.ProductId" />
-                            <input type="hidden" id="HiddenAttributeId" name="HiddenAttributeId" value="@Model.AttributeId" />
-                            <input type="hidden" id="HiddenAttributeDetailId" name="HiddenAttributeDetailId" value="@Model.AttributeDetailId" />
-                            <input type="hidden" id="AttributeName" name="AttributeName" value="@Model.AttributeName" />
-
-                            <input type="hidden" id="HiddenProductId" name="HiddenProductId" value="@Model.ProductId" />
-                            <input type="hidden" id="HiddenProductName" name="HiddenProductName" value="@Model.ProductName" />
-
                             <input type="hidden" id="HiddenTr" name="HiddenTr" value="0" />
                             <label style="text-align:left;margin-left:5px">
                                 Invoice # :

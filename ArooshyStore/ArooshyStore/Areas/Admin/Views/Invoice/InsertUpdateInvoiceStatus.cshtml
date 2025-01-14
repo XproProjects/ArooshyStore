@@ -7,25 +7,23 @@
             <div class="row" style="margin-top: 25px;">
                 <section class="col-md-12">
                     <div style="padding:5px;padding-top:0px">
-                        <label>Status (*)</label>
-                        <input type="hidden" id="InvoiceStatusId" name="InvoiceStatusId" value="@Model.InvoiceStatusId" />
+                        <label>Invoice Status (*)</label>
                         <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
-
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fal fa-building"></i>
+                                    <i class="fal fa-list"></i>
                                 </span>
                             </div>
                             <select id="Status" name="Status" class="form-control">
                                 <option value="" disabled>Select Status</option>
                                 <option value="Ordered" @(Model.Status == "Ordered" ? "selected" : "")>Ordered</option>
                                 <option value="Confirmed" @(Model.Status == "Confirmed" ? "selected" : "")>Confirmed</option>
-                                <option value="OnHold" @(Model.Status == "OnHold" ? "selected" : "")>On Hold</option>
+                                <option value="On Hold" @(Model.Status == "On Hold" ? "selected" : "")>On Hold</option>
                                 <option value="Dispatched" @(Model.Status == "Dispatched" ? "selected" : "")>Dispatched</option>
                                 <option value="Delivered" @(Model.Status == "Delivered" ? "selected" : "")>Delivered</option>
                                 <option value="Returned" @(Model.Status == "Returned" ? "selected" : "")>Returned</option>
-                                <option value="Pending" @(Model.Status == "Rejected" ? "selected" : "")>Rejected</option>
+                                <option value="Rejected" @(Model.Status == "Rejected" ? "selected" : "")>Rejected</option>
                                 <option value="Cancelled" @(Model.Status == "Cancelled" ? "selected" : "")>Cancelled</option>
                             </select>
                         </div>

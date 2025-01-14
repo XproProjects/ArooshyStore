@@ -25,6 +25,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
             _roles = roles;
             _review = review;
         }
+        #region Product
         public ActionResult Index()
         {
             if (User != null)
@@ -94,7 +95,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 else if (!(string.IsNullOrEmpty(barcode)))
                 {
-                    whereCondition += " s.ProductId in (select pd.ProductId from tblProductAttributeDetailBarcode pd where pd.Barcode = '"+barcode+"' ) ";
+                    whereCondition += " s.ProductId in (select pd.ProductId from tblProductAttributeDetailBarcode pd where pd.Barcode = '" + barcode + "' ) ";
                 }
                 else
                 {
@@ -145,13 +146,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult InsertUpdateProduct(ProductViewModel user, string data,string tags)
+        public ActionResult InsertUpdateProduct(ProductViewModel user, string data, string tags)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
 
-                response = _repository.InsertUpdateProduct(user, data,tags, User.UserId);
+                response = _repository.InsertUpdateProduct(user, data, tags, User.UserId);
             }
             else
             {
@@ -214,6 +215,8 @@ namespace ArooshyStore.Areas.Admin.Controllers
         {
             if (User != null)
             {
+                ViewBag.ViewStock = _roles.CheckActionRoleId(User.UserId, "product", "view stock");
+                ViewBag.UpdateStock = _roles.CheckActionRoleId(User.UserId, "product", "update stock");
                 List<ProductAttributeDetailViewModel> list = _repository.GetProductAttributesListByProductId(id);
                 return PartialView(list);
             }
@@ -299,8 +302,21 @@ namespace ArooshyStore.Areas.Admin.Controllers
 
             return Json(new
             {
-                productId = 0, productName = "", salePrice = 0,  barcode = "", categoryId = 0, costPrice = 0, status = false,
-                masterCategoryId = 0,masterCategoryName = "",childCategoryId = 0, childCategoryName = "", attributeId = 0,  attributeName = "", attributeDetailId = 0, attributeDetailName = ""
+                productId = 0,
+                productName = "",
+                salePrice = 0,
+                barcode = "",
+                categoryId = 0,
+                costPrice = 0,
+                status = false,
+                masterCategoryId = 0,
+                masterCategoryName = "",
+                childCategoryId = 0,
+                childCategoryName = "",
+                attributeId = 0,
+                attributeName = "",
+                attributeDetailId = 0,
+                attributeDetailName = ""
             });
         }
 
@@ -324,6 +340,65 @@ namespace ArooshyStore.Areas.Admin.Controllers
             var reviews = _review.GetProductReviews(productId);
             return View(reviews);
         }
+        #endregion
+        #region Product Stock
+        public ActionResult ProductStock()
+        {
+            if (User != null)
+            {
+                //Check if user has access of this module or not
+                if (_roles.CheckModuleRoleId(User.UserId, "product") > 0)
+                {
+                    //Get list of all actions of this module
+                    List<ModuleViewModel> actionList = new List<ModuleViewModel>();
+                    actionList = _roles.ActionsList(User.UserId, "product");
 
+                    return View(actionList);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
+        [HttpGet]
+        public ActionResult GetProductAttributes(string barcode)
+        {
+            if (User != null)
+            {
+                List<ProductAttributeDetailViewModel> list = new List<ProductAttributeDetailViewModel>();
+                if (_roles.CheckActionRoleId(User.UserId, "product", "view stock") > 0 && !(string.IsNullOrEmpty(barcode)) && !(string.IsNullOrWhiteSpace(barcode)))
+                {
+                    list = _repository.GetProductAttributesListByBarcode(barcode);
+                }
+                return PartialView(list);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
+        [HttpPost]
+        public ActionResult InsertUpdateProductStock(string data)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            if (User != null)
+            {
+
+                response = _repository.InsertUpdateProductStock(data, User.UserId);
+            }
+            else
+            {
+                BusinessInfo business = BusinessInfo.GetInstance;
+                response = business.UserLoggedOut();
+            }
+            return new JsonResult { Data = new { status = response.Status, message = response.Message, Id = response.Id } };
+        }
+        #endregion
     }
 }

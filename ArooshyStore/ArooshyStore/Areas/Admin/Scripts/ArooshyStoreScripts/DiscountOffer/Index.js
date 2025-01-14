@@ -19,17 +19,31 @@
                 }
             }
         },
+        "responsive": {
+            "details": {
+                "type": "column",
+                "target": 1
+            }
+        },
+        "columnDefs": [{
+            "className": "control",
+            "orderable": true,
+            "targets": 1
+        }],
         "columns": [
             {
                 "data": "ImagePath", "width": "45px", "class": "Acenter", "autoWidth": false, "orderable": false, "render": function (data) {
-                    return '<img src="' + data + '" style="height:45px;width:45px;" />';
+                    return '<a href="' + data + '" target="_blank"><img src="' + data + '" style="height:55px;width:55px;" /></a>';
                 }
             },
-            { "data": "DiscountName", "name": "DiscountName", "autoWidth": true },
-            { "data": "DiscPercent", "name": "DiscPercent", "class": "Acenter", "autoWidth": true  },
-            { "data": "SelectType", "name": "SelectType", "class": "Acenter", "autoWidth": true },
+            { "data": "DiscountName", "name": "DiscountName", "class": "control", "autoWidth": true },
             {
-                "data": "StatusString", "name": "StatusString", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
+                "data": "ExpiredOn", "name": "ExpiredOn", "width": "120px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
+                    return getDateForDatatable(date);
+                }
+            },
+            {
+                "data": "StatusString", "name": "StatusString", "width": "100px", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (data) {
                     if (data === "Active") {
                         return '<span class="badge badge-success badge-pill">Active</span>';
                     } else {
@@ -37,13 +51,7 @@
                     }
                 }
             },
-            { "data": "CategoryName", "name": "CategoryName", "class": "Acenter", "autoWidth": true },
-            { "data": "ProductName", "name": "ProductName", "class": "Acenter", "autoWidth": true },
-            {
-                "data": "ExpiredOn", "name": "ExpiredOn", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
-                    return getDateForDatatable(date);
-                }
-            },
+
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -58,16 +66,21 @@
             { "data": "UpdatedByString", "name": "UpdatedBy", "autoWidth": true },
             {
                 "data": "OfferId", "width": "130px", "class": "Acenter", "orderable": false, "render": function (data) {
-                    var edit = '<a title="Edit Discount Offer" data-toggle="modal" data-target="#MyModal" class="AddEditRecord btn btn-primary btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="border-radius:20px;padding:5px;color:#fff;padding-left:15px;padding-right:15px"><i class="fas fa-fw fa-edit"></i></a>&nbsp';
-                    var del = '<a title="Delete Discount Offer" class="DeleteRecord btn btn-danger" data-toggle="modal" data-target="#DeleteModal" href="javascript:void(0)" data-value="' + data + '" style="border-radius:20px;padding:5px;color:#fff;padding-left:15px;padding-right:15px"><i class="fas fa-fw fa-times-circle"></i></a>&nbsp';
-                    var final = '';
+                    var div = '';
+                    div += '<div class="btn-group">' +
+                        '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                        '<i class="fas fa-list mr-1"></i> Actions' +
+                        '</button>' +
+                        '<div class="dropdown-menu">';
                     if ($('#EditActionRole').val() > 0) {
-                        final = final + edit;
+                        div += '<a class="dropdown-item AddEditRecord" href="/admin/discountoffer/insertupdatediscountoffer/' + data + '" data-value="' + data + '" title="Edit Offer" style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
                     if ($('#DeleteActionRole').val() > 0) {
-                        final = final + del;
+                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Offer" data-toggle="modal" data-target="#DeleteModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
                     }
-                    return final;
+                    div += '</div>' +
+                        '</div>';
+                    return div;
                 }
             },
         ]
@@ -84,31 +97,6 @@ $(document).on('keydown', function (event) {
 $(document).on('shown.bs.modal', "#MyModal", function () {
     $('#DiscountName').focus();
 });
-$(document).on('click', '.AddEditRecord', function () {
-    $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
-
-    var id = $(this).attr("data-value");
-    if (id > 0) {
-        $('#ModelHeaderSpan').html('Edit Discount Offer');
-    }
-    else {
-        $('#ModelHeaderSpan').html('Add Discount Offer');
-    }
-    $('#modalDiv').html('');
-    // $('#modalDiv').load('@Url.Action("InsertUpdateOffer", "Offer")?id=' + id + '');
-    $.ajax({
-        type: "GET",
-        url: "/Admin/DiscountOffer/InsertUpdateDiscountOffer/",
-        data: {
-            'id': id,
-        },
-        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
-        success: function (response) {
-            //$('#ProductsData').html('');
-            $('#modalDiv').html(response);
-        }
-    })
-});
 $('#btnSearch').click(function () {
     SearchItem();
 });
@@ -119,14 +107,11 @@ $('#txtSearch').on('keypress', function (event) {
 });
 function SearchItem() {
     var BElement = $("#btnSearchJobType");
-    if (BElement.html() == 'Offer Name') {
+    if (BElement.html() == 'Product Name / Article #') {
         oTable.columns(0).search($('#txtSearch').val().trim()).draw();
     }
-    else if (BElement.html() == 'Discount on Category Name') {
+    else if (BElement.html() == 'Offer Name') {
         oTable.columns(1).search($('#txtSearch').val().trim()).draw();
-    }
-    else if (BElement.html() == 'Discount on Product Name') {
-        oTable.columns(2).search($('#txtSearch').val().trim()).draw();
     }
     else {
         alert("Error! try again.");
@@ -140,7 +125,7 @@ $("#ulSearchJobType").on("click", "a", function (e) {
 $(document).on('click', '.DeleteRecord', function () {
     var id = $(this).attr("data-value");
     $('#DeleteModalTitle').html("Delete Discount Offer");
-    $('#DeleteModalBody').html("Are you sure you want to delete this Discount Offer?");
+    $('#DeleteModalBody').html("Are you sure you want to delete this Offer?");
     $('#DeleteModalFooter').html(
         '<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>' +
         '<button type="button" class="btn btn-primary" onclick="DeleteRecord(' + id + ')">Yes</button>'

@@ -1,10 +1,10 @@
 ﻿
-﻿$(function () {
-     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").addClass('active');
-     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").css('display', "block");
-     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
-     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
-     $('#myTable').dataTable({
+$(function () {
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").addClass('active');
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").css('display', "block");
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+    $('#myTable').dataTable({
 
         "autoWidth": true,
         "bLengthChange": false,
@@ -28,10 +28,42 @@
             }
         },
         "columns": [
-            { "data": "InvoiceNumber", "name": "InvoiceNumber", "width": "120px", "autoWidth": false },
+            { "data": "InvoiceNumber", "name": "InvoiceNumber", "class": "Acenter", "width": "120px", "autoWidth": false },
             {
-                "data": "InvoiceDate", "name": "Date", "width": "120px", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (date) {
+                "data": "InvoiceDate", "name": "InvoiceDate", "width": "120px", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (date) {
                     return getDateForDatatable(date);
+                }
+            },
+            { "data": "CustomerName", "name": "CustomerName", "autoWidth": false },
+            {
+                "data": "Status", "name": "Status", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    if (data.toString().toLowerCase() == "ordered") {
+                        return '<span class="badge badge-info badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Ordered</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "confirmed") {
+                        return '<span class="badge badge-warning badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Confirmed</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "on hold") {
+                        return '<span class="badge badge-dark badge-pill" style="color:#fff;font-weight:bold;font-size:14px">On Hold</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "dispatched") {
+                        return '<span class="badge badge-success badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Dispatched</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "delivered") {
+                        return '<span class="badge badge-success badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Delivered</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "returned") {
+                        return '<span class="badge badge-danger badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Returned</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "rejected") {
+                        return '<span class="badge badge-danger badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Rejected</span>';
+                    }
+                    else if (data.toString().toLowerCase() == "cancelled") {
+                        return '<span class="badge badge-danger badge-pill" style="color:#fff;font-weight:bold;font-size:14px">Cancelled</span>';
+                    }
+                    else {
+                        return '<span class="badge badge-danger badge-pill" style="color:#fff;font-weight:bold;font-size:14px">In-Active</span>';
+                    }
                 }
             },
             {
@@ -39,7 +71,6 @@
                     return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
                 }
             },
-           
             {
                 "data": "CreatedDate", "name": "CreatedDate", "class": "Acenter", "orderable": true, "autoWidth": true, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -60,8 +91,8 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
-                    div += '<a class="dropdown-item UpdateStatusRole btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Update Status">Update Status</a>';
                     div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + data + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
+                    div += '<a class="dropdown-item btnUpdateStatus btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Update Status">Update Status</a>';
 
                     if ($('#EditActionRole').val() > 0) {
                         div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
@@ -71,7 +102,7 @@
                     }
                     div += '</div>' +
                         '</div>';
-                   
+
                     return div;
                 }
             },
@@ -92,9 +123,7 @@ $(document).on('shown.bs.modal', "#MyModal", function () {
 $(document).on('click', '.btnAddEdit', function () {
     //$("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
     var id = $(this).attr("data-value");
-    window.location.href = "/Admin/invoice/insertupdatesaleinvoice/?id=" + id + "&type=addedit";
-
-
+    window.location.href = "/admin/invoice/insertupdatesaleinvoice/?id=" + id + "";
 });
 $('#btnSearch').click(function () {
     SearchItem();
@@ -147,14 +176,9 @@ function DeleteRecord(id) {
         }
     })
 }
-$(document).on('click', '.UpdateStatusRole', function () {
+$(document).on('click', '.btnUpdateStatus', function () {
     var id = $(this).attr("data-value");
-    if (id > 0) {
-        $('#ModelHeaderSpan').html('Edit Status');
-    }
-    else {
-        $('#ModelHeaderSpan').html('Add Status');
-    }
+    $('#ModelHeaderSpan').html('Update Invoice Status');
     $('#modalDiv').html('');
     // $('#modalDiv').load('@Url.Action("InsertUpdateCity", "City")?id=' + id + '');
     $.ajax({

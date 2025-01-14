@@ -5,20 +5,24 @@
     @using (Html.BeginForm("PrintAttendanceReport", "Product", FormMethod.Post, new { id = "popupPrintForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
     {
         <fieldset style="padding:1.25rem;">
-            <table class="table table-striped table-bordered table-dark" style="width:100%;margin-top:30px">
+            <table class="table table-striped table-bordered" style="width:100%;margin-top:30px">
                 <thead class="thead-themed">
                     <tr>
-                        <th style="text-align: left; color:#fff">@Model.Select(x => x.AttributeName1).FirstOrDefault()</th>
-                        <th style="text-align: left; color: #fff">@Model.Select(x => x.AttributeName2).FirstOrDefault()</th>
-                        <th style="text-align: center;  color: #fff; width: 180px ">Barcode</th>
-                        <th style="text-align: center; color: #fff;width:150px">No. of Prints</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; border: 1px solid #000 ">@Model.Select(x => x.AttributeName1).FirstOrDefault()</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; border: 1px solid #000 ">@Model.Select(x => x.AttributeName2).FirstOrDefault()</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; width: 180px; border: 1px solid #000 ">Barcode</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">No. of Prints</th>
+                        @if (ViewBag.ViewStock > 0)
+                        {
+                            <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Stock</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (ProductAttributeDetailViewModel p in Model)
                     {
                         <tr class="DataTr">
-                            <td style="text-align:left;font-weight:bold">
+                            <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd">
                                 <input type="hidden" class="ProductAttributeDetailBarcodeId" name="ProductAttributeDetailBarcodeId" value="@p.ProductAttributeDetailBarcodeId" />
                                 <input type="hidden" class="ProductId" name="ProductId" value="@p.ProductId" />
                                 <input type="hidden" class="AttributeDetailId1" name="AttributeDetailId1" value="@p.AttributeDetailId1" />
@@ -26,11 +30,22 @@
                                 <input type="hidden" class="Barcode" name="Barcode" value="@p.Barcode" />
                                 @p.AttributeDetailName1
                             </td>
-                            <td style="text-align: left; font-weight: bold">@p.AttributeDetailName2</td>
-                            <td style="text-align: center; font-weight: bold">@p.Barcode</td>
-                            <td style="text-align: center; font-weight: bold">
-                                <input type="number" class="form-control TotalRecords" placeholder="Numbers" value="0" min="0" max="99" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@p.AttributeDetailName2</td>
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.Barcode</td>
+                            <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">
+                                <input type="number" style="font-weight: bold; color: brown; font-size: 15px;" class="form-control TotalRecords" placeholder="Numbers" value="0" min="0" max="99" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                             </td>
+                            @if (ViewBag.ViewStock > 0)
+                            {
+                                string isDisabled = "disabled";
+                                if (ViewBag.UpdateStock > 0)
+                                {
+                                    isDisabled = "";
+                                }
+                                <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">
+                                    <input type="number" style="font-weight: bold; color: green; font-size: 15px;" class="form-control Stock" value="@p.Stock" placeholder="Numbers" min="0" max="999" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @isDisabled />
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
@@ -38,10 +53,15 @@
         </fieldset>
         <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" id="btnSavePrint" class="btn btn-primary btnSaveForm">Print</button>
+            <button type="submit" style="font-weight:bold" id="btnSavePrint" data-value="0" class="btn btn-success btnSaveForm">Print Barcodes</button>
+            @if (ViewBag.ViewStock > 0 && ViewBag.UpdateStock > 0)
+            {
+                <button type="submit" style="font-weight:bold" id="btnUpdateStock" data-value="1" class="btn btn-info btnSaveForm">Update Stock</button>
+                <button type="submit" style="font-weight:bold" id="btnUpdateStockPrintBarcode" data-value="2" class="btn btn-primary btnSaveForm">Update Stock and Print Barcodes</button>
+            }
         </footer>
     }
 </div>
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductAttributesBarcodesList.js?v=1"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductAttributesBarcodesList.js?v=2"></script>
 

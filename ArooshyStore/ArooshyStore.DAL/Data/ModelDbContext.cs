@@ -65,6 +65,12 @@ namespace ArooshyStore.DAL.Data
         public virtual DbSet<tblProductAttributeDetailBarcodeLog> tblProductAttributeDetailBarcodeLog { get; set; }
         public virtual DbSet<tblProductStock> tblProductStock { get; set; }
         public virtual DbSet<tblProductStockLog> tblProductStockLog { get; set; }
+        public virtual DbSet<tblDiscountOfferLog> tblDiscountOfferLog { get; set; }
+        public virtual DbSet<tblDiscountOfferDetail> tblDiscountOfferDetail { get; set; }
+        public virtual DbSet<tblDiscountOfferDetailLog> tblDiscountOfferDetailLog { get; set; }
+        public virtual DbSet<tblCustomerSupplierLog> tblCustomerSupplierLog { get; set; }
+        public virtual DbSet<tblInvoiceLog> tblInvoiceLog { get; set; }
+        public virtual DbSet<tblInvoiceDetailLog> tblInvoiceDetailLog { get; set; }
     }
 
 }

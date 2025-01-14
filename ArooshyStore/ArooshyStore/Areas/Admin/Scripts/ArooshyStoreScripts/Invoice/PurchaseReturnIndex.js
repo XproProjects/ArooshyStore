@@ -24,12 +24,13 @@
             }
         },
         "columns": [
-            { "data": "InvoiceNumber", "name": "InvoiceNumber", "width": "120px", "autoWidth": false },
+            { "data": "InvoiceNumber", "name": "InvoiceNumber", "class": "Acenter", "width": "120px", "autoWidth": false },
             {
                 "data": "InvoiceDate", "name": "Date", "width": "120px", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (date) {
                     return getDateForDatatable(date);
                 }
             },
+            { "data": "CustomerName", "name": "CustomerName", "autoWidth": false },
             {
                 "data": "NetAmount", "name": "NetAmount", "width": "130px", "class": "Aright", "orderable": true, "autoWidth": false, 'render': function (data) {
                     return '<span style="color:green;font-weight:bold;font-size:15px">' + ReplaceNumberWithCommas(parseFloat(data).toFixed(2)) + '</span>';
@@ -59,10 +60,10 @@
                     div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + data + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
 
                     if ($('#EditActionRole').val() > 0) {
-                        div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Sale Invoice"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
+                        div += '<a class="dropdown-item AddEditRecord btnOpenModal btnAddEdit" href="javascript:void(0)" data-value="' + data + '" title="Edit Purchase Return"  style="text-decoration:none !important;font-weight:normal !important">Edit</a>';
                     }
                     if ($('#DeleteActionRole').val() > 0) {
-                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Sale Invoice" data-toggle="modal" data-target="#DeleteModal"  data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
+                        div += '<a class="dropdown-item DeleteRecord" href="javascript:void(0)" title="Delete Purchase Return" data-toggle="modal" data-target="#DeleteModal"  data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important">Delete</a>';
                     }
                     div += '</div>' +
                         '</div>';
@@ -87,7 +88,7 @@ $(document).on('shown.bs.modal', "#MyModal", function () {
 $(document).on('click', '.btnAddEdit', function () {
     //$("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
     var id = $(this).attr("data-value");
-    window.location.href = "/Admin/invoice/insertupdatepurchasereturn/?id=" + id + "&type=addedit";
+    window.location.href = "/Admin/invoice/insertupdatepurchasereturn/?id=" + id + "";
 
 
 });
@@ -115,8 +116,8 @@ $("#ulSearchJobType").on("click", "a", function (e) {
 })
 $(document).on('click', '.DeleteRecord', function () {
     var id = $(this).attr("data-value");
-    $('#DeleteModalTitle').html("Delete Sale Invoice");
-    $('#DeleteModalBody').html("Are you sure you want to delete this Purchase Return Invoice?");
+    $('#DeleteModalTitle').html("Delete Purchase Return");
+    $('#DeleteModalBody').html("Are you sure you want to delete this Purchase Return?");
     $('#DeleteModalFooter').html(
         '<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>' +
         '<button type="button" class="btn btn-primary btnYesDelete" data-value="' + id + '">Yes</button>'

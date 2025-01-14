@@ -11,16 +11,12 @@ namespace ArooshyStore.DAL.Entities
         [StringLength(50)]
         public string InvoiceNumber { get; set; }
         public Nullable<int> WarehouseId { get; set; }
-        public Nullable<int> MasterCategoryId { get; set; }
-        public Nullable<int> ChildCategoryId { get; set; }
         public Nullable<int> ProductId { get; set; }
-        public Nullable<int> AttributeId { get; set; }
-        public Nullable<int> AttributeDetailId { get; set; }
-        public Nullable<int> UnitId { get; set; }
-        public Nullable<int> DiscountOfferId { get; set; }
+        public Nullable<int> ProductAttributeDetailBarcodeId { get; set; }
         public Nullable<decimal> TotalAmount { get; set; }
         public Nullable<decimal> Qty { get; set; }
         public Nullable<decimal> Rate { get; set; }
+        public Nullable<int> OfferDetailId { get; set; }
         [StringLength(5)]
         public string DiscType { get; set; }
         public Nullable<decimal> DiscRate { get; set; }

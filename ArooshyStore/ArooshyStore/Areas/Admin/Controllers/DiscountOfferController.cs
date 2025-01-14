@@ -56,9 +56,8 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var offerName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
-                var categoryName = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
-                var productName = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
+                var productName = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
+                var offerName = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
@@ -75,17 +74,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.OfferId asc";
                 }
-                if (!(string.IsNullOrEmpty(offerName)))
+                if (!(string.IsNullOrEmpty(productName)))
+                {
+                    whereCondition += " s.OfferId in (select od.OfferId from tblDiscountOfferDetail od left join tblProduct pd on od.ProductId = pd.ProductId where LOWER(pd.ProductName) like ('%" + productName.ToLower() + "%') or LOWER(pd.ArticleNumber) like ('%" + productName.ToLower() + "%')) ";
+                }
+                else if (!(string.IsNullOrEmpty(offerName)))
                 {
                     whereCondition += " LOWER(s.DiscountName) like ('%" + offerName.ToLower() + "%')";
-                }
-                else if (!(string.IsNullOrEmpty(categoryName)))
-                {
-                    whereCondition += " LOWER(c.CategoryName) like ('%" + categoryName.ToLower() + "%')";
-                }
-                else if (!(string.IsNullOrEmpty(productName)))
-                {
-                    whereCondition += " LOWER(p.ProductName) like ('%" + productName.ToLower() + "%')";
                 }
                 else
                 {
@@ -114,21 +109,28 @@ namespace ArooshyStore.Areas.Admin.Controllers
         {
             if (User != null)
             {
-                DiscountOfferViewModel user = _repository.GetDiscountOfferById(id);
-                return PartialView(user);
+                if (_roles.CheckActionRoleId(User.UserId, "discount offer", "create") > 0)
+                {
+                    DiscountOfferViewModel user = _repository.GetDiscountOfferById(id);
+                    return View(user);
+                }
+                else
+                {
+                    return RedirectToAction("accessdenied", "home");
+                }
             }
             else
             {
-                return PartialView("_UserLoggedOut");
+                return RedirectToAction("login", "account");
             }
         }
         [HttpPost]
-        public ActionResult InsertUpdateDiscountOffer(DiscountOfferViewModel user)
+        public ActionResult InsertUpdateDiscountOffer(DiscountOfferViewModel user, string data)
         {
             StatusMessageViewModel response = new StatusMessageViewModel();
             if (User != null)
             {
-                response = _repository.InsertUpdateDiscountOffer(user, User.UserId);
+                response = _repository.InsertUpdateDiscountOffer(user, data, User.UserId);
             }
             else
             {
@@ -153,6 +155,19 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 response = business.UserLoggedOut();
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
+        }
+        [HttpGet]
+        public ActionResult ProductsList(int id = 0)
+        {
+            if (User != null)
+            {
+                List<DiscountOfferViewModel> list = _repository.ProductsList(id);
+                return PartialView(list);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
         }
     }
 }

@@ -4,13 +4,13 @@
             Status: {
                 required: true
             },
-           
+
         },
         messages: {
-            CityName: {
-                required: 'Status Name is required.'
+            Status: {
+                required: 'Status is required.'
             },
-           
+
         },
         errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
@@ -32,15 +32,14 @@ $('#popupForm').on('submit', function (e) {
     $('#btn_Save').attr('disabled', 'disabled');
     $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
 
-    var InvoiceStatusId = $('#InvoiceStatusId').val();
-    var Status = $('#Status').val();
     var InvoiceNumber = $('#InvoiceNumber').val();
+    var Status = $('#Status').val();
 
     var st =
     {
-        InvoiceStatusId: InvoiceStatusId,
-        Status: Status,
-        InvoiceNumber: InvoiceNumber
+        InvoiceStatusId: 0,
+        InvoiceNumber: InvoiceNumber,
+        Status: Status
     }
     //var queryData = JSON.stringify(st);
     $.ajax({
@@ -52,7 +51,7 @@ $('#popupForm').on('submit', function (e) {
             $('#btn_Save').html("Save");
             $('#btn_Save').prop('disabled', false);
             if (data.status) {
-                toastr.success("Status Saved Successfully", "Success", { timeOut: 3000, "closeButton": true });
+                toastr.success("Invoice Status Updated Successfully", "Success", { timeOut: 3000, "closeButton": true });
                 $('.close').click();
                 oTable.ajax.reload(null, false);
             }

@@ -13,6 +13,8 @@ namespace ArooshyStore.Models.ViewModels
         public string ChildCategoryName { get; set; }
         public int? ProductId { get; set; }
         public string ProductName { get; set; }
+        public int? ProductAttributeDetailBarcodeId { get; set; }
+        public int? OfferDetailId { get; set; }
         public int? AttributeId { get; set; }
         public string AttributeName { get; set; }
         public int? AttributeDetailId { get; set; }

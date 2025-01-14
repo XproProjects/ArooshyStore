@@ -42,6 +42,8 @@ namespace ArooshyStore.Models.ViewModels
         public bool? IsExpired { get; set; }
         public string IsFeaturedString { get; set; }
         public string IsExpiredString { get; set; }
+        public bool? ShowOnWebsite { get; set; }
+        public string ShowOnWebsiteString { get; set; }
         public string ArticleNumber { get; set; }
 
         public string ImagePath { get; set; }

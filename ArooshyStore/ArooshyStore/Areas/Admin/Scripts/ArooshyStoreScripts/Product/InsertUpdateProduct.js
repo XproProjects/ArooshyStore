@@ -480,6 +480,11 @@ $('#popupForm').on('submit', function (e) {
         IsExpiredString = "Yes";
     }
 
+    var ShowOnWebsiteString = "No";
+    if ($("#ShowOnWebsite").is(":checked")) {
+        ShowOnWebsiteString = "Yes";
+    }
+
     var detail = JSON.stringify(getSectionsData());
     var tagsData = JSON.stringify(getTagsData());
 
@@ -501,6 +506,7 @@ $('#popupForm').on('submit', function (e) {
         StatusString: StatusString,
         IsFeaturedString: IsFeaturedString,
         IsExpiredString: IsExpiredString,
+        ShowOnWebsiteString: ShowOnWebsiteString
     }
    
     $.ajax({

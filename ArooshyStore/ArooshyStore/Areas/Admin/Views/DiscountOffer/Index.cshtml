@@ -50,10 +50,10 @@
                             <div class="col-lg-5" style="margin-top:4px">
                                 @if (Model.Any(x => x.ActionName.ToLower() == "create"))
                                 {
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
+                                    <a href="/admin/discountoffer/insertupdatediscountoffer/0" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord" id="AddEditRecord">
                                         <i class="fal fa-plus-circle"></i>
                                         &nbsp;
-                                        New Discount Offer
+                                        New Offer
                                     </a>
                                 }
                                 @if (Model.Any(x => x.ActionName.ToLower() == "update"))
@@ -76,11 +76,10 @@
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Offer Name</button>
+                                        <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product Name / Article #</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
+                                            <a class="dropdown-item" href="#">Product Name / Article #</a>
                                             <a class="dropdown-item" href="#">Offer Name</a>
-                                            <a class="dropdown-item" href="#">Discount on Category Name</a>
-                                            <a class="dropdown-item" href="#">Discount on Product Name</a>
                                         </div>
                                     </div>
                                     <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
@@ -103,18 +102,14 @@
                             <thead>
                                 <tr>
                                     <th class="min-mobile"></th>
-                                    <th class="min-mobile">Offer Name</th>
-                                    <th class="min-tablet">Disc Percent</th>
-                                    <th class="min-desktop">Disc Type</th>
+                                    <th class="control">Offer Name</th>
+                                    <th class="min-tablet">Expiry Date</th>
                                     <th class="min-tablet">Status</th>
-                                    <th class="none">Discount on Category Name</th>
-                                    <th class="none">Discount on Product Name</th>
-                                    <th class="none">Expiry Date</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>
                                     <th class="none">Updated By</th>
-                                    <th class="min-mobile">Edit</th>
+                                    <th class="min-mobile">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

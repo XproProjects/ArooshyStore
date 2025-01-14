@@ -438,6 +438,7 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\LoginPartial.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\DiscountOffer\InsertUpdateDiscountOffer.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\EmployeeAttendance\Index.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\Print.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
@@ -1483,7 +1484,10 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Carousel\InsertUpdateCarousel.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\About\InsertUpdateAbout.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\DiscountOffer\ProductsList.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\AttributesList.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\GetProductAttributes.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductStock.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\UpdateCostPrice.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductDetail.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductAttributesBarcodesList.js" />
@@ -2527,6 +2531,9 @@
     <Content Include="Areas\Admin\Views\Product\UpdateCostPrice.cshtml" />
     <Content Include="Areas\Admin\Views\Product\AttributesList.cshtml" />
     <Content Include="Areas\Admin\Views\Product\PrintBarcodeStickersForTesting.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductStock.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\GetProductAttributes.cshtml" />
+    <Content Include="Areas\Admin\Views\DiscountOffer\ProductsList.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

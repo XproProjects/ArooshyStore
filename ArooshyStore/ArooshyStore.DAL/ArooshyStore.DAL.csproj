@@ -54,6 +54,12 @@
     <Compile Include="Data\ModelDbContext.cs" />
     <Compile Include="Entities\tblAttributeDetailLog.cs" />
     <Compile Include="Entities\tblAttributeLog.cs" />
+    <Compile Include="Entities\tblCustomerSupplierLog.cs" />
+    <Compile Include="Entities\tblDiscountOfferDetail.cs" />
+    <Compile Include="Entities\tblDiscountOfferDetailLog.cs" />
+    <Compile Include="Entities\tblDiscountOfferLog.cs" />
+    <Compile Include="Entities\tblInvoiceDetailLog.cs" />
+    <Compile Include="Entities\tblInvoiceLog.cs" />
     <Compile Include="Entities\tblProductAttributeDetailBarcode.cs" />
     <Compile Include="Entities\tblProductAttributeDetailBarcodeLog.cs" />
     <Compile Include="Entities\tblProductAttributeDetailLog.cs" />
@@ -331,6 +337,26 @@
     <Compile Include="Migrations\202501071952309_Added_Stock_Table.Designer.cs">
       <DependentUpon>202501071952309_Added_Stock_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501081626513_Added_Discount_Tables.cs" />
+    <Compile Include="Migrations\202501081626513_Added_Discount_Tables.Designer.cs">
+      <DependentUpon>202501081626513_Added_Discount_Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501081631141_Added_ShowOnWebsite_tblProduct.cs" />
+    <Compile Include="Migrations\202501081631141_Added_ShowOnWebsite_tblProduct.Designer.cs">
+      <DependentUpon>202501081631141_Added_ShowOnWebsite_tblProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501091326214_Added_tblCustomerSupplierLog.cs" />
+    <Compile Include="Migrations\202501091326214_Added_tblCustomerSupplierLog.Designer.cs">
+      <DependentUpon>202501091326214_Added_tblCustomerSupplierLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501092005384_Added_Columns_tblInvoice.cs" />
+    <Compile Include="Migrations\202501092005384_Added_Columns_tblInvoice.Designer.cs">
+      <DependentUpon>202501092005384_Added_Columns_tblInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501092018484_Added_Invoice_LogTables.cs" />
+    <Compile Include="Migrations\202501092018484_Added_Invoice_LogTables.Designer.cs">
+      <DependentUpon>202501092018484_Added_Invoice_LogTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -510,6 +536,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202501071952309_Added_Stock_Table.resx">
       <DependentUpon>202501071952309_Added_Stock_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501081626513_Added_Discount_Tables.resx">
+      <DependentUpon>202501081626513_Added_Discount_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501081631141_Added_ShowOnWebsite_tblProduct.resx">
+      <DependentUpon>202501081631141_Added_ShowOnWebsite_tblProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501091326214_Added_tblCustomerSupplierLog.resx">
+      <DependentUpon>202501091326214_Added_tblCustomerSupplierLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501092005384_Added_Columns_tblInvoice.resx">
+      <DependentUpon>202501092005384_Added_Columns_tblInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501092018484_Added_Invoice_LogTables.resx">
+      <DependentUpon>202501092018484_Added_Invoice_LogTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

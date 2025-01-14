@@ -26,6 +26,7 @@ namespace ArooshyStore.DAL.Entities
 
         public Nullable<bool> Status { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
+        public Nullable<bool> ShowOnWebsite { get; set; }
 
         [StringLength(50)]
         public string ArticleNumber { get; set; }

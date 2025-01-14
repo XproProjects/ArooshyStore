@@ -60,7 +60,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                string whereCondition = " ";
+                string whereCondition = " LOWER(s.CityName) != 'shop' ";
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
                 {
@@ -75,12 +75,12 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 }
                 if (!(string.IsNullOrEmpty(userName)))
                 {
-                    whereCondition += " LOWER(s.CityName) like ('%" + userName.ToLower() + "%')";
+                    whereCondition += "  and LOWER(s.CityName) like ('%" + userName.ToLower() + "%')";
                 }
                
                 else
                 {
-                    whereCondition += " LOWER(s.CityName) like ('%%')";
+                    whereCondition += " and LOWER(s.CityName) like ('%%')";
                 }
                 List<CityViewModel> listsub = new List<CityViewModel>();
                 if (_roles.CheckActionRoleId(User.UserId, "city", "view") > 0)
