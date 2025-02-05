@@ -5,6 +5,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Admin\OneDrive\Documents\inetpub\ArooshyStore</_PublishTargetUrl>
+    <History>True|2025-01-18T07:50:16.6287418Z;</History>
+    <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/Admin/Content/app.bundle.css">
@@ -46,6 +48,30 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Areas/Admin/Content/ArooshyStoreCss/Category/InsertUpdateCategory.css">
       <publishTime>09/06/2024 16:30:30</publishTime>
     </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/Century Gothic.ttf">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/CenturyGothic.ttf">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/GOTHIC.TTF">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/GOTHICB.TTF">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/GOTHICB0.TTF">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/GOTHICBI.TTF">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/CenturyGothic/GOTHICI.TTF">
+      <publishTime>09/05/2023 17:26:15</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/DiscountOffer/InsertUpdateDiscountOffer.css">
+      <publishTime>01/09/2025 00:32:50</publishTime>
+    </File>
     <File Include="Areas/Admin/Content/ArooshyStoreCss/EmployeeAttendance/Index.css">
       <publishTime>10/28/2024 00:53:22</publishTime>
     </File>
@@ -56,7 +82,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/06/2024 16:30:30</publishTime>
     </File>
     <File Include="Areas/Admin/Content/ArooshyStoreCss/Invoice/InsertUpdateSaleInvoice.css">
-      <publishTime>09/11/2024 14:20:20</publishTime>
+      <publishTime>01/11/2025 02:49:36</publishTime>
+    </File>
+    <File Include="Areas/Admin/Content/ArooshyStoreCss/Invoice/Print.css">
+      <publishTime>01/18/2025 00:09:10</publishTime>
     </File>
     <File Include="Areas/Admin/Content/ArooshyStoreCss/Layout/Header.css">
       <publishTime>09/06/2024 16:30:30</publishTime>
@@ -3545,7 +3574,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/06/2024 16:30:32</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Action/InsertUpdateAssign.js">
-      <publishTime>09/06/2024 16:30:32</publishTime>
+      <publishTime>01/09/2025 02:56:11</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Attribute/Index.js">
       <publishTime>01/01/2025 23:36:39</publishTime>
@@ -3563,7 +3592,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/19/2024 02:23:29</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Category/Index.js">
-      <publishTime>01/03/2025 00:58:45</publishTime>
+      <publishTime>01/09/2025 20:13:50</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Category/InsertUpdateCategory.js">
       <publishTime>09/07/2024 14:55:58</publishTime>
@@ -3581,13 +3610,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/25/2024 01:03:34</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/CustomerSupplier/Index.js">
-      <publishTime>09/07/2024 14:55:58</publishTime>
+      <publishTime>01/09/2025 20:11:40</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/CustomerSupplier/InsertUpdateCustomerSupplier.js">
-      <publishTime>10/03/2024 00:02:11</publishTime>
+      <publishTime>01/09/2025 19:57:07</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/DeliveryCharges/Index.js">
-      <publishTime>09/25/2024 01:03:34</publishTime>
+      <publishTime>01/10/2025 00:37:07</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/DeliveryCharges/InsertUpdateDeliveryCharge.js">
       <publishTime>09/25/2024 01:03:34</publishTime>
@@ -3605,10 +3634,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/28/2024 00:53:22</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/DiscountOffer/Index.js">
-      <publishTime>09/07/2024 14:55:58</publishTime>
+      <publishTime>01/09/2025 20:12:17</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/DiscountOffer/InsertUpdateDiscountOffer.js">
-      <publishTime>09/11/2024 00:31:24</publishTime>
+      <publishTime>01/09/2025 03:22:41</publishTime>
+    </File>
+    <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/DiscountOffer/ProductsList.js">
+      <publishTime>01/09/2025 03:22:22</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Documents/AttachDocument.js">
       <publishTime>09/06/2024 16:30:32</publishTime>
@@ -3644,31 +3676,31 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/06/2024 16:30:32</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateInvoiceStatus.js">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/11/2025 01:50:11</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdatePurchaseInvoice.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/11/2025 03:23:48</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdatePurchaseReturn.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/11/2025 03:23:55</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateSaleInvoice.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>02/01/2025 02:16:17</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateSaleReturn.js">
       <publishTime>10/31/2024 17:23:55</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/PurchaseInvoiceIndex.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/11/2025 01:28:19</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/PurchaseReturnIndex.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/11/2025 01:27:55</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>02/01/2025 17:43:48</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleReturnIndex.js">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/11/2025 01:28:29</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Layout/Header.js">
       <publishTime>09/06/2024 16:30:32</publishTime>
@@ -3685,20 +3717,26 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/AttributesList.js">
       <publishTime>01/03/2025 01:33:35</publishTime>
     </File>
+    <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/GetProductAttributes.js">
+      <publishTime>01/08/2025 15:37:29</publishTime>
+    </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/Index.js">
-      <publishTime>01/03/2025 00:38:19</publishTime>
+      <publishTime>02/01/2025 15:45:19</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/InsertUpdateProduct.js">
-      <publishTime>01/03/2025 01:31:53</publishTime>
+      <publishTime>01/16/2025 21:16:08</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductAttributesBarcodesList.js">
-      <publishTime>01/02/2025 01:28:54</publishTime>
+      <publishTime>02/01/2025 14:40:59</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductDetail.js">
       <publishTime>01/02/2025 23:53:23</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductReview.js">
       <publishTime>10/15/2024 14:51:41</publishTime>
+    </File>
+    <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/ProductStock.js">
+      <publishTime>01/08/2025 14:18:31</publishTime>
     </File>
     <File Include="Areas/Admin/Scripts/ArooshyStoreScripts/Product/UpdateCostPrice.js">
       <publishTime>01/02/2025 23:51:45</publishTime>
@@ -4409,16 +4447,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/03/2025 00:50:15</publishTime>
     </File>
     <File Include="Areas/Admin/Views/CustomerSupplier/Index.cshtml">
-      <publishTime>09/07/2024 14:55:58</publishTime>
+      <publishTime>01/09/2025 18:58:09</publishTime>
     </File>
     <File Include="Areas/Admin/Views/CustomerSupplier/InsertUpdateCustomerSupplier.cshtml">
-      <publishTime>10/03/2024 00:02:11</publishTime>
+      <publishTime>01/09/2025 20:07:26</publishTime>
     </File>
     <File Include="Areas/Admin/Views/DeliveryCharges/Index.cshtml">
-      <publishTime>09/25/2024 01:03:34</publishTime>
+      <publishTime>01/10/2025 00:36:49</publishTime>
     </File>
     <File Include="Areas/Admin/Views/DeliveryCharges/InsertUpdateDeliveryCharges.cshtml">
-      <publishTime>09/25/2024 01:03:34</publishTime>
+      <publishTime>01/10/2025 00:55:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/DeliveryInfo/Index.cshtml">
       <publishTime>09/25/2024 01:03:34</publishTime>
@@ -4433,10 +4471,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/28/2024 00:53:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/DiscountOffer/Index.cshtml">
-      <publishTime>09/07/2024 14:55:58</publishTime>
+      <publishTime>01/09/2025 00:15:26</publishTime>
     </File>
     <File Include="Areas/Admin/Views/DiscountOffer/InsertUpdateDiscountOffer.cshtml">
-      <publishTime>09/11/2024 14:20:20</publishTime>
+      <publishTime>01/09/2025 03:28:57</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/DiscountOffer/ProductsList.cshtml">
+      <publishTime>01/09/2025 03:26:05</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Documents/AttachDocument.cshtml">
       <publishTime>09/06/2024 16:30:34</publishTime>
@@ -4472,7 +4513,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/06/2024 16:30:34</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/AsideMenu.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>02/01/2025 02:31:38</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/Blank.cshtml">
       <publishTime>09/06/2024 16:30:34</publishTime>
@@ -4484,16 +4525,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/07/2024 14:55:58</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/QuickAccess.cshtml">
-      <publishTime>09/07/2024 14:55:58</publishTime>
+      <publishTime>01/18/2025 12:40:27</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/Setting.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/18/2025 12:39:03</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/UnderDevelopment.cshtml">
       <publishTime>09/06/2024 16:30:34</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/InsertUpdateInvoiceStatus.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/11/2025 01:53:18</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/InsertUpdatePurchaseInvoice.cshtml">
       <publishTime>10/28/2024 00:53:22</publishTime>
@@ -4502,25 +4543,34 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/28/2024 00:53:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/InsertUpdateSaleInvoice.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>02/01/2025 02:16:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/InsertUpdateSaleReturn.cshtml">
       <publishTime>10/28/2024 00:53:22</publishTime>
     </File>
+    <File Include="Areas/Admin/Views/Invoice/InvoiceDetailsList.cshtml">
+      <publishTime>02/01/2025 16:44:43</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Invoice/PrintInvoice - Copy %282%29.cshtml">
+      <publishTime>01/17/2025 17:23:29</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Invoice/PrintInvoice - Copy.cshtml">
+      <publishTime>01/17/2025 00:14:44</publishTime>
+    </File>
     <File Include="Areas/Admin/Views/Invoice/PrintInvoice.cshtml">
-      <publishTime>10/31/2024 17:23:55</publishTime>
+      <publishTime>01/18/2025 15:37:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/PurchaseInvoiceIndex.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/11/2025 01:26:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/PurchaseReturnIndex.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/11/2025 01:26:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/SaleInvoiceIndex.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>02/01/2025 17:36:53</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Invoice/SaleReturnIndex.cshtml">
-      <publishTime>10/28/2024 00:53:22</publishTime>
+      <publishTime>01/11/2025 01:22:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Module/Index.cshtml">
       <publishTime>09/06/2024 16:30:34</publishTime>
@@ -4531,26 +4581,35 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Areas/Admin/Views/Product/AttributesList.cshtml">
       <publishTime>01/03/2025 01:24:27</publishTime>
     </File>
+    <File Include="Areas/Admin/Views/Product/GetProductAttributes.cshtml">
+      <publishTime>01/08/2025 17:07:32</publishTime>
+    </File>
     <File Include="Areas/Admin/Views/Product/Index.cshtml">
-      <publishTime>01/03/2025 00:37:54</publishTime>
+      <publishTime>02/01/2025 16:35:24</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/InsertUpdateProduct.cshtml">
-      <publishTime>01/03/2025 01:26:48</publishTime>
+      <publishTime>01/08/2025 22:06:04</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/PrintBarcodeStickers.cshtml">
-      <publishTime>01/03/2025 03:09:29</publishTime>
+      <publishTime>01/18/2025 15:40:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/PrintBarcodeStickersForTesting.cshtml">
       <publishTime>01/03/2025 02:32:40</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/ProductAttributesBarcodesList.cshtml">
-      <publishTime>01/02/2025 01:19:31</publishTime>
+      <publishTime>02/01/2025 14:37:57</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/ProductDetail.cshtml">
-      <publishTime>01/02/2025 23:52:56</publishTime>
+      <publishTime>01/08/2025 21:58:53</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/ProductReviews.cshtml">
       <publishTime>10/15/2024 14:51:41</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Product/ProductStock.cshtml">
+      <publishTime>01/08/2025 17:12:17</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Product/ProductStockDetail.cshtml">
+      <publishTime>02/01/2025 15:46:32</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Product/UpdateCostPrice.cshtml">
       <publishTime>01/03/2025 00:04:13</publishTime>
@@ -6269,22 +6328,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/06/2024 16:30:36</publishTime>
     </File>
     <File Include="bin/ArooshyStore.BLL.dll">
-      <publishTime>01/03/2025 03:11:08</publishTime>
+      <publishTime>02/01/2025 17:45:51</publishTime>
     </File>
     <File Include="bin/ArooshyStore.BLL.pdb">
-      <publishTime>01/03/2025 03:11:08</publishTime>
+      <publishTime>02/01/2025 17:45:51</publishTime>
     </File>
     <File Include="bin/ArooshyStore.DAL.dll">
-      <publishTime>01/02/2025 18:02:18</publishTime>
+      <publishTime>01/18/2025 12:49:53</publishTime>
     </File>
     <File Include="bin/ArooshyStore.DAL.dll.config">
       <publishTime>09/06/2024 16:30:30</publishTime>
     </File>
     <File Include="bin/ArooshyStore.DAL.pdb">
-      <publishTime>01/02/2025 18:02:18</publishTime>
+      <publishTime>01/18/2025 12:49:53</publishTime>
     </File>
     <File Include="bin/ArooshyStore.dll">
-      <publishTime>01/03/2025 03:11:10</publishTime>
+      <publishTime>02/01/2025 17:45:53</publishTime>
     </File>
     <File Include="bin/ArooshyStore.Domain.dll">
       <publishTime>01/02/2025 12:35:44</publishTime>
@@ -6296,13 +6355,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/02/2025 12:35:44</publishTime>
     </File>
     <File Include="bin/ArooshyStore.Models.dll">
-      <publishTime>01/02/2025 12:35:44</publishTime>
+      <publishTime>02/01/2025 17:45:50</publishTime>
     </File>
     <File Include="bin/ArooshyStore.Models.pdb">
-      <publishTime>01/02/2025 12:35:44</publishTime>
+      <publishTime>02/01/2025 17:45:50</publishTime>
     </File>
     <File Include="bin/ArooshyStore.pdb">
-      <publishTime>01/03/2025 03:11:10</publishTime>
+      <publishTime>02/01/2025 17:45:53</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
       <publishTime>09/06/2024 16:30:36</publishTime>

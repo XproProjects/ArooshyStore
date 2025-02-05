@@ -7,7 +7,9 @@
         "processing": true,
         "serverSide": true,
         "responsive": true,
-
+        "fnInitComplete": function (oSettings, json) {
+            getProductStock();
+        },
         "ajax": {
             "url": "/Admin/Product/GetAllProducts",
             "type": "POST",
@@ -108,13 +110,16 @@
             { "data": "UpdatedByString", "name": "UpdatedBy", "autoWidth": true },
             {
                 "data": "ProductId", "width": "70px", "class": "Acenter", "orderable": false, "render": function (data) {
-                    var detail = '<a title="View Product Detail" href ="/admin/product/productdetail/?id=' + data + '" target="_blank" class="btn btn-secondary" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Detail</a>&nbsp';
+                    var detail = '';
+                    if ($('#ViewStockActionRole').val() > 0) {
+                        detail = '<span style="color:green;font-weight:bold;font-size:15px" class="TotalStockSpanInList" data-value="' + data + '">....</span><br /><a style="font-weight:bold" href="javascript:void(0)" data-value="' + data + '" data-toggle="modal" data-target="#MyModal" class="btnViewStockDetail btnOpenModal">View Detail</a> ';
+                    }
                     return detail;
                 }
             },
             {
                 "data": "ProductId", "width": "160px", "class": "Acenter", "orderable": false, "render": function (data) {
-                    var print = '<a title="View and Update / Print Barcode Stickers" data-toggle="modal" data-target="#MyModal" class="btn btn-secondary btnPrint btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Stock / Print Barcode</a>&nbsp';
+                    var print = '<a title="View and Update Stock / Print Barcode Stickers" data-toggle="modal" data-target="#MyModal" class="btn btn-secondary btnPrint btnOpenModal" href="javascript:void(0)" data-value="' + data + '" style="padding:5px;color:#fff;padding-left:15px;padding-right:15px">Stock / Print Barcode</a>&nbsp';
                     return print;
                 }
             },
@@ -126,6 +131,7 @@
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
+                    div += '<a class="dropdown-item" href ="/admin/product/productdetail/?id=' + data + '" target="_blank" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="View Detail of this Product">Detail</a>';
                     div += '<a class="dropdown-item btnProductReview" href="javascript:void(0)" data-value="' + data + '" style="text-decoration:none !important;font-weight:normal !important" title="Product Reviews">Product Reviews</a>';
                     if ($('#DocumentActionRole').val() > 0) {
                         div += '<a class="dropdown-item btnAttachDocument btnOpenModal" href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="' + data + '"style="text-decoration:none !important;font-weight:normal !important" title="Attach Document">Attach Documents</a>';
@@ -152,6 +158,22 @@
     });
     oTable = $('#myTable').DataTable();
 });
+
+function getProductStock() {
+    $(".TotalStockSpanInList").each(function () {
+        var productId = $(this).attr("data-value");
+        var ref = $(this);
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Product/GetProductTotalStock/",
+            dataType: 'json',
+            data: { 'productId': productId },
+            success: function (response) {
+                ref.html(response);
+            }
+        })
+    })
+}
 $(document).on('click', '.btnProductReview', function () {
 
     var id = $(this).attr("data-value"); // Get the ProductId
@@ -220,6 +242,27 @@ $(document).on('click', '.btnProductCost', function () {
     $.ajax({
         type: "GET",
         url: "/Admin/Product/UpdateCostPrice/",
+        data: {
+            'id': id,
+        },
+        //contentType: 'application/html; charset=utf-8', type: 'GET', dataType: 'html',
+        success: function (response) {
+            //$('#ProductsData').html('');
+            $('#modalDiv').html(response);
+        }
+    })
+});
+$(document).on('click', '.btnViewStockDetail', function () {
+    $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");
+    var id = $(this).attr("data-value");
+    var articleNumber = $(this).parents("tr").find(".ArticleNumberClass").text();
+    var productName = $(this).parents("tr").find(".ProductNameClass").text();
+    $('#ModelHeaderSpan').html('Stock Detail (<span style="font-weight:bold;color:yellow">' + articleNumber + ' - ' + productName + '</span>)');
+    $('#modalDiv').html('');
+    // $('#modalDiv').load('@Url.Action("InsertUpdateProduct", "Product")?id=' + id + '');
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Product/ProductStockDetail/",
         data: {
             'id': id,
         },

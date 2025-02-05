@@ -88,6 +88,14 @@
                                 {
                                     <input type="hidden" id="DocumentActionRole" value="0" />
                                 }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "view stock"))
+                                {
+                                    <input type="hidden" id="ViewStockActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="ViewStockActionRole" value="0" />
+                                }
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
@@ -135,7 +143,7 @@
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>
                                     <th class="none">Updated By</th>
-                                    <th class="min-mobile">Detail</th>
+                                    <th class="min-tablet">Total Stock</th>
                                     <th class="min-mobile">Stock / Print Barcode</th>
                                     <th class="min-mobile">Edit</th>
                                 </tr>

@@ -123,7 +123,7 @@ namespace ArooshyStore.BLL.Services
                              UnitId = f.UnitId ?? 0,
                              UnitName = _unitOfWork.Db.Set<tblUnit>().Where(x => x.UnitId == f.UnitId).Select(x => x.UnitName).FirstOrDefault() ?? "",
                              CategoryId = f.CategoryId ?? 0,
-                             CategoryName = (c.CategoryName + " - " +p.CategoryName) ?? "",
+                             CategoryName = (c.CategoryName + " - " + p.CategoryName) ?? "",
                              DeliveryInfoId = f.DeliveryInfoId ?? 0,
                              DeliveryInfoName = _unitOfWork.Db.Set<tblDeliveryInfo>().Where(x => x.DeliveryInfoId == f.DeliveryInfoId).Select(x => x.DeliveryInfoName).FirstOrDefault() ?? "",
                              SalePrice = f.SalePrice ?? 0,
@@ -617,6 +617,43 @@ namespace ArooshyStore.BLL.Services
             barcodesList.Add(barcode);
             return barcode;
         }
+
+        public int GetProductTotalStock(int productId, int loggedInUserId)
+        {
+            int totalStock = (from s in _unitOfWork.Db.Set<tblProductStock>()
+                              join d in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>() on s.ProductAttributeDetailBarcodeId equals d.ProductAttributeDetailBarcodeId
+                              where d.ProductId == productId
+                              select s.InQty - s.OutQty).Sum() ?? 0;
+            return totalStock;
+        }
+
+        public List<ProductAttributeDetailViewModel> GetProductStockDetailByProductId(int productId)
+        {
+            List<ProductAttributeDetailViewModel> AttributesList = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                                                                    join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                                                    join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                                                    join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                                                    join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                                                                    where ap.Status == true && ap.ProductId == productId
+                                                                    select new ProductAttributeDetailViewModel
+                                                                    {
+                                                                        ProductAttributeDetailBarcodeId = ap.ProductAttributeDetailBarcodeId,
+                                                                        ProductId = ap.ProductId ?? 0,
+                                                                        AttributeId1 = ap.AttributeId1,
+                                                                        AttributeName1 = a1.AttributeName,
+                                                                        AttributeId2 = ap.AttributeId2,
+                                                                        AttributeName2 = a2.AttributeName,
+                                                                        AttributeDetailId1 = ap.AttributeDetailId1,
+                                                                        AttributeDetailName1 = ad1.AttributeDetailName,
+                                                                        AttributeDetailId2 = ap.AttributeDetailId2,
+                                                                        AttributeDetailName2 = ad2.AttributeDetailName,
+                                                                        Barcode = ap.Barcode ?? "",
+                                                                        Status = ap.Status ?? false,
+                                                                        Stock = (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.InQty) ?? 0) - (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.OutQty) ?? 0)
+                                                                    }).OrderBy(x => x.AttributeDetailName1).ThenBy(x => x.AttributeDetailName2).ToList() ?? new List<ProductAttributeDetailViewModel>();
+            AttributesList = AttributesList.Where(x => x.Stock > 0).ToList();
+            return AttributesList;
+        }
         public List<ProductAttributeDetailViewModel> GetProductAttributesListByProductId(int productId)
         {
             List<ProductAttributeDetailViewModel> AttributesList = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
@@ -669,7 +706,7 @@ namespace ArooshyStore.BLL.Services
                                                                         AttributeDetailName2 = ad2.AttributeDetailName,
                                                                         Barcode = ap.Barcode ?? "",
                                                                         Status = ap.Status,
-                                                                        Stock = (_unitOfWork.Db.Set<tblProductStock>().Where(x=>x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x=>x.InQty) ?? 0) - (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.OutQty) ?? 0)
+                                                                        Stock = (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.InQty) ?? 0) - (_unitOfWork.Db.Set<tblProductStock>().Where(x => x.ProductAttributeDetailBarcodeId == ap.ProductAttributeDetailBarcodeId).Sum(x => x.OutQty) ?? 0)
                                                                     }).OrderBy(x => x.AttributeDetailName1).ThenBy(x => x.AttributeDetailName2).ToList() ?? new List<ProductAttributeDetailViewModel>();
 
             return AttributesList;
@@ -697,7 +734,7 @@ namespace ArooshyStore.BLL.Services
                     int k = 0;
                     for (int i = 0; i < list.Count; i++)
                     {
-                        dtAttributes.Rows.Add(new object[] { i + 1, 0, list[i].StockType, list[i].ProductAttributeDetailBarcodeId, list[i].Stock, list[i].ReferenceId,list[i].WarehouseId });
+                        dtAttributes.Rows.Add(new object[] { i + 1, 0, list[i].StockType, list[i].ProductAttributeDetailBarcodeId, list[i].Stock, list[i].ReferenceId, list[i].WarehouseId });
                     }
                 }
                 else
@@ -854,92 +891,88 @@ namespace ArooshyStore.BLL.Services
         }
         public ProductViewModel GetProductSalePrice(int productId)
         {
-            var product = _unitOfWork.Db.Set<tblProduct>()
-                                        .Where(p => p.ProductId == productId)
-                                        .Select(p => new { p.ProductName, p.SalePrice })
-                                        .FirstOrDefault();
+            DiscountOfferViewModel model = (from f in _unitOfWork.Db.Set<tblDiscountOfferDetail>()
+                                            where f.ProductId == productId
+                                            && f.Status == true
+                                            && f.ExpiredOn >= DateTime.Now
+                                            orderby f.OfferDetailId descending
+                                            select new DiscountOfferViewModel
+                                            {
+                                                OfferDetailId = f.OfferDetailId,
+                                                DiscountType = f.DiscountType ?? "Rs.",
+                                                DiscountRate = f.DiscountRate ?? 0
+                                            }).FirstOrDefault() ?? new DiscountOfferViewModel();
 
-            if (product != null)
-            {
-                return new ProductViewModel
-                {
-                    ProductName = product.ProductName,
-                    SalePrice = product.SalePrice ?? 0
-                };
-            }
-
-            return new ProductViewModel
-            {
-                ProductName = "",
-                SalePrice = 0
-            };
+            ProductViewModel product = (from f in _unitOfWork.Db.Set<tblProduct>()
+                                        where f.ProductId == productId
+                                        select new ProductViewModel
+                                        {
+                                            SalePrice = f.SalePrice ?? 0,
+                                            SalePriceForWebsite = f.SalePriceForWebsite ?? 0,
+                                            OfferDetailId = model.OfferDetailId,
+                                            DiscountType = model.DiscountType ?? "Rs.",
+                                            DiscountRate = model.DiscountRate ?? 0
+                                        }).FirstOrDefault() ?? new ProductViewModel();
+            return product;
         }
         public ProductViewModel GetProductByBarcode(string barcode)
         {
-            ProductViewModel model = new ProductViewModel();
+            ProductViewModel model = (from ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                                      join p in _unitOfWork.Db.Set<tblProduct>() on ap.ProductId equals p.ProductId
+                                      join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                      join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                      join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                      join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                                      where ap.Barcode.ToLower().Trim() == barcode.ToLower().Trim()
+                                      select new ProductViewModel
+                                      {
+                                          ProductId = ap.ProductId ?? 0,
+                                          ProductName = p.ArticleNumber + " - " + p.ProductName ?? "",
+                                          AttributeDetailId = ap.ProductAttributeDetailBarcodeId,
+                                          AttributeName = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName,
+                                          SalePrice = p.SalePrice ?? 0,
+                                          Quantity = 1,
+                                      }).FirstOrDefault() ?? new ProductViewModel();
 
-            if (!string.IsNullOrEmpty(barcode))
+            DiscountOfferViewModel discount = (from f in _unitOfWork.Db.Set<tblDiscountOfferDetail>()
+                                               where f.ProductId == model.ProductId
+                                               && f.Status == true
+                                               && f.ExpiredOn >= DateTime.Now
+                                               orderby f.OfferDetailId descending
+                                               select new DiscountOfferViewModel
+                                               {
+                                                   OfferDetailId = f.OfferDetailId,
+                                                   DiscountType = f.DiscountType ?? "Rs.",
+                                                   DiscountRate = f.DiscountRate ?? 0
+                                               }).FirstOrDefault();
+            if (discount != null)
             {
-                var productAttributeDetail = _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
-                    .Where(f => f.Barcode == barcode)
-                    .Select(f => new
-                    {
-                        ProductId = f.ProductId,
-                        AttributeId = f.AttributeId1,
-                        AttributeDetailId = f.AttributeDetailId1,
-                        Status = f.Status,
-                        SalePrice = _unitOfWork.Db.Set<tblProduct>().Where(c => c.ProductId == f.ProductId).Select(c => c.SalePrice).FirstOrDefault() ?? 0,
-                        ProductName = _unitOfWork.Db.Set<tblProduct>().Where(c => c.ProductId == f.ProductId).Select(c => c.ProductName).FirstOrDefault() ?? "",
-                        AttributeDetailName = _unitOfWork.Db.Set<tblAttributeDetail>().Where(c => c.AttributeDetailId == f.AttributeDetailId1).Select(c => c.AttributeDetailName).FirstOrDefault() ?? "",
-                        AttributeName = _unitOfWork.Db.Set<tblAttribute>().Where(c => c.AttributeId == f.AttributeId1).Select(c => c.AttributeName).FirstOrDefault() ?? "",
-
-                        // Get the category details
-                        CategoryId = _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault(),
-                        ChildCategoryId = _unitOfWork.Db.Set<tblCategory>().Where(cat => cat.CategoryId == _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault()).Select(cat => cat.CategoryId).FirstOrDefault(),
-                        ChildCategoryName = _unitOfWork.Db.Set<tblCategory>().Where(cat => cat.CategoryId == _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault()).Select(cat => cat.CategoryName).FirstOrDefault() ?? "",
-                        MasterCategoryId = _unitOfWork.Db.Set<tblCategory>().Where(cat => cat.CategoryId == _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault()).Select(cat => cat.ParentCategoryId).FirstOrDefault(),
-                        MasterCategoryName = _unitOfWork.Db.Set<tblCategory>().Where(cat => cat.CategoryId == _unitOfWork.Db.Set<tblProduct>().Where(p => p.ProductId == f.ProductId).Select(p => p.CategoryId).FirstOrDefault() && cat.ParentCategoryId != null).Select(cat => _unitOfWork.Db.Set<tblCategory>().Where(pCat => pCat.CategoryId == cat.ParentCategoryId).Select(pCat => pCat.CategoryName).FirstOrDefault()).FirstOrDefault() ?? ""
-                    })
-                    .FirstOrDefault();
-
-                if (productAttributeDetail != null)
+                model.OfferDetailId = discount.OfferDetailId;
+                model.DiscountType = discount.DiscountType;
+                model.DiscountRate = discount.DiscountRate;
+                decimal discountAmount = 0;
+                if (discount.DiscountType == "%")
                 {
-                    model = new ProductViewModel
-                    {
-                        ProductId = productAttributeDetail.ProductId ?? 0,
-                        ProductName = productAttributeDetail.ProductName,
-                        AttributeId = productAttributeDetail.AttributeId ?? 0,
-                        AttributeDetailId = productAttributeDetail.AttributeDetailId ?? 0,
-                        MasterCategoryId = productAttributeDetail.MasterCategoryId ?? 0,
-                        AttributeName = productAttributeDetail.AttributeName,
-                        AttributeDetailName = productAttributeDetail.AttributeDetailName,
-                        MasterCategoryName = productAttributeDetail.MasterCategoryName,
-                        ChildCategoryId = productAttributeDetail.ChildCategoryId,
-                        ChildCategoryName = productAttributeDetail.ChildCategoryName,
-                        SalePrice = productAttributeDetail.SalePrice,
-                        Status = productAttributeDetail.Status ?? false
-                    };
+                    discountAmount = Convert.ToDecimal(discount.DiscountRate) / 100 * Convert.ToDecimal(model.SalePrice);
+                    discountAmount = Math.Round(Convert.ToDecimal(discountAmount), 2);
                 }
+                else
+                {
+                    discountAmount = Convert.ToDecimal(discount.DiscountRate);
+                }
+                model.DiscountAmount = discountAmount;
+
+                decimal netPrice = Convert.ToDecimal(model.SalePrice) - Convert.ToDecimal(discountAmount);
+                model.NetAmount = netPrice;
             }
             else
             {
-                model = new ProductViewModel
-                {
-                    ProductId = 0,
-                    ProductName = "",
-                    AttributeId = 0,
-                    AttributeDetailId = 0,
-                    MasterCategoryId = 0,
-                    ChildCategoryId = 0,
-                    AttributeName = "",
-                    AttributeDetailName = "",
-                    MasterCategoryName = "",
-                    ChildCategoryName = "",
-                    SalePrice = 0,
-                    Status = false
-                };
+                model.OfferDetailId = 0;
+                model.DiscountType = "Rs.";
+                model.DiscountRate = 0;
+                model.DiscountAmount = 0;
+                model.NetAmount = model.SalePrice;
             }
-
             return model;
         }
 

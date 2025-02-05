@@ -172,6 +172,13 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
-       
+        #region Products Attributes from tblProductDetailBarcode
+        public JsonResult GetProductAttributesFromBarcodeTableOptionList(string searchTerm, int pageSize, int pageNumber, int productId = 0)
+        {
+            var select2pagedResult = _repository.GetProductListAttributesFromBarcodeTable(searchTerm, pageSize, pageNumber, productId);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

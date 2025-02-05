@@ -18,9 +18,11 @@ namespace ArooshyStore.BLL.Interfaces
         List<ProductViewModel> GetExpiredProducts();
         List<ProductViewModel> GetProductsByMasterCategory(int masterCategoryId);
         List<ProductAttributeDetailViewModel> GetProductAttributesListByProductId(int productId);
+        List<ProductAttributeDetailViewModel> GetProductStockDetailByProductId(int productId);
         List<ProductAttributeDetailViewModel> GetProductAttributesListByBarcode(string barcode);
         List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data);
         ProductViewModel GetProductDetailById(int id);
+        int GetProductTotalStock(int productId, int loggedInUserId);
 
         List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);

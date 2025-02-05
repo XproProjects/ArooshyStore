@@ -1,0 +1,112 @@
+﻿@media print {
+    /*@page {
+        size: portrait;
+        text-align: center;
+        margin-left: -19px;
+        margin-top: -10px;
+    }
+
+    @page:first {
+        size: portrait;
+        text-align: center;
+        margin-top: -175px !important;
+        margin-left: -19px;
+    }*/
+
+    /*@page {
+        text-align: center;
+        margin-left: -19px;
+        margin-top: -10px;
+    }*/
+
+    @page:first {
+      /*  size: portrait; */
+        text-align: center;
+        margin-top: -70px !important;
+        width: 100mm;
+       /*height:10in;*/
+        /*margin-left: -19px;*/
+    }
+    @font-face {
+        font-family: 'century gothic';
+        src: url('../../content/arooshystorecss/centurygothic/century gothic.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'century gothic';
+        src: url('../centurygothic/century gothic.ttf') format('truetype');
+    }
+    .font {
+        font-family: 'Century Gothic' !important;
+    }
+    #printable-content{
+        padding : 0px !important;
+    }
+    .HeaderAddress{
+        font-size:8px !important;
+    }
+    tr.mainHeaderTr > th {
+        border-top: 1px dotted #000 !important;
+        border-bottom: 1px dotted #000 !important;
+        font-weight: bold;
+    }
+
+    tr.mainTotalTr > td {
+        border-top: 1px dotted #000 !important;
+        border-bottom: 1px dotted #000 !important;
+        font-weight: bold;
+    }
+    /*.ArooshyStoreTag {
+        font-size: 45px !important;
+    }
+
+    .ProductNameTag {
+        font-size: 30px !important;
+    }
+
+    .PriceTag {
+        font-size: 30px !important;
+    }
+
+    .PageEnd {
+        page-break-after: always !important;
+    }
+
+    .BarcodeTag {
+        width: 480px !important;
+    }*/
+}
+tr.mainHeaderTr > th {
+    border-top: 1px dotted #000 !important;
+    border-bottom: 1px dotted #000 !important;
+    font-weight:bold;
+}
+tr.mainTotalTr > td {
+    border-top: 1px dotted #000 !important;
+    border-bottom: 1px dotted #000 !important;
+    font-weight: bold;
+}
+/*
+.ArooshyStoreTag {
+    font-size: 65px !important;
+}
+
+.ProductNameTag {
+    font-size: 55px !important;
+}
+
+.PriceTag {
+    font-size: 60px !important;
+}
+*/
+
+/*.PageEnd {
+    page-break-after: always !important;
+}*/
+@font-face {
+    font-family: 'century gothic';
+    src: url('../../content/arooshystorecss/centurygothic/century gothic.ttf') format('truetype');
+}
+
+.font {
+    font-family: 'Century Gothic' !important;
+}

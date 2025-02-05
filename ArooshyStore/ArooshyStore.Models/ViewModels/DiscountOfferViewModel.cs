@@ -8,7 +8,7 @@ namespace ArooshyStore.Models.ViewModels
         public string DiscountName { get; set; }
         public DateTime? ExpiredOn { get; set; }
         public string DiscountType { get; set; }
-        public decimal DiscountRate { get; set; }
+        public decimal? DiscountRate { get; set; }
         public int? ProductId { get; set; }
         public string ProductName { get; set; }
         public string ArticleNumber { get; set; }

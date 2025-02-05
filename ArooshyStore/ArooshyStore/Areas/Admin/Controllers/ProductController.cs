@@ -209,6 +209,29 @@ namespace ArooshyStore.Areas.Admin.Controllers
             }
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
+        public ActionResult GetProductTotalStock(int productId = 0)
+        {
+            int totalStock = _repository.GetProductTotalStock(productId, User.UserId);
+            return Json(totalStock, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ProductStockDetail(int id = 0)
+        {
+            if (User != null)
+            {
+                List<ProductAttributeDetailViewModel> list = new List<ProductAttributeDetailViewModel>();
+                if (_roles.CheckActionRoleId(User.UserId, "product", "view stock") > 0)
+                {
+                    list = _repository.GetProductStockDetailByProductId(id);
+                }
+                return PartialView(list);
+            }
+            else
+            {
+                return PartialView("_UserLoggedOut");
+            }
+        }
 
         [HttpGet]
         public ActionResult ProductAttributesBarcodesList(int id = 0)
@@ -284,19 +307,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     productId = product.ProductId,
                     productName = product.ProductName,
-                    salePrice = product.SalePrice,
-                    barcode = product.Barcode,
-                    categoryId = product.CategoryId,
-                    costPrice = product.CostPrice,
-                    status = product.Status,
-                    masterCategoryId = product.MasterCategoryId,
-                    masterCategoryName = product.MasterCategoryName,
-                    childCategoryId = product.ChildCategoryId,
-                    childCategoryName = product.ChildCategoryName,
-                    attributeId = product.AttributeId,
+                    productAttributeDetailBarcodeId = product.AttributeDetailId,
                     attributeName = product.AttributeName,
-                    attributeDetailId = product.AttributeDetailId,
-                    attributeDetailName = product.AttributeDetailName
+                    offerDetailId = product.OfferDetailId,
+                    salePrice = product.SalePrice,
+                    quantity = product.Quantity,
+                    discountType = product.DiscountType,
+                    discountRate = product.DiscountRate,
+                    discountAmount = product.DiscountAmount,
+                    netAmount = product.NetAmount,
                 });
             }
 
@@ -304,19 +323,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
             {
                 productId = 0,
                 productName = "",
-                salePrice = 0,
-                barcode = "",
-                categoryId = 0,
-                costPrice = 0,
-                status = false,
-                masterCategoryId = 0,
-                masterCategoryName = "",
-                childCategoryId = 0,
-                childCategoryName = "",
-                attributeId = 0,
+                productAttributeDetailBarcodeId = 0,
                 attributeName = "",
-                attributeDetailId = 0,
-                attributeDetailName = ""
+                offerDetailId = 0,
+                salePrice = 0,
+                quantity = 0,
+                discountType = "",
+                discountRate = 0,
+                discountAmount = 0,
+                netAmount = 0,
             });
         }
 
@@ -327,10 +342,24 @@ namespace ArooshyStore.Areas.Admin.Controllers
 
             if (product != null)
             {
-                return Json(new { productName = product.ProductName, salePrice = product.SalePrice });
+                return Json(new
+                {
+                    productName = product.ProductName,
+                    salePrice = product.SalePrice,
+                    offerDetailId = product.OfferDetailId,
+                    discountType = product.DiscountType,
+                    discountRate = product.DiscountRate
+                });
             }
 
-            return Json(new { productName = "", salePrice = 0 });
+            return Json(new
+            {
+                productName = "",
+                salePrice = 0,
+                offerDetailId = 0,
+                discountType = "Rs.",
+                discountRate = 0
+            });
 
         }
 

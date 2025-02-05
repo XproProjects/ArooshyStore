@@ -9,6 +9,7 @@ namespace ArooshyStore.Models.ViewModels
         public string AttributeDetailName { get; set; }
         public int? CustomerSupplierId { get; set; }
         public string InvoiceType { get; set; }
+        public string InvoiceNumberWithStatus { get; set; }
         public string Status { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -35,6 +36,8 @@ namespace ArooshyStore.Models.ViewModels
         public string CompanyContact { get; set; }
         public string CompanyAddress { get; set; }
         public string CompanyEmail { get; set; }
+        public string CompanyLogoPath { get; set; }
+        public string LoggedInUserName { get; set; }
 
         public List<InvoiceDetailViewModel> InvoiceDetailsList { get; set; }
 

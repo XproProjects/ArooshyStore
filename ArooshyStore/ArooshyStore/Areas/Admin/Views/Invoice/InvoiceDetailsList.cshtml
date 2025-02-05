@@ -1,0 +1,45 @@
+﻿@using ArooshyStore.Models.ViewModels
+@model List<InvoiceDetailViewModel>
+<div style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    <fieldset style="padding:1.25rem;">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" style="width:1000px;margin-top:30px">
+                <thead class="thead-themed">
+                    <tr>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; border: 1px solid #000;width:80px ">Sr #</th>
+                        <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000;width:200px ">Product Name</th>
+                        <th style="text-align: left; color: #fff; background-color: #727B84; width: 180px; border: 1px solid #000 ">Size & Color</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Price</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Qty</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Disc Type</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Disc Rate</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Disc Amount</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; width: 150px; border: 1px solid #000 ">Net Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (InvoiceDetailViewModel p in Model)
+                    {
+                        i++;
+                        <tr class="DataTr">
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd">@i</td>
+                            <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.ProductName</td>
+                            <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.AttributeName</td>
+                            <td style="text-align: right; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.Rate).ToString("#,##0.00")</td>
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@Math.Round(Convert.ToDecimal(p.Qty),0)</td>
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.DiscType</td>
+                            <td style="text-align: right; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.DiscRate).ToString("#,##0.00")</td>
+                            <td style="text-align: right; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.DiscAmount).ToString("#,##0.00")</td>
+                            <td style="text-align: right; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.NetAmount).ToString("#,##0.00")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+    </fieldset>
+</div>
+

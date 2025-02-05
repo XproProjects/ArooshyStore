@@ -19,6 +19,7 @@ namespace ArooshyStore.Models.ViewModels
         public string TagName { get; set; }
         public string DeliveryInfoName { get; set; }
         public int? LoggedUserId { get; set; }
+        public int OfferDetailId { get; set; }
 
         public int? UnitId { get; set; }
         public int? DeliveryInfoId { get; set; }
@@ -31,8 +32,10 @@ namespace ArooshyStore.Models.ViewModels
         public string CategoryName { get; set; }
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
+        public decimal Quantity { get; set; }
         public decimal SalePriceForWebsite { get; set; }
         public decimal SalePriceAfterExpired { get; set; }
+        public int ProductAttributeDetailBarcodeId { get; set; }
         public int AttributeDetailId { get; set; }
         public string AttributeName { get; set; }
         public string AttributeDetailName { get; set; }
@@ -58,6 +61,10 @@ namespace ArooshyStore.Models.ViewModels
         public int TotalRecords { get; set; }
         public string AllAttributes { get; set; }
         public int CartId { get; set; }
+        public string DiscountType { get; set; }
+        public decimal? DiscountRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        public decimal? NetAmount { get; set; }
         public List<AttributeViewModel> AttributesList { get; set; }
         public List<AttributeViewModel> AttributeDetailsList { get; set; }
         public List<DocumentViewModel> DocumentsList { get; set; }

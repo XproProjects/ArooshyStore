@@ -54,7 +54,7 @@
                         for (int j = 0; j < p.TotalRecords; j++)
                         {
                             totalBarcodes++;
-                            <table style="padding-top:0px;" id="myTable">
+                            <table class="barcodeTable" style="padding-top:0px;" id="myTable">
                                 <tr>
                                     <th class="ArooshyStoreTag" style="font-weight: bold; text-align: center;" colspan="12">Arooshy Store</th>
                                 </tr>
@@ -184,14 +184,25 @@
 </div>
 <script src="~/Areas/Admin/Scripts/JsBarcode.all.min.js"></script>
 <script type="text/javascript">
-    JsBarcode(".BarcodeTag", $(".HiddenBarcode").val(), {
-        //format: "pharmacode",
-        //lineColor: "#0aa",
-        width: 4,
-        height: 40,
-        displayValue: false,
-        fontSize: 50,
-    });
+    $('.barcodeTable').each(function () {
+        //JsBarcode(".BarcodeTag", $(".HiddenBarcode").val(), {
+        //    //format: "pharmacode",
+        //    //lineColor: "#0aa",
+        //    width: 4,
+        //    height: 40,
+        //    displayValue: true,
+        //    fontSize: 50,
+        //});
+        $(this).find(".BarcodeTag").JsBarcode($(this).find(".HiddenBarcode").val(), {
+            //format: "pharmacode",
+            //lineColor: "#0aa",
+            width: 4,
+            height: 40,
+            displayValue: false,
+            fontSize: 50,
+        });
+    })
+    
     // $(".BarcodeTag").JsBarcode($(".HiddenBarcode").val());
     //$(document).on("click", ".printBtn", function () {
     //    $('.printable-content').removeClass('table-responsive');
@@ -201,6 +212,7 @@
         $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").css('display', "block");
         $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
         $('.nav-menu li a[href="/attendance/index"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+        $(".printBtn").click();
     });
 </script>
 

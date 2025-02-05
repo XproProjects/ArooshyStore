@@ -268,7 +268,7 @@ namespace ArooshyStore.BLL.Services
             List<SelectListViewModel> item = new List<SelectListViewModel>();
             item = (from c in _unitOfWork.Db.Set<tblProduct>()
                     where c.Status == true
-                    orderby c.ProductName
+                    orderby c.ArticleNumber
                     select new SelectListViewModel
                     {
                         id = c.ProductId,
@@ -509,7 +509,37 @@ namespace ArooshyStore.BLL.Services
             return result;
         }
         #endregion
+        #region Products Attributes from tblProductDetailBarcode
+        public Select2PagedResultViewModel GetProductListAttributesFromBarcodeTable(string searchTerm, int pageSize, int pageNumber, int productId)
+        {
+            AllItemsList = AllProductListAttributesFromBarcodeTable(productId);
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
 
+        public IQueryable<SelectListViewModel> AllProductListAttributesFromBarcodeTable(int productId)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                    join a1 in _unitOfWork.Db.Set<tblAttribute>() on c.AttributeId1 equals a1.AttributeId
+                    join a2 in _unitOfWork.Db.Set<tblAttribute>() on c.AttributeId2 equals a2.AttributeId
+                    join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on c.AttributeDetailId1 equals ad1.AttributeDetailId
+                    join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on c.AttributeDetailId2 equals ad2.AttributeDetailId
+                    where c.ProductId == productId
+                    && c.Status == true
+                    orderby ad1.AttributeDetailName
+                    select new SelectListViewModel
+                    {
+                        id = c.ProductAttributeDetailBarcodeId,
+                        text = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
         List<SelectListViewModel> GetPagedListOptions(string searchTerm, int pageSize, int pageNumber, out int totalSearchRecords)
         {
             var allSearchedResults = GetAllSearchResults(searchTerm);

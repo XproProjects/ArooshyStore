@@ -62,7 +62,7 @@
         <ul id="js-nav-menu" class="nav-menu">
             @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "dashboard"))
             {
-                @*<li class="nav-title">Dashboard</li>*@
+                <li class="nav-title">Dashboard</li>
                 <li>
                     <a href="/admin/home/index" title="Dashboard" data-filter-tags="dashboard">
                         <i class="fas fa-home"></i>
@@ -71,68 +71,34 @@
                 </li>
             }
             @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "attendance"))
+                    x.ModuleName.ToLower() == "product"
+                    || x.ModuleName.ToLower() == "sale invoice"))
             {
-                @*<li class="nav-title">Suppliers</li>*@
-                <li>
-                    <a href="/admin/employeeattendance/index" title="Attendance" data-filter-tags="attendance">
-                        <i class="fas fa-clock"></i>
-                        <span class="nav-link-text" data-i18n="nav.Attendance">Attendance</span>
-                    </a>
-                </li>
+                <li class="nav-title">Products / Discount / Stock</li>
             }
             @if (Model.ModuleList.Any(x =>
           x.ModuleName.ToLower() == "product"))
             {
-                @*<li class="nav-title">Products</li>*@
                 <li>
                     <a href="/admin/product/index" title="Products" data-filter-tags="products">
                         <i class="fas fa-box"></i>
                         <span class="nav-link-text" data-i18n="nav.Products">Products</span>
                     </a>
                 </li>
-            }
-            @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "product"))
-            {
-                @*<li class="nav-title">Products</li>*@
-                <li>
+                @*<li>
                     <a href="/admin/product/productstock" title="Products Stock" data-filter-tags="products stock">
                         <i class="fas fa-box"></i>
                         <span class="nav-link-text" data-i18n="nav.ProductsStock">Products Stock</span>
                     </a>
-                </li>
+                </li>*@
             }
             @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "customer"))
+x.ModuleName.ToLower() == "discount offer"))
             {
-                @*<li class="nav-title">Customers</li>*@
                 <li>
-                    <a href="/admin/customersupplier/index/?type=customer" title="Customers" data-filter-tags="customers">
-                        <i class="fas fa-user-circle"></i>
-                        <span class="nav-link-text" data-i18n="nav.Customers">Customers</span>
-                    </a>
-                </li>
-            }
-            @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "supplier"))
-            {
-                @*<li class="nav-title">Suppliers</li>*@
-                <li>
-                    <a href="/admin/customersupplier/index/?type=supplier" title="Suppliers" data-filter-tags="suppliers">
-                        <i class="fas fa-user-circle"></i>
-                        <span class="nav-link-text" data-i18n="nav.Suppliers">Suppliers</span>
-                    </a>
-                </li>
-            }
-            @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "expense"))
-            {
-                @*<li class="nav-title">Suppliers</li>*@
-                <li>
-                    <a href="/admin/expense/index" title="Expenses" data-filter-tags="expenses">
-                        <i class="fas fa-money-bill"></i>
-                        <span class="nav-link-text" data-i18n="nav.Expenses">Expenses</span>
+                    <a href="/admin/discountoffer/index" title="Discount Offer" data-filter-tags="discount offer">
+                        <i class="fas fa-percent"></i>
+                        <span class="nav-link-text" data-i18n="nav.DiscountOffer">Discount Offer</span>
                     </a>
                 </li>
             }
@@ -176,6 +142,11 @@ x.ModuleName.ToLower() == "expense"))
                             </a>
                         </li>
                         <li>
+                            <a href="/admin/invoice/saleinvoiceindex/?from=exchanged" title="Exchanged" data-filter-tags="exchanged">
+                                <span class="nav-link-text" data-i18n="nav.Exchanged">Exchanged</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/admin/invoice/saleinvoiceindex/?from=returned" title="Returned" data-filter-tags="returned">
                                 <span class="nav-link-text" data-i18n="nav.Returned">Returned</span>
                             </a>
@@ -194,10 +165,9 @@ x.ModuleName.ToLower() == "expense"))
                 </li>
 
             }
-            @if (Model.ModuleList.Any(x =>
+            @*@if (Model.ModuleList.Any(x =>
            x.ModuleName.ToLower() == "sale return"))
             {
-                @*<li class="nav-title">Suppliers</li>*@
                 <li>
                     <a href="/admin/invoice/salereturnindex" title="Sale Return" data-filter-tags="Sale Return">
                         <i class="fas fa-exchange-alt"></i>
@@ -205,39 +175,60 @@ x.ModuleName.ToLower() == "expense"))
                     </a>
                 </li>
 
-            }
+            }*@
 
             @*@if (Model.ModuleList.Any(x =>
-            x.ModuleName.ToLower() == "purchase invoice"))
-            {
-                <li>
-                    <a href="/admin/invoice/purchaseinvoiceindex" title="Purchase Invoice" data-filter-tags="Purchase Invoice">
-                        <i class="fas fa-align-justify"></i>
-                        <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Invoice</span>
-                    </a>
-                </li>
+        x.ModuleName.ToLower() == "purchase invoice"))
+        {
+            <li>
+                <a href="/admin/invoice/purchaseinvoiceindex" title="Purchase Invoice" data-filter-tags="Purchase Invoice">
+                    <i class="fas fa-align-justify"></i>
+                    <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Invoice</span>
+                </a>
+            </li>
 
+        }
+        @if (Model.ModuleList.Any(x =>
+        x.ModuleName.ToLower() == "purchase return"))
+        {
+            <li>
+                <a href="/admin/invoice/purchasereturnindex" title="Purchase Return" data-filter-tags="Purchase Return">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Return</span>
+                </a>
+            </li>
+        }*@
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "customer"
+|| x.ModuleName.ToLower() == "supplier"))
+            {
+                <li class="nav-title">Customers / Suppliers</li>
             }
             @if (Model.ModuleList.Any(x =>
-            x.ModuleName.ToLower() == "purchase return"))
+x.ModuleName.ToLower() == "customer"))
             {
                 <li>
-                    <a href="/admin/invoice/purchasereturnindex" title="Purchase Return" data-filter-tags="Purchase Return">
-                        <i class="fas fa-exchange-alt"></i>
-                        <span class="nav-link-text" data-i18n="nav.Invoice">Purchase Return</span>
+                    <a href="/admin/customersupplier/index/?type=customer" title="Customers" data-filter-tags="customers">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="nav-link-text" data-i18n="nav.Customers">Customers</span>
                     </a>
                 </li>
-            }*@
+            }
             @if (Model.ModuleList.Any(x =>
-x.ModuleName.ToLower() == "salary"))
+x.ModuleName.ToLower() == "supplier"))
             {
-                @*<li class="nav-title">Suppliers</li>*@
                 <li>
-                    <a href="/admin/salary/index" title="Salary" data-filter-tags="salary">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span class="nav-link-text" data-i18n="nav.Salary">Salary</span>
+                    <a href="/admin/customersupplier/index/?type=supplier" title="Suppliers" data-filter-tags="suppliers">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="nav-link-text" data-i18n="nav.Suppliers">Suppliers</span>
                     </a>
                 </li>
+            }
+            @if (Model.ModuleList.Any(x =>
+x.ModuleName.ToLower() == "user"
+|| x.ModuleName.ToLower() == "user permissions"))
+            {
+                <li class="nav-title">Users</li>
             }
             @if (Model.ModuleList.Any(x =>
 x.ModuleName.ToLower() == "user" ||

@@ -28,6 +28,10 @@
                                         {
                                             <span class="hidden-md-down">Edit Sale Invoice</span>
                                         }
+                                        else if (Model.IsNewOrEdit == "Exchange")
+                                        {
+                                            <span class="hidden-md-down">Exchange Sale Invoice</span>
+                                        }
                                         else
                                         {
                                             <span class="hidden-md-down">Add Sale Invoice</span>
@@ -46,431 +50,359 @@
             </div>
 
         </div>
-
-        @using (Html.BeginForm("InsertUpdateInvoice", "Invoice", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
-        {
-
-            <fieldset style="padding:1.25rem;margin-top:15px">
-                <div class="row">
-                    <section class="col-md-10">
-                        <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Information</label>
-                    </section>
-                    <section class="col-md-1">
-                        <div class="custom-control custom-radio custom-control-inline pull-right">
-                            <input type="radio" class="custom-control-input" id="Cash" value="Cash" name="CashOrCredit" @(Model.CashOrCredit == "Cash" ? "checked" : "")>
-                            <label class="custom-control-label" for="Cash">Cash</label>
-                        </div>
-                    </section>
-                    <section class="col-md-1">
-                        <div class="custom-control custom-radio custom-control-inline pull-right">
-                            <input type="radio" class="custom-control-input" id="Credit" value="Credit" name="CashOrCredit" @(Model.CashOrCredit == "Credit" ? "checked" : "")>
-                            <label class="custom-control-label" for="Credit">Credit</label>
-                        </div>
-                    </section>
-                </div>
-                <div class="row" style="margin-top: 15px;">
-                    <section class="col-md-12">
-                        <div style="padding:5px;padding-top:0px">
-                            <input type="hidden" id="IsNewOrEdit" name="IsNewOrEdit" value="@Model.IsNewOrEdit" />
-                            <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
-                            <input type="hidden" id="HiddenCustomerSupplierId" name="HiddenCustomerSupplierId" value="@Model.CustomerSupplierId" />
-                            <input type="hidden" id="HiddenCustomerSupplierName" name="HiddenCustomerSupplierName" value="@Model.CustomerName" />
-                            <input type="hidden" id="HiddenTr" name="HiddenTr" value="0" />
-                            <label style="text-align:left;margin-left:5px">
-                                Invoice # :
-                                @if (Model.IsNewOrEdit == "New")
-                                {
-                                    <label style="color:green;font-weight:bold;font-size:15px" id="InvoiceNumberLbl"></label>
-                                }
-                                else
-                                {
-                                    <label style="color: green; font-weight: bold; font-size: 15px" id="InvoiceNumberLbl">@Model.InvoiceNumber</label>
-                                }
-                            </label>
-                        </div>
-                    </section>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <section class="col-md-6">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Customer (*)</label>
-                                            <div class="input-group" id="CustomerSupplierIdDiv">
-                                                <select id="CustomerSupplierId" name="CustomerSupplierId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/customersupplier/index/?type=customer" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Customer">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-6">
-                        <div style="padding:5px;padding-top:0px">
-                            <label>Invoice Date (*)</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fal fa-calendar"></i>
-                                    </span>
-                                </div>
-                                @{
-                                    string value = "";
-                                }
-                                @if (Model.IsNewOrEdit == "Update")
-                                {
-                                    value = Model.InvoiceDate.HasValue ? Model.InvoiceDate.GetValueOrDefault().ToString("yyyy-MM-dd") : "";
-                                }
-                                else
-                                {
-                                    value = DateTime.Now.ToString("yyyy-MM-dd");
-                                }
-                                <input type="date" class="form-control" id="InvoiceDate" name="InvoiceDate" value="@value" />
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
-
-            </fieldset>
-            <fieldset style="padding:1.25rem;margin-top:15px">
-                <div class="row">
-                    <section class="col-md-8">
-                        <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Detail</label>
-                    </section>
-                    <section class="col-md-2">
-                        <div class="custom-control custom-radio custom-control-inline pull-right">
-                            <input type="radio" class="custom-control-input" id="Barcode" value="Existing Item" name="SelectItemType" checked>
-                            <label class="custom-control-label" for="Barcode">Barcode</label>
-                        </div>
-                    </section>
-                    <section class="col-md-2">
-                        <div class="custom-control custom-radio custom-control-inline pull-right">
-                            <input type="radio" class="custom-control-input" id="NewItem" value="New Item" name="SelectItemType">
-                            <label class="custom-control-label" for="NewItem">New Product</label>
-                        </div>
-                    </section>
-                </div>
-                <div class="row BarcodeDiv" style="margin-top: 40px;">
-                    <section class="col-md-3"></section>
-                    <section class="col-md-6">
-                        <div style="padding:5px;padding-top:0px">
-                            <label>Barcode</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fal fa-info"></i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" id="txtBarcode" name="Barcode" value="" placeholder="Barcode" autocomplete="off" />
-                            </div>
-                        </div>
-                    </section>
-
-
-                    <section class="col-md-3"></section>
-                </div>
-                <div class="row NewItemDiv" style="margin-top: 40px;" hidden>
-                    <section class="col-md-4">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Product (*)</label>
-                                            <div class="input-group" id="ProductIdDiv">
-                                                <select id="ProductId" name="ProductId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/product/index/" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Product">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-6">
-                        <table class="" style="width:100% !important">
-                            <tr>
-                                <td style="width: 20%; padding-left: 3px" id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Sales Price (*)</label>
-                                        <div class="input-group">
-                                            <input placeholder="Price" class="form-control" id="Rate" name="Rate" value="0" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px" id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Quantity (*)</label>
-                                        <div class="input-group">
-                                            <input type="number" placeholder="Qty" class="form-control" id="Qty" name="Qty" value="0" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Disc Type</label>
-                                        <select id="LineDiscType" name="LineDiscType" class="custom-select">
-                                            <option value="%">%</option>
-                                            <option value="€">€</option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Disc Rate</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Disc Rate" class="form-control" id="LineDiscRate" name="LineDiscRate" value="0" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left:3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Disc Amount</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Disc Amount" class="form-control" id="LineDiscAmount" name="LineDiscAmount" value="0" disabled />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </section>
-                    <section class="col-md-2">
-                        <div style="padding: 3px">
-                            <center>
-                                <label style="text-align:center;">
-                                    <span style="font-size: 14px" id="">Net Price</span>
-                                    <br />
-                                    <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="LineNetAmount">0.00</span>
-                                </label>
-                            </center>
-                        </div>
-                    </section>
-                </div>
-                <div class="row NewItemDiv" style="margin-top: 7px;" hidden>
-                    <section class="col-md-3">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Master Category (*)</label>
-                                            <div class="input-group" id="MasterCategoryIdDiv">
-                                                <select id="MasterCategoryId" name="MasterCategoryId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/category/index/?from=master" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Master Category">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-3">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Child Category (*)</label>
-                                            <div class="input-group" id="ChildCategoryIdDiv">
-                                                <select id="ChildCategoryId" name="ChildCategoryId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/category/index/?from=child" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px; color: #fff; padding: 9px; margin-left: -6px; background-color: #aaaaaa !important; border-color: #aaaaaa !important; padding-left: 12px; padding-right: 12px;" title="Add New Child Category">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-3">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Attribute (*)</label>
-                                            <div class="input-group" id="AttributeIdDiv">
-                                                <select id="AttributeId" name="AttributeId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/attribute/index/" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Attribute">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="col-md-3">
-                        <div style="padding:5px;padding-top:0px;padding-right:0px">
-                            <div class="input-group">
-                                <table class="" style="width: 100%;">
-                                    <tr>
-                                        <td style="width: 80%;">
-                                            <label class="form-label">Select Attribute Detail (*)</label>
-                                            <div class="input-group" id="AttributeDetail">
-                                                <select id="AttributeDetailId" name="AttributeDetailId"></select>
-                                            </div>
-                                        </td>
-                                        <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
-                                            <a href="/admin/attribute/index/" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Attribute Detail">
-                                                <i class="fas fa-plus" style=""></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
-
-
+        <div class=" row">
+            <div class="col-md-12">
                 <center>
-                    <a title="Add Detail" id="btnAddDetail" href="javascript:void(0)" class="btn btn-primary" style="/* width: 123px; */ margin-top: 20px; /* height:39px; */ color: white; margin-bottom: 8px; /* line-height:26px; */ border-radius: 5px; padding: 9px; padding-left: 19px; padding-right: 19px;background-color:#838383;border-color:#838383 !important">
-                        <i class="fas fa-edit"></i> <span class="btnLineSpan">Add</span>
-                    </a>
-                    <a title="Cancel" id="btnCancelDetail" href="javascript:void(0)" class="btn btn-default" style="/* width: 123px; */ margin-top: 20px; /* height:39px; */ color: black; margin-bottom: 8px; /* line-height:26px; */ border-radius: 5px; padding: 9px; padding-left: 19px; padding-right: 19px;background-color:#838383;border-color:#838383 !important" hidden>
-                        Cancel
-                    </a>
+                    <button type="button" target="_blank" id="btn_New" class="btn btn-dark" style="margin-top:10px">Create New Invoice</button>
                 </center>
-                <div class="row">
-                    <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px ">
-                        <table id="detailTable" class="display nowrap cell-border table table-bordered table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th data-class="" style="width: 10px;background-color: #838383;color: white;padding: 5px;text-align: center;border-right: none"></th>
-                                    <th data-class="" style="width: 10px;background-color: #838383;color: white;padding: 5px;text-align: center;border-left: none;"></th>
-                                    <th style="width: 40px; background-color: #838383; color: white; padding: 5px; text-align: center;">Sr#</th>
-                                    <th style="width: 400px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Product Name</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Sale Price</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Quantity</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Disc Type</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Disc Rate</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Disc Amount</th>
-                                    <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Net Price</th>
-                                    <th style="width: 200px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Master Category</th>
-                                    <th style="width: 200px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Child Category</th>
-                                    <th style="width: 200px; background-color: #838383; color: white; padding: 5px; text-align: left;">  Attribute</th>
-                                    <th style="width: 200px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Attribute Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+            </div>
+        </div>
+        @*@using (Html.BeginForm("InsertUpdateInvoice", "Invoice", FormMethod.Post, new { id = "popupFormm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+            {*@
+
+        <fieldset style="padding:1.25rem;margin-top:15px">
+            <div class="row">
+                <section class="col-md-10">
+                    <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Information</label>
+                </section>
+                <section class="col-md-1">
+                    <div class="custom-control custom-radio custom-control-inline pull-right">
+                        <input type="radio" class="custom-control-input" id="Cash" value="Cash" name="CashOrCredit" @(Model.CashOrCredit == "Cash" ? "checked" : "")>
+                        <label class="custom-control-label" for="Cash">Cash</label>
                     </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    <section class="col-md-2">
-                    </section>
-                    <section class="col-md-2">
-                        <div style="padding: 3px">
-                            <center>
-                                <label style="text-align:center;">
-                                    <span style="font-size: 14px">Gross Amount</span>
-                                    <br />
-                                    <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="TotalAmount" value="@Model.TotalAmount">0.00</span>
-                                </label>
-                            </center>
+                </section>
+                <section class="col-md-1">
+                    <div class="custom-control custom-radio custom-control-inline pull-right">
+                        <input type="radio" class="custom-control-input" id="Credit" value="Credit" name="CashOrCredit" @(Model.CashOrCredit == "Credit" ? "checked" : "")>
+                        <label class="custom-control-label" for="Credit">Credit</label>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 15px;">
+                <section class="col-md-12">
+                    <div style="padding:5px;padding-top:0px">
+                        <input type="hidden" id="IsNewOrEdit" name="IsNewOrEdit" value="@Model.IsNewOrEdit" />
+                        <input type="hidden" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber" />
+                        <input type="hidden" id="HiddenCustomerSupplierId" name="HiddenCustomerSupplierId" value="@Model.CustomerSupplierId" />
+                        <input type="hidden" id="HiddenCustomerSupplierName" name="HiddenCustomerSupplierName" value="@Model.CustomerName" />
+                        <input type="hidden" id="HiddenTr" name="HiddenTr" value="0" />
+                        <input type="hidden" id="HiddenOfferDetailId" name="HiddenOfferDetailId" value="0" />
+                        <label style="text-align:left;margin-left:5px">
+                            Invoice # :
+                            @if (Model.IsNewOrEdit == "New")
+                            {
+                                <label style="color:green;font-weight:bold;font-size:15px" id="InvoiceNumberLbl"></label>
+                            }
+                            else
+                            {
+                                <label style="color: green; font-weight: bold; font-size: 15px" id="InvoiceNumberLbl">@Model.InvoiceNumber</label>
+                            }
+                        </label>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Customer (*)</label>
+                                        <div class="input-group" id="CustomerSupplierIdDiv">
+                                            <select id="CustomerSupplierId" name="CustomerSupplierId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/customersupplier/index/?type=customer" target="_blank" class="btn btn-primary btnAddNewCustomer" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Customer">
+                                            <i class="fas fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                    </section>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Invoice Date (*)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-calendar"></i>
+                                </span>
+                            </div>
+                            @{
+                                string value = "";
+                            }
+                            @if (Model.IsNewOrEdit == "Update" || Model.IsNewOrEdit == "Exchange")
+                            {
+                                value = Model.InvoiceDate.HasValue ? Model.InvoiceDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ss") : "";
+                            }
+                            else
+                            {
+                                value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                            }
+                            <input type="datetime-local" class="form-control" id="InvoiceDate" name="InvoiceDate" value="@value" />
+                        </div>
+                    </div>
+                </section>
 
-                    <section class="col-md-6">
-                        <table class="" style="width:100% !important">
+            </div>
+
+        </fieldset>
+        <fieldset style="padding:1.25rem;margin-top:15px">
+            <div class="row">
+                <section class="col-md-9">
+                    <label class="pull-left" style="color:#36455B !important;font-size:16px;font-weight:bold">Invoice Detail</label>
+                </section>
+                <section class="col-md-1">
+                    <div class="custom-control custom-radio custom-control-inline pull-right">
+                        <input type="radio" class="custom-control-input" id="Barcode" value="Existing Item" name="SelectItemType" checked>
+                        <label class="custom-control-label" for="Barcode">Barcode</label>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div class="custom-control custom-radio custom-control-inline pull-right">
+                        <input type="radio" class="custom-control-input" id="NewItem" value="New Item" name="SelectItemType">
+                        <label class="custom-control-label" for="NewItem">New Product</label>
+                    </div>
+                </section>
+            </div>
+            <div class="row BarcodeDiv" style="margin-top: 40px;">
+                <section class="col-md-3"></section>
+                <section class="col-md-6">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Barcode</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fal fa-barcode"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="txtBarcode" name="Barcode" value="" placeholder="Barcode" autocomplete="off" />
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-3"></section>
+            </div>
+            <div class="row NewItemDiv" style="margin-top: 40px;" hidden>
+                <section class="col-md-4">
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 80%;">
+                                        <label class="form-label">Select Product (*)</label>
+                                        <div class="input-group" id="ProductIdDiv">
+                                            <select id="ProductId" name="ProductId"></select>
+                                        </div>
+                                    </td>
+                                    <td style="width: 2%;margin-left: -5px;padding-top:8.7px;">
+                                        <a href="/admin/product/index/" target="_blank" class="btn btn-primary btnPlusNewUserType" style="margin-top: 16px;color: #fff;padding: 9px;margin-left: -6px;background-color: #aaaaaa !important;border-color: #aaaaaa !important;padding-left: 12px;padding-right: 12px;" title="Add New Product">
+                                            <i class="fas fa-plus" style=""></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-4">
+                    <div style="padding:5px;padding-top:0px;padding-right:0px">
+                        <div class="input-group">
+                            <table class="" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 100%;">
+                                        <label class="form-label">Select Size & Color (*)</label>
+                                        <div class="input-group" id="ProductAttributeDetailBarcodeIdDiv">
+                                            <select id="ProductAttributeDetailBarcodeId" name="ProductAttributeDetailBarcodeId"></select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="row NewItemDiv" style="margin-top: 17px;" hidden>
+                <section class="col-md-2">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Sales Price (*)</label>
+                        <div class="input-group">
+                            <input placeholder="Sales Price" class="form-control" id="Rate" name="Rate" value="0" />
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Quantity (*)</label>
+                        <div class="input-group">
+                            <input type="number" placeholder="Qty" class="form-control" id="Qty" name="Qty" value="0" />
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Discount Type</label>
+                        <select id="LineDiscType" name="LineDiscType" class="custom-select">
+                            <option value="Rs.">Rs.</option>
+                            <option value="%">%</option>
+                        </select>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Discount Rate</label>
+                        <div class="input-group">
+                            <input type="text" placeholder="Discount Rate" class="form-control" id="LineDiscRate" name="LineDiscRate" value="0" />
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding:5px;padding-top:0px">
+                        <label>Discount Amount</label>
+                        <div class="input-group">
+                            <input type="text" placeholder="Discount Amount" class="form-control" id="LineDiscAmount" name="LineDiscAmount" value="0" disabled />
+                        </div>
+                    </div>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding: 3px">
+                        <center>
+                            <label style="text-align:center;">
+                                <span style="font-size: 14px" id="">Net Price</span>
+                                <br />
+                                <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="LineNetAmount">0.00</span>
+                            </label>
+                        </center>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row" style="margin-top:25px">
+                <div class="col-md-12">
+                    <center>
+                        <a title="Add Detail" id="btnAddDetail" href="javascript:void(0)" class="btn btn-secondary">
+                            <i class="fas fa-edit"></i> &nbsp;<span class="btnLineSpan">Add</span>
+                        </a>
+                        <a title="Cancel" id="btnCancelDetail" href="javascript:void(0)" class="btn btn-default" style="padding: 10px; border: 1px solid #838383;" hidden>
+                            <i class="fas fa-times-circle"></i>&nbsp; Cancel
+                        </a>
+                    </center>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px ">
+                    <table id="detailTable" class="display nowrap cell-border table table-bordered table-striped" style="width:100%;">
+                        <thead>
                             <tr>
-                                <td style="width: 20%; padding-left: 3px" id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        @{
-                                            string percentSelected = "";
-                                            string euroSelected = "";
-                                            if (Model.DiscType == "%")
-                                            {
-                                                percentSelected = "selected";
-                                                euroSelected = "";
-                                            }
-                                            else
-                                            {
-                                                percentSelected = "";
-                                                euroSelected = "selected";
-                                            }
-                                        }
-                                        <label>Disc Type</label>
-                                        <select id="DiscType" name="DiscType" class="custom-select">
-                                            <option value="%" @percentSelected>%</option>
-                                            <option value="€" @euroSelected>€</option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Disc Rate</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Disc Rate" class="form-control" id="DiscRate" name="DiscRate" value="@Model.DiscRate" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Disc Amount</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Disc Amount" class="form-control" id="DiscAmount" name="DiscAmount" value="@Model.DiscAmount" disabled />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="width: 20%; padding-left: 3px; " id="">
-                                    <div style="padding:5px;padding-top:0px">
-                                        <label>Delivery Charges</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Delivery Charges" class="form-control" id="DeliveryCharges" name="DeliveryCharges" value="@Model.DeliveryCharges" />
-                                        </div>
-                                    </div>
-                                </td>
-
+                                <th data-class="" style="width: 10px;background-color: #838383;color: white;padding: 5px;text-align: center;border-right: none"></th>
+                                <th data-class="" style="width: 10px;background-color: #838383;color: white;padding: 5px;text-align: center;border-left: none;"></th>
+                                <th style="width: 40px; background-color: #838383; color: white; padding: 5px; text-align: center;">Sr#</th>
+                                <th style="width: 400px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Product Name</th>
+                                <th style="width: 200px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Size & Color</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Sale Price</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Quantity</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: left;"> Discount Type</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Discount Rate</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Discount Amount</th>
+                                <th style="width: 140px; background-color: #838383; color: white; padding: 5px; text-align: right;"> Net Price</th>
                             </tr>
-                        </table>
-                    </section>
-                    <section class="col-md-2">
-                        <div style="padding: 3px">
-                            <center>
-                                <label style="text-align:center;">
-                                    <span style="font-size: 14px" id="">Net Amount</span>
-                                    <br />
-                                    <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="NetAmount">0.00</span>
-                                </label>
-                            </center>
-                        </div>
-                    </section>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-            </fieldset>
-            <footer class="modal-footer" style="margin-top:20px;margin-bottom:60px;background-color:#F9F9F9;border-top:1px solid #ddd;padding:0px">
-                <a href="/invoice/incomingpreliminaryinvoiceindex" class="btn btn-secondary" style="margin-top:10px">Cancel</a>
-                <button type="submit" id="btn_Save" class="btn btn-primary btnSaveForm" style="margin-top:10px">Save</button>
-            </footer>
-        }
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <section class="col-md-2">
+                    <div style="padding: 3px">
+                        <center>
+                            <label style="text-align:center;">
+                                <span style="font-size: 14px">Gross Amount</span>
+                                <br />
+                                <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="TotalAmount" value="@Model.TotalAmount">0.00</span>
+                            </label>
+                        </center>
+                    </div>
+                </section>
+                <section class="col-md-8">
+                    <table class="" style="width:100% !important">
+                        <tr>
+                            <td style="width: 20%; padding-left: 3px" id="">
+                                <div style="padding:5px;padding-top:0px">
+                                    @{
+                                        string percentSelected = "";
+                                        string euroSelected = "";
+                                        if (Model.DiscType == "%")
+                                        {
+                                            percentSelected = "selected";
+                                            euroSelected = "";
+                                        }
+                                        else
+                                        {
+                                            percentSelected = "";
+                                            euroSelected = "selected";
+                                        }
+                                    }
+                                    <label>Discount Type</label>
+                                    <select id="DiscType" name="DiscType" class="custom-select">
+                                        <option value="Rs." @euroSelected>Rs.</option>
+                                        <option value="%" @percentSelected>%</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td style="width: 20%; padding-left: 3px; " id="">
+                                <div style="padding:5px;padding-top:0px">
+                                    <label>Discount Rate</label>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Discount Rate" class="form-control" id="DiscRate" name="DiscRate" value="@Model.DiscRate" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 20%; padding-left: 3px; " id="">
+                                <div style="padding:5px;padding-top:0px">
+                                    <label>Discount Amount</label>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Discount Amount" class="form-control" id="DiscAmount" name="DiscAmount" value="@Model.DiscAmount" disabled />
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 20%; padding-left: 3px; " id="">
+                                <div style="padding:5px;padding-top:0px">
+                                    <label>Delivery Charges</label>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Delivery Charges" class="form-control" id="DeliveryCharges" name="DeliveryCharges" value="@Model.DeliveryCharges" />
+                                    </div>
+                                </div>
+                            </td>
 
-       
+                        </tr>
+                    </table>
+                </section>
+                <section class="col-md-2">
+                    <div style="padding: 3px">
+                        <center>
+                            <label style="text-align:center;">
+                                <span style="font-size: 14px" id="">Net Amount</span>
+                                <br />
+                                <span style="font-size: 20px; margin-left: 8px; font-weight:bold;color: green;" id="NetAmount">0.00</span>
+                            </label>
+                        </center>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:20px;margin-bottom:60px;background-color:#F9F9F9;border-top:1px solid #ddd;padding:0px">
+            <a href="/admin/invoice/saleinvoiceindex/?from=all" class="btn btn-secondary" style="margin-top:10px">Cancel</a>
+            <button type="button" id="btn_Save" data-value="0" class="btn btn-primary btnSaveForm" style="margin-top:10px">Save & Exit</button>
+            <button type="button" id="btn_SaveAndPrint" data-value="1" class="btn btn-primary btnSaveForm" style="margin-top:10px">Save & Print</button>
+        </footer>
+        @*}*@
     </main>
 </div>
 
 <script src="~/Areas/Admin/Scripts/app.bundle.js"></script>
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateSaleInvoice.js?=4"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/InsertUpdateSaleInvoice.js?=8"></script>

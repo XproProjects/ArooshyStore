@@ -31,6 +31,9 @@ function getRowsDataForUpdateStock() {
         var id = $(this).val();
         var ProductAttributeDetailBarcodeId = $(this).find('.ProductAttributeDetailBarcodeId').val();
         var Stock = $(this).find('.Stock').val();
+        if (Stock == null || Stock == '' || Stock == undefined || isNaN(Stock)) {
+            Stock = 0;
+        }
         var alldata = {
             'ProductAttributeDetailBarcodeId': ProductAttributeDetailBarcodeId,
             'StockType': 'Product Stock Page',
@@ -127,6 +130,7 @@ function UpdateStock(print) {
                     $('#btnUpdateStock').html("Update Stock");
                     $('#btnUpdateStockPrintBarcode').html("Update Stock and Print Barcodes");
                     toastr.success("Product Stock Updated Successfully", "Success", { timeOut: 3000, "closeButton": true });
+                    UpdateTotalStock();
                 }
             }
             else {
@@ -134,4 +138,17 @@ function UpdateStock(print) {
             }
         }
     })
+}
+
+function UpdateTotalStock() {
+    var totalStock = 0;
+    $('.DataTr').each(function () {
+        var Stock = $(this).find('.Stock').val();
+        if (Stock == null || Stock == '' || Stock == undefined || isNaN(Stock)) {
+            Stock = 0;
+        }
+        totalStock += parseInt(Stock);
+    })
+    totalStock = parseInt(totalStock);
+    $("#TotalStockSpan").html(totalStock);
 }

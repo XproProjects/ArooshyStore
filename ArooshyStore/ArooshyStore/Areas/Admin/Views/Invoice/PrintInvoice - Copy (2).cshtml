@@ -1,0 +1,251 @@
+﻿@{
+    ViewBag.Title = "Print Invoice";
+}
+@using ArooshyStore.Models.ViewModels
+@model InvoiceViewModel
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Invoice/Print.css" rel="stylesheet" />
+<style>
+    @@font-face {
+        font-family: 'century gothic';
+        src: url('../../content/arooshystorecss/centurygothic/century gothic.ttf') format('truetype');
+    }
+    .font {
+        font-family: 'Century Gothic' !important;
+    }
+</style>
+<div class="mySelect" style="overflow: hidden;padding: 0px">
+    <main id="js-page-content" role="main" class="page-content">
+        <div class="row">
+            <div class="col-lg-6" style="margin-top:4px">
+            </div>
+            <div class="col-md-12" style="display:flex">
+                <table style="width: 100%">
+                    <tr>
+                        <th>
+                            <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-clipboard"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Print Invoice</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-list-ol"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">@Model.InvoiceNumber</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </th>
+                        <th style="text-align:right">
+                            <button type="button" class="btn printBtn" onclick="window.print();" style=" background-color:#544D81; color: white;height:32px;width:65px;padding:6px">
+                                Print
+                            </button>
+                        </th>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("download", "pdf", FormMethod.Post, new { id = "downloadForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+        {
+            <input type="hidden" name="DocumentName" id="DocumentName" value="" /><input type="hidden" name="FileName" id="FileName" value="TimesheetReport" />
+            <div id="printable-content" class="font panel printable-content rpt table-responsive" style="max-width:82mm;color:#000 !important;text-decoration:solid !important;padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                <center>
+                    <h3><img src="@Model.CompanyLogoPath" style="height: 150px; width: 260px;" /></h3>
+                    <h1 class="CompanyAddress"><span>@Model.CompanyAddress</span></h1>
+                </center>
+                <table style="padding-top:0px;" id="myTable">
+                    @*<tr>
+                            <th class="ArooshyStoreTag" style="font-weight: bold; text-align: center;" colspan="12">
+                                <img src="@Model.CompanyLogoPath" style="height: 70px; width: 140px;" />
+                                <br />
+                                <br />
+                                <br />
+                            </th>
+                        </tr>*@
+                    @*<tr>
+                            <th style="text-align: center; font-weight: bold" colspan="12">
+                                <span>@Model.CompanyAddress</span>
+                            </th>
+                        </tr>*@
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: center; font-weight: bold" colspan="12">
+                            <span>PH: @Model.CompanyContact</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: center; font-weight: bold" colspan="12">
+                            <span>Whatsapp: @Model.CompanyContact</span>
+                            <br />
+                            <br />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: left; font-weight: normal" colspan="12">
+                            <span>Customer:&nbsp;&nbsp;<b>@Model.CustomerName</b></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: left; font-weight: normal" colspan="12">
+                            <span>Receipt No:&nbsp;&nbsp;<b>@Model.InvoiceNumber</b></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: left; font-weight: normal" colspan="12">
+                            <span>Date:&nbsp;&nbsp;<b>@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy hh:mm tt")</b></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: left; font-weight: normal" colspan="12">
+                            @if (Model.LoggedInUserName.ToLower() == "super admin")
+                            {
+                                <span>User ID:&nbsp;&nbsp;Admin</span>
+                            }
+                            else
+                            {
+                                <span>User ID:&nbsp;&nbsp;@Model.LoggedInUserName</span>
+                            }
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="ProductNameTag" style=" text-align: left; font-weight: normal" colspan="12">
+                            <span>NTN No:&nbsp;&nbsp;0</span>
+                            <br />
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+                <table class="ProductsTable" style="width:100%">
+                    <thead>
+                        <tr class="mainHeaderTr">
+                            <th style="text-align: center; width: 5%;">Sr #</th>
+                            <th style="text-align: left;width:55%">Product</th>
+                            <th style="text-align: right; width: 10%">Price</th>
+                            <th style="text-align: center; width: 10%">Qty</th>
+                            <th style="text-align: right; width: 10%">Disc</th>
+                            <th style="text-align: right;width:10%">Net Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int j = 0;
+                            decimal totalQty = 0;
+                            decimal totalDiscount = 0;
+                            decimal totalNetAmount = 0;
+                            decimal actualRetailPrice = 0;
+                        }
+                        @foreach (InvoiceDetailViewModel s in Model.InvoiceDetailsList)
+                        {
+                            j++;
+                            totalQty += Convert.ToDecimal(s.Qty);
+                            totalDiscount += Convert.ToDecimal(s.DiscAmount);
+                            totalNetAmount += Convert.ToDecimal(s.NetAmount);
+                            actualRetailPrice += Convert.ToDecimal(s.Rate) * Convert.ToDecimal(s.Qty);
+                            <tr class="mainDataTr">
+                                <td style="text-align: center; ">@(j)</td>
+                                <td style="text-align: left; ">@s.ProductName</td>
+                                <td style="text-align: right;">@Convert.ToDecimal(s.Rate).ToString("#,##0.00")</td>
+                                <td style="text-align: center;">@Math.Round(Convert.ToDecimal(s.Qty), 0)</td>
+                                <td style="text-align: right;">@Convert.ToDecimal(s.DiscAmount).ToString("#,##0.00")</td>
+                                <td style="text-align: right;">@Convert.ToDecimal(s.NetAmount).ToString("#,##0.00")</td>
+                            </tr>
+                        }
+                        <tr class="mainTotalTr">
+                            <td style="text-align: right; " colspan="3">Gross Total: </td>
+                            <td style="text-align: center;">@Math.Round(Convert.ToDecimal(totalQty), 0)</td>
+                            <td style="text-align: right;">@Convert.ToDecimal(totalDiscount).ToString("#,##0.00")</td>
+                            <td style="text-align: right;">@Convert.ToDecimal(totalNetAmount).ToString("#,##0.00")</td>
+                        </tr>
+                        <tr class="">
+                            <td style="text-align: center; font-weight: bold " colspan="6">
+                                <br />
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td style="text-align: right; font-weight: bold " colspan="5">Actual Retail Value:&nbsp;&nbsp;</td>
+                            <td style="text-align: right; font-weight: bold">@Convert.ToDecimal(actualRetailPrice).ToString("#,##0.00")</td>
+                        </tr>
+
+                        <tr class="">
+                            <td style="text-align: right; font-weight: bold " colspan="5">More Discount:&nbsp;&nbsp;</td>
+                            <td style="text-align: right; font-weight: bold">@Convert.ToDecimal(Model.DiscAmount).ToString("#,##0.00")</td>
+                        </tr>
+                        <tr class="mainTr">
+                            <td style="text-align: right; font-weight: bold" colspan="5">Delivery Charges:&nbsp;&nbsp;</td>
+                            <td style="text-align: right; font-weight: bold">@Convert.ToDecimal(Model.DeliveryCharges).ToString("#,##0.00")</td>
+                        </tr>
+                        <tr class="mainTr">
+                            <td style="text-align: right; font-weight: bold " colspan="5">Net Total:&nbsp;&nbsp;</td>
+                            <td style="text-align: right; font-weight: bold">@Convert.ToDecimal(Model.NetAmount).ToString("#,##0.00")</td>
+                        </tr>
+                        <tr class="">
+                            <td style="text-align: center; font-weight: bold " colspan="6">
+                                <br />
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td style="text-align: center; font-weight: bold " colspan="6">
+                                <br />
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td style="font-weight: bold " colspan="6">
+                                Note:
+                                <ul>
+                                    <li>Unused Shoes can be exchanged within 10 days after purchase. Please bring also receipt with you as we will not exchange any item without receipt.</li>
+                                    <li>Used Shoes will never be exchanged / returned / claimed.</li>
+                                    <li>Sale Items will never be exchanged / returned / claimed.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                @*@foreach (ProductAttributeDetailViewModel p in Model)
+                    {
+                        for (int j = 0; j < p.TotalRecords; j++)
+                        {
+                            totalBarcodes++;
+                            <table style="padding-top:0px;" id="myTable">
+                                <tr>
+                                    <th class="ArooshyStoreTag" style="font-weight: bold; text-align: center;" colspan="12">Arooshy Store</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center;text-decoration:underline" colspan="12">
+                                        <input type="hidden" class="HiddenBarcode" value="@p.Barcode" />
+                                        <img class="BarcodeTag" style="width:300px" />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="ProductNameTag" style=" text-align: center; font-weight: bold" colspan="12">
+                                        @p.ArticleNumber - @p.AttributeDetailName1 - @p.AttributeDetailName2
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="PriceTag" style=" text-align: center;font-weight:bold" colspan="12">
+                                        Price @p.Price /-
+                                    </th>
+                                </tr>
+                            </table>
+                            <div class="PageEnd"></div>
+                        }
+                    }*@
+            </div>
+            <br />
+        }
+    </main>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").addClass('active');
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").css('display', "block");
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+        $(".printBtn").click();
+    });
+</script>
+

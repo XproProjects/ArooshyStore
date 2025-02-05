@@ -3,6 +3,7 @@
     if (radioValue == 'Existing Item') {
         $('.BarcodeDiv').removeAttr("hidden");
         $('.NewItemDiv').attr("hidden", "hidden");
+        $('#txtBarcode').focus();
     }
     else if (radioValue == 'New Item') {
         $('.BarcodeDiv').attr("hidden", "hidden");
@@ -12,26 +13,35 @@
         $('.BarcodeDiv').removeAttr("hidden");
         $('.NewItemDiv').attr("hidden", "hidden");
     }
-    $('#BarcodeId').val(null).trigger('change.select2');
+    $('#btnCancelDetail').hide();
+    $('#btnAddDetail').find('.btnLineSpan').html('Add');
+    ResetLineValues();
+});
 
+function ResetLineValues() {
+    $('#HiddenOfferDetailId').val('0');
+    $('#txtBarcode').val('');
+    $('#ProductId').val(null).trigger('change.select2');
+    $('#ProductAttributeDetailBarcodeId').val(null).trigger('change.select2');
     $('#Rate').val('0');
-    $('#LineDiscType').val('%');
+    $('#Qty').val('0');
+    $('#LineDiscType').val('Rs.');
     $('#LineDiscRate').val('0');
     $('#LineDiscAmount').val('0');
     $('#LineNetAmount').html('0.00');
-    $('#Description').val('');
+    $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-choice').css('border-color', '#CCCCCC');
+    $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-choice').css('color', 'black');
 
-
-    $('#btnCancelDetail').hide();
-    $('#btnAddDetail').find('.btnLineSpan').html('Add');
-
-    $('#BarcodeIdDiv').closest('#BarcodeIdDiv').find('.select2-choice').css('border-color', '#CCCCCC');
-    $('#BarcodeIdDiv').closest('#BarcodeIdDiv').find('.select2-choice').css('color', 'black');
+    $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductIdDiv').find('.select2-choice').css('border-color', '#CCCCCC');
+    $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductIdDiv').find('.select2-choice').css('color', 'black');
 
     $('#Rate').css('border-color', '#bdbdbd');
     $('#Rate').css('background-color', '#fff');
-});
-
+    $('#Qty').css('border-color', '#bdbdbd');
+    $('#Qty').css('background-color', '#fff');
+    $('#txtBarcode').css('border-color', '#bdbdbd');
+    $('#txtBarcode').css('background-color', '#fff');
+}
 $('input[type=radio][name=CashOrCredit]').change(function () {
     GetCustomer();
 })
@@ -53,11 +63,14 @@ function GetCustomer() {
                         $('#CustomerSupplierId').append(newOption).trigger('change.select2');
                     }
                     $('#CustomerSupplierId').prop("disabled", true);
+                    $(".btnAddNewCustomer").attr("hidden", "hidden");
                 }
                 else {
                     $('#CustomerSupplierId').val(null).trigger('change.select2');
                     $('#CustomerSupplierId').prop("disabled", false);
+                    $(".btnAddNewCustomer").removeAttr("hidden");
                 }
+                $('#DeliveryCharges').val('0');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error fetching details: " + textStatus + " " + errorThrown);
@@ -67,6 +80,7 @@ function GetCustomer() {
     }
     else {
         $('#CustomerSupplierId').prop("disabled", false);
+        $(".btnAddNewCustomer").removeAttr("hidden");
         if ($("#HiddenCustomerSupplierId").val() > 0) {
             if ($('#CustomerSupplierId').find("option[value='" + $("#HiddenCustomerSupplierId").val() + "']").length) {
                 $('#CustomerSupplierId').val($("#HiddenCustomerSupplierId").val()).trigger('change.select2');
@@ -79,10 +93,23 @@ function GetCustomer() {
         }
         else {
             $('#CustomerSupplierId').val(null).trigger('change.select2');
+            $('#DeliveryCharges').val('0');
         }
     }
 }
 
+function GetInvoiceNo() {
+    $.ajax({
+        type: "POST",
+        url: "/Invoice/GetMaxCodeForInvoice/",
+        dataType: 'json',
+        data: { 'type': 'Sale Invoice' },
+        success: function (response) {
+            $('#InvoiceNumber').val(response);
+            $('#InvoiceNumberLbl').text(response);
+        }
+    })
+}
 $(function () {
     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").addClass('active');
     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").css('display', "block");
@@ -132,6 +159,38 @@ $(function () {
         dropdownParent: $(".mySelect"),
         allowClear: true,
     });
+
+    $('#ProductAttributeDetailBarcodeId').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetProductAttributesFromBarcodeTableOptionList/',
+            dataType: 'json',
+
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page,
+                    productId: $("#ProductId").val()
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Size & Color --",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelect"),
+        allowClear: true,
+    });
+
     $('#CustomerSupplierId').select2({
         ajax: {
             delay: 150,
@@ -163,432 +222,234 @@ $(function () {
         allowClear: true,
     });
 
+
     GetCustomer();
-    if ($('#IsNewOrEdit').val() === 'Update') {
+    if ($('#IsNewOrEdit').val() === 'Update' || $('#IsNewOrEdit').val() === 'Exchange') {
         getInvoiceDetail($('#InvoiceNumber').val());
     } else {
         GetInvoiceNo();
     }
 
-    var $checkoutForm = $('#popupForm').validate({
-        rules: {
-            CustomerSupplierId: {
-                required: true
-            },
-            InvoiceDate: {
-                required: true
-            },
-
-
-        },
-        messages: {
-            CustomerSupplierId: {
-                required: 'Customer Name is required.'
-            },
-            InvoiceDate: {
-                required: 'Invoice Date is required.'
-            },
-
-
-
-        },
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.parent());
-            if (element.val() == '' || element.val() == null) {
-                element.parents('td').siblings('td').find('.btn').css("margin-top", "-8.5px");
-            }
-        }
-    });
+    //var $checkoutForm = $('#popupForm').validate({
+    //    rules: {
+    //        CustomerSupplierId: {
+    //            required: true
+    //        },
+    //        InvoiceDate: {
+    //            required: true
+    //        },
+    //    },
+    //    messages: {
+    //        CustomerSupplierId: {
+    //            required: 'Customer is required.'
+    //        },
+    //        InvoiceDate: {
+    //            required: 'Invoice Date is required.'
+    //        },
+    //    },
+    //    errorPlacement: function (error, element) {
+    //        error.insertAfter(element.parent());
+    //        if (element.val() == '' || element.val() == null) {
+    //            element.parents('td').siblings('td').find('.btn').css("margin-top", "-8.5px");
+    //        }
+    //    }
+    //});
 })
 
 $('#ProductId').change(function () {
+    $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-selection').css('border-color', '#ddd');
+    $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-selection').css('background-color', '#fff');
+
+    $('#Rate').css('border-color', '#bdbdbd');
+    $('#Rate').css('background-color', '#fff');
+    $('#Qty').css('border-color', '#bdbdbd');
+    $('#Qty').css('background-color', '#fff');
+
     var productId = $(this).val();
-    if (productId) {
+    if (productId != 0 && productId != '' && productId != undefined && productId != null) {
         $.ajax({
             "url": "/Admin/Product/GetProductSalePrice",
             type: 'POST',
             data: { productId: productId },
             success: function (response) {
-                if (response.salePrice) {
-                    $('#Rate').val(response.salePrice);
-                    $('#SelectedProductName').val(response.productName);
-                } else {
-                    console.log("No sale price available");
-                }
+                $('#HiddenOfferDetailId').val(response.offerDetailId);
+                $('#Rate').val(response.salePrice);
+                $('#Qty').val('1');
+                $('#LineDiscType').val(response.discountType);
+                $('#LineDiscRate').val(response.discountRate);
+                getLineTotals();
             },
             error: function () {
                 alert('Error fetching product details.');
             }
         });
-    } else {
-        $('#Rate').val('0');
     }
+    else {
+        ResetLineValues();
+    }
+});
+$('#ProductAttributeDetailBarcodeId').change(function () {
+    $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductAttributeDetailBarcodeIdDiv').find('.select2-selection').css('border-color', '#ddd');
+    $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductAttributeDetailBarcodeIdDiv').find('.select2-selection').css('background-color', '#fff');
 });
 
 $('#CustomerSupplierId').change(function () {
     var customerSupplierId = $(this).val();
-
-    if (customerSupplierId) {
+    if (customerSupplierId != 0 && customerSupplierId != '' && customerSupplierId != undefined && customerSupplierId != null) {
         $.ajax({
-            "url": "/Admin/CustomerSupplier/GetDeliveryChargesForCustomer",
-            type: 'POST',
-            data: { customerSupplierId: customerSupplierId },
+            type: "POST",
+            url: "/Admin/Invoice/GetDeliveryCharges/",
+            dataType: 'json',
+            data: { 'customerId': customerSupplierId },
             success: function (response) {
-                if (response.deliveryCharges) {
-                    $('#DeliveryCharges').val(response.deliveryCharges);
-                    console.log("Delivery Charges: " + response.deliveryCharges);
-                } else {
-                    console.log("No deliveryCharges available");
-                }
-            },
-            error: function () {
-                alert('Error fetching product details.');
+                $('#DeliveryCharges').val(response);
+                GetMainTotals();
             }
-        });
+        })
     } else {
         $('#DeliveryCharges').val('0');
     }
 });
 
-$('#DeliveryCharges').on('change keyup', function () {
-    updateNetAmount();
-});
-$('#DiscType, #DiscRate').on('change keyup', function () {
-    updateNetAmount();
-});
-
-$('#Rate').keyup(function () {
-    getLineTotals();
-})
-$('#LineDiscType').change(function () {
-    getLineTotals();
-})
-$('#LineDiscRate').keyup(function () {
-    getLineTotals();
-})
-$('#Qty').keyup(function () {
-    getLineTotals();
-});
-function getLineTotals() {
-    var rate = $('#Rate').val();
-    var Quantity = $('#Qty').val();
-    var discountType = $('#LineDiscType').val();
-    var discountAmount = $('#LineDiscRate').val();
-    var deliveryCharges = $('#DeliveryCharges').val()
-    if (rate == '' || rate == null || rate == undefined || isNaN(rate)) {
-        rate = 0;
-    }
-    if (discountType == '' || discountType == null) {
-        discountType = "%";
-    }
-    if (discountAmount == '' || discountAmount == null || discountAmount == undefined || isNaN(discountAmount)) {
-        discountAmount = 0;
-    }
-    if (deliveryCharges == '' || deliveryCharges == null || isNaN(deliveryCharges)) {
-        deliveryCharges = 0;
-    }
-    var multiplier = 1;
-    if (Quantity != '' && Quantity != null && !isNaN(Quantity)) {
-        multiplier = parseFloat(Quantity);
-    }
-    var netDiscount = 0;
-    if (discountType.trim() == '%') {
-        netDiscount = parseFloat(discountAmount) / 100 * parseFloat(rate);
-        netDiscount = parseFloat(netDiscount).toFixed(2);
-    }
-    else if (discountType.trim() == '€') {
-        netDiscount = parseFloat(discountAmount).toFixed(2);
-    }
-    else {
-        netDiscount = 0;
-    }
-    $('#LineDiscAmount').val(netDiscount);
-
-    var netPrice = parseFloat(rate) - parseFloat(netDiscount);
-    netPrice = parseFloat(netPrice).toFixed(2);
-    if (multiplier > 1) {
-        netDiscount = (netDiscount * multiplier).toFixed(2);
-        netPrice = (parseFloat(rate) * multiplier - parseFloat(netDiscount)).toFixed(2);
-    }
-
-    // Set the values
-    $('#LineDiscAmount').val(netDiscount);
-    $('#LineNetAmount').html(ReplaceNumberWithCommas(netPrice));
-
-}
-function GetInvoiceNo() {
-    $.ajax({
-        type: "POST",
-        url: "/Invoice/GetMaxCodeForInvoice/",
-        dataType: 'json',
-        data: { 'type': 'Sale Invoice' },
-        success: function (response) {
-            $('#InvoiceNumber').val(response);
-            $('#InvoiceNumberLbl').text(response);
-        }
-    })
-}
-function updateTotalAmount() {
-    var vtable = $('#detailTable').DataTable();
-    var totalAmount = 0;
-
-    vtable.rows().every(function () {
-        var data = this.data();
-        var netPrice = parseFloat($(data[9]).text().trim());
-        if (!isNaN(netPrice)) {
-            totalAmount += netPrice;
-        }
-    });
-
-    $('#TotalAmount').text(ReplaceNumberWithCommas(totalAmount.toFixed(2)));
-
-    // Call updateNetAmount after updating the total amount
-    updateNetAmount();
-}
 $('#btnAddDetail').click(function () {
-    updateTotalAmount();
-});
-
-//netamount after adding deliver and gross amount
-function updateNetAmount() {
-    var grossAmount = parseFloat($('#TotalAmount').text().replace(/,/g, '')) || 0;
-    var discType = $('#DiscType').val();
-    var discRate = parseFloat($('#DiscRate').val()) || 0;
-
-    var discountAmount = 0;
-    if (discType === '%') {
-        discountAmount = (grossAmount * discRate / 100).toFixed(2);
-    } else if (discType === '€') {
-        discountAmount = discRate.toFixed(2);
-    }
-
-    // Populate the DiscAmount field
-    $('#DiscAmount').val(discountAmount);
-
-    var amountAfterDiscount = (parseFloat(grossAmount) - parseFloat(discountAmount)).toFixed(2);
-    var deliveryCharges = parseFloat($('#DeliveryCharges').val()) || 0;
-    var netAmount = (parseFloat(amountAfterDiscount) + parseFloat(deliveryCharges)).toFixed(2);
-
-    // Update NetAmount field
-    $('#NetAmount').text(ReplaceNumberWithCommas(netAmount));
-}
-
-
-//add values in data table using new product tab
-$('#btnAddDetail').click(function () {
-    console.log("Add button clicked");
-
     var check = 0;
-    var salesPrice = $('#Rate').val();
-    var discountType = $('#LineDiscType').val();
-    var discountRate = $('#LineDiscRate').val();
-    var discountAmount = $('#LineDiscAmount').val();
-    var productName = $('#SelectedProductName').val();
-    var ProductId = $('#ProductId').val();
-    var DiscountOfferId = $('#DiscountOfferId').val();
-    var AttributeId = $('#AttributeId').val();
-    var AttributeDetailId = $('#AttributeDetailId').val();
-    var MasterCategoryId = $('#MasterCategoryId').val();
-    var ChildCategoryId = $('#ChildCategoryId').val();
-    //$('#DeliveryCharges').val(response.deliveryCharges);
-
-    var CustomerSupplierId = $('#CustomerSupplierId').val();
-    var Quantity = $('#Qty').val();
-    var multiplier = 1;
-    if (Quantity != '' && Quantity != null && !isNaN(Quantity) && parseFloat(Quantity) > 0) {
-        multiplier = parseFloat(Quantity);
-    }
-    if (salesPrice == '' || salesPrice == null || salesPrice == 0) {
-        $('#Rate').css('border-color', '#A90329');
-        $('#Rate').css('background-color', '#FFF0F0');
-        check = 1;
-    } else {
-        $('#Rate').css('border-color', '');
-        $('#Rate').css('background-color', '');
-    }
-
-    if (check > 0) {
-        return false;
-    }
-
-    if (discountType == '' || discountType == null) {
-        discountType = '%';
-    }
-
-    if (discountRate == '' || discountRate == null) {
-        discountRate = 0;
-    }
-
-    if (discountAmount == '' || discountAmount == null) {
-        discountAmount = 0;
-    }
-
-    var AttributeName = "";
-    if (AttributeId == '' || AttributeId == null || AttributeId == 0) {
-        AttributeId = 0;
-        AttributeName = "";
-    } else {
-        AttributeName = $('#AttributeId option:selected').text();
-    }
-    var AttributeDetailName = "";
-    if (AttributeDetailId == '' || AttributeDetailId == null || AttributeDetailId == 0) {
-        AttributeDetailId = 0;
-        AttributeDetailName = "";
-    } else {
-        AttributeDetailName = $('#AttributeDetailId option:selected').text();
-    }
-    var MasterCategoryName = "";
-    if (MasterCategoryId == '' || MasterCategoryId == null || MasterCategoryId == 0) {
-        MasterCategoryId = 0;
-        MasterCategoryName = "";
-    } else {
-        MasterCategoryName = $('#MasterCategoryId option:selected').text();
-    }
-    var ChildCategoryName = "";
-    if (ChildCategoryId == '' || ChildCategoryId == null || ChildCategoryId == 0) {
-        ChildCategoryId = 0;
-        ChildCategoryName = "";
-    } else {
-        ChildCategoryName = $('#ChildCategoryId option:selected').text();
-    }
-    var ProductName = "";
-    if (ProductId == '' || ProductId == null || ProductId == 0) {
-        ProductId = 0;
-        ProductName = "";
-    } else {
-        ProductName = $('#ProductId option:selected').text();
-    }
-
-    var DiscountName = "";
-    if (DiscountOfferId == '' || DiscountOfferId == null || DiscountOfferId == 0) {
-        DiscountOfferId = 0;
-        DiscountName = "";
-    } else {
-        DiscountName = $('#DiscountOfferId option:selected').text();
-    }
-    var CustomerName = "";
-    if (CustomerSupplierId == '' || CustomerSupplierId == null || CustomerSupplierId == 0) {
-        CustomerSupplierId = 0;
-        CustomerName = "";
-    } else {
-        CustomerName = $('#CustomerSupplierId option:selected').text();
-    }
-    var netDiscount = 0;
-    if (discountType.trim() == '%') {
-        netDiscount = (parseFloat(discountRate) / 100) * parseFloat(salesPrice);
-    } else if (discountType.trim() == '€') {
-        netDiscount = parseFloat(discountAmount);
-    } else {
-        netDiscount = 0;
-    }
-
-    netDiscount = parseFloat(netDiscount).toFixed(2);
-
-    var netPrice = parseFloat(salesPrice) - parseFloat(netDiscount);
-    netPrice = parseFloat(netPrice).toFixed(2);
-
-    if (multiplier > 1) {
-        netDiscount = (parseFloat(netDiscount) * multiplier).toFixed(2);
-        netPrice = (parseFloat(salesPrice) * multiplier - parseFloat(netDiscount)).toFixed(2);
-    }
-
-    var vtable = $('#detailTable').DataTable();
-    var checkKey = 0;
-    var exists = vtable.rows().data().toArray().some(function (row) {
-        return $(row[3]).find('input').val() == ProductId;
-    });
-
-    if (exists) {
-        toastr.error("This product is already added in the list below.", "Error", { timeOut: 3000, "closeButton": true });
-        return false;
-    }
-    if ($(this).find('.btnLineSpan').html().trim() == 'Add') {
-        // Check if record already exists
-        var rowsCount = vtable.data().length;
-        for (irow = 0; irow < rowsCount; irow++) {
-            var data = vtable.row(irow).data();
-            var prevId = data[3].split('value=')[1].split('/>')[0].trim();
-            if (prevId == ProductId) {
-                checkKey += 1;
-            }
+    var radioValue = $("input[name='SelectItemType']:checked").val();
+    if (radioValue == 'Existing Item') {
+        var Barcode = $('#txtBarcode').val();
+        if (Barcode == '' || Barcode == null) {
+            $('#txtBarcode').css('border-color', '#A90329');
+            $('#txtBarcode').css('background-color', '#FFF0F0');
+            return false;
         }
+        GetProductFromBarcode();
+    }
+    else if (radioValue == 'New Item') {
+        var ProductId = $('#ProductId').val();
+        var ProductAttributeDetailBarcodeId = $('#ProductAttributeDetailBarcodeId').val();
+        var OfferDetailId = $('#HiddenOfferDetailId').val();
+        var Rate = $('#Rate').val();
+        var Qty = $('#Qty').val();
+        var LineDiscType = $('#LineDiscType').val();
+        var LineDiscRate = $('#LineDiscRate').val();
+        var LineDiscAmount = $('#LineDiscAmount').val();
+
+        if (ProductId == '' || ProductId == null || ProductId == 0) {
+            $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-selection').css('border-color', '#A90329');
+            $('#ProductIdDiv').closest('#ProductIdDiv').find('.select2-selection').css('background-color', '#FFF0F0');
+            check = 1;
+        }
+
+        if (ProductAttributeDetailBarcodeId == '' || ProductAttributeDetailBarcodeId == null || ProductAttributeDetailBarcodeId == 0) {
+            $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductAttributeDetailBarcodeIdDiv').find('.select2-selection').css('border-color', '#A90329');
+            $('#ProductAttributeDetailBarcodeIdDiv').closest('#ProductAttributeDetailBarcodeIdDiv').find('.select2-selection').css('background-color', '#FFF0F0');
+            check = 1;
+        }
+
+        if (Rate == '' || Rate == null || Rate == 0) {
+            $('#Rate').css('border-color', '#A90329');
+            $('#Rate').css('background-color', '#FFF0F0');
+            check = 1;
+        }
+
+        if (Qty == '' || Qty == null || Qty == 0) {
+            $('#Qty').css('border-color', '#A90329');
+            $('#Qty').css('background-color', '#FFF0F0');
+            check = 1;
+        }
+
+        if (check > 0) {
+            return false;
+        }
+
+        if (LineDiscType == '' || LineDiscType == null) {
+            LineDiscType = 'Rs.';
+        }
+
+        if (LineDiscRate == '' || LineDiscRate == null || isNaN(LineDiscRate)) {
+            LineDiscRate = 0;
+        }
+
+        if (LineDiscAmount == '' || LineDiscAmount == null || isNaN(LineDiscAmount)) {
+            LineDiscAmount = 0;
+        }
+
+        var LineNetAmount = parseFloat(ReplaceCommas($('#LineNetAmount').html()));
+        if (LineNetAmount == '' || LineNetAmount == null || isNaN(LineNetAmount)) {
+            LineNetAmount = 0;
+        }
+        var ProductName = $('#ProductId option:selected').text();
+        var AttributeName = $('#ProductAttributeDetailBarcodeId option:selected').text();
+
+
 
         var vtable = $('#detailTable').DataTable();
-        console.log("Table Data Before Add:", vtable.rows().data().toArray());
-        if (checkKey > 0) {
-            toastr.error("This product is already added in the list below.", "Error", { timeOut: 3000, "closeButton": true });
-        } else {
-            // Add new row to DataTable
-            vtable.row.add([
-                "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
-                "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
-                "<center><span class='SrNo'><input type='hidden' class='SR01' value='' /></span></center>",
-                "<span><input type='hidden' class='ProductId' value=" + ProductId + " />" + ProductName + "</span>",
-                "<span class='pull-right'><input type='hidden' class='SalesPrice' value=" + salesPrice + " />" + ReplaceNumberWithCommas(parseFloat(salesPrice).toFixed(2)) + "</span>",
-                "<span><input type='hidden' class='Quantity' value=" + Quantity + " />" + Quantity + "</span>",
-                "<span><input type='hidden' class='DiscountType' value=" + discountType + " />" + discountType + "</span>",
-                "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discountRate + " />" + ReplaceNumberWithCommas(parseFloat(discountRate).toFixed(2)) + "</span>",
-                "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discountAmount + " />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
-                "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>",
-                "<span><input type='hidden' class='MasterCategoryId' value=" + MasterCategoryId + " />" + MasterCategoryName + "</span>",
-                "<span><input type='hidden' class='ChildCategoryId' value=" + ChildCategoryId + " />" + ChildCategoryName + "</span>",
-                "<span><input type='hidden' class='AttributeId' value=" + AttributeId + " />" + AttributeName + "</span>",
-                "<span><input type='hidden' class='AttributeDetailId' value=" + AttributeDetailId + " />" + AttributeDetailName + "</span>",
-            ]).draw(false);
-            updateTotalAmount();
+        if ($(this).find('.btnLineSpan').html().trim() == 'Add') {
+            AddRowToTable("Add", 0, vtable, ProductId, ProductName, ProductAttributeDetailBarcodeId, AttributeName,
+                OfferDetailId, Rate, Qty, LineDiscType, LineDiscRate, LineDiscAmount, LineNetAmount);
 
         }
-    } else {
-        // Edit existing row
-        var tr = $('#HiddenTr').val();
+        else {
+            // Edit existing row
+            var tr = $('#HiddenTr').val();
 
-        $('#btnAddDetail').find('.btnLineSpan').html('Add');
-        $('#btnCancelDetail').hide();
+            $('#btnAddDetail').find('.btnLineSpan').html('Add');
+            $('#btnCancelDetail').hide();
+            $('#btnCancelDetail').attr("hidden", "hidden");
 
+            AddRowToTable("Edit", tr, vtable, ProductId, ProductName, ProductAttributeDetailBarcodeId, AttributeName,
+                OfferDetailId, Rate, Qty, LineDiscType, LineDiscRate, LineDiscAmount, LineNetAmount);
+        }
+    }
+
+    $('input[type=radio][name=SelectItemType]').prop("disabled", false);
+    $('input[type=radio][value="Existing Item"]').prop("checked", true);
+    $('.NewItemDiv').attr("hidden", "hidden");
+    $('.BarcodeDiv').removeAttr("hidden");
+    $('#txtBarcode').focus();
+
+    getSerialNo();
+    ResetLineValues();
+    GetMainTotals();
+    return false;
+});
+
+function AddRowToTable(insertType, tr, vtable, productId, productName, productAttributeDetailBarcodeId, productAttributeDetailBarcodeName,
+    offerDetailId, rate, qty, discType, discRate, discAmount, netPrice) {
+
+    if (insertType == "Add") {
+        vtable.row.add([
+            "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
+            "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
+            "<center><input type='hidden' class='SR01' value='' /><input type='hidden' class='OfferDetailId' value=" + offerDetailId + " /><span class='SrNo'></span></center>",
+            "<span><input type='hidden' class='ProductId' value=" + productId + " />" + productName + "</span>",
+            "<span><input type='hidden' class='ProductAttributeDetailBarcodeId' value=" + productAttributeDetailBarcodeId + " />" + productAttributeDetailBarcodeName + "</span>",
+            "<span class='pull-right'><input type='hidden' class='SalesPrice' value=" + rate + " />" + ReplaceNumberWithCommas(parseFloat(rate).toFixed(2)) + "</span>",
+            "<span><input type='hidden' class='Quantity' value=" + qty + " />" + qty + "</span>",
+            "<span><input type='hidden' class='DiscountType' value=" + discType + " />" + discType + "</span>",
+            "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discRate + " />" + ReplaceNumberWithCommas(parseFloat(discRate).toFixed(2)) + "</span>",
+            "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discAmount + " />" + ReplaceNumberWithCommas(parseFloat(discAmount).toFixed(2)) + "</span>",
+            "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + ReplaceNumberWithCommas(parseFloat(netPrice).toFixed(2)) + "</span>",
+        ]).draw(false);
+    }
+    else if (insertType == "Edit") {
         vtable.row(tr).data([
             "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
             "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
-            "<center><span class='SrNo'><input type='hidden' class='SR01' value='' /></span></center>",
-            "<span><input type='hidden' class='ProductId' value=" + ProductId + " />" + ProductName + "</span>",
-            "<span class='pull-right'><input type='hidden' class='SalesPrice' value=" + salesPrice + " />" + ReplaceNumberWithCommas(parseFloat(salesPrice).toFixed(2)) + "</span>",
-            "<span class='pull-right'>" + multiplier + "</span>",
-            "<span><input type='hidden' class='DiscountType' value=" + discountType + " />" + discountType + "</span>",
-            "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discountRate + " />" + ReplaceNumberWithCommas(parseFloat(discountRate).toFixed(2)) + "</span>",
-            "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discountAmount + " />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
-            "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>",
-            "<span><input type='hidden' class='MasterCategoryId' value=" + MasterCategoryId + " />" + MasterCategoryName + "</span>",
-            "<span><input type='hidden' class='ChildCategoryId' value=" + ChildCategoryId + " />" + ChildCategoryName + "</span>",
-            "<span><input type='hidden' class='AttributeId' value=" + AttributeId + " />" + AttributeName + "</span>",
-            "<span><input type='hidden' class='AttributeDetailId' value=" + AttributeDetailId + " />" + AttributeDetailName + "</span>",
+            "<center><input type='hidden' class='SR01' value='' /><input type='hidden' class='OfferDetailId' value=" + offerDetailId + " /><span class='SrNo'></span></center>",
+            "<span><input type='hidden' class='ProductId' value=" + productId + " />" + productName + "</span>",
+            "<span><input type='hidden' class='ProductAttributeDetailBarcodeId' value=" + productAttributeDetailBarcodeId + " />" + productAttributeDetailBarcodeName + "</span>",
+            "<span class='pull-right'><input type='hidden' class='SalesPrice' value=" + rate + " />" + ReplaceNumberWithCommas(parseFloat(rate).toFixed(2)) + "</span>",
+            "<span><input type='hidden' class='Quantity' value=" + qty + " />" + qty + "</span>",
+            "<span><input type='hidden' class='DiscountType' value=" + discType + " />" + discType + "</span>",
+            "<span class='pull-right'><input type='hidden' class='DiscountRate' value=" + discRate + " />" + ReplaceNumberWithCommas(parseFloat(discRate).toFixed(2)) + "</span>",
+            "<span class='pull-right'><input type='hidden' class='DiscountAmount' value=" + discAmount + " />" + ReplaceNumberWithCommas(parseFloat(discAmount).toFixed(2)) + "</span>",
+            "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + ReplaceNumberWithCommas(parseFloat(netPrice).toFixed(2)) + "</span>",
         ]).draw(false);
-        updateTotalAmount();
-
     }
 
-    if (checkKey == 0) {
-        getSerialNo();
-        $('#Rate').val('0');
-        $('#LineDiscType').val('%');
-        $('#Qty').val('');
-        $('#LineDiscRate').val('0');
-        $('#LineDiscAmount').val('0');
-        $('#SelectedProductName').val('');
-        $('#ProductId').val(null).trigger('change.select2');
-        $('#DiscountOfferId').val(null).trigger('change.select2');
-        $('#AttributeId').val(null).trigger('change.select2');
-        $('#AttributeDetailId').val(null).trigger('change.select2');
-        $('#MasterCategoryId').val(null).trigger('change.select2');
-        $('#ChildCategoryId').val(null).trigger('change.select2');
-        $('#AttributeName').val('');
-        $('#AttributeDetailName').val('');
-        $('#MasterCategoryName').val('');
-        $('#ChildCategoryName').val('');
-
-        $('#CustomerSupplierId').val(null).trigger('change.select2');
-        GetMainTotals();
-    }
-});
-
+    $('input[type=radio][name=SelectItemType]').prop("disabled", false);
+    //$('input[type=radio][value="Existing Item"]').prop("checked", true);
+}
 
 // Function to update serial numbers
 function getSerialNo() {
@@ -602,19 +463,16 @@ function getSerialNo() {
 // Cancel button functionality
 $('#btnCancelDetail').click(function () {
     $('#btnCancelDetail').hide();
+    $('#btnCancelDetail').attr("hidden", "hidden");
     $('#btnAddDetail').find('.btnLineSpan').html('Add');
-    $('#Rate').val('0');
-    $('#LineDiscType').val('%');
-    $('#Qty').val('');
-    $('#LineDiscRate').val('0');
-    $('#LineDiscAmount').val('0');
-    $('#SelectedProductName').val('');
-    $('#ProductId').val(null).trigger('change.select2');
-    $('#DiscountOfferId').val(null).trigger('change.select2');
-    $('#MasterCategoryId').val(null).trigger('change.select2');
-    $('#ChildCategoryId').val(null).trigger('change.select2');
-    $('#AttributeId').val(null).trigger('change.select2');
-    $('#AttributeDetailId').val(null).trigger('change.select2');
+
+    $('input[type=radio][name=SelectItemType]').prop("disabled", false);
+    $('input[type=radio][value="Existing Item"]').prop("checked", true);
+    $('.NewItemDiv').attr("hidden", "hidden");
+    $('.BarcodeDiv').removeAttr("hidden");
+    $('#txtBarcode').focus();
+
+    ResetLineValues();
 });
 
 
@@ -625,34 +483,36 @@ $(document).on('click', '.editRowBtn', function () {
     var rowIndex = vtable.row($(this).parents('tr')).index();
     $('#HiddenTr').val(rowIndex);
 
-    var data = vtable.row($(this).parents('tr')).data();
-    var productId = $(data[3]).find('input.ProductId').val();
-    var salesPrice = $(data[4]).find('input.SalesPrice').val();
-    var quantity = $(data[5]).text();
-    var discountType = $(data[6]).find('input.DiscountType').val();
-    var discountRate = $(data[7]).find('input.DiscountRate').val();
-    var discountAmount = $(data[8]).find('input.DiscountAmount').val();
-    var netAmount = $(data[9]).find('input.NetAmount').val();
-    var masterCategoryId = $(data[10]).find('input.MasterCategoryId').val();
-    var childCategoryId = $(data[11]).find('input.ChildCategoryId').val();
-    var attributeId = $(data[12]).find('input.AttributeId').val();
-    var attributeDetailId = $(data[13]).find('input.AttributeDetailId').val();
+    $('input[type=radio][name=SelectItemType]').prop("disabled", true);
+    $('input[type=radio][value="New Item"]').prop("checked", true);
+    $('.BarcodeDiv').attr("hidden", "hidden");
+    $('.NewItemDiv').removeAttr("hidden");
 
-    updateSelect2Option('#ProductId', productId, data[3]);
-    updateSelect2Option('#MasterCategoryId', masterCategoryId, data[10]);
-    updateSelect2Option('#ChildCategoryId', childCategoryId, data[11]);
-    updateSelect2Option('#AttributeId', attributeId, data[12]);
-    updateSelect2Option('#AttributeDetailId', attributeDetailId, data[13]);
+    var data = vtable.row($(this).parents('tr')).data();
+    var OfferDetailId = $(data[2]).find('input.OfferDetailId').val();
+    var ProductId = $(data[3]).find('input.ProductId').val();
+    var ProductAttributeDetailBarcodeId = $(data[4]).find('input.ProductAttributeDetailBarcodeId').val();
+    var SalesPrice = $(data[5]).find('input.SalesPrice').val();
+    var Quantity = $(data[6]).find('input.Quantity').val();
+    var DiscountType = $(data[7]).find('input.DiscountType').val();
+    var DiscountRate = $(data[8]).find('input.DiscountRate').val();
+    var DiscountAmount = $(data[9]).find('input.DiscountAmount').val();
+    var NetAmount = $(data[10]).find('input.NetAmount').val();
+
+    updateSelect2Option('#ProductId', ProductId, data[3]);
+    updateSelect2Option('#ProductAttributeDetailBarcodeId', ProductAttributeDetailBarcodeId, data[4]);
 
     // Populate the fields
-    $('#Rate').val(salesPrice);
-    $('#LineDiscType').val(discountType);
-    $('#LineDiscRate').val(discountRate);
-    $('#LineDiscAmount').val(discountAmount);
-    $('#Qty').val(quantity);
-    $('#NetAmount').val(netAmount);
+    $('#HiddenOfferDetailId').val(OfferDetailId);
+    $('#Rate').val(SalesPrice);
+    $('#Qty').val(Quantity);
+    $('#LineDiscType').val(DiscountType);
+    $('#LineDiscRate').val(DiscountRate);
+    $('#LineDiscAmount').val(DiscountAmount);
+    $('#LineNetAmount').html(ReplaceNumberWithCommas(NetAmount));
     $('#btnAddDetail').find('.btnLineSpan').html('Update');
     $('#btnCancelDetail').show();
+    $('#btnCancelDetail').removeAttr("hidden");
 });
 
 function updateSelect2Option(selector, value, dataItem) {
@@ -672,152 +532,171 @@ $(document).on('click', '.deleteRowBtn', function () {
     var vtable = $('#detailTable').DataTable();
     vtable.row($(this).parents('tr')).remove().draw(false);
     getSerialNo();
+    $('#btnCancelDetail').hide();
+    $('#btnCancelDetail').attr("hidden", "hidden");
+    ResetLineValues();
+    GetMainTotals();
 });
+
+$('#txtBarcode').on('keypress', function (event) {
+    if (event.keyCode == 13) {
+        var Barcode = $('#txtBarcode').val();
+        if (Barcode != '') {
+            GetProductFromBarcode();
+        }
+    }
+});
+
+function GetProductFromBarcode() {
+    $('#txtBarcode').css('border-color', '#bdbdbd');
+    $('#txtBarcode').css('background-color', '#fff');
+    $.ajax({
+        type: 'POST',
+        url: '/Admin/Product/GetProductDetailsByBarcode',
+        data: { 'barcode': $('#txtBarcode').val() },
+        success: function (response) {
+            if (response.productId > 0) {
+                var vtable = $('#detailTable').DataTable();
+                AddRowToTable("Add", 0, vtable, response.productId, response.productName, response.productAttributeDetailBarcodeId, response.attributeName,
+                    response.offerDetailId, response.salePrice, response.quantity, response.discountType, response.discountRate, response.discountAmount, response.netAmount);
+                $('#txtBarcode').val('');
+                $('#txtBarcode').focus();
+                getSerialNo();
+                ResetLineValues();
+                GetMainTotals();
+
+            } else {
+                $('#txtBarcode').val('');
+                $('#txtBarcode').focus();
+                var errorMessage = "Error! Product not found with this barcode.";
+                toastr.error(errorMessage, "Error", { timeOut: 3000, closeButton: true });
+            }
+        },
+        error: function () {
+            alert('Error fetching product details.');
+        }
+    });
+
+}
+
+$('#txtBarcode').keyup(function () {
+    $('#txtBarcode').css('border-color', '#bdbdbd');
+    $('#txtBarcode').css('background-color', '#fff');
+})
+$('#Rate').keyup(function () {
+    $('#Rate').css('border-color', '#bdbdbd');
+    $('#Rate').css('background-color', '#fff');
+    getLineTotals();
+})
+$('#Qty').keyup(function () {
+    $('#Qty').css('border-color', '#bdbdbd');
+    $('#Qty').css('background-color', '#fff');
+    getLineTotals();
+});
+$('#LineDiscType').change(function () {
+    getLineTotals();
+})
+$('#LineDiscRate').keyup(function () {
+    getLineTotals();
+})
+function getLineTotals() {
+    var rate = $('#Rate').val();
+    var Quantity = $('#Qty').val();
+    var discountType = $('#LineDiscType').val();
+    var discountRate = $('#LineDiscRate').val();
+    if (rate == '' || rate == null || rate == undefined || isNaN(rate)) {
+        rate = 0;
+    }
+    if (Quantity == '' || Quantity == null || Quantity == undefined || isNaN(Quantity)) {
+        Quantity = 0;
+    }
+    if (discountType == '' || discountType == null) {
+        discountType = "Rs.";
+    }
+    if (discountRate == '' || discountRate == null || discountRate == undefined || isNaN(discountRate)) {
+        discountRate = 0;
+    }
+    var netDiscount = 0;
+    if (discountType.trim() == '%') {
+        netDiscount = parseFloat(discountRate) / 100 * parseFloat(rate);
+        netDiscount = parseFloat(netDiscount).toFixed(2);
+    }
+    else if (discountType.trim() == 'Rs.') {
+        netDiscount = parseFloat(discountRate).toFixed(2);
+    }
+    else {
+        netDiscount = 0;
+    }
+    $('#LineDiscAmount').val(netDiscount);
+
+    var netPrice = parseFloat(rate) - parseFloat(netDiscount);
+    netPrice = parseFloat(netPrice) * parseFloat(Quantity);
+    netPrice = parseFloat(netPrice).toFixed(2);
+
+    $('#LineNetAmount').html(ReplaceNumberWithCommas(netPrice));
+}
+
+$('#DeliveryCharges').on('change keyup', function () {
+    GetMainTotals();
+});
+$('#DiscType, #DiscRate').on('change keyup', function () {
+    GetMainTotals();
+});
+function GetMainTotals() {
+    var vtable = $('#detailTable').DataTable();
+    var totalAmount = 0;
+    debugger;
+    vtable.rows().every(function () {
+        var data = this.data();
+        var netPrice = parseFloat($(data[10]).find('input.NetAmount').val());
+        if (netPrice != '' && netPrice != null && netPrice != undefined && !isNaN(netPrice)) {
+            totalAmount += netPrice;
+        }
+    });
+
+    $('#TotalAmount').text(ReplaceNumberWithCommas(parseFloat(totalAmount).toFixed(2)));
+
+    var discType = $('#DiscType').val();
+    var discRate = $('#DiscRate').val();
+
+    if (discType == '' || discType == null) {
+        discType = "Rs.";
+    }
+    if (discRate == '' || discRate == null || discRate == undefined || isNaN(discRate)) {
+        discRate = 0;
+    }
+    var netDiscount = 0;
+    if (discType.trim() == '%') {
+        netDiscount = parseFloat(discRate) / 100 * parseFloat(totalAmount);
+        netDiscount = parseFloat(netDiscount).toFixed(2);
+    }
+    else if (discType.trim() == 'Rs.') {
+        netDiscount = parseFloat(discRate).toFixed(2);
+    }
+    else {
+        netDiscount = 0;
+    }
+
+    // Populate the DiscAmount field
+    $('#DiscAmount').val(netDiscount);
+
+    var amountAfterDiscount = (parseFloat(totalAmount) - parseFloat(netDiscount)).toFixed(2);
+    var deliveryCharges = $('#DeliveryCharges').val();
+    if (deliveryCharges == '' || deliveryCharges == null || deliveryCharges == undefined || isNaN(deliveryCharges)) {
+        deliveryCharges = 0;
+    }
+    var netAmount = (parseFloat(amountAfterDiscount) + parseFloat(deliveryCharges)).toFixed(2);
+
+    // Update NetAmount field
+    $('#NetAmount').text(ReplaceNumberWithCommas(netAmount));
+}
+
+
 $(document).on('change', 'select', function () {
     $(this).parents('td').siblings('td').find('.btn').css("margin-top", "14px");
     $(this).parents('label').siblings('em').remove();
 })
-function enterEvent(event) {
-    if (event.keyCode === 13) {
-        console.log('Enter key pressed');
-        var Barcode = $('#txtBarcode').val();
-        if (Barcode !== '') {
-            BarcodeScan(Barcode);
-        }
 
-        $("input[id=txtBarcode]").click();
-        getLineTotals();
-        $('#LineDiscount').val('');
-    }
-}
-
-
-
-
-function BarcodeScan(barcode) {
-    $.ajax({
-        type: 'POST',
-        url: '/Admin/Product/GetProductDetailsByBarcode',
-        data: { barcode: barcode },
-        success: function (response) {
-            console.log('AJAX success:', response);
-            if (response.productId > 0) {
-                //addToDataTable(response);
-                console.log('Response product details:', response);
-                addToDataTable(response);
-
-            } else {
-                var errorMessage = "Product not found.";
-                toastr.error(errorMessage, "Error", { timeOut: 3000, closeButton: true });
-            }
-        },
-        error: function () {
-            alert('Error fetching product details.');
-        }
-    });
-}
-$('#txtBarcode').on('change', function () {
-    var barcode = $(this).val();
-
-    if (barcode !== '') {
-        BarcodeScan(barcode);
-    }
-});
-
-//Add on enter press
-$('#txtBarcode').on('keydown', function (event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        var barcode = $('#txtBarcode').val();
-        if (barcode !== '') {
-            BarcodeScan(barcode);
-        }
-    }
-});
-function BarcodeScan(barcode) {
-    $.ajax({
-        type: 'POST',
-        url: '/Admin/Product/GetProductDetailsByBarcode',
-        data: { barcode: barcode },
-        success: function (response) {
-            console.log('AJAX success:', response);
-            if (response.productId > 0) {
-                alert("Product ID: " + response.productId + "\nDetails: " + JSON.stringify(response, null, 2));
-                var vtable = $('#detailTable').DataTable();
-                var exists = vtable.rows().data().toArray().some(function (row) {
-                    return $(row[3]).find('input').val() == response.productId;
-                });
-
-                if (exists) {
-                    toastr.error("This product is already added in the list below.", "Error", { timeOut: 3000, closeButton: true });
-                } else {
-                    // Add to DataTable if the product does not exist
-                    addToDataTable(response);
-                }
-            } else {
-                var errorMessage = "Product not found.";
-                toastr.error(errorMessage, "Error", { timeOut: 3000, closeButton: true });
-            }
-        },
-        error: function () {
-            alert('Error fetching product details.');
-        }
-    });
-}
-function getSerialNumber() {
-    var i = 0;
-    $('.SrNo').each(function () {
-        i++;
-        $(this).html(i);
-    });
-}
-function addToDataTable(product) {
-    var vtable = $('#detailTable').DataTable();
-    var exists = vtable.rows().data().toArray().some(function (row) {
-        return $(row[3]).find('input').val() == product.productId;
-    });
-
-    if (exists) {
-        toastr.error("This product is already added in the list below.", "Error", { timeOut: 3000, closeButton: true });
-    } else {
-        var salesPrice = product.salePrice || 0;
-        var discountAmount = product.discountAmount || 0;
-        var netPrice = (parseFloat(salesPrice) - parseFloat(discountAmount)).toFixed(2);
-
-        // Add new row to DataTable
-        vtable.row.add([
-            "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
-            "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
-            "<center><span class='SrNo'><input type='hidden' class='SR01' value='' /></span></center>",
-            "<span><input type='hidden' class='ProductId' value='" + product.productId + "' />" + product.productName + "</span>",
-            "<span class='pull-right'><input type='hidden' class='SalesPrice' value='" + salesPrice + "' />" + ReplaceNumberWithCommas(parseFloat(salesPrice).toFixed(2)) + "</span>",
-            "<span class='pull-right'>" + (product.multiplier || 1) + "</span>",
-            "<span><input type='hidden' class='DiscountType' value='" + (product.discountType || '%') + "' />" + (product.discountType || '%') + "</span>",
-            "<span class='pull-right'><input type='hidden' class='DiscountRate' value='" + (isNaN(product.discountRate) ? 0 : product.discountRate) + "' />" + ReplaceNumberWithCommas(parseFloat(isNaN(product.discountRate) ? 0 : product.discountRate).toFixed(2)) + "</span>",
-            "<span class='pull-right'><input type='hidden' class='DiscountAmount' value='" + (product.discountAmount || 0) + "' />" + ReplaceNumberWithCommas(parseFloat(discountAmount).toFixed(2)) + "</span>",
-            "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + netPrice + "' />" + netPrice + "</span>",
-            "<span><input type='hidden' class='MasterCategoryId' value='" + product.masterCategoryId + "' />" + product.masterCategoryName + "</span>",
-            "<span><input type='hidden' class='ChildCategoryId' value='" + product.childCategoryId + "' />" + product.childCategoryName + "</span>",
-            "<span><input type='hidden' class='AttributeId' value='" + product.attributeId + "' />" + product.attributeName + "</span>",
-            "<span><input type='hidden' class='AttributeDetailId' value='" + product.attributeDetailId + "' />" + product.attributeDetailName + "</span>",
-
-        ]).draw(false);
-
-        updateTotalAmount();
-        getSerialNumber();
-        $('#txtBarcode').val('');
-        updateNetAmount();
-    }
-}
-
-
-function getSerialNumber() {
-    var i = 1;
-    $('.SrNo').each(function () {
-        $(this).text(i);
-        i++;
-    });
-}
 function getInvoiceDetail(id) {
     $.ajax({
         type: "POST",
@@ -829,25 +708,10 @@ function getInvoiceDetail(id) {
             vtable.clear().draw();
             if (response && response.data && response.data.length > 0) {
                 for (var key in response.data) {
-                    vtable.row.add([
-                        "<a href='javascript:void(0);' class='btn btn-primary editRowBtn' title='Edit' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-edit'></i></a>",
-                        "<a href='javascript:void(0);' class='btn btn-danger deleteRowBtn' title='Delete' style='font-size: 13.5px;padding: 6px;padding-left:10px;padding-right:10px'><i class='fas fa-times-circle'></i></a>",
-                        "<center><span class='SrNo'><input type='hidden' class='SR01' value='' /></span></center>",
-                        "<span><input type='hidden' class='ProductId' value='" + response.data[key].ProductName + "' />" + response.data[key].ProductName + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='SalesPrice' value='" + response.data[key].Rate + "' />" + response.data[key].Rate + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='Quantity' value='" + response.data[key].Qty + "' />" + response.data[key].Qty + "</span>",
-                        "<span><input type='hidden' class='DiscountType' value='" + response.data[key].DiscType + "' />" + response.data[key].DiscType + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='DiscountRate' value='" + response.data[key].DiscRate + "' />" + response.data[key].DiscRate + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='DiscountAmount' value='" + response.data[key].DiscAmount + "' />" + response.data[key].DiscAmount + "</span>",
-                        "<span class='pull-right'><input type='hidden' class='NetAmount' value='" + response.data[key].NetAmount + "' />" + response.data[key].NetAmount + "</span>",
-                        "<span><input type='hidden' class='MasterCategoryName' value='" + response.data[key].MasterCategoryName + "' />" + response.data[key].MasterCategoryName + "</span>",
-                        "<span><input type='hidden' class='ChildCategoryName' value='" + response.data[key].ChildCategoryName + "' />" + response.data[key].ChildCategoryName + "</span>",
-                        "<span><input type='hidden' class='AttributeName' value='" + response.data[key].AttributeName + "' />" + response.data[key].AttributeName + "</span>",
-                        "<span><input type='hidden' class='AttributeDetailName' value='" + response.data[key].AttributeDetailName + "' />" + response.data[key].AttributeDetailName + "</span>",
-                    ]).draw(false);
+                    AddRowToTable("Add", 0, vtable, response.data[key].ProductId, response.data[key].ProductName, response.data[key].ProductAttributeDetailBarcodeId, response.data[key].AttributeName,
+                        response.data[key].OfferDetailId, response.data[key].Rate, response.data[key].Qty, response.data[key].DiscType, response.data[key].DiscRate, response.data[key].DiscAmount, response.data[key].NetAmount);
                 }
-                vtable.draw(false);
-                getSerialNumber();
+                getSerialNo();
                 GetMainTotals();
             } else {
                 console.error("No valid data found.");
@@ -862,52 +726,56 @@ function getInvoiceDetail(id) {
 
 }
 
+function CheckAllData() {
+    var check = 0;
+    var vtable = $('#detailTable').DataTable();
+    vtable.rows().every(function () {
+        check++;
+    });
+
+    return check;
+}
 function getAllData() {
     var arrayData = [];
     var vtable = $('#detailTable').DataTable();
     vtable.rows().every(function () {
         var data = this.data();
 
-        var getInt = (value) => {
-            let intVal = parseInt(value, 10);
-            return isNaN(intVal) ? 0 : intVal;
-        };
+        //var getInt = (value) => {
+        //    let intVal = parseInt(value, 10);
+        //    return isNaN(intVal) ? 0 : intVal;
+        //};
 
-        var getFloat = (value) => {
-            let floatVal = parseFloat(value);
-            return isNaN(floatVal) ? 0 : floatVal;
-        };
+        //var getFloat = (value) => {
+        //    let floatVal = parseFloat(value);
+        //    return isNaN(floatVal) ? 0 : floatVal;
+        //};
 
-        var warehouseId = getInt($(data[0]).find('input.WarehouseId').val());
-        var productId = getInt($(data[3]).find('input.ProductId').val());
-        var salesPrice = getFloat($(data[4]).find('input.SalesPrice').val());
-        var qty = getFloat(data[5].split('value=')[1]?.split('/>')[0]?.trim());
-        var discountType = data[6].split('value=')[1]?.split('/>')[0]?.trim() || '';
-        var discountRate = getFloat(data[7].split('value=')[1]?.split('/>')[0]?.trim());
-        var discountAmount = getFloat(data[8].split('value=')[1]?.split('/>')[0]?.trim());
-        var netAmount = getFloat($(data[9]).find('input.NetAmount').val());
-        var masterCategoryId = getInt($(data[10]).find('input.MasterCategoryId').val());
-        var childCategoryId = getInt($(data[11]).find('input.ChildCategoryId').val());
-        var attributeId = getInt($(data[12]).find('input.AttributeId').val());
-        var attributeDetailId = getInt($(data[13]).find('input.AttributeDetailId').val());
-        var discountOfferId = getInt($(data[7]).find('input.DiscountOfferId').val());
+        //var warehouseId = getInt($(data[0]).find('input.WarehouseId').val());
 
+        var OfferDetailId = $(data[2]).find('input.OfferDetailId').val();
+        var ProductId = $(data[3]).find('input.ProductId').val();
+        var ProductAttributeDetailBarcodeId = $(data[4]).find('input.ProductAttributeDetailBarcodeId').val();
+        var SalesPrice = $(data[5]).find('input.SalesPrice').val();
+        var Quantity = $(data[6]).find('input.Quantity').val();
+        var DiscountType = $(data[7]).find('input.DiscountType').val();
+        var DiscountRate = $(data[8]).find('input.DiscountRate').val();
+        var DiscountAmount = $(data[9]).find('input.DiscountAmount').val();
+        var NetAmount = $(data[10]).find('input.NetAmount').val();
+
+        var TotalAmount = parseFloat(SalesPrice) * parseFloat(Quantity);
         var rowData = {
-            'WarehouseId': warehouseId,
-            'MasterCategoryId': masterCategoryId,
-            'ChildCategoryId': childCategoryId,
-            'ProductId': productId,
-            'AttributeId': attributeId,
-            'AttributeDetailId': attributeDetailId,
-            'DiscountOfferId': discountOfferId,
-            'UnitId': 0,
-            'TotalAmount': netAmount,
-            'Qty': qty,
-            'Rate': salesPrice,
-            'DiscType': discountType,
-            'DiscRate': discountRate,
-            'DiscAmount': discountAmount,
-            'NetAmount': netAmount
+            'WarehouseId': 0,
+            'ProductId': ProductId,
+            'ProductAttributeDetailBarcodeId': ProductAttributeDetailBarcodeId,
+            'Qty': Quantity,
+            'TotalAmount': TotalAmount,
+            'Rate': SalesPrice,
+            'OfferDetailId': OfferDetailId,
+            'DiscType': DiscountType,
+            'DiscRate': DiscountRate,
+            'DiscAmount': DiscountAmount,
+            'NetAmount': NetAmount,
         };
 
         arrayData.push(rowData);
@@ -917,40 +785,68 @@ function getAllData() {
     return arrayData;
 }
 
-function extractValueFromHtml(htmlString, type) {
-    var value = '';
-    try {
-        if (type === 'value') {
-            value = htmlString.split('value=')[1].split('/>')[0].trim();
-        } else if (type === 'text') {
-            value = htmlString.split('/>')[1].split('</span>')[0].trim();
-        }
-    } catch (e) {
-        console.error('Error extracting value:', e);
-    }
-    return value;
-}
+$('#CustomerSupplierId').change(function () {
+    $('#CustomerSupplierIdDiv').closest('#CustomerSupplierIdDiv').find('.select2-selection').css('border-color', '#ddd');
+    $('#CustomerSupplierIdDiv').closest('#CustomerSupplierIdDiv').find('.select2-selection').css('background-color', '#fff');
+});
 
-$('#popupForm').on('submit', function (e) {
+$(document).on('keyup change', '#InvoiceDate', function () {
+    $('#InvoiceDate').css('border-color', '#bdbdbd');
+    $('#InvoiceDate').css('background-color', '#fff');
+})
+
+$(document).off("click", "#btn_Save").on('click', "#btn_Save", function (e) {
     e.preventDefault();
-    if (!$("#popupForm").valid()) {
-        return false;
-    }
-    $('#btn_Save').attr('disabled', 'disabled');
-    $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
+    SaveForm("exit");
+})
+$(document).off("click", "#btn_SaveAndPrint").on('click', "#btn_SaveAndPrint", function (e) {
+    e.preventDefault();
+    SaveForm("print");
+})
 
-    var IsNewOrEdit = $('#IsNewOrEdit').val();
-    var InvoiceNumber = $('#InvoiceNumber').val();
+function SaveForm(type) {
     var InvoiceDate = $('#InvoiceDate').val();
-    var DeliveryCharges = $('#DeliveryCharges').val();
     var CustomerSupplierId = $('#CustomerSupplierId').val();
 
+    var check = 0;
+    if (InvoiceDate == '' || InvoiceDate == null) {
+        $('#InvoiceDate').css('border-color', '#A90329');
+        $('#InvoiceDate').css('background-color', '#FFF0F0');
+        check = 1;
+    }
 
+    if (CustomerSupplierId == '' || CustomerSupplierId == null || CustomerSupplierId == 0) {
+        $('#CustomerSupplierIdDiv').closest('#CustomerSupplierIdDiv').find('.select2-selection').css('border-color', '#A90329');
+        $('#CustomerSupplierIdDiv').closest('#CustomerSupplierIdDiv').find('.select2-selection').css('background-color', '#FFF0F0');
+        check = 1;
+    }
+    if (check > 0) {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 300);
+        return false;
+    }
+
+    if (CheckAllData() == 0) {
+        toastr.error("Error! Please add Products Detail.", "Error", { timeOut: 3000, "closeButton": true });
+        return false;
+    }
+
+    $('#btn_Save').attr('disabled', 'disabled');
+    $('#btn_SaveAndPrint').attr('disabled', 'disabled');
+    $('#btn_Save').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
+    $('#btn_SaveAndPrint').html("<i class='fal fa-sync fa-spin'></i> &nbsp; Processing...");
+
+    var CashOrCredit = $("input[name='CashOrCredit']:checked").val();
+    var IsNewOrEdit = $('#IsNewOrEdit').val();
+    var InvoiceNumber = $('#InvoiceNumber').val();
     var TotalAmount = parseFloat(ReplaceCommas($('#TotalAmount').html()));
     var DiscType = $('#DiscType').val();
     var DiscRate = $('#DiscRate').val();
     var DiscAmount = $('#DiscAmount').val();
+    var DeliveryCharges = $('#DeliveryCharges').val();
     var NetAmount = parseFloat(ReplaceCommas($('#NetAmount').html()));
+
     var st =
     {
         IsNewOrEdit: IsNewOrEdit,
@@ -964,7 +860,8 @@ $('#popupForm').on('submit', function (e) {
         DiscRate: DiscRate,
         DiscAmount: DiscAmount,
         NetAmount: NetAmount,
-
+        CashOrCredit: CashOrCredit,
+        AdminOrClient: "Admin"
     }
     var detailData = JSON.stringify(getAllData());
     $.ajax({
@@ -974,12 +871,20 @@ $('#popupForm').on('submit', function (e) {
 
         dataType: 'json',
         success: function (data) {
-            $('#btn_Save').html("Save");
+            $('#btn_Save').html("Save & Exit");
+            $('#btn_SaveAndPrint').html("Save & Print");
             $('#btn_Save').prop('disabled', false);
+            $('#btn_SaveAndPrint').prop('disabled', false);
             if (data.status) {
-                toastr.success("Invoice Saved Successfully", "Success", { timeOut: 3000, "closeButton": true });
-                window.location.href = "/admin/invoice/saleinvoiceindex";
-
+                if (type == "print") {
+                    window.location.href = "/admin/invoice/PrintInvoice/?id="+data.Id+"";
+                }
+                else {
+                    toastr.success("Sale Invoice Saved Successfully", "Success", { timeOut: 3000, "closeButton": true });
+                    setTimeout(function () {
+                        window.location.href = "/admin/invoice/saleinvoiceindex/?from=all";
+                    }, 2000);
+                }
             }
             else {
                 toastr.error(data.message, "Error", { timeOut: 3000, "closeButton": true });
@@ -987,14 +892,59 @@ $('#popupForm').on('submit', function (e) {
         }
     })
 
-})
-
+}
 $("#Rate").on('input keypress', function (event) {
+    NumberPostiveNegativeWithDecimal(event, this, 9, 2);
+});
+$("#LineDiscRate").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 9, 2);
 });
 $("#DiscRate").on('input keypress', function (event) {
     NumberPostiveNegativeWithDecimal(event, this, 9, 2);
 });
+$("#DiscAmount").on('input keypress', function (event) {
+    NumberPostiveNegativeWithDecimal(event, this, 9, 2);
+});
+$("#DeliveryCharges").on('input keypress', function (event) {
+    NumberPostiveNegativeWithDecimal(event, this, 5, 2);
+});
 $("#Qty").on('input keypress', function (event) {
     NumberPostive(event, this, 5);
+});
+
+//$(document).keypress(function (event) {
+//    var keycode = (event.keyCode ? event.keyCode : event.which);
+//    if (keycode == '13') {
+//        event.preventDefault();
+//    }
+//});
+
+
+//$(window).keypress(function (event) {
+//    if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+//    alert();
+//    event.preventDefault();
+//    return false;
+//});
+
+$(document).off("click", "#btn_New").on('click', "#btn_New", function (e) {
+    window.open("/admin/invoice/insertupdatesaleinvoice/?id=0&type=new", '_blank');
+})
+$(document).keypress(function (event) {
+    //Shift + S or Shift + s
+    if (event.shiftKey && event.which == 68) {
+        $("#btn_Save").click();
+    }
+});
+$(document).keypress(function (event) {
+    //Shift + S or Shift + s
+    if (event.shiftKey && event.which == 83) {
+        $("#btn_SaveAndPrint").click();
+    }
+});
+$(document).keypress(function (event) {
+    //Shift + N or Shift + n
+    if (event.shiftKey && event.which == 78) {
+        $("#btn_New").click();
+    }
 });

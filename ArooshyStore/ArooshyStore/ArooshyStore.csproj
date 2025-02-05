@@ -440,6 +440,7 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\DiscountOffer\InsertUpdateDiscountOffer.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\EmployeeAttendance\Index.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Invoice\Print.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\Print.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Product\InsertUpdateProductAttributeDetail.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Action\InsertUpdateAssign.css" />
@@ -2534,6 +2535,17 @@
     <Content Include="Areas\Admin\Views\Product\ProductStock.cshtml" />
     <Content Include="Areas\Admin\Views\Product\GetProductAttributes.cshtml" />
     <Content Include="Areas\Admin\Views\DiscountOffer\ProductsList.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\PrintInvoice - Copy.cshtml" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\Century Gothic.ttf" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\CenturyGothic.ttf" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\GOTHIC.TTF" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\GOTHICB.TTF" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\GOTHICB0.TTF" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\GOTHICBI.TTF" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\CenturyGothic\GOTHICI.TTF" />
+    <Content Include="Areas\Admin\Views\Invoice\PrintInvoice - Copy %282%29.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductStockDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InvoiceDetailsList.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

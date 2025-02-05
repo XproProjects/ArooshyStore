@@ -73,6 +73,22 @@
                                 {
                                     <input type="hidden" id="DeleteActionRole" value="0" />
                                 }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "exchange"))
+                                {
+                                    <input type="hidden" id="ExchangeActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="ExchangeActionRole" value="0" />
+                                }
+                                @if (Model.Any(x => x.ActionName.ToLower() == "return"))
+                                {
+                                    <input type="hidden" id="ReturnActionRole" value="1" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" id="ReturnActionRole" value="0" />
+                                }
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
@@ -89,14 +105,105 @@
                                 </div>
                             </div>
                         </div>
-                        <table id="myTable" class="table table-bordered table-hover table-striped w-100">
+                        <div class="panel FiltersPanel panel-locked panel-collapsed" style="margin-top:15px;background-color:#FDFDFD;border: 2px solid #ddd;cursor:pointer !important">
+                            <div class="panel-hdr color-success-600 myFilterPanel" title="Click to Expand/Collapase Advance Filters" style="background-color:#FDFDFD;cursor:pointer !important" data-action="panel-collapse">
+                                <h2>
+                                    <span>
+                                        <i class="fal fa-search"></i>
+                                        &nbsp;
+                                        More Filters
+                                    </span>
+                                </h2>
+                                <div class="panel-toolbar myToolbar" style="margin-right:15px">
+                                    <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                                </div>
+                            </div>
+                            <div class="panel-container collapse" style="">
+                                <div class="panel-content">
+                                    <div class="row" style="margin-top:15px">
+                                        <section class="col-md-8">
+                                            <div class="frame-wrap">
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-top:5px">
+                                                    <input type="radio" class="custom-control-input" id="DateRadio" value="Date" name="MoreFilterRadio" checked />
+                                                    <label class="custom-control-label" for="DateRadio">Date</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-top:5px;margin-left:10px">
+                                                    <input type="radio" class="custom-control-input" id="Month" value="Month" name="MoreFilterRadio" />
+                                                    <label class="custom-control-label" for="Month">Month</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-top:5px;margin-left:10px">
+                                                    <input type="radio" class="custom-control-input" id="BetweenDates" value="Between Dates" name="MoreFilterRadio" />
+                                                    <label class="custom-control-label" for="BetweenDates">Between Dates</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-top:5px;margin-left:10px">
+                                                    <input type="radio" class="custom-control-input" id="All" value="All" name="MoreFilterRadio" />
+                                                    <label class="custom-control-label" for="All">All</label>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                    <div class="row" style="margin-top:25px">
+                                        <section class="col-md-6 DateDiv">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="date" class="form-control" id="DateFilter" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                            </div>
+                                        </section>
+                                        <section class="col-md-6 MonthDiv" hidden>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="month" class="form-control" id="MonthFilter" value="@DateTime.Now.ToString("yyyy-MM")" />
+                                            </div>
+                                        </section>
+                                        <section class="col-md-4 BetweenDatesDiv" hidden>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="date" class="form-control" id="FromDateFilter" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                                            </div>
+                                        </section>
+                                        <section class="col-md-4 BetweenDatesDiv" hidden>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="date" class="form-control" id="ToDateFilter" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                            </div>
+                                        </section>
+                                        <section class="col-md-4 pull-right">
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="myTable" class="table table-bordered table-hover table-striped w-100" style="margin-top: -31px !important;">
                             <thead>
                                 <tr>
                                     <th class="min-mobile">Invoice #</th>
                                     <th class="min-tablet">Invoice Date</th>
                                     <th class="min-desktop">Customer</th>
                                     <th class="min-desktop">Status</th>
+                                    <th class="min-tablet">Total Items</th>
                                     <th class="min-tablet">Net Amount</th>
+                                    <th class="none">Gross Amount</th>
+                                    <th class="none">Discount Type</th>
+                                    <th class="none">Discount Rate</th>
+                                    <th class="none">Discount Amount</th>
+                                    <th class="none">Delivery Charges</th>
                                     <th class="none">Created Date</th>
                                     <th class="none">Created By</th>
                                     <th class="none">Updated Date</th>
@@ -117,4 +224,4 @@
 
 </main>
 <!-- this overlay is activated only when mobile menu is triggered -->
-<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js?v=3"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Invoice/SaleInvoiceIndex.js?v=4"></script>

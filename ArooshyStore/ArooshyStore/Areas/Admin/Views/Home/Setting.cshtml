@@ -15,14 +15,17 @@
 || x.ModuleName.ToLower() == "designation"
 || x.ModuleName.ToLower() == "employee"
 || x.ModuleName.ToLower() == "product unit"
-|| x.ModuleName.ToLower() == "discount offer"
+//|| x.ModuleName.ToLower() == "discount offer"
 || x.ModuleName.ToLower() == "expense type"
 || x.ModuleName.ToLower() == "carousel"
 || x.ModuleName.ToLower() == "company"
 || x.ModuleName.ToLower() == "about"
 || x.ModuleName.ToLower() == "delivery charges"
 || x.ModuleName.ToLower() == "delivery info"
-|| x.ModuleName.ToLower() == "product tag"))
+|| x.ModuleName.ToLower() == "product tag"
+|| x.ModuleName.ToLower() == "attendance"
+|| x.ModuleName.ToLower() == "salary"
+|| x.ModuleName.ToLower() == "expense"))
 {
     <main id="js-page-content" role="main" class="page-content">
         <!-- BREADCRUMB -->
@@ -55,10 +58,13 @@
         || x.ModuleName.ToLower() == "product"
         || x.ModuleName.ToLower() == "city"
         || x.ModuleName.ToLower() == "designation"
-|| x.ModuleName.ToLower() == "employee"
+        || x.ModuleName.ToLower() == "employee"
         || x.ModuleName.ToLower() == "product unit"
-        || x.ModuleName.ToLower() == "discount offer"
-        || x.ModuleName.ToLower() == "expense type"))
+        //|| x.ModuleName.ToLower() == "discount offer"
+        || x.ModuleName.ToLower() == "expense type"
+        || x.ModuleName.ToLower() == "attendance"
+        || x.ModuleName.ToLower() == "salary"
+        || x.ModuleName.ToLower() == "expense"))
         {
             <div class="row">
                 <div class="col-lg-12">
@@ -104,19 +110,19 @@
                                             </a>
                                         </div>
                                     }
-                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "discount offer"))
-                                    {
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
-                                            <a href="/admin/discountoffer/index/">
-                                                <div class="card text-center">
-                                                    <p style="background-image: linear-gradient(to right, #7b4397, #dc2430);">
-                                                        <i class="fas fa-percent fa-4x" style="margin-top:20px; color: white;"></i>
-                                                    </p>
-                                                    <h4 style="color:black">Discount Offer</h4>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    }
+                                    @*@if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "discount offer"))
+        {
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
+                <a href="/admin/discountoffer/index/">
+                    <div class="card text-center">
+                        <p style="background-image: linear-gradient(to right, #7b4397, #dc2430);">
+                            <i class="fas fa-percent fa-4x" style="margin-top:20px; color: white;"></i>
+                        </p>
+                        <h4 style="color:black">Discount Offer</h4>
+                    </div>
+                </a>
+            </div>
+        }*@
                                     @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "expense type"))
                                     {
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
@@ -128,13 +134,13 @@
                                             </a>
                                         </div>
                                     }
-                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "employee"))
+                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "expense"))
                                     {
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
-                                            <a href="/admin/employee/index/">
+                                            <a href="/admin/expense/index">
                                                 <div class="card text-center">
-                                                    <p style="background-image: linear-gradient(to right, #220901, #621708);"><i class="fal fa-user fa-4x" style="margin-top:20px"></i></p>
-                                                    <h4 style="color:black">Employee</h4>
+                                                    <p style="background-image: linear-gradient(to right,#cc444b, #df7373); "><i class="fal fa-list fa-4x" style="margin-top:20px"></i></p>
+                                                    <h4 style="color:black" class="tree">Expense</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -230,7 +236,39 @@
                                             </a>
                                         </div>
                                     }
-
+                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "employee"))
+                                    {
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
+                                            <a href="/admin/employee/index/">
+                                                <div class="card text-center">
+                                                    <p style="background-image: linear-gradient(to right, #220901, #621708);"><i class="fal fa-user fa-4x" style="margin-top:20px"></i></p>
+                                                    <h4 style="color:black">Employee</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "attendance"))
+                                    {
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
+                                            <a href="/admin/employeeattendance/index">
+                                                <div class="card text-center">
+                                                    <p style="background-image: linear-gradient(to right,#cc444b, #df7373); "><i class="fal fa-users fa-4x" style="margin-top:20px"></i></p>
+                                                    <h4 style="color:black" class="tree">Attendance</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                    @if (Model.ModuleList.Any(x => x.ModuleName.ToLower() == "salary"))
+                                    {
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="margin-top:25px">
+                                            <a href="/admin/salary/index">
+                                                <div class="card text-center">
+                                                    <p style="background-image: linear-gradient(to right,#143601, #1a4301);"><i class="fal fa-money-bill-alt fa-4x" style="margin-top:20px"></i></p>
+                                                    <h4 style="color:black" class="tree">Salary</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,262 @@
+﻿@{
+    ViewBag.Title = "Print Invoice";
+}
+@using ArooshyStore.Models.ViewModels
+@model InvoiceViewModel
+<link href="~/Content/PayrollCss/Report/PrintInvoice.css" rel="stylesheet" />
+<div class="mySelect" style="overflow: hidden;padding: 0px">
+    <main id="js-page-content" role="main" class="page-content">
+        <div class="row">
+            <div class="col-lg-6" style="margin-top:4px">
+            </div>
+            <div class="col-md-12" style="display:flex">
+                <table style="width: 100%">
+                    <tr>
+                        <th>
+                            <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-clipboard"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Invoice</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)">
+                                        <i class="fal fa-list-ol"></i>
+                                        &nbsp;
+                                        <span class="hidden-md-down">Print Invoice</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </th>
+                        <th style="text-align:right">
+                            <button type="button" class="btn btn-primary printBtn" onclick="window.print();" style=" color: white;height:32px;width:65px;padding:6px">
+                                Print
+                            </button>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("download", "pdf", FormMethod.Post, new { id = "downloadForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+        {
+            @*Header of The main Panel Ends*@
+
+
+            <input type="hidden" name="DocumentName" id="DocumentName" value="" />
+            <input type="hidden" name="FileName" id="FileName" value="TimesheetReport" />
+            <input type="hidden" name="Type" id="Type" value="" />
+            <div id="HtmlData" style="margin-top:8px">
+                <div id="printable-content" class="panel rpt" style=" padding-top: 37px; padding-left: 37px;padding-right: 37px; border-radius: 0px;border:none">
+                    @{
+                        string width1 = "45%";
+                        string width2 = "15%";
+                        string width3 = "40%";
+                        string columnWidth = "180px";
+                        string reportType = "";
+                       
+                    }
+                    <table style="padding: 30px;padding-top:0px;margin-top:-55px" id="myTable">
+                        <tr>
+                            <th style="font-weight: bold; font-size: 15px; text-align: right;font-weight:normal;padding-bottom:20px" colspan="3"><strong>Print Date:&nbsp;</strong>@*<span class="LocalDate"></span>*@@Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy hh:mm tt")</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: bold; font-size: 24px !important; text-align: left; width: @width1;padding-bottom:15px;vertical-align:middle">
+                                <img src="~/Areas/Admin/Content/img/DummyLogo5.jpg" style="height: 30px; width: 30px;" />
+                                <span style="font-size: 24px !important; margin-left: 10px ">@Model.InvoiceNumber</span>
+                            </th>
+                            <th style="font-weight: bold; font-size: 24px !important; text-align: right; width: @width2;padding-bottom:15px;vertical-align:middle" colspan="2">@reportType</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; width: @width1">
+                                @Model.InvoiceType
+                            </th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding:0px;width: @width2"></th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; border: 1px solid #000; width: @width3">
+                                <label style="border-right: 1px solid #000; width: @columnWidth; padding: 0px; padding-left: 5px; margin-bottom: -5px; font-weight: bold">Invoice #:</label>
+                                <label style="padding: 0px; margin-bottom: -5px ">&nbsp;@Model.InvoiceNumber</label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; width: @width1">
+                                <b>Contact No.: &nbsp;</b>
+                                @Model.CompanyContact
+                            </th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding:0px;width: @width2"></th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; border: 1px solid #000; width: @width3">
+                                <label style="border-right: 1px solid #000; width: @columnWidth; padding: 0px; padding-left: 5px; margin-bottom: -5px; font-weight: bold">Invoice Date:</label>
+                                <label style="padding: 0px; margin-bottom: -5px ">&nbsp;@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy")</label>
+                            </th>
+
+                        </tr>
+
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; width: @width1">
+                                <b>Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                                @Model.CompanyEmail
+                            </th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding:0px;width: @width2"></th>
+
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px;width: @width1">
+                                <b>Address: &nbsp; </b>
+                                @Model.CompanyAddress
+                            </th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding:0px;width: @width2"></th>
+
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px;width: @width1">
+                                <b>Website: &nbsp;  https://arooshystore.com/</b>
+
+                            </th>
+                            <th style="font-weight: normal; font-size: 14px !important; text-align: left; padding:0px;width: @width2"></th>
+
+                        </tr>
+
+
+
+                        <tr>
+                            <th style="font-weight: normal; font-size: 16px !important; text-align: left; padding: 5px; padding-left: 10px;" colspan="3">
+                                &nbsp;
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight: normal; font-size: 16px !important; text-align: left; padding: 5px; padding-left: 10px; background-color: #ddd !important; border: 1px solid #C5C5C5" colspan="3">
+                                <b>Invoice To: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                                @Model.CustomerName
+                            </th>
+                        </tr>
+                        <thead>
+                            <tr>
+                                <th style="font-weight: bold; font-size: 16px; text-align: center; padding-bottom: 10px" colspan="2">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="12">
+                                    @{
+                                        string marginTop = "";
+                                        if (Model != null)
+                                        {
+                                            marginTop = "-25px";
+                                        }
+                                        else
+                                        {
+                                            marginTop = "5px";
+                                        }
+                                    }
+                                    <table class="mainTable" style="margin-top:@marginTop;width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-weight: bold; font-size: 16px; text-align: center; padding: 13px; border: !important" colspan="12">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tr class="mainTr">
+                                            <th style="text-align: center; width: 45px; font-size: 14px !important;">Sr#</th>
+                                            <th style="text-align: center; font-size: 14px !important;">Product Name</th>
+                                            <th style="text-align: center; font-size: 14px !important;">Sale Price</th>
+                                            <th style="text-align: center; font-size: 14px !important;">Quantity</th>
+                                            <th style="text-align: center; font-size: 14px !important">Attribute Name</th>
+                                            <th style="text-align: center; font-size: 14px !important">Attribute Detail Name</th>
+                                            <th style="text-align: center; font-size: 14px !important">Net Price</th>
+                                        </tr>
+
+                                        @if (Model.InvoiceDetailsList.Count != 0)
+                                        {
+                                            <tbody>
+                                                @{
+                                                    int j = 0;
+                                                }
+                                                @foreach (InvoiceDetailViewModel s in Model.InvoiceDetailsList)
+                                                {
+                                                    j++;
+                                                    <tr class="mainTr">
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000; ">@(j)</td>
+                                                        @*<td style="font-weight: normal; font-size: 14px !important; text-align: left; padding: 0px; border: 1px solid #000; width: @width3">
+                    <label style="padding: 0px; margin-bottom: -5px ">&nbsp;@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy")</label>
+                </td>*@
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000; ">@s.ProductName</td>
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.SalePrice</td>
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.Qty</td>
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.AttributeName</td>
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.AttributeDetailName</td>
+                                                        <td style="text-align: center; font-size: 14px !important; border: 1px solid #000;">@s.NetAmount</td>
+                                                    </tr>
+                                                }
+                                                <tr class="mainTr">
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Gross Amount:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.TotalAmount).ToString("#,##0.00")</td>
+                                                </tr>
+
+                                                <tr class="mainTr">
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Discount Amount:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.DiscAmount).ToString("#,##0.00")</td>
+                                                </tr>
+                                                <tr class="mainTr">
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold" colspan="6">Delivery Charges:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Model.DeliveryCharges</td>
+                                                </tr>
+                                                <tr class="mainTr">
+                                                    <td style="text-align: right; border: 0px !important; font-size: 15px !important; font-weight: bold " colspan="6">Net Total:&nbsp;&nbsp;</td>
+                                                    <td class="borderRight" style="text-align: center; font-size: 15px !important; border: 1px solid #000; ">@Convert.ToDecimal(Model.NetAmount).ToString("#,##0.00")</td>
+                                                </tr>
+
+                                            </tbody>
+                                        }
+                                        else
+                                        {
+                                            <tbody>
+                                                <tr class="mainTr">
+                                                    <td class="borderRight" colspan="12" style="text-align:center;padding:10px">No record found.</td>
+                                                </tr>
+                                            </tbody>
+                                        }
+                                        <tfoot>
+                                            <tr>
+                                                <th style="font-weight: bold; font-size: 20px; text-align: center; padding: 50px;  border: none !important;" colspan="12">&nbsp;</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight: normal; font-size: 16px !important; text-align: center; width: 100%; padding-bottom: 15px" colspan="3">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width: 50%; text-align: center; font-weight: bold">_______________________________</td>
+                                            <td style="width: 50%; text-align: center; font-weight: bold">_______________________________</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:50%;text-align:center;font-weight:bold">CUSTOMER</td>
+                                            <td style="width: 50%; text-align: center; font-weight: bold">Arooshy Store</td>
+                                        </tr>
+                                        @*<tr>
+                            <td style="width: 50%; text-align: center; font-weight: normal; font-size: 14px !important">A VAT invoice will be issued upon payment</td>
+                            <td style="width: 50%; text-align: center; font-weight: normal; font-size: 14px !important">This is not a VAT Invoice</td>
+                        </tr>*@
+                                    </table>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="PageEnd"></div>
+                <br />
+            </div>
+        }
+    </main>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").addClass('active');
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").css('display', "block");
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+        $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+        $(".printBtn").click();
+    })
+</script>

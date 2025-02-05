@@ -23,6 +23,6 @@ namespace ArooshyStore.BLL.Interfaces
         Select2PagedResultViewModel GetProductTagList(string searchTerm, int pageSize, int pageNumber);
         Select2PagedResultViewModel GetDesignationsList(string searchTerm, int pageSize, int pageNumber);
         Select2PagedResultViewModel GetEmployeesList(string searchTerm, int pageSize, int pageNumber);
-
+        Select2PagedResultViewModel GetProductListAttributesFromBarcodeTable(string searchTerm, int pageSize, int pageNumber, int productId);
     }
 }

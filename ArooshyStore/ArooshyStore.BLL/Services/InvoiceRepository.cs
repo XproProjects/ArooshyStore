@@ -44,7 +44,7 @@ namespace ArooshyStore.BLL.Services
                     string query = "SELECT Count(s.InvoiceNumber) as MyRowCount FROM tblInvoice s left join tblCustomerSupplier c on s.CustomerSupplierId = c.CustomerSupplierId where " + whereCondition + " ";
                     //Get List
                     //query += " select s.InvoiceNumber,isnull(s.InvoiceNumber,'') as InvoiceNumber,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy' from tblInvoice s  where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
-                    query += " select s.InvoiceNumber,isnull(s.InvoiceDate,'') as 'InvoiceDate',isnull(c.CustomerSupplierName,'') as 'CustomerName',isnull(s.NetAmount,0) as NetAmount,isnull((select top(1) isnull(iss.Status,'') from tblInvoiceStatus iss where iss.InvoiceNumber = s.InvoiceNumber order by iss.InvoiceStatusId desc),'') as Status,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy'  from tblInvoice s left join tblCustomerSupplier c on s.CustomerSupplierId = c.CustomerSupplierId   where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
+                    query += " select s.InvoiceNumber,isnull(s.InvoiceDate,'') as 'InvoiceDate',isnull(c.CustomerSupplierName,'') as 'CustomerName',isnull(s.TotalAmount,0) as TotalAmount,isnull(s.DiscType,'') as 'DiscType',isnull(s.DiscRate,0) as DiscRate,isnull(s.DiscAmount,0) as DiscAmount,isnull(s.DeliveryCharges,0) as DeliveryCharges,isnull(s.NetAmount,0) as NetAmount,isnull((select top(1) isnull(iss.Status,'') from tblInvoiceStatus iss where iss.InvoiceNumber = s.InvoiceNumber order by iss.InvoiceStatusId desc),'') as Status,isnull(s.CreatedDate,'') as 'CreatedDate',(case when isnull(s.CreatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.CreatedBy) , 'Record Deleted')End) as 'CreatedBy',isnull(s.UpdatedDate,'') as 'UpdatedDate',(case when isnull(s.UpdatedBy,0) = 0 then '' else isnull((select isnull(i.FullName,'')  from tblUser u inner join tblInfo i on u.InfoId = i.InfoId where u.UserId = s.UpdatedBy) , 'Record Deleted')End) as 'UpdatedBy'  from tblInvoice s left join tblCustomerSupplier c on s.CustomerSupplierId = c.CustomerSupplierId   where " + whereCondition + " " + sorting + " OFFSET " + offset + " ROWS  FETCH NEXT " + length + " ROWS ONLY ";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.CommandType = CommandType.Text;
@@ -66,8 +66,14 @@ namespace ArooshyStore.BLL.Services
                                     InvoiceNumber = reader["InvoiceNumber"].ToString(),
                                     InvoiceDate = Convert.ToDateTime(reader["InvoiceDate"].ToString()),
                                     CustomerName = reader["CustomerName"].ToString(),
+                                    TotalAmount = Convert.ToDecimal(reader["TotalAmount"].ToString()),
+                                    DiscType = reader["DiscType"].ToString(),
+                                    DiscRate = Convert.ToDecimal(reader["DiscRate"].ToString()),
+                                    DiscAmount = Convert.ToDecimal(reader["DiscAmount"].ToString()),
+                                    DeliveryCharges = Convert.ToDecimal(reader["DeliveryCharges"].ToString()),
                                     NetAmount = Convert.ToDecimal(reader["NetAmount"].ToString()),
                                     Status = reader["Status"].ToString(),
+                                    InvoiceNumberWithStatus = reader["InvoiceNumber"].ToString() + "|" + reader["Status"].ToString(),
                                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString()),
                                     CreatedByString = reader["CreatedBy"].ToString(),
                                     UpdatedDate = Convert.ToDateTime(reader["UpdatedDate"].ToString()),
@@ -92,11 +98,24 @@ namespace ArooshyStore.BLL.Services
             return list;
         }
 
-        public InvoiceViewModel GetInvoiceById(string id)
+        public InvoiceViewModel GetInvoiceById(string id, string type)
         {
             InvoiceViewModel model = new InvoiceViewModel();
 
-            if (id != "0")
+            string isNewOrEdit = "";
+            if (type.ToLower() == "edit")
+            {
+                isNewOrEdit = "Update";
+            }
+            else if (type.ToLower() == "exchange")
+            {
+                isNewOrEdit = "Exchange";
+            }
+            else
+            {
+                isNewOrEdit = "New";
+            }
+            if (type.ToLower() == "edit" || type.ToLower() == "exchange")
             {
                 model = (from f in _unitOfWork.Db.Set<tblInvoice>()
                          where f.InvoiceNumber == id
@@ -111,13 +130,13 @@ namespace ArooshyStore.BLL.Services
                                             .Select(x => x.CustomerSupplierName)
                                             .FirstOrDefault() ?? "",
                              TotalAmount = f.TotalAmount ?? 0,
-                             DiscType = f.DiscType ?? "%",
+                             DiscType = f.DiscType ?? "Rs.",
                              DiscRate = f.DiscRate ?? 0,
                              DiscAmount = f.DiscAmount ?? 0,
                              NetAmount = f.NetAmount ?? 0,
                              DeliveryCharges = f.DeliveryCharges ?? 0,
                              CashOrCredit = f.CashOrCredit ?? "",
-                             IsNewOrEdit = "Update",
+                             IsNewOrEdit = isNewOrEdit,
                          }).FirstOrDefault();
             }
             else
@@ -130,13 +149,13 @@ namespace ArooshyStore.BLL.Services
                     CustomerSupplierId = 0,
                     CustomerName = "",
                     TotalAmount = 0,
-                    DiscType = "%",
+                    DiscType = "Rs.",
                     DiscRate = 0,
                     DiscAmount = 0,
                     NetAmount = 0,
                     DeliveryCharges = 0,
                     CashOrCredit = "Cash",
-                    IsNewOrEdit = "New"
+                    IsNewOrEdit = isNewOrEdit
                 };
             }
 
@@ -179,6 +198,10 @@ namespace ArooshyStore.BLL.Services
                 if (model.IsNewOrEdit == "Update")
                 {
                     insertUpdateStatus = "Update";
+                }
+                else if (model.IsNewOrEdit == "Exchange")
+                {
+                    insertUpdateStatus = "Exchange";
                 }
                 else
                 {
@@ -300,7 +323,47 @@ namespace ArooshyStore.BLL.Services
             return response;
         }
 
-        public InvoiceViewModel GetInvoiceByIdForPrint(string id)
+        public StatusMessageViewModel ReturnInvoice(string id, int loggedInUserId)
+        {
+            StatusMessageViewModel response = new StatusMessageViewModel();
+            InvoiceViewModel model = new InvoiceViewModel
+            {
+                InvoiceNumber = id
+            };
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
+            dt.Columns.Add("WarehouseId");
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("ProductAttributeDetailBarcodeId");
+            dt.Columns.Add("TotalAmount");
+            dt.Columns.Add("Qty");
+            dt.Columns.Add("Rate");
+            dt.Columns.Add("OfferDetailId");
+            dt.Columns.Add("DiscType");
+            dt.Columns.Add("DiscRate");
+            dt.Columns.Add("DiscAmount");
+            dt.Columns.Add("NetAmount");
+
+            dt.Rows.Add(new object[] { 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0 });
+            ResultViewModel result = InsertUpdateInvoiceDb(model, dt, "Return", loggedInUserId);
+            if (result.Message == "Success")
+            {
+                response.Status = true;
+                response.Message = "Invoice Returned Successfully";
+                response.IdString = result.IdString;
+            }
+            else
+            {
+                response.Status = false;
+                response.Message = result.Message;
+                response.Id = result.Id;
+            }
+
+            return response;
+        }
+
+        public InvoiceViewModel GetInvoiceByIdForPrint(string id, int loggedInUserId)
         {
             InvoiceViewModel model = (from f in _unitOfWork.Db.Set<tblInvoice>()
                                       where f.InvoiceNumber == id
@@ -308,44 +371,54 @@ namespace ArooshyStore.BLL.Services
                                       {
                                           InvoiceNumber = f.InvoiceNumber ?? "",
                                           InvoiceType = f.InvoiceType ?? "",
-                                          InvoiceDate = f.InvoiceDate,
+                                          InvoiceDate = f.InvoiceDate ?? DateTime.Now,
                                           CustomerSupplierId = f.CustomerSupplierId ?? 0,
                                           CustomerName = _unitOfWork.Db.Set<tblCustomerSupplier>()
-                                                              .Where(x => x.CustomerSupplierId == f.CustomerSupplierId)
-                                                              .Select(x => x.CustomerSupplierName)
-                                                              .FirstOrDefault() ?? "",
+                                            .Where(x => x.CustomerSupplierId == f.CustomerSupplierId)
+                                            .Select(x => x.CustomerSupplierName)
+                                            .FirstOrDefault() ?? "",
                                           TotalAmount = f.TotalAmount ?? 0,
-                                          DiscType = f.DiscType ?? "%",
+                                          DiscType = f.DiscType ?? "Rs.",
                                           DiscRate = f.DiscRate ?? 0,
-                                          DeliveryCharges = f.DeliveryCharges ?? 0,
                                           DiscAmount = f.DiscAmount ?? 0,
                                           NetAmount = f.NetAmount ?? 0,
-
+                                          DeliveryCharges = f.DeliveryCharges ?? 0,
+                                          CashOrCredit = f.CashOrCredit ?? "",
                                       }).FirstOrDefault() ?? new InvoiceViewModel();
 
             model.InvoiceDetailsList = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                                        join p in _unitOfWork.Db.Set<tblProduct>() on c.ProductId equals p.ProductId
+                                        join ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>() on c.ProductAttributeDetailBarcodeId equals ap.ProductAttributeDetailBarcodeId
+                                        join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                        join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                        join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                        join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
                                         where c.InvoiceNumber == id
                                         select new InvoiceDetailViewModel
                                         {
+                                            WarehouseId = c.WarehouseId,
+                                            ProductId = c.ProductId,
+                                            ProductName = p.ArticleNumber + " - " + p.ProductName ?? "",
+                                            TotalAmount = c.TotalAmount ?? 0,
                                             Rate = c.Rate ?? 0,
                                             Qty = c.Qty ?? 0,
-                                            DiscType = c.DiscType ?? "%",
+                                            DiscType = c.DiscType ?? "Rs.",
                                             DiscRate = c.DiscRate ?? 0,
                                             DiscAmount = c.DiscAmount ?? 0,
                                             NetAmount = c.NetAmount ?? 0,
-                                            ProductId = c.ProductId ?? 0,
-                                            ProductName = _unitOfWork.Db.Set<tblProduct>()
-                                                            .Where(x => x.ProductId == c.ProductId)
-                                                            .Select(x => x.ProductName)
-                                                            .FirstOrDefault() ?? "",
-                                            SalePrice = _unitOfWork.Db.Set<tblProduct>()
-                                              .Where(x => x.ProductId == c.ProductId)
-                                              .Select(x => x.SalePrice)
-                                              .FirstOrDefault() ?? 0
+                                            ProductAttributeDetailBarcodeId = c.ProductAttributeDetailBarcodeId ?? 0,
+                                            AttributeName = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName,
+                                            OfferDetailId = c.OfferDetailId ?? 0,
                                         }).ToList();
+
+            model.LoggedInUserName = (from u in _unitOfWork.Db.Set<tblUser>() join i in _unitOfWork.Db.Set<tblInfo>() on u.InfoId equals i.InfoId where u.UserId == loggedInUserId select i.FullName).FirstOrDefault() ?? "";
             var companyInfo = _unitOfWork.Db.Set<tblCompany>().FirstOrDefault();
             if (companyInfo != null)
             {
+                model.CompanyLogoPath = _unitOfWork.Db.Set<tblDocument>()
+                            .Where(x => x.TypeId == companyInfo.CompanyId.ToString() && x.DocumentType == "Company" && x.Remarks == "ProfilePicture")
+                            .Select(x => "/Areas/Admin/FormsDocuments/Company/" + x.DocumentId + "." + x.DocumentExtension)
+                            .FirstOrDefault() ?? "/Areas/Admin/Content/noimage.png";
                 model.CompanyEmail = companyInfo.Email ?? "";
                 model.CompanyAddress = companyInfo.Address ?? "";
                 model.CompanyContact = companyInfo.Contact1 ?? "";
@@ -353,26 +426,71 @@ namespace ArooshyStore.BLL.Services
 
             return model;
         }
+        public List<InvoiceDetailViewModel> InvoiceDetailsList(string invoiceNo)
+        {
+            List<InvoiceDetailViewModel> list = new List<InvoiceDetailViewModel>();
+            try
+            {
+                list = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                        join p in _unitOfWork.Db.Set<tblProduct>() on c.ProductId equals p.ProductId
+                        join ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>() on c.ProductAttributeDetailBarcodeId equals ap.ProductAttributeDetailBarcodeId
+                        join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                        join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                        join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                        join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                        where c.InvoiceNumber == invoiceNo
+                        select new InvoiceDetailViewModel
+                        {
+                            WarehouseId = c.WarehouseId,
+                            ProductId = c.ProductId,
+                            ProductName = p.ArticleNumber + " - " + p.ProductName ?? "",
+                            TotalAmount = c.TotalAmount ?? 0,
+                            Rate = c.Rate ?? 0,
+                            Qty = c.Qty ?? 0,
+                            DiscType = c.DiscType ?? "Rs.",
+                            DiscRate = c.DiscRate ?? 0,
+                            DiscAmount = c.DiscAmount ?? 0,
+                            NetAmount = c.NetAmount ?? 0,
+                            ProductAttributeDetailBarcodeId = c.ProductAttributeDetailBarcodeId ?? 0,
+                            AttributeName = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName,
+                            OfferDetailId = c.OfferDetailId ?? 0,
+                        }).ToList();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler error = ErrorHandler.GetInstance;
+                error.InsertError(0, ex.Message, "Web Application",
+                    "InvoiceRepository", "InvoiceDetailsList");
+            }
+            return list;
+        }
         public List<InvoiceDetailViewModel> GetInvoiceDetailsList(string invoiceNo)
         {
             List<InvoiceDetailViewModel> list = new List<InvoiceDetailViewModel>();
             try
             {
                 list = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                        join p in _unitOfWork.Db.Set<tblProduct>() on c.ProductId equals p.ProductId
+                        join ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>() on c.ProductAttributeDetailBarcodeId equals ap.ProductAttributeDetailBarcodeId
+                        join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                        join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                        join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                        join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
                         where c.InvoiceNumber == invoiceNo
                         select new InvoiceDetailViewModel
                         {
                             WarehouseId = c.WarehouseId,
                             ProductId = c.ProductId,
-                            ProductName = _unitOfWork.Db.Set<tblProduct>().Where(x => x.ProductId == c.ProductId).Select(x => x.ArticleNumber + " - " + x.ProductName).FirstOrDefault() ?? "",
+                            ProductName = p.ArticleNumber + " - " + p.ProductName ?? "",
                             TotalAmount = c.TotalAmount ?? 0,
                             Rate = c.Rate ?? 0,
                             Qty = c.Qty ?? 0,
-                            DiscType = c.DiscType ?? "%",
+                            DiscType = c.DiscType ?? "Rs.",
                             DiscRate = c.DiscRate ?? 0,
                             DiscAmount = c.DiscAmount ?? 0,
                             NetAmount = c.NetAmount ?? 0,
                             ProductAttributeDetailBarcodeId = c.ProductAttributeDetailBarcodeId ?? 0,
+                            AttributeName = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName,
                             OfferDetailId = c.OfferDetailId ?? 0,
                         }).ToList();
             }
@@ -447,6 +565,13 @@ namespace ArooshyStore.BLL.Services
                 maxCode = InvoiceNo + "0001";
             }
             return maxCode;
+        }
+
+        public decimal GetDeliveryCharges(int customerId, int loggedInUserId)
+        {
+            int cityId = _unitOfWork.Db.Set<tblCustomerSupplier>().Where(x => x.CustomerSupplierId == customerId).Select(x => x.CityId).FirstOrDefault() ?? 0;
+            decimal deliveryCharges = _unitOfWork.Db.Set<tblDeliveryCharges>().Where(x => x.CityId == cityId).Select(x => x.DeliveryCharges).FirstOrDefault() ?? 0;
+            return deliveryCharges;
         }
 
         public StatusMessageViewModel InsertUpdateInvoiceStatus(InvoiceStatusViewModel model, int loggedInUserId)
@@ -565,12 +690,16 @@ namespace ArooshyStore.BLL.Services
                      {
                          CustomerSupplierId = f.CustomerSupplierId,
                          CustomerName = f.CustomerSupplierName ?? "",
-                     }).FirstOrDefault() ??  new InvoiceViewModel();
+                     }).FirstOrDefault() ?? new InvoiceViewModel();
 
             return model;
         }
 
-
+        public int GetTotalInvoiceItems(string id)
+        {
+            int totalItems = _unitOfWork.Db.Set<tblInvoiceDetail>().Where(x => x.InvoiceNumber == id).Count();
+            return totalItems;
+        }
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
