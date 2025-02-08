@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Invoice Detail";
+}
+@using ArooshyStore.Models.ViewModels
+@model InvoiceViewModel
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-md-12" style="display:flex">
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        <ol class="breadcrumb breadcrumb-sm breadcrumb-arrow">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-clipboard"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">Invoice Detail</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)">
+                                    <i class="fal fa-list-ol"></i>
+                                    &nbsp;
+                                    <span class="hidden-md-down">@Model.InvoiceNumber</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </th>
+                    <th style="text-align:right">
+                        <h6 class="js-get-date" style="margin-top: -7px;"></h6>
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="panel" style="padding:10px">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered" style="border:1px solid #ddd">
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Invoice #</th>
+                        <td style=" border: 1px solid #ddd" colspan="3"><span class="badge badge-dark" style="padding:5px; padding-left:10px;padding-right:10px;font-size:14px;font-weight:bold">@Model.InvoiceNumber</span></td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">@((Model.InvoiceType == "Sale Invoice" || Model.InvoiceType == "Sale Return") ? "Customer" : "Supplier")</th>
+                        <td style=" border: 1px solid #ddd; font-weight: bold">@Model.CustomerName</td>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Invoice Date</th>
+                        <td style=" border: 1px solid #ddd;font-weight:bold"><span style="color:green">@Convert.ToDateTime(Model.InvoiceDate).ToString("dd/MM/yyyy")</span>&nbsp;&nbsp;<span style="color:brown">@Convert.ToDateTime(Model.InvoiceDate).ToString("hh:mm tt")</span></td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Gross Amount</th>
+                        <td style=" border: 1px solid #ddd; font-size: 15px; color: green; font-weight: bold">@Convert.ToDecimal(Model.TotalAmount).ToString("#,##0.00")</td>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Discount Type</th>
+                        <td style=" border: 1px solid #ddd;font-weight:bold;">@Model.DiscType</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Discount Rate</th>
+                        <td style=" border: 1px solid #ddd; font-weight: bold">@Convert.ToDecimal(Model.DiscRate).ToString("#,##0.00")</td>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Discount Amount</th>
+                        <td style=" border: 1px solid #ddd; font-weight: bold">@Convert.ToDecimal(Model.DiscAmount).ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Delivery Charges</th>
+                        <td style=" border: 1px solid #ddd; font-weight: bold">@Convert.ToDecimal(Model.DeliveryCharges).ToString("#,##0.00")</td>
+                        <th style="background-color: #727B84; width: 200px; color: #fff; font-weight: bold; border: 1px solid #ddd">Net Amount</th>
+                        <td style=" border: 1px solid #ddd;font-size:15px; color: green; font-weight: bold">@Convert.ToDecimal(Model.NetAmount).ToString("#,##0.00")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" style="width:100%;margin-top:30px">
+                <thead class="thead-themed">
+                    <tr>
+                        <th style="text-align: center; color: #fff; background-color: #727B84; border: 1px solid #000;width:80px ">Sr #</th>
+                        <th style="text-align: left; color: #fff; background-color: #727B84; border: 1px solid #000; ">Product Name</th>
+                        <th style="text-align: left; color: #fff; background-color: #727B84;  border: 1px solid #000 ">Size & Color</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; border: 1px solid #000 ">Price</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84;  border: 1px solid #000 ">Qty</th>
+                        <th style="text-align: center; color: #fff; background-color: #727B84;  border: 1px solid #000 ">Disc Type</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84;  border: 1px solid #000 ">Disc Rate</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84;  border: 1px solid #000 ">Disc Amount</th>
+                        <th style="text-align: right; color: #fff; background-color: #727B84; border: 1px solid #000 ">Net Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (InvoiceDetailViewModel p in Model.InvoiceDetailsList)
+                    {
+                        i++;
+                        <tr class="DataTr">
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd">@i</td>
+                            <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.ProductName</td>
+                            <td style="text-align: left; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.AttributeName</td>
+                            <td style="text-align: right;  font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.Rate).ToString("#,##0.00")</td>
+                            <td style="text-align: center; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@Math.Round(Convert.ToDecimal(p.Qty), 0)</td>
+                            <td style="text-align: center; font-weight: normal; background-color: #F7F7F7; border: 1px solid #ddd ">@p.DiscType</td>
+                            <td style="text-align: right; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.DiscRate).ToString("#,##0.00")</td>
+                            <td style="text-align: right; font-weight: bold; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.DiscAmount).ToString("#,##0.00")</td>
+                            <td style="text-align: right; font-weight: bold;color:green; background-color: #F7F7F7; border: 1px solid #ddd ">@Convert.ToDecimal(p.NetAmount).ToString("#,##0.00")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+<script type="text/javascript">
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").addClass('active');
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").css('display', "block");
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
+    $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=all"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
+</script>

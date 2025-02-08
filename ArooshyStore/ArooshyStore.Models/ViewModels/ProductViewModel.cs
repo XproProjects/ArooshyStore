@@ -70,6 +70,7 @@ namespace ArooshyStore.Models.ViewModels
         public List<DocumentViewModel> DocumentsList { get; set; }
         public List<ProductViewModel> Products { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
+        public List<ModuleViewModel> ModulesList { get; set; }
         public List<TagsForProductsViewModel> Tags { get; set; }
         public List<DiscountOfferViewModel> DiscountOffer { get; set; }
     }

@@ -23,6 +23,7 @@ namespace ArooshyStore.BLL.Interfaces
         List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data);
         ProductViewModel GetProductDetailById(int id);
         int GetProductTotalStock(int productId, int loggedInUserId);
+        List<CategoryViewModel> GetMasterCategoriesList();
 
         List<ProductViewModel> GetNewArrivalProducts();
         ProductViewModel GetProductSalePrice(int productId);

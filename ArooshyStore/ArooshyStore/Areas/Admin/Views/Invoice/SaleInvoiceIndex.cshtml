@@ -6,7 +6,7 @@
 <!-- END Page Header -->
 <!-- BEGIN Page Content -->
 <input type="hidden" id="From" value="@ViewBag.From" />
-<main id="js-page-content" role="main" class="page-content">
+<main id="js-page-content" role="main" class="page-content mySelectList">
     <div class="row">
         <div class="col-md-12" style="display:flex">
             <table style="width:100%">
@@ -92,13 +92,13 @@
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
+                                    @*<div class="input-group-prepend">
                                         <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Invoice Number</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
                                             <a class="dropdown-item" href="#">Invoice Number</a>
                                         </div>
-                                    </div>
-                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
+                                    </div>*@
+                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search Invoice # here..." aria-label="Text input with dropdown button">
                                     <div class="input-group-append">
                                         <button id="btnSearch" class="btn btn-outline-default btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false">Go</button>
                                     </div>
@@ -144,7 +144,12 @@
 
                                     </div>
                                     <div class="row" style="margin-top:25px">
-                                        <section class="col-md-6 DateDiv">
+                                        <div class="col-md-4">
+                                            <div class="input-group" id="ProductIdListDiv">
+                                                <select id="ProductIdList" name="ProductIdList"></select>
+                                            </div>
+                                        </div>
+                                        <section class="col-md-4 DateDiv">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -154,7 +159,7 @@
                                                 <input type="date" class="form-control" id="DateFilter" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                                             </div>
                                         </section>
-                                        <section class="col-md-6 MonthDiv" hidden>
+                                        <section class="col-md-4 MonthDiv" hidden>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -184,8 +189,7 @@
                                                 <input type="date" class="form-control" id="ToDateFilter" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                                             </div>
                                         </section>
-                                        <section class="col-md-4 pull-right">
-                                        </section>
+
                                     </div>
                                 </div>
                             </div>

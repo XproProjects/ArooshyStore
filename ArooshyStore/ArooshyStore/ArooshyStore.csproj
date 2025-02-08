@@ -372,6 +372,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\SalaryController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeAttendanceController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
@@ -436,6 +437,8 @@
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login7.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\Login8.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Account\LoginPartial.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Report\PrintReport.css" />
+    <Content Include="Areas\Admin\Content\ArooshyStoreCss\Report\Index.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\Category\InsertUpdateCategory.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\About\InsertUpdateAbout.css" />
     <Content Include="Areas\Admin\Content\ArooshyStoreCss\DiscountOffer\InsertUpdateDiscountOffer.css" />
@@ -1492,6 +1495,11 @@
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\UpdateCostPrice.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductDetail.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Product\ProductAttributesBarcodesList.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Report\Index.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Report\ProductStockReport\ProductStockReport.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Report\ProductSaleReport\ProductSaleReport.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Report\SalePurchaseStatusWiseReport\SalePurchaseStatusWiseReport.js" />
+    <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Report\SalePurchaseReport\SalePurchaseReport.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\Index.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\Salary\InsertUpdateSalary.js" />
     <Content Include="Areas\Admin\Scripts\ArooshyStoreScripts\EmployeeAttendance\Index.js" />
@@ -2546,6 +2554,16 @@
     <Content Include="Areas\Admin\Views\Invoice\PrintInvoice - Copy %282%29.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductStockDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\InvoiceDetailsList.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoice\InvoiceDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\SalePurchaseReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\PrintSalePurchaseReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\ProductSaleReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\PrintProductSaleReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\ProductStockReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\PrintProductStockReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\SalePurchaseStatusWiseReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\PrintSalePurchaseStatusWiseReport.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

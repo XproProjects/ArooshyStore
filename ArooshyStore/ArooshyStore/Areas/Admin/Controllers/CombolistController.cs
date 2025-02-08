@@ -26,6 +26,22 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region All Categories
+        public JsonResult GetAllCategoryOptionList(string searchTerm, int pageSize, int pageNumber, string type = "child")
+        {
+            var select2pagedResult = _repository.GetAllCategoriesList(searchTerm, pageSize, pageNumber, type);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Child Categories by Parent Category Id
+        public JsonResult GetChildCategoriesByParentCategoryIdOptionList(string searchTerm, int pageSize, int pageNumber, int parentCategoryId = 0)
+        {
+            var select2pagedResult = _repository.GetChildCategoriesByParentCategoryIdOptionList(searchTerm, pageSize, pageNumber, parentCategoryId);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         #region Customers Supplier
         public JsonResult GetCustomerSupplierOptionList(string searchTerm, int pageSize, int pageNumber, string type = "customer")
         {
@@ -105,11 +121,26 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region Products
         public JsonResult GetProductsOptionList(string searchTerm, int pageSize, int pageNumber)
         {
             var select2pagedResult = _repository.GetProductsList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region All Products
+        public JsonResult GetAllProductsOptionList(string searchTerm, int pageSize, int pageNumber)
+        {
+            var select2pagedResult = _repository.GetAllProductsList(searchTerm, pageSize, pageNumber);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Products with Category Id
+        public JsonResult GetProductsByCategoryIdOptionList(string searchTerm, int pageSize, int pageNumber, int parentCategoryId, int childCategoryId = 0)
+        {
+            var select2pagedResult = _repository.GetProductsByCategoryIdList(searchTerm, pageSize, pageNumber, parentCategoryId, childCategoryId);
             var result = select2pagedResult;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -130,7 +161,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region Delivery Info
         public JsonResult GetDeliveryInfoList(string searchTerm, int pageSize, int pageNumber)
         {
@@ -163,7 +193,6 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region Error Source
         public JsonResult GetErrorActionOptionList(string searchTerm, int pageSize, int pageNumber)
         {
@@ -176,6 +205,14 @@ namespace ArooshyStore.Areas.Admin.Controllers
         public JsonResult GetProductAttributesFromBarcodeTableOptionList(string searchTerm, int pageSize, int pageNumber, int productId = 0)
         {
             var select2pagedResult = _repository.GetProductListAttributesFromBarcodeTable(searchTerm, pageSize, pageNumber, productId);
+            var result = select2pagedResult;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Products All Attributes from tblProductDetailBarcode
+        public JsonResult GetProductAllAttributesFromBarcodeTableOptionList(string searchTerm, int pageSize, int pageNumber, int productId = 0)
+        {
+            var select2pagedResult = _repository.GetProductListAllAttributesFromBarcodeTable(searchTerm, pageSize, pageNumber, productId);
             var result = select2pagedResult;
             return Json(result, JsonRequestBehavior.AllowGet);
         }

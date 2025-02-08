@@ -38,9 +38,6 @@ namespace ArooshyStore.Models.ViewModels
         public string CompanyEmail { get; set; }
         public string CompanyLogoPath { get; set; }
         public string LoggedInUserName { get; set; }
-
-        public List<InvoiceDetailViewModel> InvoiceDetailsList { get; set; }
-
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public string CreatedByString { get; set; }
@@ -48,5 +45,6 @@ namespace ArooshyStore.Models.ViewModels
         public int? UpdatedBy { get; set; }
         public string UpdatedByString { get; set; }
         public int TotalRecords { get; set; }
+        public List<InvoiceDetailViewModel> InvoiceDetailsList { get; set; }
     }
 }

@@ -804,6 +804,20 @@ namespace ArooshyStore.BLL.Services
             }
             return result;
         }
+        public List<CategoryViewModel> GetMasterCategoriesList()
+        {
+            List<CategoryViewModel> list = new List<CategoryViewModel>();
+            list = (from c in _unitOfWork.Db.Set<tblCategory>()
+                    orderby c.CategoryName
+                    where c.ParentCategoryId == 0
+                    && c.Status == true
+                    select new CategoryViewModel
+                    {
+                        CategoryId = c.CategoryId,
+                        CategoryName = c.CategoryName
+                    }).OrderBy(x => x.CategoryId).ToList();
+            return list;
+        }
         public List<ProductAttributeDetailViewModel> GetBarcodesDataForPrint(string data)
         {
             List<ProductAttributeDetailViewModel> barcodesList = JsonConvert.DeserializeObject<List<ProductAttributeDetailViewModel>>(data);

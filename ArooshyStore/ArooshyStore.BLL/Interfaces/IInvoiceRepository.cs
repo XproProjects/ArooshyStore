@@ -17,6 +17,7 @@ namespace ArooshyStore.BLL.Interfaces
         StatusMessageViewModel InsertUpdateInvoiceStatus(InvoiceStatusViewModel model, int loggedInUserId);
         InvoiceStatusViewModel GetInvoiceStatusById(string id);
         InvoiceViewModel GetInvoiceByIdForPrint(string id, int loggedInUserId);
+        InvoiceViewModel GetInvoiceDetail(string id, int loggedInUserId);
         InvoiceViewModel GetCashCustomer();
         int GetTotalInvoiceItems(string id);
         List<InvoiceDetailViewModel> InvoiceDetailsList(string InvoiceNo);

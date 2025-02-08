@@ -52,7 +52,7 @@ namespace ArooshyStore
             container.RegisterType<IDesignationRepository, DesignationRepository>();
             container.RegisterType<IEmployeeAttendanceRepository, EmployeeAttendanceRepository>();
             container.RegisterType<ISalaryRepository, SalaryRepository>();
-
+            container.RegisterType<IReportRepository, ReportRepository>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

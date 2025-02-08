@@ -1,4 +1,69 @@
 ﻿$(function () {
+    $('#ChildCategoryIdList').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetChildCategoriesByParentCategoryIdOptionList/',
+            dataType: 'json',
+
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page,
+                    parentCategoryId: $('.tabMainLi.active').find("a").attr("data-value")
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Category--",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelectList"),
+        allowClear: true,
+    });
+    $('#ProductIdList').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetProductsByCategoryIdOptionList/',
+            dataType: 'json',
+
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page,
+                    parentCategoryId: $('.tabMainLi.active').find("a").attr("data-value"),  
+                    childCategoryId: $('#ChildCategoryIdList').val()
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Product--",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelectList"),
+        allowClear: true,
+    });
+    LoadDataTable();
+});
+
+function LoadDataTable() {
     $('#myTable').dataTable({
 
         "autoWidth": true,
@@ -7,6 +72,7 @@
         "processing": true,
         "serverSide": true,
         "responsive": true,
+        "bDestroy": true,
         "fnInitComplete": function (oSettings, json) {
             getProductStock();
         },
@@ -14,6 +80,12 @@
             "url": "/Admin/Product/GetAllProducts",
             "type": "POST",
             "datatype": "json",
+            "data": function (d) {
+                d.TextboxFilter = $("#txtSearch").val();
+                d.MasterCategoryIdList = $('.tabMainLi.active').find("a").attr("data-value");
+                d.ChildCategoryIdList = $("#ChildCategoryIdList").val();
+                d.ProductIdList = $("#ProductIdList").val();
+            },
             error: function (xhr, httpStatusMessage, customErrorMessage) {
                 if (xhr.status === 410) {
                     window.location.href = customErrorMessage;
@@ -157,8 +229,7 @@
         ]
     });
     oTable = $('#myTable').DataTable();
-});
-
+}
 function getProductStock() {
     $(".TotalStockSpanInList").each(function () {
         var productId = $(this).attr("data-value");
@@ -174,6 +245,21 @@ function getProductStock() {
         })
     })
 }
+$('#ChildCategoryIdList').change(function () {
+    $('#ProductIdList').val(null).trigger('change.select2');
+    LoadDataTable();
+});
+$('#ProductIdList').change(function () {
+    LoadDataTable();
+});
+$(document).on('click', '.btnMainOrder', function () {
+    $('.tabMainLi').removeClass("active");
+    $(this).parent("li").addClass("active");
+    $(this).css("color", "#6B9635");
+    $('#ChildCategoryIdList').val(null).trigger('change.select2');
+    $('#ProductIdList').val(null).trigger('change.select2');
+    LoadDataTable();
+});
 $(document).on('click', '.btnProductReview', function () {
 
     var id = $(this).attr("data-value"); // Get the ProductId
@@ -295,11 +381,11 @@ $(document).on('click', '.btnPrint', function () {
     })
 });
 $('#btnSearch').click(function () {
-    SearchItem();
+    LoadDataTable();
 });
 $('#txtSearch').on('keypress', function (event) {
     if (event.keyCode == 13) {
-        SearchItem();
+        LoadDataTable();
     }
 });
 function SearchItem() {

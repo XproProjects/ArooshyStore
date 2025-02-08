@@ -1,0 +1,65 @@
+﻿<div class="mySelect" style="overflow-x:hidden;margin-top:-20px;padding:0px">
+    @using (Html.BeginForm("PrintProductSaleReport", "Report", FormMethod.Post, new { id = "popupForm", @class = "smart-form custome-class-form", @novalidate = "novalidate", enctype = "multipart/form-data" }))
+    {
+        <fieldset style="padding:1.25rem">
+            <div class="row" style="margin-top: 15px">
+                <section class="col-md-6">
+                    <label class="form-label">Select Master Category</label>
+                    <div class="input-group" id="ParentCategoryIdDiv">
+                        <select id="ParentCategoryId" name="ParentCategoryId"></select>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <label class="form-label">Select Child Category</label>
+                    <div class="input-group" id="ChildCategoryIdDiv">
+                        <select id="ChildCategoryId" name="ChildCategoryId"></select>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <section class="col-md-6">
+                    <label class="form-label">Select Product</label>
+                    <div class="input-group" id="ProductIdDiv">
+                        <select id="ProductId" name="ProductId"></select>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <label class="form-label">Select Size & Color</label>
+                    <div class="input-group" id="ProductAttributeDetailBarcodeIdDiv">
+                        <select id="ProductAttributeDetailBarcodeId" name="ProductAttributeDetailBarcodeId"></select>
+                    </div>
+                </section>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <section class="col-md-6">
+                    <label class="form-label">From Date</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control" id="FromDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <label class="form-label">To Date</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control" id="ToDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <footer class="modal-footer" style="margin-top:11px;background-color:#F9F9F9;border-top:1px solid #ddd">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" id="btn_Save" formtarget="_blank" class="btn btn-primary btnSaveForm">Print</button>
+        </footer>
+    }
+</div>
+<script src="~/Scripts/app.bundle.js"></script>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Report/SaleReport/SaleReport.js"></script>

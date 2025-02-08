@@ -31,8 +31,36 @@ $(function () {
     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").css('display', "block");
     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").removeClass("open").addClass("open");
     $('.nav-menu li a[href="/admin/invoice/saleinvoiceindex/?from=' + $("#From").val() + '"]').parent("li").parent("ul").parent("li").find("a").find("b").find("em").removeClass("fa-angle-down").removeClass("fa-angle-up").addClass("fa-angle-up");
-    LoadDataTable();
+    $('#ProductIdList').select2({
+        ajax: {
+            delay: 150,
+            url: '/Admin/Combolist/GetAllProductsOptionList/',
+            dataType: 'json',
 
+            data: function (params) {
+                params.page = params.page || 1;
+                return {
+                    searchTerm: params.term,
+                    pageSize: 20,
+                    pageNumber: params.page
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: data.Results,
+                    pagination: {
+                        more: (params.page * 20) < data.Total
+                    }
+                };
+            }
+        },
+        placeholder: "-- Select Product--",
+        minimumInputLength: 0,
+        dropdownParent: $(".mySelectList"),
+        allowClear: true,
+    });
+    LoadDataTable();
 });
 function LoadDataTable() {
     $('#myTable').dataTable({
@@ -60,6 +88,7 @@ function LoadDataTable() {
                 d.FromDateFilter = $("#FromDateFilter").val();
                 d.ToDateFilter = $("#ToDateFilter").val();
                 d.TextboxFilter = $('#txtSearch').val();
+                d.ProductIdList = $('#ProductIdList').val();
             },
             error: function (xhr, httpStatusMessage, customErrorMessage) {
                 if (xhr.status === 410) {
@@ -68,7 +97,11 @@ function LoadDataTable() {
             }
         },
         "columns": [
-            { "data": "InvoiceNumber", "name": "InvoiceNumber", "class": "InvoiceNumberClass Acenter", "width": "120px", "autoWidth": false },
+            {
+                "data": "InvoiceNumber", "name": "InvoiceNumber", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (data) {
+                    return '<a href="/admin/invoice/invoicedetail/?id='+data+'" target="_blank" style="text-decoration:underline !important;font-weight:bold">'+data+'</a>';
+                }
+            },
             {
                 "data": "InvoiceDate", "name": "InvoiceDate", "width": "130px", "class": "Acenter", "orderable": true, "autoWidth": false, 'render': function (date) {
                     return getDateTimeForDatatable(date);
@@ -164,6 +197,7 @@ function LoadDataTable() {
                         '<i class="fas fa-list mr-1"></i> Actions' +
                         '</button>' +
                         '<div class="dropdown-menu">';
+                    div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/invoicedetail/?id=' + invoiceNumber + '" title="Print Invoice" style="text-decoration:none !important">Detail</a>';
                     div += '<a class="dropdown-item" target="_blank" href="/admin/invoice/printinvoice/?id=' + invoiceNumber + '" title="Print Invoice" style="text-decoration:none !important">Print</a>';
                     if (status != 'Returned' && status != 'returned') {
                         if ($('#EditActionRole').val() > 0) {
@@ -207,6 +241,10 @@ function getInvoiceItemsList() {
         })
     })
 }
+
+$('#ProductIdList').change(function () {
+    LoadDataTable();
+});
 
 $(document).on('click', '.btnViewItemsDetail', function () {
     $("#MyModal").find('.modal-dialog').removeClass("modal-lg").addClass("modal-lg");

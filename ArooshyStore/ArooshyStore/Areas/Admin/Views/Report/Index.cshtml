@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Reports";
+}
+@using ArooshyStore.Models.ViewModels
+@model List<ModuleViewModel>
+<link href="~/Areas/Admin/Content/ArooshyStoreCss/Report/Index.css" rel="stylesheet" />
+<!-- widget content -->
+<div id="content" class="tablecontainer" style=" padding: 89px 30px;background-color:#FAF8FB">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa fa-print fa-fw "></i>
+                Reports
+            </h1>
+        </div>
+    </div>
+    <section style="margin-top:15px">
+        <div class="panel">
+            <div class="panel-heading" style="padding: 10px;background-color: #F2F2F2;font-size: 15px;font-weight: bold;border: 1px solid #C3C3C3;border-bottom:none">
+                <div style="margin-bottom:10px">
+                    <span>
+                        Reports
+                    </span>
+                </div>
+            </div>
+            <div class="panel-body" style="padding:15px;background-color:#FAF8FB;border:1px solid #C3C3C3">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%; padding-right: 10px; vertical-align: top">
+                                @if (Model.Any(x => x.ActionName.ToLower() == "sale report"
+                                                    || x.ActionName.ToLower() == "purchase report"))
+                                {
+                                    <div class="panel panel-default" id="">
+                                        <div class="panel-heading ChildHeader" style="">
+                                            <div style="text-align:left; color: #ccc;font-size: 15px; font-weight: bold;">1. Sale / Purchase</div>
+                                        </div>
+                                        @if (Model.Any(x => x.ActionName.ToLower() == "sale report"))
+                                        {
+                                            <div class="list-group">
+                                                <a href="javascript:void(0)" class="list-group-item btnSaleReport btnOpenModal" data-toggle="modal" data-target="#MyModal" style="font-weight: bold; font-size: 12px;color:#5090CD">1.1)&nbsp;&nbsp;Sale Report</a>
+                                            </div>
+                                        }
+                                        @if (Model.Any(x => x.ActionName.ToLower() == "purchase report"))
+                                        {
+                                            <div class="list-group">
+                                                <a href="javascript:void(0)" class="list-group-item btnPurchaseReport btnOpenModal" data-toggle="modal" data-target="#MyModal" style="font-weight: bold; font-size: 12px;color:#5090CD">1.2)&nbsp;&nbsp;Purchase Report</a>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                            <td style="width: 50%; padding-left: 10px; vertical-align: top">
+                                @if (Model.Any(x => x.ActionName.ToLower() == "product sale report" 
+                                                    || x.ActionName.ToLower() == "product stock report"))
+                                {
+                                    <div class="panel panel-default" id="">
+                                        <div class="panel-heading ChildHeader" style="background-color:#F2F2F2">
+                                            <div style="text-align:left; color: #ccc;font-size: 15px; font-weight: bold;">2. Product</div>
+                                        </div>
+                                        @if (Model.Any(x => x.ActionName.ToLower() == "product sale report"))
+                                        {
+                                            <div class="list-group">
+                                                <a href="javascript:void(0)" class="list-group-item btnProductSaleReport btnOpenModal" data-toggle="modal" data-target="#MyModal" style="font-weight: bold; font-size: 12px;color:#5090CD">2.1)&nbsp;&nbsp;Product Sale Report</a>
+                                            </div>
+                                        }
+                                        @if (Model.Any(x => x.ActionName.ToLower() == "product stock report"))
+                                        {
+                                            <div class="list-group">
+                                                <a href="javascript:void(0)" class="list-group-item btnStockReport btnOpenModal" data-toggle="modal" data-target="#MyModal" style="font-weight: bold; font-size: 12px;color:#5090CD">2.2)&nbsp;&nbsp;Product Stock Report</a>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="~/Areas/Admin/Scripts/ArooshyStoreScripts/Report/Index.js"></script>

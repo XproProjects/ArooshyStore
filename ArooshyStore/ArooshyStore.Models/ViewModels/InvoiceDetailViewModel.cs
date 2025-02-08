@@ -6,6 +6,7 @@ namespace ArooshyStore.Models.ViewModels
     {
         public string InvoiceLineNumber { get; set; }
         public string InvoiceNumber { get; set; }
+        public DateTime? InvoiceDate { get; set; }
         public int? WarehouseId { get; set; }
         public int? MasterCategoryId { get; set; }
         public string MasterCategoryName { get; set; }
@@ -19,6 +20,7 @@ namespace ArooshyStore.Models.ViewModels
         public string AttributeName { get; set; }
         public int? AttributeDetailId { get; set; }
         public string AttributeDetailName { get; set; }
+        public string Status { get; set; }
         public int? UnitId { get; set; }
         public int? DiscountOfferId { get; set; }
         public decimal? TotalAmount { get; set; }

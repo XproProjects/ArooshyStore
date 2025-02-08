@@ -363,6 +363,57 @@ namespace ArooshyStore.BLL.Services
             return response;
         }
 
+        public InvoiceViewModel GetInvoiceDetail(string id, int loggedInUserId)
+        {
+            InvoiceViewModel model = (from f in _unitOfWork.Db.Set<tblInvoice>()
+                                      where f.InvoiceNumber == id
+                                      select new InvoiceViewModel
+                                      {
+                                          InvoiceNumber = f.InvoiceNumber ?? "",
+                                          InvoiceType = f.InvoiceType ?? "",
+                                          InvoiceDate = f.InvoiceDate ?? DateTime.Now,
+                                          CustomerSupplierId = f.CustomerSupplierId ?? 0,
+                                          CustomerName = _unitOfWork.Db.Set<tblCustomerSupplier>()
+                                            .Where(x => x.CustomerSupplierId == f.CustomerSupplierId)
+                                            .Select(x => x.CustomerSupplierName)
+                                            .FirstOrDefault() ?? "",
+                                          TotalAmount = f.TotalAmount ?? 0,
+                                          DiscType = f.DiscType ?? "Rs.",
+                                          DiscRate = f.DiscRate ?? 0,
+                                          DiscAmount = f.DiscAmount ?? 0,
+                                          NetAmount = f.NetAmount ?? 0,
+                                          DeliveryCharges = f.DeliveryCharges ?? 0,
+                                          CashOrCredit = f.CashOrCredit ?? "",
+                                      }).FirstOrDefault() ?? new InvoiceViewModel();
+
+            model.InvoiceDetailsList = (from c in _unitOfWork.Db.Set<tblInvoiceDetail>()
+                                        join p in _unitOfWork.Db.Set<tblProduct>() on c.ProductId equals p.ProductId
+                                        join ap in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>() on c.ProductAttributeDetailBarcodeId equals ap.ProductAttributeDetailBarcodeId
+                                        join a1 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId1 equals a1.AttributeId
+                                        join a2 in _unitOfWork.Db.Set<tblAttribute>() on ap.AttributeId2 equals a2.AttributeId
+                                        join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId1 equals ad1.AttributeDetailId
+                                        join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on ap.AttributeDetailId2 equals ad2.AttributeDetailId
+                                        where c.InvoiceNumber == id
+                                        select new InvoiceDetailViewModel
+                                        {
+                                            WarehouseId = c.WarehouseId,
+                                            ProductId = c.ProductId,
+                                            ProductName = p.ArticleNumber + " - " + p.ProductName ?? "",
+                                            TotalAmount = c.TotalAmount ?? 0,
+                                            Rate = c.Rate ?? 0,
+                                            Qty = c.Qty ?? 0,
+                                            DiscType = c.DiscType ?? "Rs.",
+                                            DiscRate = c.DiscRate ?? 0,
+                                            DiscAmount = c.DiscAmount ?? 0,
+                                            NetAmount = c.NetAmount ?? 0,
+                                            ProductAttributeDetailBarcodeId = c.ProductAttributeDetailBarcodeId ?? 0,
+                                            AttributeName = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName,
+                                            OfferDetailId = c.OfferDetailId ?? 0,
+                                        }).ToList();
+
+            return model;
+        }
+
         public InvoiceViewModel GetInvoiceByIdForPrint(string id, int loggedInUserId)
         {
             InvoiceViewModel model = (from f in _unitOfWork.Db.Set<tblInvoice>()

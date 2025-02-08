@@ -22,7 +22,7 @@ namespace ArooshyStore.BLL.Services
         {
             this._unitOfWork = unitOfWork;
         }
-        #region Master Category
+        #region Category
         public Select2PagedResultViewModel GetCategoriesList(string searchTerm, int pageSize, int pageNumber, string type)
         {
             if (type.ToLower() == "master")
@@ -33,7 +33,7 @@ namespace ArooshyStore.BLL.Services
             {
                 AllItemsList = AllChildCategoriesList(type);
             }
-            
+
             var select2pagedResult = new Select2PagedResultViewModel();
             var totalResults = 0;
             select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
@@ -68,6 +68,82 @@ namespace ArooshyStore.BLL.Services
                     {
                         id = c.CategoryId,
                         text = c.CategoryName + " - " + p.CategoryName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
+        #region All Category
+        public Select2PagedResultViewModel GetAllCategoriesList(string searchTerm, int pageSize, int pageNumber, string type)
+        {
+            if (type.ToLower() == "master")
+            {
+                AllItemsList = AllAllParentCategoriesList(type);
+            }
+            else
+            {
+                AllItemsList = AllAllChildCategoriesList(type);
+            }
+
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> AllAllParentCategoriesList(string type)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblCategory>()
+                    orderby c.CategoryName
+                    where c.ParentCategoryId == 0
+                    select new SelectListViewModel
+                    {
+                        id = c.CategoryId,
+                        text = c.CategoryName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        public IQueryable<SelectListViewModel> AllAllChildCategoriesList(string type)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblCategory>()
+                    join p in _unitOfWork.Db.Set<tblCategory>() on c.ParentCategoryId equals p.CategoryId
+                    orderby p.CategoryName
+                    where c.ParentCategoryId != 0
+                    select new SelectListViewModel
+                    {
+                        id = c.CategoryId,
+                        text = c.CategoryName + " - " + p.CategoryName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
+        #region Child Categories by Parent Category Id
+        public Select2PagedResultViewModel GetChildCategoriesByParentCategoryIdOptionList(string searchTerm, int pageSize, int pageNumber, int parentCategoryId = 0)
+        {
+            AllItemsList = AllChildCategoriesByParentCategoryIdList(parentCategoryId);
+
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> AllChildCategoriesByParentCategoryIdList(int parentCategoryId)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblCategory>()
+                    orderby c.CategoryName
+                    where c.ParentCategoryId == parentCategoryId
+                    select new SelectListViewModel
+                    {
+                        id = c.CategoryId,
+                        text = c.CategoryName
                     }).ToList();
             var result = item.AsQueryable();
             return result;
@@ -241,7 +317,7 @@ namespace ArooshyStore.BLL.Services
         {
             List<SelectListViewModel> item = new List<SelectListViewModel>();
             item = (from c in _unitOfWork.Db.Set<tblCity>()
-                    where  c.Status == true && c.CityName.ToLower() != "shop"
+                    where c.Status == true && c.CityName.ToLower() != "shop"
                     orderby c.CityName
                     select new SelectListViewModel
                     {
@@ -274,6 +350,76 @@ namespace ArooshyStore.BLL.Services
                         id = c.ProductId,
                         text = c.ArticleNumber + " - " + c.ProductName
                     }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
+        #region All Products
+        public Select2PagedResultViewModel GetAllProductsList(string searchTerm, int pageSize, int pageNumber)
+        {
+            AllItemsList = GetAllProductsList();
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> GetAllProductsList()
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblProduct>()
+                    orderby c.ArticleNumber
+                    select new SelectListViewModel
+                    {
+                        id = c.ProductId,
+                        text = c.ArticleNumber + " - " + c.ProductName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
+        #region Products by CategoryId
+        public Select2PagedResultViewModel GetProductsByCategoryIdList(string searchTerm, int pageSize, int pageNumber, int parentCategoryId, int childCategoryId)
+        {
+            AllItemsList = GetProductsByCategoryIdList(parentCategoryId, childCategoryId);
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> GetProductsByCategoryIdList(int parentCategoryId, int childCategoryId)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            if (childCategoryId != 0)
+            {
+                item = (from c in _unitOfWork.Db.Set<tblProduct>()
+                        join cc in _unitOfWork.Db.Set<tblCategory>() on c.CategoryId equals cc.CategoryId
+                        join p in _unitOfWork.Db.Set<tblCategory>() on cc.ParentCategoryId equals p.CategoryId
+                        where cc.ParentCategoryId == parentCategoryId
+                        && c.CategoryId == childCategoryId
+                        orderby c.ArticleNumber
+                        select new SelectListViewModel
+                        {
+                            id = c.ProductId,
+                            text = c.ArticleNumber + " - " + c.ProductName
+                        }).ToList();
+            }
+            else
+            {
+                item = (from c in _unitOfWork.Db.Set<tblProduct>()
+                        join cc in _unitOfWork.Db.Set<tblCategory>() on c.CategoryId equals cc.CategoryId
+                        join p in _unitOfWork.Db.Set<tblCategory>() on cc.ParentCategoryId equals p.CategoryId
+                        where cc.ParentCategoryId == parentCategoryId
+                        orderby c.ArticleNumber
+                        select new SelectListViewModel
+                        {
+                            id = c.ProductId,
+                            text = c.ArticleNumber + " - " + c.ProductName
+                        }).ToList();
+            }
             var result = item.AsQueryable();
             return result;
         }
@@ -419,7 +565,7 @@ namespace ArooshyStore.BLL.Services
         {
             List<SelectListStringViewModel> item = new List<SelectListStringViewModel>();
             item = (from c in _unitOfWork.Db.Set<tblErrorsLog>()
-                    
+
                     orderby c.ErrorLineNumber
                     select new SelectListStringViewModel
                     {
@@ -530,6 +676,36 @@ namespace ArooshyStore.BLL.Services
                     join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on c.AttributeDetailId2 equals ad2.AttributeDetailId
                     where c.ProductId == productId
                     && c.Status == true
+                    orderby ad1.AttributeDetailName
+                    select new SelectListViewModel
+                    {
+                        id = c.ProductAttributeDetailBarcodeId,
+                        text = ad1.AttributeDetailName + " - " + ad2.AttributeDetailName
+                    }).ToList();
+            var result = item.AsQueryable();
+            return result;
+        }
+        #endregion
+        #region Products All Attributes from tblProductDetailBarcode
+        public Select2PagedResultViewModel GetProductListAllAttributesFromBarcodeTable(string searchTerm, int pageSize, int pageNumber, int productId)
+        {
+            AllItemsList = AllProductListAllAttributesFromBarcodeTable(productId);
+            var select2pagedResult = new Select2PagedResultViewModel();
+            var totalResults = 0;
+            select2pagedResult.Results = GetPagedListOptions(searchTerm, pageSize, pageNumber, out totalResults);
+            select2pagedResult.Total = totalResults;
+            return select2pagedResult;
+        }
+
+        public IQueryable<SelectListViewModel> AllProductListAllAttributesFromBarcodeTable(int productId)
+        {
+            List<SelectListViewModel> item = new List<SelectListViewModel>();
+            item = (from c in _unitOfWork.Db.Set<tblProductAttributeDetailBarcode>()
+                    join a1 in _unitOfWork.Db.Set<tblAttribute>() on c.AttributeId1 equals a1.AttributeId
+                    join a2 in _unitOfWork.Db.Set<tblAttribute>() on c.AttributeId2 equals a2.AttributeId
+                    join ad1 in _unitOfWork.Db.Set<tblAttributeDetail>() on c.AttributeDetailId1 equals ad1.AttributeDetailId
+                    join ad2 in _unitOfWork.Db.Set<tblAttributeDetail>() on c.AttributeDetailId2 equals ad2.AttributeDetailId
+                    where c.ProductId == productId
                     orderby ad1.AttributeDetailName
                     select new SelectListViewModel
                     {

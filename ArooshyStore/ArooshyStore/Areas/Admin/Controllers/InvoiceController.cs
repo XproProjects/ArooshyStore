@@ -129,6 +129,7 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 var FromDateFilter = Request.Form["FromDateFilter"];
                 var ToDateFilter = Request.Form["ToDateFilter"];
                 var TextboxFilter = Request.Form["TextboxFilter"];
+                var ProductId = Request.Form["ProductIdList"];
                 var draw = Request.Form.GetValues("draw").FirstOrDefault();
                 var start = Request.Form.GetValues("start").FirstOrDefault();
                 var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -146,6 +147,10 @@ namespace ArooshyStore.Areas.Admin.Controllers
                     {
                         whereCondition += " And (select top(1) lower(ist.Status) from tblInvoiceStatus ist where ist.InvoiceNumber = s.InvoiceNumber order by ist.InvoiceStatusId desc) = '" + (From.ToString().ToLower().Trim() == "onhold" ? "on hold" : From.ToString().ToLower().Trim()) + "' ";
                     }
+                }
+                if (!(string.IsNullOrEmpty(ProductId)))
+                {
+                    whereCondition += " and s.InvoiceNumber in (select idd.InvoiceNumber from tblInvoiceDetail idd where idd.ProductId = " + ProductId + ") ";
                 }
                 if (!string.IsNullOrEmpty(FilterType))
                 {
@@ -411,6 +416,23 @@ namespace ArooshyStore.Areas.Admin.Controllers
             return new JsonResult { Data = new { status = response.Status, message = response.Message } };
         }
 
+        [HttpGet]
+        public ActionResult InvoiceDetail(string id)
+        {
+
+            if (User != null)
+            {
+
+                InvoiceViewModel invoice = _repository.GetInvoiceDetail(id, User.UserId);
+                return View(invoice);
+
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+        }
         [HttpGet]
         public ActionResult PrintInvoice(string id)
         {

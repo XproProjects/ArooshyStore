@@ -33,11 +33,15 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 //Check if user has access of this module or not
                 if (_roles.CheckModuleRoleId(User.UserId, "product") > 0)
                 {
+                    ProductViewModel model = new ProductViewModel();
+
                     //Get list of all actions of this module
                     List<ModuleViewModel> actionList = new List<ModuleViewModel>();
                     actionList = _roles.ActionsList(User.UserId, "product");
 
-                    return View(actionList);
+                    model.ModulesList = actionList;
+                    model.Categories = _repository.GetMasterCategoriesList();
+                    return View(model);
                 }
                 else
                 {
@@ -55,20 +59,33 @@ namespace ArooshyStore.Areas.Admin.Controllers
         {
             if (User != null)
             {
+                var MasterCategoryId = Request.Form["MasterCategoryIdList"];
+                var ChildCategoryId = Request.Form["ChildCategoryIdList"];
+                var ProductId = Request.Form["ProductIdList"];
+                var TextboxFilter = Request.Form["TextboxFilter"];
                 var draw = Request.Form.GetValues("draw").FirstOrDefault();
                 var start = Request.Form.GetValues("start").FirstOrDefault();
                 var length = Request.Form.GetValues("length").FirstOrDefault();
                 var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault()
                                         + "][name]").FirstOrDefault();
                 var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                var articleNumber = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
-                var productName = Request.Form.GetValues("columns[1][search][value]").FirstOrDefault();
-                var categoryName = Request.Form.GetValues("columns[2][search][value]").FirstOrDefault();
-                var barcode = Request.Form.GetValues("columns[3][search][value]").FirstOrDefault();
+                //var articleNumber = Request.Form.GetValues("columns[0][search][value]").FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
                 string whereCondition = " ";
+                if (!(string.IsNullOrEmpty(MasterCategoryId)))
+                {
+                    whereCondition = " p.CategoryId = " + MasterCategoryId + " and ";
+                }
+                if (!(string.IsNullOrEmpty(ChildCategoryId)))
+                {
+                    whereCondition += " c.CategoryId = " + ChildCategoryId + " and ";
+                }
+                if (!(string.IsNullOrEmpty(ProductId)))
+                {
+                    whereCondition += " s.ProductId = " + ProductId + " and ";
+                }
                 string sorting = "";
                 if (!(string.IsNullOrEmpty(sortColumn) && !(string.IsNullOrEmpty(sortColumnDir))))
                 {
@@ -81,21 +98,9 @@ namespace ArooshyStore.Areas.Admin.Controllers
                 {
                     sorting = " Order by s.ProductId asc";
                 }
-                if (!(string.IsNullOrEmpty(articleNumber)))
+                if (!(string.IsNullOrEmpty(TextboxFilter)))
                 {
-                    whereCondition += " LOWER(s.ArticleNumber) like ('%" + articleNumber.ToLower() + "%')";
-                }
-                else if (!(string.IsNullOrEmpty(productName)))
-                {
-                    whereCondition += " LOWER(s.ProductName) like ('%" + productName.ToLower() + "%')";
-                }
-                else if (!(string.IsNullOrEmpty(categoryName)))
-                {
-                    whereCondition += " (LOWER(c.CategoryName) like ('%" + categoryName.ToLower() + "%') or LOWER(p.CategoryName) like ('%" + categoryName.ToLower() + "%') )";
-                }
-                else if (!(string.IsNullOrEmpty(barcode)))
-                {
-                    whereCondition += " s.ProductId in (select pd.ProductId from tblProductAttributeDetailBarcode pd where pd.Barcode = '" + barcode + "' ) ";
+                    whereCondition += " s.ProductId in (select pd.ProductId from tblProductAttributeDetailBarcode pd where pd.Barcode = '" + TextboxFilter.ToString().ToLower().Trim() + "' ) ";
                 }
                 else
                 {

@@ -2,10 +2,10 @@
     ViewBag.Title = "Product";
 }
 @using ArooshyStore.Models.ViewModels
-@model List<ModuleViewModel>
+@model ProductViewModel
 <!-- BEGIN Page Content -->
 <!-- the #js-page-content id is needed for some plugins to initialize -->
-<main id="js-page-content" role="main" class="page-content">
+<main id="js-page-content" role="main" class="page-content mySelectList">
     <div class="row">
         <div class="col-md-12" style="display:flex">
             <table style="width:100%">
@@ -48,7 +48,7 @@
                     <div class="panel-content">
                         <div class="row" style="padding-left: 0px;padding-right: 0px;padding-top:0px">
                             <div class="col-lg-5" style="margin-top:4px">
-                                @if (Model.Any(x => x.ActionName.ToLower() == "create"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "create"))
                                 {
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#MyModal" data-value="0" class="btn btn-outline-primary waves-effect waves-themed btnNew AddEditRecord btnOpenModal" id="AddEditRecord">
                                         <i class="fal fa-plus-circle"></i>
@@ -56,7 +56,7 @@
                                         New Product
                                     </a>
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "update"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "update"))
                                 {
                                     <input type="hidden" id="EditActionRole" value="1" />
                                 }
@@ -64,7 +64,7 @@
                                 {
                                     <input type="hidden" id="EditActionRole" value="0" />
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "delete"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "delete"))
                                 {
                                     <input type="hidden" id="DeleteActionRole" value="1" />
                                 }
@@ -72,7 +72,7 @@
                                 {
                                     <input type="hidden" id="DeleteActionRole" value="0" />
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "product cost"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "product cost"))
                                 {
                                     <input type="hidden" id="ProductCostActionRole" value="1" />
                                 }
@@ -80,7 +80,7 @@
                                 {
                                     <input type="hidden" id="ProductCostActionRole" value="0" />
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "documents"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "documents"))
                                 {
                                     <input type="hidden" id="DocumentActionRole" value="1" />
                                 }
@@ -88,7 +88,7 @@
                                 {
                                     <input type="hidden" id="DocumentActionRole" value="0" />
                                 }
-                                @if (Model.Any(x => x.ActionName.ToLower() == "view stock"))
+                                @if (Model.ModulesList.Any(x => x.ActionName.ToLower() == "view stock"))
                                 {
                                     <input type="hidden" id="ViewStockActionRole" value="1" />
                                 }
@@ -99,7 +99,7 @@
                             </div>
                             <div class="col-lg-7" style="margin-top:4px">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
+                                    @*<div class="input-group-prepend">
                                         <button id="btnSearchJobType" class="btn btn-outline-default dropdown-toggle btnSearchGo" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Article #</button>
                                         <div class="dropdown-menu" id="ulSearchJobType">
                                             <a class="dropdown-item" href="#">Article #</a>
@@ -107,8 +107,8 @@
                                             <a class="dropdown-item" href="#">Category</a>
                                             <a class="dropdown-item" href="#">Barcode</a>
                                         </div>
-                                    </div>
-                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search here..." aria-label="Text input with dropdown button">
+                                    </div>*@
+                                    <input type="text" id="txtSearch" class="form-control" placeholder="Search barcode here..." aria-label="Text input with dropdown button">
                                     <div class="input-group-append">
                                         <button id="btnSearch" class="btn btn-outline-default btnSearchGo" type="button" aria-haspopup="true" aria-expanded="false">Go</button>
                                     </div>
@@ -123,36 +123,67 @@
                                     </div>*@
                             </div>
                         </div>
-
-                        <table id="myTable" class="table table-bordered table-hover table-striped w-100">
-                            <thead>
-                                <tr>
-                                    <th class="min-mobile"></th>
-                                    <th class="control">Article #</th>
-                                    <th class="min-tablet">Product Name</th>
-                                    <th class="min-desktop">Category</th>
-                                    <th class="none">Status</th>
-                                    <th class="none">Featured?</th>
-                                    <th class="none">Show on Website?</th>
-                                    <th class="none">Sales Price (Admin)</th>
-                                    <th class="none">Sales Price (Website)</th>
-                                    <th class="none">Expired?</th>
-                                    <th class="none">Sales Price (Expired)</th>
-                                    <th class="none">Product Description</th>
-                                    <th class="none">Created Date</th>
-                                    <th class="none">Created By</th>
-                                    <th class="none">Updated Date</th>
-                                    <th class="none">Updated By</th>
-                                    <th class="min-tablet">Total Stock</th>
-                                    <th class="min-mobile">Stock / Print Barcode</th>
-                                    <th class="min-mobile">Edit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            @*<tfoot>
-                                </tfoot>*@
-                        </table>
+                        <ul class="nav nav-tabs" role="tablist" style="background-color:#FAFAFA;border:1px solid #ddd;margin-top:25px">
+                            @{
+                                string isActive = "";
+                            }
+                            @for (int i = 0; i < Model.Categories.Count; i++)
+                            {
+                                isActive = "";
+                                if (i == 0)
+                                {
+                                    isActive = "active";
+                                }
+                                <li class="tabMainLi nav-item navItemMain @isActive">
+                                    <a class="nav-link btnMainOrder" data-value="@Model.Categories[i].CategoryId" href="javascript:void(0)" role="tab"><span class=""> @Model.Categories[i].CategoryName</span></a>
+                                </li>
+                            }
+                        </ul>
+                        <div class="tab-content border border-top-0 p-3">
+                            <div class="tab-pane fade show active" id="ActiveOrdersTab" role="tabpanel" style="padding:0px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group" id="ChildCategoryIdListDiv">
+                                            <select id="ChildCategoryIdList" name="ChildCategoryIdList"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group" id="ProductIdListDiv">
+                                            <select id="ProductIdList" name="ProductIdList"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table id="myTable" class="table table-bordered table-hover table-striped w-100">
+                                    <thead>
+                                        <tr>
+                                            <th class="min-mobile"></th>
+                                            <th class="control">Article #</th>
+                                            <th class="min-tablet">Product Name</th>
+                                            <th class="min-desktop">Category</th>
+                                            <th class="none">Status</th>
+                                            <th class="none">Featured?</th>
+                                            <th class="none">Show on Website?</th>
+                                            <th class="none">Sales Price (Admin)</th>
+                                            <th class="none">Sales Price (Website)</th>
+                                            <th class="none">Expired?</th>
+                                            <th class="none">Sales Price (Expired)</th>
+                                            <th class="none">Product Description</th>
+                                            <th class="none">Created Date</th>
+                                            <th class="none">Created By</th>
+                                            <th class="none">Updated Date</th>
+                                            <th class="none">Updated By</th>
+                                            <th class="min-tablet">Total Stock</th>
+                                            <th class="min-mobile">Stock / Print Barcode</th>
+                                            <th class="min-mobile">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    @*<tfoot>
+                                        </tfoot>*@
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
